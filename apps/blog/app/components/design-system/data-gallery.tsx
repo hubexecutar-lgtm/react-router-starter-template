@@ -363,7 +363,7 @@ function DataTable() {
 
   return (
     <div className="flex flex-col gap-4" data-testid="data-table">
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto" data-wide-table role="region" aria-label="Tabela de dados (rolagem horizontal intencional)" tabIndex={0}>
         <Table>
           <TableCaption className="sr-only">Territórios editoriais, ordenáveis</TableCaption>
           <TableHeader>

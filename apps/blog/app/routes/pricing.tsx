@@ -3,12 +3,12 @@
 import type { Route } from "./+types/pricing";
 
 import { PageHero } from "@/components/editorial/PageHero";
-import { SURFACE } from "@/components/editorial/surface";
+import { CompareCards } from "@/components/layout/CompareCards";
+import { Section } from "@/components/layout/Section";
 import seed from "@/data/editorial/seed.json";
 import DefaultLayout from "@/layouts/DefaultLayout";
 import { getPosts } from "@/lib/posts.server";
 import { seo } from "@/lib/seo";
-import { cn } from "@/lib/utils";
 
 export function loader() {
 	const published = getPosts().length;
@@ -40,9 +40,38 @@ export default function Page({ loaderData }: Route.ComponentProps) {
 				title="Conteúdo aberto, em vários formatos"
 				lead="Todos os artigos, mapas, guias e evidências do blog são de leitura livre, sem cadastro. Outros formatos derivam dos mesmos artigos."
 			/>
-			<section className="container grid gap-10 lg:grid-cols-[1fr_20rem] lg:gap-14 [&>*]:min-w-0">
-				<div className="overflow-x-auto" role="region" aria-label="Canais e formatos" tabIndex={0}>
-					<table className="ds-table w-full min-w-[34rem] text-left text-sm">
+			<Section id="comparar" eyebrow="Explore os formatos" title="Leitura aberta e produtos do ecossistema">
+				<CompareCards
+					options={[
+						{
+							title: "Ler o Risco Cognitivo",
+							subtitle: "Aberto · sem cadastro",
+							benefits: [
+								"Todos os artigos e ensaios do framework",
+								"Mapas, guias e o modelo de análise para copiar",
+								"Banco de evidências com autor, ano e link",
+								"Feed RSS para acompanhar novas publicações",
+							],
+							cta: { href: "/blog/", label: "Ler os artigos" },
+							more: { href: "/rss.xml", label: "Assinar o RSS" },
+						},
+						{
+							title: "Produtos EXECUTAR",
+							subtitle: "Catálogo de exemplo",
+							benefits: [
+								"Skills, agentes e prompts para aplicar o método",
+								"E-books, PDFs e workbooks derivados dos artigos",
+								"Ferramentas HTML e assets de apoio",
+							],
+							cta: { href: "/loja/", label: "Ver a loja" },
+						},
+					]}
+				/>
+			</Section>
+
+			<Section id="canais" eyebrow="Canais" title="Formatos previstos no banco editorial" lead="Fonte: banco editorial (Hub Editorial), canais e ativos derivados.">
+				<div className="sm:overflow-x-auto" role="region" aria-label="Canais e formatos" tabIndex={0}>
+					<table className="ds-table ds-table--stack w-full text-left text-sm sm:min-w-[34rem]">
 						<caption className="sr-only">Canais e formatos do banco editorial</caption>
 						<thead>
 							<tr>
@@ -54,24 +83,21 @@ export default function Page({ loaderData }: Route.ComponentProps) {
 						<tbody>
 							{loaderData.channels.map((c) => (
 								<tr key={c.canal}>
-									<td className="font-medium">{c.canal}</td>
-									<td>{c.formatos}</td>
-									<td className="text-muted-foreground">{c.status}</td>
+									<td className="font-medium" data-label="Canal">
+										<div>{c.canal}</div>
+									</td>
+									<td data-label="Formatos">
+										<div>{c.formatos}</div>
+									</td>
+									<td className="text-muted-foreground" data-label="Status">
+										<div>{c.status}</div>
+									</td>
 								</tr>
 							))}
 						</tbody>
 					</table>
-					<p className="text-muted-foreground mt-3 text-sm">Fonte: banco editorial (Hub Editorial), canais e ativos derivados.</p>
 				</div>
-				<aside className={cn(SURFACE, "p-6")}>
-					<p className="rc-eyebrow">Produtos</p>
-					<p className="rc-title mt-3 text-xl">Skills, modelos e ferramentas</p>
-					<p className="text-muted-foreground mt-2 text-sm">Materiais do ecossistema EXECUTAR ficam no catálogo da loja.</p>
-					<a href="/loja/" className="rc-link mt-4 inline-block">
-						Ver a loja
-					</a>
-				</aside>
-			</section>
+			</Section>
 		</DefaultLayout>
 	);
 }

@@ -35,7 +35,7 @@ export function SiteHeader() {
 	return (
 		<header className="bg-background/95 supports-[backdrop-filter]:bg-background/85 sticky top-0 z-50 border-b border-[var(--border-default)] backdrop-blur">
 			<div className="container flex h-16 items-center gap-2 sm:gap-4 lg:h-[4.5rem]">
-				<a href="/" className="flex min-w-0 shrink-0 items-center gap-3" aria-label={`${SITE_NAME} — página inicial`}>
+				<a href="/" className="flex min-h-10 min-w-0 shrink-0 items-center gap-3" aria-label={`${SITE_NAME} — página inicial`}>
 					<span className="rc-display text-[0.95rem] leading-none tracking-[-0.02em] whitespace-nowrap uppercase min-[360px]:text-[1.1rem] sm:text-xl">
 						{SITE_NAME}
 					</span>

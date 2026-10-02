@@ -1,4 +1,4 @@
-import { ArrowRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 
 import { SURFACE_LINK } from "./surface";
 
@@ -28,7 +28,7 @@ export function TerritoryCard({ territory, count }: { territory: Territory; coun
 			</h3>
 			<p className="text-muted-foreground mt-2 text-sm leading-relaxed">{territory.question}</p>
 			<span className="rc-link mt-auto inline-flex items-center gap-1.5 pt-4 text-sm group-hover:underline">
-				Explorar tema <ArrowRight className="size-4" aria-hidden="true" />
+				Explorar tema <ChevronRight className="size-4" aria-hidden="true" />
 			</span>
 		</article>
 	);

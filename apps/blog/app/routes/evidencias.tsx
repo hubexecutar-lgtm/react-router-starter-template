@@ -2,6 +2,7 @@
 import type { Route } from "./+types/evidencias";
 
 import { EvidenceTable } from "@/components/editorial/EvidenceTable";
+import { PageHero } from "@/components/editorial/PageHero";
 import { SURFACE } from "@/components/editorial/surface";
 import { PlainTextPanel } from "@/components/plain";
 import seed from "@/data/editorial/seed.json";
@@ -40,16 +41,13 @@ LEITURA       citar só o que a fonte demonstra; limites no texto`;
 export default function Page() {
 	return (
 		<DefaultLayout>
-			<section className="container pt-12 pb-10 lg:pt-20" aria-labelledby="evid-title">
-				<p className="rc-eyebrow text-primary">Evidências</p>
-				<h1 id="evid-title" className="rc-display mt-4 text-5xl sm:text-6xl lg:text-7xl">
-					Da pergunta à evidência
-				</h1>
-				<p className="rc-lead mt-5 max-w-3xl text-lg sm:text-xl">
-					Cada afirmação central dos artigos aponta para um registro deste banco. Aqui estão todos, com o que cada
-					fonte sustenta — e o que ela não sustenta.
-				</p>
-			</section>
+			<PageHero
+				id="evid-title"
+				eyebrow="Evidências"
+				title="Da pergunta à evidência"
+				lead="Cada afirmação central dos artigos aponta para um registro deste banco. Aqui estão todos, com o que cada fonte sustenta — e o que ela não sustenta."
+				seed={19}
+			/>
 
 			<section className="container grid gap-10 lg:grid-cols-[1.8fr_1fr] lg:gap-14 [&>*]:min-w-0" aria-label="Banco de evidências">
 				<div className="min-w-0">

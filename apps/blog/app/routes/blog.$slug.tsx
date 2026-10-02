@@ -1,6 +1,6 @@
 // Página de artigo (mood board 03): eyebrow território/tipo, título display, lead, meta mono,
 // corpo em prosa e coluna lateral com pergunta do território, leitura seguinte, assuntos e evidências.
-import { ArrowRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { data } from "react-router";
 
 import type { Route } from "./+types/blog.$slug";
@@ -119,7 +119,7 @@ export default function Page({ loaderData, params }: Route.ComponentProps) {
 													<span className="rc-title mt-1.5 block text-base">{p.title}</span>
 													<span className="rc-meta mt-2 block">{p.minutes} min</span>
 												</span>
-												<ArrowRight className="text-primary mt-1 size-4 shrink-0" aria-hidden="true" />
+												<ChevronRight className="text-primary mt-1 size-4 shrink-0" aria-hidden="true" />
 											</a>
 										</li>
 									))}

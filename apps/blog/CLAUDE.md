@@ -280,7 +280,7 @@ to `apps/blog/`.
 
 ### ADR-12: Transversal de leitura — cards-célula, plain estruturado, halftone e banco de imagens (RC-UX-HIG-002)
 
-- **Status:** Aceita — implementada (PR C); anatomia de página e gate HIG no PR D
+- **Status:** Aceita — implementada (PR C e PR D). Registro em `docs/handoff/RC-UX-HIG-002/`; auditoria em `docs/audit/`
 - **Contexto:** Revisando o site no iPhone, o usuário apontou painéis plain text com corpo em mono corrido,
   sem estrutura, num blog que é de leitura; pediu cards iguais à tabela, um fundo de bolinhas orgânico
   (halftone) e as imagens do seu banco. Regra herdada do monorepo: UX-GOV-HIG-001 (Apple HIG + WCAG 2.2 AA).
@@ -301,7 +301,15 @@ to `apps/blog/`.
     entram imagens **sem texto**: hoje binóculo (hero da home e de Sobre, OG), equipe com tablet (Sobre) e mão
     com chaves (login, cadastro), registradas em `IMAGES` (`HeroArt.tsx`) com `alt` descritivo. Artigos sem
     ilustração ficam sem imagem; o schema ganhou `imageAlt`.
+  - **Anatomia de página** (UX-GOV-HIG-001 / ADR-M03, referência developer.apple.com/programs), em
+    `app/components/layout/`: `PageHero` (eyebrow, h1, lead ≤ 60ch, ações, arte), `Section` (h2, lead,
+    "Saiba mais ›"), `FeatureBlock`/`FeatureRow` (ícone ou mídia, título, parágrafo curto, link),
+    `CompareCards` e `ChevronLink`. Links de texto usam chevron; botões, seta. Ritmo entre seções:
+    `--space-section`. Todo `p/li/dd` de `main` respeita `--measure`; tabelas com `ds-table--stack` viram
+    células rotuladas no celular (grades de dados declaradas com `data-wide-table` + região focável).
 - **Consequências:**
+  - `tests/hig.spec.ts` é o gate UX-GOV-HIG-001 em todas as rotas (P0/P1 falham o `npm test`);
+    `HIG_AUDIT=1` + `node scripts/hig-audit.mjs` regeneram `docs/audit/HIG-WEB-AUDIT.{json,md}`.
   - `tests/plain.spec.ts` trava o parser e exige que todo painel dos artigos tenha estrutura e não use mono;
     `tests/surfaces.spec.ts` trava a célula (sem contorno, raio 2px) nos cards.
   - Imagem nova no site: `tem_texto: false` no manifest, webp em `public/images/`, `alt` e uso registrados.

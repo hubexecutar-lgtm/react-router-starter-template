@@ -25,10 +25,10 @@ export function PageHero({
 }) {
 	return (
 		<section className="container pt-12 pb-10 lg:pt-20" aria-labelledby={id}>
-			<div className="grid items-center gap-8 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] lg:gap-16">
+			<div className="grid items-center gap-8 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] lg:gap-16 [&>*]:min-w-0">
 				<div>
 					<p className="rc-eyebrow">{eyebrow}</p>
-					<h1 id={id} className="rc-display mt-4 text-5xl sm:text-6xl lg:text-7xl">
+					<h1 id={id} className="rc-display mt-4 text-[clamp(2.25rem,11vw,3rem)] hyphens-auto sm:text-6xl lg:text-7xl">
 						{title}
 					</h1>
 					{lead && <p className="rc-lead mt-5 text-lg sm:text-xl">{lead}</p>}

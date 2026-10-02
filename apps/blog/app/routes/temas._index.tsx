@@ -1,6 +1,7 @@
 // Mapa de temas (mood board 09): os 8 territórios TAX-RC do banco editorial.
 import type { Route } from "./+types/temas._index";
 
+import { PageHero } from "@/components/editorial/PageHero";
 import { SectionHeader } from "@/components/editorial/SectionHeader";
 import { TerritoryCard } from "@/components/editorial/TerritoryCard";
 import { AsciiDiagram } from "@/components/plain";
@@ -31,18 +32,18 @@ export default function Page({ loaderData }: Route.ComponentProps) {
 	const { counts } = loaderData;
 	return (
 		<DefaultLayout>
-			<section className="container pt-12 pb-12 lg:pt-20" aria-labelledby="temas-title">
-				<p className="rc-eyebrow">Explorar</p>
-				<h1 id="temas-title" className="rc-display mt-4 text-5xl sm:text-6xl lg:text-7xl">
-					Mapa de temas
-				</h1>
-				<p className="rc-lead mt-5 max-w-2xl text-lg sm:text-xl">
-					Navegue pelos territórios do blog e veja como eles se conectam. Cada tema responde a uma pergunta e
-					reúne os artigos que tratam dela.
-				</p>
-			</section>
+			<PageHero
+				id="temas-title"
+				eyebrow="Explorar"
+				title="Mapa de temas"
+				lead="Navegue pelos territórios do blog e veja como eles se conectam. Cada tema responde a uma pergunta e reúne os artigos que tratam dela."
+				seed={13}
+			/>
 
-			<section className="container grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:gap-14 [&>*]:min-w-0" aria-label="Territórios">
+			<section className="container grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:gap-14 [&>*]:min-w-0" aria-labelledby="territorios-title">
+				<h2 id="territorios-title" className="sr-only">
+					Territórios
+				</h2>
 				<div>
 					<AsciiDiagram id="MAP-TERRITORIES-001" kind="tree" title="Territórios do Risco Cognitivo" source={TERRITORY_TREE} />
 				</div>

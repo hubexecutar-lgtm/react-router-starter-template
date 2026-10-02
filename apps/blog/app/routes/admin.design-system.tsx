@@ -1,4 +1,4 @@
-import { ArrowRight, CircleDot, Eye, FileText } from 'lucide-react';
+import { ArrowRight, ChevronRight, CircleDot, Eye, FileText } from 'lucide-react';
 
 import type { Route } from './+types/admin.design-system';
 
@@ -313,15 +313,15 @@ export default function DesignSystem({ loaderData }: Route.ComponentProps) {
                 <div className="mt-4 flex flex-wrap items-center gap-3">
                   <a href="#gramatica" className={cn(buttonVariants({ size: 'lg' }), 'gap-2')}>Ler artigo <ArrowRight className="size-4" aria-hidden="true" /></a>
                   <a href="#gramatica" className={buttonVariants({ variant: 'outline', size: 'lg' })}>Ver todos</a>
-                  <a href="#gramatica" className="rc-link inline-flex items-center gap-1.5">Saiba mais <ArrowRight className="size-4" aria-hidden="true" /></a>
+                  <a href="#gramatica" className="rc-link inline-flex items-center gap-1.5">Saiba mais <ChevronRight className="size-4" aria-hidden="true" /></a>
                 </div>
               </div>
               <div className="rc-cell p-5">
                 <p className="rc-eyebrow">Tabela com gutters</p>
                 <div className="mt-3 overflow-x-auto" role="region" aria-label="Tabela com gutters" tabIndex={0}>
-                  <table className="ds-table w-full min-w-[22rem] text-left [--table-cell-padding:0.5rem_0.75rem] [--table-font-size:0.875rem]">
+                  <table className="ds-table ds-table--stack w-full text-left [--table-cell-padding:0.5rem_0.75rem] [--table-font-size:0.875rem] sm:min-w-[22rem]">
                     <thead><tr><th scope="col">Tópico</th><th scope="col">Formato</th><th scope="col">Camada</th><th scope="col">Uso</th></tr></thead>
-                    <tbody>{grammarTable.map((row) => <tr key={row[0]}>{row.map((c) => <td key={c}>{c}</td>)}</tr>)}</tbody>
+                    <tbody>{grammarTable.map((row) => <tr key={row[0]}>{row.map((c, j) => <td key={c} data-label={['Tópico', 'Formato', 'Camada', 'Uso'][j]}><div>{c}</div></td>)}</tr>)}</tbody>
                   </table>
                 </div>
               </div>
@@ -640,7 +640,7 @@ export default function DesignSystem({ loaderData }: Route.ComponentProps) {
 
           <h3 className="mt-10 text-xl font-medium">Tabelas</h3>
           <p className="text-muted-foreground mt-2 text-base font-medium">Todas as tabelas (componente <code>Table</code> e tabelas Markdown) usam células cinza separadas, cabeçalho em caixa alta e valores técnicos em mono.</p>
-          <div className="mt-4 overflow-x-auto" data-testid="table-reference">
+          <div className="mt-4 overflow-x-auto" data-testid="table-reference" data-wide-table role="region" aria-label="Tabela de referência (rolagem horizontal intencional)" tabIndex={0}>
             <table className="ds-table">
               <caption className="sr-only">Store Hub — wireframe para código</caption>
               <thead><tr><th scope="col">Wireframe_node</th><th scope="col">Component</th><th scope="col">Source_file</th><th scope="col">Data</th><th scope="col">State</th></tr></thead>
