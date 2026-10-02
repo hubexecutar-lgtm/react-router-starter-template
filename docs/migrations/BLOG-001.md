@@ -122,11 +122,13 @@ Causa: o upload autentica com o JWT da sessão, e o proxy desta sessão de traba
 header `Authorization` de `api.cloudflare.com` pela credencial injetada. Nada foi publicado: o
 Worker continua com a versão anterior (modificada em 2026-10-02T14:27:47Z, antes da sessão).
 
-O Workers Builds (CI da Cloudflare ligado a este repositório) executa `wrangler` na raiz, que
-agora é a raiz do workspace e não tem configuração própria. O arquivo `.wrangler/deploy/config.json`
-da raiz redireciona o wrangler para a configuração gerada pelo build do blog
-(`apps/blog/build/server/wrangler.json`), então `npm run build` seguido de `npx wrangler deploy`
-(ou `versions upload`) funciona a partir da raiz. Alternativa no painel: diretório raiz `apps/blog`.
+**Workers Builds (CI da Cloudflare ligado a este repositório):** depois da migração, o Worker
+`react-router-starter-template` precisa de **Root directory = `apps/blog`** nas configurações de
+build (painel: Workers & Pages → react-router-starter-template → Settings → Builds). Sem isso, o
+build falha antes de começar: a Cloudflare valida o `name` do `wrangler.jsonc` no diretório raiz
+configurado, e a raiz do repositório agora é o workspace, sem Worker próprio
+([monorepos](https://developers.cloudflare.com/workers/ci-cd/builds/advanced-setups/#monorepos)).
+Comandos: build `npm run build`, deploy `npx wrangler deploy` (padrões).
 
 Para publicar, de um ambiente com credencial própria (máquina local ou CI):
 
