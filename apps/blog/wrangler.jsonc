@@ -1,0 +1,14 @@
+{
+	"$schema": "../../node_modules/wrangler/config-schema.json",
+	// Blog Risco Cognitivo (apps/blog). Static pages are prerendered and served as assets;
+	// the Worker renders everything else (SSR) and the 404 page.
+	"name": "react-router-starter-template",
+	"main": "./workers/app.ts",
+	"compatibility_date": "2025-10-08",
+	"compatibility_flags": ["nodejs_compat"],
+	"observability": {
+		"enabled": true,
+		"head_sampling_rate": 1
+	},
+	"upload_source_maps": true
+}
