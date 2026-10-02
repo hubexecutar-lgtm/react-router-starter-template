@@ -8,10 +8,10 @@ to `apps/blog/`.
 
 ### ADR-01: Trabalhar diretamente em `main` e abrir PR automaticamente (sem rascunho)
 
-- **Status:** Aceita
+- **Status:** Aceita — promovida a regra do monorepo como **ADR-M02** (`CLAUDE.md` da raiz),
+  que acrescenta auto-merge para branches paralelas.
 - **Contexto:** Este é um projeto simples (site estático), sem necessidade de um
-  fluxo de branches elaborado. Desde a migração para o monorepo (ADR-07), a política de
-  branches e PRs do repositório é a do `CLAUDE.md` da raiz.
+  fluxo de branches elaborado.
 - **Decisão:**
   - Todo o desenvolvimento deve ser feito diretamente a partir da branch `main`
     (criar a branch de trabalho a partir de `main`, nunca de outra branch de feature).
