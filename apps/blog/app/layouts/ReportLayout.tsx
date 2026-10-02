@@ -7,7 +7,7 @@ import DefaultLayout from "@/layouts/DefaultLayout";
 export default function ReportLayout({ eyebrow, children }: { eyebrow?: string; children: ReactNode }) {
 	return (
 		<DefaultLayout>
-			<section className="py-28 lg:pt-44 lg:pb-32">
+			<section className="pt-12 pb-20 lg:pt-20 lg:pb-28">
 				<div className="container max-w-5xl">
 					{eyebrow && (
 						<p className="text-muted-foreground mx-auto max-w-2xl text-sm font-medium">

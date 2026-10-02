@@ -13,20 +13,21 @@ tailwind.config={theme:{extend:{
  fontFamily:{ui:['Inter','ui-sans-serif','-apple-system','BlinkMacSystemFont','Segoe UI','Roboto','Helvetica','Arial','sans-serif'],mono:['ui-monospace','SFMono-Regular','Menlo','Monaco','Consolas','Liberation Mono','Courier New','monospace']},
  borderRadius:{sm:'6px',md:'8px',lg:'12px',xl:'16px'}}}};
 </script>
+<link rel="stylesheet" href="/ds/surfaces.css">
 <style>
-/* Tokens normalizados do bundle EXECUTAR-UI-FULLSTACK-BUNDLE-001 */
-:root{--c-canvas:#FBFBFB;--c-surface:#FFFFFF;--c-sub:#F8F8F8;--c-muted:#F5F5F5;--c-sel:#F1F1F1;
---c-bs:#EAEAEA;--c-b:#E5E5E5;--c-bst:#D4D4D4;--c-t:#222222;--c-t2:#6B6B6B;--c-t3:#9B9B9B;
---c-p:#326EF7;--c-ph:#285EDB;--c-ps:#F3F7FF;--c-ok:#2B8C5D;--c-no:#C74747;--c-waS:#FFF8E6;--c-waB:#F0DDA8;
---ring:rgba(50,110,247,.28);--scrim:rgba(17,17,17,.42)}
+/* Neutros, ação e elevação: contrato do blog (ADR-09) via /ds/surfaces.css, gerado de
+   src/styles/global.css. Aqui ficam só as cores de estado (ok, erro, aviso). */
+:root{--c-canvas:var(--ds-surface-page);--c-surface:var(--ds-surface-default);--c-sub:var(--ds-surface-hover);
+--c-muted:var(--ds-surface-hover);--c-sel:var(--ds-surface-selected);
+--c-bs:var(--ds-border-subtle);--c-b:var(--ds-border-default);--c-bst:var(--ds-border-strong);
+--c-t:var(--ds-foreground);--c-t2:var(--ds-muted-foreground);--c-t3:var(--ds-muted-foreground);
+--c-p:var(--ds-primary);--c-ph:color-mix(in oklch,var(--ds-primary) 86%,black);
+--c-ps:color-mix(in oklch,var(--ds-primary) 10%,var(--ds-surface-page));
+--c-ok:#2B8C5D;--c-no:#C74747;--c-waS:#FFF8E6;--c-waB:#F0DDA8;
+--ring:color-mix(in oklch,var(--ds-ring) 35%,transparent);--scrim:rgba(17,17,17,.42)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;
---c-canvas:#171717;--c-surface:#1E1E1E;--c-sub:#222222;--c-muted:#2A2A2A;--c-sel:#303030;
---c-bs:#2C2C2C;--c-b:#333333;--c-bst:#474747;--c-t:#EDEDED;--c-t2:#A8A8A8;--c-t3:#7E7E7E;
---c-p:#6F9BFF;--c-ph:#8FB0FF;--c-ps:#1D2740;--c-ok:#4CC38A;--c-no:#E77A7A;--c-waS:#2B2414;--c-waB:#5A4A1E;--ring:rgba(111,155,255,.35)}}
-:root[data-theme="dark"]{color-scheme:dark;
---c-canvas:#171717;--c-surface:#1E1E1E;--c-sub:#222222;--c-muted:#2A2A2A;--c-sel:#303030;
---c-bs:#2C2C2C;--c-b:#333333;--c-bst:#474747;--c-t:#EDEDED;--c-t2:#A8A8A8;--c-t3:#7E7E7E;
---c-p:#6F9BFF;--c-ph:#8FB0FF;--c-ps:#1D2740;--c-ok:#4CC38A;--c-no:#E77A7A;--c-waS:#2B2414;--c-waB:#5A4A1E;--ring:rgba(111,155,255,.35)}
+--c-ok:#4CC38A;--c-no:#E77A7A;--c-waS:#2B2414;--c-waB:#5A4A1E}}
+:root[data-theme="dark"]{color-scheme:dark;--c-ok:#4CC38A;--c-no:#E77A7A;--c-waS:#2B2414;--c-waB:#5A4A1E}
 html{font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
 body{margin:0;min-width:320px;background:var(--c-canvas);color:var(--c-t)}
 a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:none;box-shadow:0 0 0 3px var(--ring);border-color:var(--c-p)}
@@ -97,7 +98,7 @@ const Row=({label,children,cols='92px'})=>(
 function SkillCard({k,onMore,onCopy}){
   const extra=k.vul.length>3?' +'+(k.vul.length-3):'';
   return (
-    <article aria-label={k.title} className="flex flex-col gap-3.5 min-w-0 bg-surface border border-line rounded-lg p-5 hover:border-linestr">
+    <article aria-label={k.title} className="flex flex-col gap-3.5 min-w-0 bg-surface border border-line rounded-lg p-5 hover:bg-sub">
       <div className="flex justify-between items-center gap-2">
         <span aria-hidden="true" className="w-7 h-7 rounded-md bg-muted grid place-items-center text-tx2 text-sm">◇</span>
         <Badge active>{k.status}</Badge>
@@ -171,7 +172,7 @@ function Overview(){
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {DB.areas.map(a=>(
-          <a key={a.id} href={'#/area/'+a.id.replace('AREA-','')} className="block no-underline text-tx bg-surface border border-line rounded-lg p-5 hover:border-linestr">
+          <a key={a.id} href={'#/area/'+a.id.replace('AREA-','')} className="block no-underline text-tx bg-surface border border-line rounded-lg p-5 hover:bg-sub">
             <div className="font-mono text-xs text-tx3">{a.id} · {a.count} skills</div>
             <h3 className="text-lg font-semibold mt-1 mb-1.5">{a.title}</h3>
             <p className="text-sm leading-5 text-tx2">{a.desc}</p>
@@ -189,7 +190,7 @@ function AreaPage({areaKey,onMore,onCopy}){
   const gs=useMemo(()=>[...new Set(all.map(s=>s.gname))],[all]);
   const list=useMemo(()=>{const t=q.toLowerCase();return all.filter(s=>(!kind||s.kind===kind)&&(!g||s.gname===g)&&(!t||(s.id+s.title+s.desc+s.cmd+s.src+s.p+s.pr+s.pg).toLowerCase().includes(t)))},[all,q,kind,g]);
   if(!area)return <div className="border border-line rounded-lg bg-surface min-h-[240px] grid place-items-center text-tx2">Área não encontrada.</div>;
-  const inp='min-h-[40px] px-3 border border-line rounded-md bg-surface text-sm text-tx';
+  const inp='min-h-[40px] px-3 border border-linestr rounded-md bg-surface text-sm text-tx';
   return (
     <>
       <div className="text-sm text-tx2 mb-3"><a href="#/" className="text-inherit">Catálogo</a> / {area.title}</div>

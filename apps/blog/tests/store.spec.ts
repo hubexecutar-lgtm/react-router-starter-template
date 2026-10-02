@@ -197,7 +197,7 @@ test("navigation: Loja is reachable by keyboard from the navbar", async ({ page 
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/blog/");
   await page.waitForLoadState("networkidle"); // wait for hydration
-  const link = page.locator("nav a[href='/loja']").first();
+  const link = page.locator("header nav a[href^='/loja']").first();
   await link.focus();
   await expect(link).toBeFocused();
   await page.keyboard.press("Enter");

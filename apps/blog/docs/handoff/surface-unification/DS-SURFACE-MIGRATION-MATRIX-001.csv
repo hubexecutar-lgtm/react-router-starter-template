@@ -1,0 +1,16 @@
+component_family,target_surface,target_border,target_shadow,radius_rule,priority,status
+Card/default,surface-neutral,surface-neutral-border,flat,surface-radius-card,P0,PREPARED
+Table/default,surface-neutral,none,flat,surface-radius-cell,P0,PREPARED
+Markdown table,surface-neutral,none,flat,surface-radius-cell,P0,PREPARED
+PlainSurface,surface-neutral,surface-neutral-border,flat,plain 28px desktop / 22px mobile,P0,PREPARED
+PlainTextPanel,surface-neutral,surface-neutral-border,flat,inherit PlainSurface,P0,PREPARED
+AsciiDiagram,surface-neutral,surface-neutral-border,flat,inherit PlainSurface,P0,PREPARED
+Admin cards,surface-neutral,surface-neutral-border,flat,inherit Card,P1,PREPARED
+CategoryCard,surface-neutral,surface-neutral-border,flat,inherit Card,P1,PREPARED
+SkillCard,surface-neutral,surface-neutral-border,flat,inherit Card,P1,PREPARED
+VisualProductCard,surface-neutral,surface-neutral-border,flat,inherit Card,P1,PREPARED
+FeaturedItem,surface-neutral,surface-neutral-border,flat,inherit Card,P1,PREPARED
+KPI/Data cards,surface-neutral,surface-neutral-border,flat,inherit Card,P1,PREPARED
+Popover,card/popover,border,raised,current overlay radius,P1,PREPARED
+Dialog/Drawer/Sheet,card/popover,border,overlay,current overlay radius,P1,PREPARED
+Callouts,semantic family,semantic family,as specified,current callout radius,P2,NO_CHANGE

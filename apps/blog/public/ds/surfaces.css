@@ -1,0 +1,71 @@
+/* Gerado por scripts/export-surface-tokens.mjs a partir de app/styles/global.css (ADR-09).
+   Não edite: altere global.css e rode `npm run build`. Tema escuro: PROVISIONAL, como no site. */
+:root {
+  --ds-surface-page: oklch(1 0 0);
+  --ds-surface-default: #f8f8f8;
+  --ds-surface-subtle: #fafafa;
+  --ds-surface-hover: #f3f3f3;
+  --ds-surface-selected: #eeeeee;
+  --ds-border-subtle: #f0f0f0;
+  --ds-border-default: #ebebeb;
+  --ds-border-strong: #dadada;
+  --ds-elevation-flat: none;
+  --ds-elevation-raised: 0 1px 2px rgb(0 0 0 / 0.04);
+  --ds-elevation-overlay: 0 8px 28px rgb(0 0 0 / 0.1);
+  --ds-surface-radius-card: calc(8px * 2 - 4px);
+  --ds-table-radius: 2px;
+  --ds-table-gap: 3px;
+  --ds-table-head-surface: #ebebeb;
+  --ds-foreground: #111111;
+  --ds-muted-foreground: #6a6a72;
+  --ds-primary: oklch(0.552 0.171 260.25);
+  --ds-primary-foreground: oklch(0.985 0 0);
+  --ds-ring: oklch(0.552 0.171 260.25);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not(.light) {
+    --ds-surface-page: oklch(0.227 0.004 286.09);
+    --ds-surface-default: oklch(0.294 0.004 286.18);
+    --ds-surface-subtle: oklch(0.27 0.004 286.15);
+    --ds-surface-hover: oklch(0.261 0.004 286.14);
+    --ds-surface-selected: oklch(0.349 0.003 286.22);
+    --ds-border-subtle: oklch(0.31 0.003 286.2);
+    --ds-border-default: oklch(0.349 0.003 286.22);
+    --ds-border-strong: oklch(0.42 0.003 286.2);
+    --ds-elevation-flat: none;
+    --ds-elevation-raised: 0 1px 2px rgb(0 0 0 / 0.4);
+    --ds-elevation-overlay: 0 8px 28px rgb(0 0 0 / 0.5);
+    --ds-surface-radius-card: calc(8px * 2 - 4px);
+    --ds-table-radius: 2px;
+    --ds-table-gap: 3px;
+    --ds-table-head-surface: oklch(0.349 0.003 286.22);
+    --ds-foreground: oklch(0.971 0.003 286.35);
+    --ds-muted-foreground: oklch(0.781 0.008 286.2);
+    --ds-primary: oklch(0.705 0.159 252.35);
+    --ds-primary-foreground: oklch(0.227 0.004 286.09);
+    --ds-ring: oklch(0.705 0.159 252.35);
+  }
+}
+:root[data-theme="dark"],
+:root.dark {
+  --ds-surface-page: oklch(0.227 0.004 286.09);
+  --ds-surface-default: oklch(0.294 0.004 286.18);
+  --ds-surface-subtle: oklch(0.27 0.004 286.15);
+  --ds-surface-hover: oklch(0.261 0.004 286.14);
+  --ds-surface-selected: oklch(0.349 0.003 286.22);
+  --ds-border-subtle: oklch(0.31 0.003 286.2);
+  --ds-border-default: oklch(0.349 0.003 286.22);
+  --ds-border-strong: oklch(0.42 0.003 286.2);
+  --ds-elevation-flat: none;
+  --ds-elevation-raised: 0 1px 2px rgb(0 0 0 / 0.4);
+  --ds-elevation-overlay: 0 8px 28px rgb(0 0 0 / 0.5);
+  --ds-surface-radius-card: calc(8px * 2 - 4px);
+  --ds-table-radius: 2px;
+  --ds-table-gap: 3px;
+  --ds-table-head-surface: oklch(0.349 0.003 286.22);
+  --ds-foreground: oklch(0.971 0.003 286.35);
+  --ds-muted-foreground: oklch(0.781 0.008 286.2);
+  --ds-primary: oklch(0.705 0.159 252.35);
+  --ds-primary-foreground: oklch(0.227 0.004 286.09);
+  --ds-ring: oklch(0.705 0.159 252.35);
+}

@@ -153,7 +153,7 @@ test("AC-06/07 + annex AC-04: both components share the token-driven surface", a
     });
   const diagram = await style("#FLOW-OPS-001");
   const panel = await style("#PANEL-INSTRUCTION-001");
-  expect(diagram).toEqual({ bg: "rgb(248, 248, 248)", border: "rgb(235, 235, 235)", radius: "28px", color: "rgb(0, 0, 0)" });
+  expect(diagram).toEqual({ bg: "rgb(248, 248, 248)", border: "rgb(235, 235, 235)", radius: "28px", color: "rgb(17, 17, 17)" });
   expect(panel).toEqual(diagram);
   const fonts = await page.locator("#FLOW-OPS-001 pre, #PANEL-INSTRUCTION-001 [data-plain-content]").evaluateAll((els) =>
     els.map((e) => getComputedStyle(e).fontFamily),

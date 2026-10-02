@@ -1,16 +1,18 @@
 import type { Route } from "./+types/privacy";
-import Content from "../../content/pages/privacy.mdx";
+import Content, { frontmatter } from "../../content/pages/privacy.mdx";
 
 import BasicLayout from "@/layouts/BasicLayout";
 import { seo } from "@/lib/seo";
 
-// content/pages/privacy.mdx (was src/pages/privacy.mdx with `layout: BasicLayout`). Astro
-// handed MDX layouts `frontmatter`, not `title`, so the page used the site defaults.
-export const meta: Route.MetaFunction = ({ location }) => seo({ pathname: location.pathname });
+// content/pages/privacy.mdx: texto corrido com o BasicLayout (título, eyebrow e lead do frontmatter).
+const fm = frontmatter as { title: string; description: string; eyebrow?: string };
+
+export const meta: Route.MetaFunction = ({ location }) =>
+	seo({ title: fm.title, description: fm.description, pathname: location.pathname });
 
 export default function Page() {
 	return (
-		<BasicLayout>
+		<BasicLayout title={fm.title} description={fm.description} eyebrow={fm.eyebrow}>
 			<Content />
 		</BasicLayout>
 	);

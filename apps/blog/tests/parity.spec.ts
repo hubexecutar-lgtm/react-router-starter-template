@@ -5,6 +5,9 @@ import { scanBlogSlugs } from "../app/lib/routes/scan";
 
 // Migration parity (EXECUTAR-MONOREPO-BLOG-001): every route of this build is compared with
 // the reference deployment of the original Astro site. Run with `npm run parity`.
+// HISTORICAL: it passed 31/31 at the migration (docs/migrations/BLOG-001.md). The editorial
+// redesign (ADR-10) replaced the template pages and demo posts, so it is expected to fail now;
+// it is kept as the record of how parity was verified, outside `npm test`.
 // PARITY_BASE_URL overrides the reference host.
 const REFERENCE = (
   process.env.PARITY_BASE_URL ?? "https://risco-cognitivo-blog.executar-rotina-8b7.workers.dev"

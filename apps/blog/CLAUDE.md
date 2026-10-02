@@ -187,3 +187,61 @@ to `apps/blog/`.
 - **Consequências:**
   - `tests/store.spec.ts` cobre hub, filtros, estados, detalhe, navegação, áreas e acessibilidade.
   - Catálogo real, preços e checkout são uma etapa futura (substituir o repositório de dados).
+
+### ADR-09: Superfícies, bordas e elevação (DS-SURFACE-UNIFICATION-001)
+
+- **Status:** Aceita — implementada; tema escuro provisório
+- **Contexto:** O visual aprovado das tabelas (cinza muito claro, separação limpa, borda discreta)
+  vivia só em `--plain-*`, enquanto cards usavam `--card`/`--border` e cinco níveis de sombra
+  sem regra. Decidido e implementado no repositório original (branch `claude/trusting-gates-go053v`,
+  lá ADR-08) e portado com o redesign editorial (RC-DESIGN-MOCKUPS-001, PR A). Handoff em
+  `docs/handoff/surface-unification/`; contrato em `docs/design-system/DS-SURFACE-UNIFICATION-001.md`.
+- **Decisão:**
+  - Camada "Surfaces & Elevation" em `app/styles/global.css`: `--surface-{page,subtle,default,hover,selected}`,
+    `--border-{subtle,default,strong}`, `--elevation-{flat,raised,overlay}`. É o único lugar com
+    hex neutro; `--plain-*`, `--table-*`, `--card`, `--border`, `--muted` são aliases.
+  - Card, painel, célula de tabela, Plain/Ascii: `surface-default` + `border-default` + **sem sombra**.
+    Hover por superfície (`surface-hover`), não por sombra.
+  - Sombra só indica elevação: `raised` em controles (`shadow-xs/sm`), `overlay` em popover, dialog,
+    drawer, sheet, hover-card e menus (`shadow-md…`). Tabela dentro de card usa células na superfície da página.
+  - Borda neutra é estrutural (contraste ~1,1:1): nunca texto, ícone ou estado só por borda; contorno de
+    campos segue em `--input`.
+  - Callouts semânticos mantêm suas famílias cromáticas; só o card perde a sombra.
+  - Valores atuais (texto, marca, cinzas): ver o bloco de tokens; a paleta exata dos mockups entra no PR B do RC-DESIGN-MOCKUPS-001.
+- **Consequências:**
+  - Código novo não usa hex neutro nem `shadow-md/lg/xl` fora de overlay (`tests/surfaces.spec.ts`).
+  - Mudar a aparência neutra do blog mexe só nesse bloco de tokens.
+
+### ADR-10: Conteúdo editorial a partir do banco, visual editorial em todas as rotas (HANDOFF-RC-GLOBAL-DESIGN-CONTENT-001)
+
+- **Status:** Aceita — implementada; revisão humana dos artigos pendente
+- **Contexto:** O blog ainda era o template Mainline (landing, nav, páginas e posts demo). O redesign
+  editorial e as rotas dos mood boards foram feitos no repositório original (branch
+  `claude/trusting-gates-go053v` @ `8b567b1`, lá ADR-09) e portados para React Router no PR A do
+  RC-DESIGN-MOCKUPS-001. Registros em `docs/handoff/HANDOFF-RC-GLOBAL-DESIGN-CONTENT-001/`.
+- **Decisão:**
+  - Banco editorial canônico: `app/data/editorial/seed.json` (CNT, ARG, EVD, TAX, IDE…). O Hub Editorial
+    recebe `public/hub-editorial/seed.js`, gerado no `prebuild`; nunca editar o seed dentro do HTML.
+  - Artigos seguem a skill `executar-block-quick-frameworks` (`tools/`): registro em
+    `app/data/editorial/quick-frameworks/CNT-RC-NNNN.md` (validado por `validate_output.py`) e MDX gerado em
+    `content/blog/` por `scripts/build-quick-frameworks.mjs` — não editar os `.mdx` gerados. Mermaid vira
+    ```` ```ascii ```` (ADR-05).
+  - Todo post declara `territory` (TAX) e, quando houver, `contentId` e `evidence`. Listagens, cards, temas,
+    busca e artigos consomem `getPosts()` / `getPostViewsWithBody()` (`app/lib/posts.server.ts`, só em
+    loaders) e `app/lib/editorial.ts`, sem copy duplicada.
+  - Rotas dos mood boards: `/` (01–02), `/blog/` (04), `/blog/:slug/` (03), `/mapas/` (05), `/evidencias/` (06),
+    `/guias/` (07), `/buscar/` (08), `/temas/` e `/temas/:slug/` (09). Todas pré-renderizadas
+    (`app/data/pages.ts`, `TERRITORY_PATHS`) e registradas no hub (ADR-06).
+  - Títulos de mockup sem registro no banco vão para o backlog (IDE-RC), não para o site. Dados ilustrativos
+    (autores, datas, contagens) nunca viram conteúdo.
+  - Shell editorial único (`app/components/site/SiteHeader.tsx`/`SiteFooter.tsx`, `site/nav.ts`), `lang="pt-BR"`,
+    utilitários `rc-*` (`global.css`) e superfícies via `SURFACE` (`components/editorial/surface.ts`) sobre os
+    tokens do ADR-09. Componentes editoriais em `app/components/editorial/`.
+  - Ferramentas em `public/` consomem `public/ds/surfaces.css`, gerado de `global.css`
+    (`scripts/export-surface-tokens.mjs`); só cores de estado próprias ficam locais.
+  - URLs antigas removidas (posts de demonstração) ganham 301 em `public/_redirects` (Workers assets).
+- **Consequências:**
+  - `tests/content.spec.ts` (`npm run content:check`) falha com arquivo gerado defasado, Quick Framework
+    inválido, território/evidência inexistente, copy de template no build, página sem pt-BR ou link quebrado.
+  - Novo artigo = novo registro QF + `node scripts/build-quick-frameworks.mjs` (ou `npm run build`).
+  - A paridade com o site Astro (`tests/parity.spec.ts`) virou registro histórico, fora do `npm test`.

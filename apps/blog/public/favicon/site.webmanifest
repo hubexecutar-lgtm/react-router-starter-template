@@ -1,6 +1,6 @@
 {
-  "name": "Mainline",
-  "short_name": "Mainline",
+  "name": "Risco Cognitivo",
+  "short_name": "Risco Cognitivo",
   "icons": [
     {
       "src": "/favicon/web-app-manifest-192x192.png",
@@ -15,8 +15,8 @@
       "purpose": "maskable"
     }
   ],
-  "theme_color": "#09090B",
-  "background_color": "#09090B",
+  "theme_color": "#FFFFFF",
+  "background_color": "#FFFFFF",
   "display": "standalone",
   "start_url": "/"
 }

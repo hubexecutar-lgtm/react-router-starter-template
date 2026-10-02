@@ -1,77 +1,63 @@
-// Place any global data in this file.
-// You can import this data from anywhere in your site by using the `import` keyword.
+// Dados globais do site. Importe de qualquer lugar com `import { … } from "@/consts"`.
+import { DEFAULT_BASE_URL } from "@/data/routes";
 
-export const SITE_TITLE = "Mainline - Modern Astro Template";
+export const SITE_NAME = "Risco Cognitivo";
+export const SITE_TAGLINE = "Conhecimento que vira estrutura.";
+export const SITE_TITLE = "Risco Cognitivo — fatores, exposição e controles do trabalho cognitivo";
 export const SITE_DESCRIPTION =
-  "A modern, fully featured Astro template built with Shadcn/UI, TailwindCSS and TypeScript, perfect for your next web application.";
+  "Blog e framework sobre risco cognitivo: como atenção, memória e julgamento participam da formação do risco no trabalho, e como identificar, controlar e acompanhar.";
+export const SITE_URL = DEFAULT_BASE_URL;
 
-export const GITHUB_URL =
-  "https://github.com/shadcnblocks/mainline-astro-template";
+/** Imagem padrão de compartilhamento: foto do artigo-tese (o og-image do template foi removido). */
+const OG_IMAGE = {
+  url: "/blog/do-risco-cognitivo-a-execucao-assistida/hero.jpg",
+  width: 1080,
+  height: 1350,
+  alt: "Uma pessoa sustenta uma enorme tecla Ctrl amarela.",
+};
 
 export const SITE_METADATA = {
   title: {
-    default: "Mainline - Modern Astro Template",
-    template: "%s | Mainline",
+    default: SITE_TITLE,
+    template: `%s | ${SITE_NAME}`,
   },
-  description:
-    "A modern Astro template built with shadcn/ui, Tailwind & MDX. Open source - MIT License.",
+  description: SITE_DESCRIPTION,
   keywords: [
-    "Astro",
-    "astro template",
-    "astro theme",
-    "astro starter",
-    "shadcn template",
-    "shadcn theme",
-    "shadcn starter",
-    "tailwind template",
-    "tailwind theme",
-    "tailwind starter",
-    "mdx template",
-    "mdx theme",
-    "mdx starter",
+    "risco cognitivo",
+    "fatores de risco cognitivo",
+    "exposição cognitiva",
+    "erro humano",
+    "fatores humanos",
+    "gestão de risco",
+    "carga mental",
+    "controles cognitivos",
   ],
-  authors: [{ name: "shadcnblocks.com" }],
-  creator: "shadcnblocks.com",
-  publisher: "shadcnblocks.com",
+  authors: [{ name: SITE_NAME }],
+  creator: SITE_NAME,
+  publisher: SITE_NAME,
   robots: {
     index: true,
     follow: true,
   },
   icons: {
     icon: [
-      { url: "/favicon/favicon.ico", sizes: "48x48" },
       { url: "/favicon/favicon.svg", type: "image/svg+xml" },
       { url: "/favicon/favicon-96x96.png", sizes: "96x96", type: "image/png" },
-      { url: "/favicon/favicon.svg", type: "image/svg+xml" },
-      { url: "/favicon/favicon.ico" },
+      { url: "/favicon/favicon.ico", sizes: "48x48" },
     ],
     apple: [{ url: "/favicon/apple-touch-icon.png", sizes: "180x180" }],
     shortcut: [{ url: "/favicon/favicon.ico" }],
   },
   openGraph: {
-    title: "Mainline - Modern Astro Template",
-    description:
-      "A modern Astro template built with shadcn/ui, Tailwind & MDX. Open source - MIT License.",
-    siteName: "Mainline",
-    images: [
-      {
-        url: "/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Mainline - Modern Astro Template",
-      },
-    ],
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    siteName: SITE_NAME,
+    images: [OG_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Mainline - Modern Astro Template",
-    description:
-      "A modern Astro template built with shadcn/ui, Tailwind & MDX. Open source - MIT License.",
-    images: ["/og-image.jpg"],
-    creator: "@ausrobdev",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    images: [OG_IMAGE.url],
   },
 };
-
-// Canonical site URL (the Astro `site` option of the original project). Kept as-is in
-// the migration; see docs/migrations/BLOG-001.md, pending items.
-export const SITE_URL = "https://example.com";

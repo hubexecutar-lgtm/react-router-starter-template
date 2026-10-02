@@ -1,0 +1,185 @@
+id: QF-CONTENT-CONTRACT-001
+versao: 1.0.0
+nome: Contrato de Conteudo Quick Framework
+idioma: pt-BR
+
+objetivo:
+  descricao: >
+    Produzir conteudo claro, pratico e argumentativo que conecte problema,
+    processo, solucao, progresso e aplicacao cotidiana.
+
+ordem_obrigatoria:
+  - contexto
+  - cinco_w_dois_h
+  - referencia_padrao_ouro
+  - problema_existente
+  - problema_solucionado
+  - processo
+  - visao_do_sistema
+  - progresso_esperado
+  - aviso
+  - proximos_passos
+  - fontes
+  - infografico
+
+linguagem:
+  clara: true
+  pratica: true
+  argumentativa: true
+  direta: true
+  evitar_palavras_tecnicas_desnecessarias: true
+  evitar_ingles_quando_houver_equivalente: true
+  explicar_termos_necessarios: true
+  priorizar_verbo_de_acao: true
+  evitar_repeticao: true
+  evitar_frases_vazias: true
+
+contexto:
+  formato: um_paragrafo
+  funcao: >
+    Associar o tema a uma situacao cotidiana reconhecivel e explicar,
+    de forma pratica, por que o problema importa.
+  deve_conter:
+    - situacao
+    - dor
+    - consequencia
+    - exemplo_cotidiano
+    - ligacao_com_tema
+
+cinco_w_dois_h:
+  formato: tabela
+  maximo_palavras_por_variavel: 12
+  estrutura_preferida: verbo_de_acao + objeto + finalidade_ou_resultado
+  campos:
+    o_que: Definir o tema, problema ou acao.
+    por_que: Explicar motivo, dor, risco ou beneficio.
+    onde: Localizar ambiente, situacao ou etapa.
+    quando: Indicar momento, condicao ou gatilho.
+    quem: Identificar pessoa, grupo ou responsavel.
+    como: Resumir a forma principal de atuacao.
+    quanto: Indicar esforco, custo, tempo, impacto ou escala.
+
+referencia_padrao_ouro:
+  quantidade_maxima: 1
+  tipos:
+    - pessoa
+    - organizacao
+  perfil:
+    maximo_paragrafos: 1
+    deve_conter:
+      - quem_e
+      - por_que_e_referencia
+      - formacao_funcao_ou_reconhecimento
+      - contribuicao_principal
+      - mudanca_no_campo
+  citacao:
+    obrigatoria: false
+    maximo_palavras: 12
+    fonte_obrigatoria: true
+
+bloco_principal:
+  inclui:
+    - problema_existente
+    - problema_solucionado
+    - processo
+    - visao_do_sistema
+  maximo_palavras_total: 300
+
+problema_existente:
+  estrutura:
+    - definicao
+    - identificacao
+    - explicacao
+    - fechamento
+  perguntas:
+    definicao: Qual e o problema?
+    identificacao: Como aparece na pratica?
+    explicacao: Por que continua acontecendo?
+    fechamento: Qual dor ou consequencia produz?
+
+problema_solucionado:
+  estrutura:
+    - definicao
+    - identificacao
+    - explicacao
+    - fechamento
+  perguntas:
+    definicao: Qual parte do problema ja possui solucao conhecida?
+    identificacao: Quem demonstrou ou aplicou essa solucao?
+    explicacao: O que mudou com a abordagem?
+    fechamento: Qual resultado passou a ser possivel?
+
+processo:
+  formato: tres_etapas
+  regra: >
+    Mesmo que existam subetapas, agrupar a explicacao em tres blocos.
+  etapas:
+    1:
+      nome: Entender
+      funcao: Identificar problema, causas, contexto e resultado desejado.
+    2:
+      nome: Estruturar
+      funcao: Organizar evidencias, escolher abordagem e preparar a acao.
+    3:
+      nome: Executar
+      funcao: Aplicar o processo, observar resultados e ajustar.
+
+progresso_esperado:
+  maximo_palavras: 50
+  deve_conectar:
+    - dor_inicial
+    - problema
+    - processo
+    - resultado_esperado
+  exemplo_cotidiano: obrigatorio
+  estrutura_preferida:
+    - antes
+    - mudanca
+    - depois
+  evitar_promessa_garantida: true
+
+aviso:
+  maximo_palavras: 30
+  somente_quando_necessario: true
+  usar_em:
+    - saude
+    - juridico
+    - financeiro
+    - risco
+    - evidencia_limitada
+    - divergencia_relevante
+    - forte_dependencia_de_contexto
+
+proximos_passos:
+  titulo: Next 01-02-03
+  maximo_palavras_total: 100
+  etapas:
+    next_01:
+      nome: Entender
+      funcao: Reconhecer problema, dor, causas e resultado desejado.
+    next_02:
+      nome: Estruturar
+      funcao: Organizar dados, escolher metodo e preparar sequencia de acao.
+    next_03:
+      nome: Executar
+      funcao: Aplicar processo, observar resultado e ajustar.
+  mermaid_obrigatorio: true
+
+fontes:
+  maximo_palavras_descritivas: 70
+  incluir:
+    - fontes_principais
+    - referencias_citadas
+    - publicacoes_relevantes
+    - links_de_aprofundamento
+
+infografico:
+  proporcao: "16:9"
+  sintese:
+    - problema
+    - processo
+    - progresso
+  etapas: 3
+  figura_associada_ao_contexto: true
+  objetivo: >
+    Comunicar visualmente problema, processo e progresso com baixa carga de leitura.

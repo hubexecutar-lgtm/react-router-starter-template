@@ -20,6 +20,11 @@ const links = [
 		description: "Relatório composto com Markdown, PlainTextPanel e AsciiDiagram (ADR-05).",
 	},
 	{
+		href: "/admin/handoff/",
+		label: "Handoff — Knowledge Work Skills",
+		description: "Estado da adaptação de HANDOFF-KNOWLEDGE-WORK-SKILLS-001 e da campanha de copy.",
+	},
+	{
 		href: "/blog",
 		label: "Blog",
 		description: "Artigos publicados no site — conteúdo editorial do Risco Cognitivo.",
@@ -51,7 +56,7 @@ export const meta: Route.MetaFunction = ({ location }) =>
 export default function Admin() {
 	return (
 		<DefaultLayout>
-			<div className="py-28 lg:pt-44 lg:pb-32">
+			<div className="pt-12 pb-20 lg:pt-20 lg:pb-28">
 				<div className="container">
 					<div className="mb-10 flex items-center justify-between">
 						<h1 className="text-3xl font-semibold tracking-tight md:text-4xl">Painel</h1>
@@ -61,7 +66,7 @@ export default function Admin() {
 							<a
 								key={link.href}
 								href={link.href}
-								className="bg-card text-card-foreground hover:bg-muted flex flex-col gap-2 rounded-xl border p-6 shadow-sm transition-colors"
+								className="bg-card text-card-foreground hover:bg-muted flex flex-col gap-2 rounded-xl border p-6 transition-colors"
 							>
 								<span className="text-sm font-medium tracking-tight">{link.label}</span>
 								<span className="text-muted-foreground text-sm">{link.description}</span>

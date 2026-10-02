@@ -1,0 +1,13 @@
+# Redirecionamentos permanentes (assets do Cloudflare Workers).
+# HANDOFF-RC-GLOBAL-DESIGN-CONTENT-001: os posts de demonstração do template foram
+# substituídos por artigos do banco editorial (docs/handoff/HANDOFF-RC-GLOBAL-DESIGN-CONTENT-001/03-reconciliacao.md).
+/blog/post-1/  /blog/eventos-de-risco-cognitivo/      301
+/blog/post-1   /blog/eventos-de-risco-cognitivo/      301
+/blog/post-2/  /blog/controles-cognitivos/            301
+/blog/post-2   /blog/controles-cognitivos/            301
+/blog/post-3/  /blog/indicadores-de-risco-cognitivo/  301
+/blog/post-3   /blog/indicadores-de-risco-cognitivo/  301
+/blog/post-4/  /blog/gestao-do-risco-cognitivo/       301
+/blog/post-4   /blog/gestao-do-risco-cognitivo/       301
+/blog/post-5/  /blog/framework-de-risco-cognitivo/    301
+/blog/post-5   /blog/framework-de-risco-cognitivo/    301

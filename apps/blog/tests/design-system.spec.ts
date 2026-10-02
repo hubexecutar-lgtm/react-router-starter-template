@@ -1,37 +1,11 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
 
-import { expectTheme, useTheme } from "./theme";
+import { contrast, expectTheme, useTheme } from "./theme";
 
 const SHOWROOM = "/admin/design-system/";
 const ARTICLE = "/blog/do-risco-cognitivo-a-execucao-assistida/";
 const WIDTHS = [320, 375, 768, 1024, 1440];
-
-// Resolves any CSS colour (oklch included) to sRGB through a canvas and returns
-// the WCAG contrast ratio between two computed colours.
-async function contrast(page: Page, fg: string, bg: string) {
-  return page.evaluate(
-    ([a, b]) => {
-      const ctx = document.createElement("canvas").getContext("2d")!;
-      const rgb = (c: string) => {
-        ctx.clearRect(0, 0, 1, 1);
-        ctx.fillStyle = c;
-        ctx.fillRect(0, 0, 1, 1);
-        return Array.from(ctx.getImageData(0, 0, 1, 1).data.slice(0, 3)).map((v) => {
-          const s = v / 255;
-          return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
-        });
-      };
-      const lum = (c: string) => {
-        const [r, g, bl] = rgb(c);
-        return 0.2126 * r + 0.7152 * g + 0.0722 * bl;
-      };
-      const [x, y] = [lum(a), lum(b)];
-      return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05);
-    },
-    [fg, bg],
-  );
-}
 
 test.describe("Callout — visual regression", () => {
   for (const width of WIDTHS) {
