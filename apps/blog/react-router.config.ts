@@ -3,6 +3,7 @@ import { readdirSync } from "node:fs";
 
 
 import { ENDPOINTS, PAGES } from "./app/data/pages";
+import { STORE_PATHS } from "./app/features/store/data/paths";
 
 // Every page of the blog is static: prerender them all at build time (the Worker still
 // serves SSR for anything else, including the 404 page).
@@ -14,7 +15,7 @@ function blogPaths(): string[] {
 
 export default {
 	ssr: true,
-	prerender: () => [...PAGES, ...ENDPOINTS, ...blogPaths()],
+	prerender: () => [...PAGES, ...ENDPOINTS, ...blogPaths(), ...STORE_PATHS],
 	future: {
 		unstable_viteEnvironmentApi: true,
 	},

@@ -168,3 +168,22 @@ to `apps/blog/`.
   - Componentes compartilháveis entre produtos migram para `packages/*` quando o segundo
     produto precisar deles (ver `CLAUDE.md` da raiz).
 
+
+### ADR-08: Loja (`/loja`) com dados de exemplo e marcadores de área (ADR-STORE-ROUTES-UI-001)
+
+- **Status:** Aceita — implementada
+- **Contexto:** A Loja foi construída no repositório original (`executar-23/Risco-cognitivo-blog`,
+  branch `claude/trusting-gates-go053v`, commit `c3a4219`) e trazida para cá depois da migração.
+  Decisão completa em `docs/adr/ADR-STORE-ROUTES-UI-001.md`; mapas e wireframes em
+  `docs/handoff/store-routes/`.
+- **Decisão:**
+  - Rotas `/loja/` (hub), `/loja/<tipo>/` (8 catálogos) e `/loja/<tipo>/<slug>/` (detalhe), todas
+    pré-renderizadas a partir de `app/features/store/data/paths.ts` (prerender e sitemap).
+  - Código em `app/features/store/`; dados só por `data/repository.ts` (hoje mock, sem preços,
+    métricas nem integrações). Trocar o mock não mexe em rotas nem componentes.
+  - Camada `--area-*` em `app/styles/global.css`: verde, verde-azulado e violeta existem só como
+    marcadores de área; callouts e gráficos seguem nas 3 famílias do ADR-03.
+  - Link "Loja" na navbar; a Loja entra no hub de rotas (ADR-06) como `/loja/`.
+- **Consequências:**
+  - `tests/store.spec.ts` cobre hub, filtros, estados, detalhe, navegação, áreas e acessibilidade.
+  - Catálogo real, preços e checkout são uma etapa futura (substituir o repositório de dados).

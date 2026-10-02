@@ -10,8 +10,13 @@ const REFERENCE = (
   process.env.PARITY_BASE_URL ?? "https://risco-cognitivo-blog.executar-rotina-8b7.workers.dev"
 ).replace(/\/+$/, "");
 
+// Pages added after the migration have no counterpart in the original site.
+const POST_MIGRATION_PAGES = new Set(["/loja/"]);
+
 const PAGES = [
-  ...ROUTES.filter((r) => r.kind === "route" && r.path!.endsWith("/")).map((r) => r.path!),
+  ...ROUTES.filter((r) => r.kind === "route" && r.path!.endsWith("/") && !POST_MIGRATION_PAGES.has(r.path!)).map(
+    (r) => r.path!,
+  ),
   ...scanBlogSlugs(process.cwd()).map((s) => `/blog/${s}/`),
 ];
 
@@ -20,6 +25,9 @@ const EXTRA_LINKS: Record<string, string[]> = {
   // /sitemap-0.xml is now a declared route, so ADR-06 requires it in the hub.
   "/admin/rotas/": ["/sitemap-0.xml"],
 };
+// Added after the migration (not in the original site): the store (/loja) and its navbar link.
+const EXTRA_LINKS_ALL = ["/loja"];
+const withoutStore = (xml: string) => xml.replace(/<url><loc>[^<]*\/loja\/[^<]*<\/loc><\/url>/g, "");
 
 type Snapshot = {
   status: number;
@@ -111,9 +119,12 @@ test.describe("parity with the original Astro site", () => {
       expect(b.description, "meta description").toBe(a.description);
       expect(b.canonical, "canonical").toBe(a.canonical);
       expect(b.h1, "h1").toEqual(a.h1);
-      const extra = EXTRA_LINKS[path] ?? [];
-      expect(b.links.filter((l) => !extra.includes(l)), "links").toEqual(a.links);
-      for (const l of extra) expect(b.links, `intentional extra link ${l}`).toContain(l);
+      // EXTRA_LINKS_ALL is allowed everywhere (static tools in public/ have no navbar);
+      // per-page EXTRA_LINKS are required.
+      const required = EXTRA_LINKS[path] ?? [];
+      const allowed = [...EXTRA_LINKS_ALL, ...required];
+      expect(b.links.filter((l) => !allowed.includes(l)), "links").toEqual(a.links);
+      for (const l of required) expect(b.links, `intentional extra link ${l}`).toContain(l);
       expect(b.images, "images").toEqual(a.images);
       expect(errors, "console errors").toEqual([]);
       await Promise.all([ref.close(), cur.close()]);
@@ -143,7 +154,7 @@ test.describe("parity with the original Astro site", () => {
     test(`${path} is identical`, async ({ request, baseURL }) => {
       const [a, b] = await Promise.all([request.get(`${REFERENCE}${path}`), request.get(`${baseURL}${path}`)]);
       expect(b.headers()["content-type"]).toContain("xml");
-      expect(await b.text()).toBe(await a.text());
+      expect(withoutStore(await b.text())).toBe(await a.text());
     });
   }
 

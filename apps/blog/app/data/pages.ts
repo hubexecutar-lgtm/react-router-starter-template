@@ -10,6 +10,7 @@ export const PAGES = [
 	"/contact/",
 	"/faq/",
 	"/login/",
+	"/loja/",
 	"/pricing/",
 	"/privacy/",
 	"/signup/",

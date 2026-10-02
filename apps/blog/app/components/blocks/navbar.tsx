@@ -35,11 +35,15 @@ const ITEMS = [
   },
   { label: "About Us", href: "/about" },
   { label: "Blog", href: "/blog" },
+  { label: "Loja", href: "/loja" },
   { label: "Painel", href: "/admin" },
   { label: "Pricing", href: "/pricing" },
   { label: "FAQ", href: "/faq" },
   { label: "Contact", href: "/contact" },
 ];
+
+const isActive = (pathname: string, href: string) =>
+  pathname === href || pathname.startsWith(`${href}/`);
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -104,8 +108,8 @@ export const Navbar = () => {
                   <a
                     href={link.href}
                     className={cn(
-                      "relative bg-transparent px-1.5 text-sm font-medium transition-opacity hover:opacity-75",
-                      pathname === link.href && "text-muted-foreground",
+                      "relative bg-transparent px-1.5 text-sm font-medium whitespace-nowrap transition-opacity hover:opacity-75",
+                      isActive(pathname, link.href) && "text-muted-foreground",
                     )}
                   >
                     {link.label}
@@ -222,7 +226,7 @@ export const Navbar = () => {
                 href={link.href}
                 className={cn(
                   "text-foreground hover:text-foreground/80 py-4 text-base font-medium transition-colors first:pt-0 last:pb-0",
-                  pathname === link.href && "text-muted-foreground",
+                  isActive(pathname, link.href) && "text-muted-foreground",
                 )}
                 onClick={() => setIsMenuOpen(false)}
               >
