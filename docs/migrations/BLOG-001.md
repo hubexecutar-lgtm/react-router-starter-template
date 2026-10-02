@@ -122,6 +122,12 @@ Causa: o upload autentica com o JWT da sessão, e o proxy desta sessão de traba
 header `Authorization` de `api.cloudflare.com` pela credencial injetada. Nada foi publicado: o
 Worker continua com a versão anterior (modificada em 2026-10-02T14:27:47Z, antes da sessão).
 
+O Workers Builds (CI da Cloudflare ligado a este repositório) executa `wrangler` na raiz, que
+agora é a raiz do workspace e não tem configuração própria. O arquivo `.wrangler/deploy/config.json`
+da raiz redireciona o wrangler para a configuração gerada pelo build do blog
+(`apps/blog/build/server/wrangler.json`), então `npm run build` seguido de `npx wrangler deploy`
+(ou `versions upload`) funciona a partir da raiz. Alternativa no painel: diretório raiz `apps/blog`.
+
 Para publicar, de um ambiente com credencial própria (máquina local ou CI):
 
 ```bash
