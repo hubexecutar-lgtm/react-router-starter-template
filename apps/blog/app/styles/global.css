@@ -901,6 +901,56 @@ body {
   --area-data: var(--muted-foreground-on-gray);
 }
 
+/* Stacked table on phones (ADR-12): every row becomes a pile of labelled cells, so no column is
+   cut off or hidden behind a horizontal scroll. Cells keep the table tokens (gutter, radius, fill). */
+@media (max-width: 639.98px) {
+  .ds-table--stack,
+  .ds-table--stack tbody,
+  .ds-table--stack tr {
+    display: block;
+    margin-inline: 0;
+  }
+  .ds-table--stack thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+  .ds-table--stack tr + tr {
+    margin-top: calc(var(--table-gap) * 4);
+  }
+  .ds-table--stack td {
+    display: grid;
+    grid-template-columns: 6.5rem minmax(0, 1fr);
+    column-gap: 0.75rem;
+    row-gap: 0;
+    margin-top: var(--table-gap);
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  .ds-table--stack td > * {
+    grid-column: 2;
+  }
+  .ds-table--stack td::before {
+    grid-column: 1;
+    grid-row: 1 / span 9; /* label column for every piece of the cell; empty rows have no height */
+    content: attr(data-label);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: var(--editorial-eyebrow-tracking);
+    text-transform: uppercase;
+    color: var(--muted-foreground-on-gray);
+  }
+}
+
+/* Reading measure (ADR-12, AUD-HIG-05/06): no running-text line in main is longer than
+   --measure, whatever the column width. Tables, code and diagrams are exempt. */
+:where(main) :where(p, li, dd, blockquote, figcaption):not(:where(table, pre, [data-plain="diagram"]) *) {
+  max-width: var(--measure);
+}
+
 /* Anchors land below the sticky site header. */
 html {
   scroll-padding-top: 5.5rem;

@@ -1,5 +1,5 @@
 // Card de artigo em três variantes (mood boards 01, 02 e 04). Consome PostView, nunca copy fixa.
-import { ArrowRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 
 import { ArticleMeta } from "./ArticleMeta";
 import { SURFACE_LINK } from "./surface";
@@ -44,7 +44,7 @@ export function ArticleCard({
 				<div className="mt-6 flex flex-wrap items-center justify-between gap-4">
 					<ArticleMeta post={post} />
 					<span className="rc-link inline-flex items-center gap-1.5 group-hover:underline">
-						Ler artigo <ArrowRight className="size-4" aria-hidden="true" />
+						Ler artigo <ChevronRight className="size-4" aria-hidden="true" />
 					</span>
 				</div>
 			</article>
@@ -73,7 +73,7 @@ export function ArticleCard({
 					<div className="mt-3 flex flex-wrap items-center justify-between gap-3">
 						<ArticleMeta post={post} />
 						<span className="rc-link inline-flex items-center gap-1.5 text-sm group-hover:underline">
-							Ler artigo <ArrowRight className="size-4" aria-hidden="true" />
+							Ler artigo <ChevronRight className="size-4" aria-hidden="true" />
 						</span>
 					</div>
 				</div>

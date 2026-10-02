@@ -1,17 +1,18 @@
 // Sobre: decisões de marca (DEC-RC-0001), método editorial e distinção ciência × framework.
-import { ArrowRight } from "lucide-react";
+// Anatomia Apple Developer Programs (ADR-12): hero, três pilares, linhas de recurso com mídia.
+import { Compass, Route as RouteIcon, TrendingUp } from "lucide-react";
 
 import type { Route } from "./+types/about";
 
-import { IMAGES } from "@/components/editorial/HeroArt";
+import { HeroArt, IMAGES } from "@/components/editorial/HeroArt";
 import { PageHero } from "@/components/editorial/PageHero";
-import { SURFACE } from "@/components/editorial/surface";
+import { FeatureBlock, FeatureRow } from "@/components/layout/FeatureBlock";
+import { Section } from "@/components/layout/Section";
 import { PlainTextPanel } from "@/components/plain";
 import seed from "@/data/editorial/seed.json";
 import DefaultLayout from "@/layouts/DefaultLayout";
 import { EVIDENCE, TERRITORIES } from "@/lib/editorial";
 import { seo } from "@/lib/seo";
-import { cn } from "@/lib/utils";
 
 export const meta: Route.MetaFunction = ({ location }) =>
 	seo({
@@ -30,9 +31,27 @@ REDIGIR      português direto, exemplo cotidiano, limites explícitos
 VALIDAR      validate_output.py: seções, limites de palavras, diagramas
 ENTREGAR     artigo no blog + registro no Hub Editorial`;
 const PILLARS = [
-	{ n: "01", title: "Problema", text: "Risco cognitivo: reconhecer como atenção, memória e julgamento participam da formação do risco." },
-	{ n: "02", title: "Método", text: "Processo neuroadaptativo: redesenhar o trabalho para que ele não dependa de sustentar tudo de cabeça." },
-	{ n: "03", title: "Progresso", text: "Execução assistida: controles, ferramentas e indicadores que mostram se a mudança funcionou." },
+	{
+		icon: Compass,
+		n: "01",
+		title: "Problema",
+		text: "Risco cognitivo: reconhecer como atenção, memória e julgamento participam da formação do risco.",
+		link: { href: "/blog/o-que-e-risco-cognitivo/", label: "O que é risco cognitivo" },
+	},
+	{
+		icon: RouteIcon,
+		n: "02",
+		title: "Método",
+		text: "Processo neuroadaptativo: redesenhar o trabalho para que ele não dependa de sustentar tudo de cabeça.",
+		link: { href: "/mapas/", label: "Ver o framework" },
+	},
+	{
+		icon: TrendingUp,
+		n: "03",
+		title: "Progresso",
+		text: "Execução assistida: controles, ferramentas e indicadores que mostram se a mudança funcionou.",
+		link: { href: "/guias/", label: "Abrir os guias" },
+	},
 ];
 
 export default function Page() {
@@ -46,66 +65,83 @@ export default function Page() {
 				seed={3}
 			/>
 
-			<section className="container grid gap-4 md:grid-cols-3" aria-label="Três pilares">
-				{PILLARS.map((p) => (
-					<div key={p.n} className={cn(SURFACE, "p-6")}>
-						<p className="rc-eyebrow flex justify-between">
-							<span>Pilar</span>
-							<span>{p.n}</span>
-						</p>
-						<h2 className="rc-title mt-4 text-2xl">{p.title}</h2>
-						<p className="text-muted-foreground mt-2 leading-relaxed">{p.text}</p>
-					</div>
-				))}
-			</section>
-
-			<section className="container mt-16 grid gap-10 lg:grid-cols-2 lg:gap-16 [&>*]:min-w-0">
-				<div>
-					<p className="rc-eyebrow">Nome e escopo</p>
-					<h2 className="rc-title mt-2 text-3xl">Marca, prática e método</h2>
-					{naming && <p className="mt-4 text-lg leading-relaxed">{naming.Decisao_tomada}</p>}
-					<p className="text-muted-foreground mt-4 leading-relaxed">
-						O conteúdo se organiza em {TERRITORIES.length} territórios — do fenômeno ao framework que conecta tudo.
-						Cada território responde a uma pergunta e reúne os artigos que tratam dela.
-					</p>
-					<a href="/temas/" className="rc-link mt-4 inline-flex items-center gap-1.5">
-						Ver o mapa de temas <ArrowRight className="size-4" aria-hidden="true" />
-					</a>
-
-					<p className="rc-eyebrow mt-12">Ciência e framework próprio</p>
-					<h2 className="rc-title mt-2 text-3xl">O que é evidência, o que é proposta</h2>
-					<p className="mt-4 leading-relaxed">
-						“Risco cognitivo”, como usado aqui, é uma definição operacional deste projeto, não um consenso
-						científico. Os artigos apoiam essa proposta em fontes de fatores humanos, ergonomia e gestão de risco
-						— hoje {EVIDENCE.length} registros — e marcam quando uma afirmação é do framework, não da literatura.
-					</p>
-					<a href="/evidencias/" className="rc-link mt-4 inline-flex items-center gap-1.5">
-						Ver as evidências <ArrowRight className="size-4" aria-hidden="true" />
-					</a>
+			<Section id="pilares" eyebrow="Três pilares" title="Do problema ao progresso">
+				<div className="grid gap-[var(--table-gap)] md:grid-cols-3">
+					{PILLARS.map((p) => (
+						<FeatureBlock key={p.n} icon={p.icon} eyebrow={`Pilar ${p.n}`} title={p.title} link={p.link}>
+							<p>{p.text}</p>
+						</FeatureBlock>
+					))}
 				</div>
-				<div>
-					<p className="rc-eyebrow">Como produzimos</p>
-					<h2 className="rc-title mt-2 text-3xl">Do tema ao artigo</h2>
-					<p className="text-muted-foreground mt-4 leading-relaxed">
-						Os artigos seguem o workflow de Quick Frameworks: um tópico por vez, fontes verificadas antes da
-						escrita e validação automática da estrutura. O banco editorial vive no Hub Editorial.
-					</p>
+			</Section>
+
+			<FeatureRow
+				id="nome-escopo"
+				eyebrow="Nome e escopo"
+				title="Marca, prática e método"
+				link={{ href: "/temas/", label: "Ver o mapa de temas" }}
+				media={<HeroArt seed={9} className="w-full" />}
+			>
+				{naming && <p>{naming.Decisao_tomada}</p>}
+				<p>
+					O conteúdo se organiza em {TERRITORIES.length} territórios — do fenômeno ao framework que conecta tudo.
+					Cada território responde a uma pergunta e reúne os artigos que tratam dela.
+				</p>
+			</FeatureRow>
+
+			<FeatureRow
+				id="ciencia"
+				eyebrow="Ciência e framework próprio"
+				title="O que é evidência, o que é proposta"
+				link={{ href: "/evidencias/", label: "Ver as evidências" }}
+				reverse
+				media={
+					<dl className="grid grid-cols-2 gap-[var(--table-gap)]">
+						<div className="rc-cell rc-surface p-6">
+							<dt className="rc-eyebrow">Registros de evidência</dt>
+							<dd className="rc-display mt-3 text-5xl">{EVIDENCE.length}</dd>
+						</div>
+						<div className="rc-cell rc-surface p-6">
+							<dt className="rc-eyebrow">Territórios</dt>
+							<dd className="rc-display mt-3 text-5xl">{TERRITORIES.length}</dd>
+						</div>
+					</dl>
+				}
+			>
+				<p>
+					“Risco cognitivo”, como usado aqui, é uma definição operacional deste projeto, não um consenso científico.
+				</p>
+				<p>
+					Os artigos apoiam essa proposta em fontes de fatores humanos, ergonomia e gestão de risco, e marcam
+					quando uma afirmação é do framework, não da literatura.
+				</p>
+			</FeatureRow>
+
+			<FeatureRow
+				id="como-produzimos"
+				eyebrow="Como produzimos"
+				title="Do tema ao artigo"
+				link={{ href: "/hub-editorial/", label: "Abrir o Hub Editorial" }}
+				media={
 					<img
 						src={IMAGES.equipeTablet.src}
 						alt={IMAGES.equipeTablet.alt}
 						width={IMAGES.equipeTablet.width}
 						height={IMAGES.equipeTablet.height}
 						loading="lazy"
-						className="mt-6 aspect-[4/3] w-full max-w-md object-contain"
+						className="mx-auto max-h-80 w-auto object-contain"
 					/>
-					<div className="mt-6">
-						<PlainTextPanel id="ABOUT-PIPELINE-001" kind="procedure" title="Workflow editorial" source={PIPELINE} />
-					</div>
-					<a href="/hub-editorial/" className="rc-link mt-4 inline-flex items-center gap-1.5">
-						Abrir o Hub Editorial <ArrowRight className="size-4" aria-hidden="true" />
-					</a>
-				</div>
-			</section>
+				}
+			>
+				<p>
+					Os artigos seguem o workflow de Quick Frameworks: um tópico por vez, fontes verificadas antes da escrita
+					e validação automática da estrutura. O banco editorial vive no Hub Editorial.
+				</p>
+			</FeatureRow>
+
+			<Section id="workflow" eyebrow="Workflow editorial" title="Sete etapas, sempre na mesma ordem">
+				<PlainTextPanel id="ABOUT-PIPELINE-001" kind="procedure" title="Workflow editorial" source={PIPELINE} className="my-0" />
+			</Section>
 		</DefaultLayout>
 	);
 }

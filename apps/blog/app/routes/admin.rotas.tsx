@@ -178,19 +178,19 @@ export default function RoutesHub({ loaderData }: Route.ComponentProps) {
         <section id="registro" className="mt-20" aria-labelledby="registro-title" data-hub-hide-print>
           <h2 id="registro-title" className={h2}>Registro</h2>
           <p className="text-muted-foreground mt-3 max-w-2xl text-lg font-medium">Auditoria de cada entrada: origem, responsável e data de inclusão.</p>
-          <div className="mt-6 overflow-x-auto" data-testid="hub-registry">
-            <table className="ds-table">
+          <div className="mt-6 sm:overflow-x-auto" data-testid="hub-registry">
+            <table className="ds-table ds-table--stack">
               <caption className="sr-only">Registro de rotas e links</caption>
               <thead><tr><th scope="col">Id</th><th scope="col">Título</th><th scope="col">Endereço</th><th scope="col">Exposição</th><th scope="col">Incluída em</th><th scope="col">Origem</th></tr></thead>
               <tbody>
                 {withQr.map((e, i) => (
                   <tr key={i}>
-                    <td><code>{e.id}</code></td>
-                    <td>{e.title}</td>
-                    <td>{e.kind === 'route' ? <code>{e.path}</code> : <a href={e.url} rel="noopener noreferrer">{e.url}</a>}</td>
-                    <td>{exposureLabel[e.exposure]}</td>
-                    <td>{e.addedAt}</td>
-                    <td>{e.source ?? '—'}</td>
+                    <td data-label="Id"><div><code>{e.id}</code></div></td>
+                    <td data-label="Título"><div>{e.title}</div></td>
+                    <td data-label="Endereço"><div>{e.kind === 'route' ? <code>{e.path}</code> : <a href={e.url} rel="noopener noreferrer">{e.url}</a>}</div></td>
+                    <td data-label="Exposição"><div>{exposureLabel[e.exposure]}</div></td>
+                    <td data-label="Incluída em"><div>{e.addedAt}</div></td>
+                    <td data-label="Origem"><div>{e.source ?? '—'}</div></td>
                   </tr>
                 ))}
               </tbody>

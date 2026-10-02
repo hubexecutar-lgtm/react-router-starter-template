@@ -1,9 +1,10 @@
 // Guias e ferramentas (mood board 07): transformar leitura em próxima ação.
 // Os passos vêm do "Next 01-02-03" de cada artigo; nada de exemplo fictício.
-import { ArrowRight, BookOpen, FileText, HelpCircle, LayoutGrid, ListChecks, Wrench } from "lucide-react";
+import { BookOpen, ChevronRight, FileText, HelpCircle, LayoutGrid, ListChecks, Wrench } from "lucide-react";
 
 import type { Route } from "./+types/guias";
 
+import { PageHero } from "@/components/editorial/PageHero";
 import { SURFACE } from "@/components/editorial/surface";
 import { PlainTextPanel } from "@/components/plain";
 import { buttonVariants } from "@/components/ui/button";
@@ -43,16 +44,13 @@ export default function Page({ loaderData }: Route.ComponentProps) {
 
 	return (
 		<DefaultLayout>
-			<section className="container pt-12 pb-10 lg:pt-20" aria-labelledby="guias-title">
-				<p className="rc-eyebrow">Guias e ferramentas</p>
-				<h1 id="guias-title" className="rc-display mt-4 text-5xl sm:text-6xl lg:text-7xl">
-					Transforme leitura em próxima ação.
-				</h1>
-				<p className="rc-lead mt-5 max-w-3xl text-lg sm:text-xl">
-					Cada artigo termina em três passos — Entender, Estruturar, Executar. Aqui eles viram ferramentas para
-					aplicar o framework a uma tarefa real.
-				</p>
-			</section>
+			<PageHero
+				id="guias-title"
+				eyebrow="Guias e ferramentas"
+				title="Transforme leitura em próxima ação."
+				lead="Cada artigo termina em três passos — Entender, Estruturar, Executar. Aqui eles viram ferramentas para aplicar o framework a uma tarefa real."
+				seed={23}
+			/>
 
 			<div className="container grid gap-10 lg:grid-cols-[1fr_20rem] lg:gap-12 [&>*]:min-w-0">
 				<div className="grid content-start gap-4 md:grid-cols-2">
@@ -70,7 +68,7 @@ export default function Page({ loaderData }: Route.ComponentProps) {
 						</p>
 						{firstHref && (
 							<a href={firstHref} className="rc-link mt-auto inline-flex items-center gap-1.5 pt-6">
-								Acessar guia <ArrowRight className="size-4" aria-hidden="true" />
+								Acessar guia <ChevronRight className="size-4" aria-hidden="true" />
 							</a>
 						)}
 					</article>
@@ -119,7 +117,7 @@ export default function Page({ loaderData }: Route.ComponentProps) {
 							/>
 						</div>
 						<a href="/mapas/" className="rc-link mt-auto inline-flex items-center gap-1.5 pt-6">
-							Usar com o mapa <ArrowRight className="size-4" aria-hidden="true" />
+							Usar com o mapa <ChevronRight className="size-4" aria-hidden="true" />
 						</a>
 					</article>
 				</div>
@@ -148,7 +146,7 @@ export default function Page({ loaderData }: Route.ComponentProps) {
 									<a href={href} className="hover:text-primary flex min-h-12 items-center gap-3 text-[0.95rem]">
 										<Icon className="size-4 shrink-0" aria-hidden="true" />
 										<span className="flex-1">{label}</span>
-										<ArrowRight className="size-4" aria-hidden="true" />
+										<ChevronRight className="size-4" aria-hidden="true" />
 									</a>
 								</li>
 							))}

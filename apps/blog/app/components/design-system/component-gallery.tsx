@@ -767,7 +767,7 @@ export function ComponentGallery() {
             </ResizablePanelGroup>
           </Specimen>
           <Specimen name="scroll-area · separator · aspect-ratio">
-            <ScrollArea className="h-24 w-40 rounded-md border p-3 text-sm">
+            <ScrollArea className="h-24 w-40 rounded-md border p-3 text-sm" viewportProps={{ tabIndex: 0, "aria-label": "Lista rolável" }}>
               {Array.from({ length: 8 }, (_, i) => (
                 <p key={i}>Item {i + 1}</p>
               ))}

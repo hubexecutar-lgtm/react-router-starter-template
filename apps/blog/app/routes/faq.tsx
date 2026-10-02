@@ -2,6 +2,8 @@
 import type { Route } from "./+types/faq";
 
 import { PageHero } from "@/components/editorial/PageHero";
+import { ChevronLink } from "@/components/layout/ChevronLink";
+import { Section } from "@/components/layout/Section";
 import DefaultLayout from "@/layouts/DefaultLayout";
 import { seo } from "@/lib/seo";
 
@@ -69,28 +71,28 @@ export default function Page() {
 				title="Dúvidas sobre o framework"
 				lead="Respostas curtas, com link para o texto completo quando houver."
 			/>
-			<section className="container max-w-4xl" aria-label="Perguntas">
-				<div className="divide-y divide-[var(--border-default)] border-y border-[var(--border-default)]">
+			<Section id="perguntas" title="Perguntas" srTitle className="max-w-4xl">
+				<div className="flex flex-col gap-[var(--table-gap)]">
 					{FAQS.map((f) => (
-						<details key={f.q} className="group py-2">
-							<summary className="rc-title focus-visible:ring-ring/50 flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 rounded-md text-lg outline-none focus-visible:ring-[3px] sm:text-xl [&::-webkit-details-marker]:hidden">
+						<details key={f.q} className="rc-cell rc-surface group">
+							<summary className="rc-title focus-visible:ring-ring/50 flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 rounded-[var(--table-radius)] px-5 py-3 text-lg outline-none focus-visible:ring-[3px] sm:text-xl [&::-webkit-details-marker]:hidden">
 								{f.q}
 								<span aria-hidden="true" className="text-primary text-2xl leading-none transition-transform group-open:rotate-45">
 									+
 								</span>
 							</summary>
-							<div className="pb-5">
-								<p className="text-muted-foreground max-w-3xl leading-relaxed">{f.a}</p>
-								{f.href && (
-									<a href={f.href} className="rc-link mt-3 inline-block">
+							<div className="px-5 pb-5">
+								<p className="text-muted-foreground leading-relaxed">{f.a}</p>
+								{f.href && f.link && (
+									<ChevronLink href={f.href} className="mt-3">
 										{f.link}
-									</a>
+									</ChevronLink>
 								)}
 							</div>
 						</details>
 					))}
 				</div>
-			</section>
+			</Section>
 		</DefaultLayout>
 	);
 }

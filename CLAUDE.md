@@ -59,3 +59,28 @@ docs/      decisões e evidências do monorepo (docs/migrations/*)
   - `main` é sempre o estado publicado: o merge dispara o deploy de produção pelo Workers Builds.
   - Antes de enviar, rodar as verificações do app (`npm run typecheck`, `npm run build`,
     testes); o CI vermelho bloqueia o auto-merge.
+
+### ADR-M03: UX-GOV-HIG-001 — Apple HIG + WCAG 2.2 AA como gate transversal de interface
+
+- **Status:** Aceita — vigente para todo app, presente e futuro. Política completa em
+  `docs/governance/UX-GOV-HIG-001.md`.
+- **Contexto:** O usuário definiu o Apple Human Interface Guidelines (oito princípios: Purpose, Agency,
+  Responsibility, Familiarity, Flexibility, Simplicity, Craft, Delight) como regra transversal e a página
+  https://developer.apple.com/programs/ como fonte de verdade da anatomia de página. Um site de leitura não
+  pode ter texto desestruturado, e a regra precisa valer para tudo que vier depois.
+- **Decisão:**
+  - Baseline obrigatória: Apple HIG + WCAG 2.2 AA + HTML semântico + ARIA quando necessária + responsivo +
+    Design System do produto. Segue-se o pensamento do HIG, não a aparência do iOS; a marca prevalece.
+  - Anatomia de página (Apple Developer Programs): hero com título e lead curto; seções com ícone ou
+    ilustração, título, parágrafo curto e link "Saiba mais ›"; cards de comparação; rodapé-diretório.
+    Todo texto ocupa um slot dessa anatomia, dentro da medida de leitura e sem prosa em fonte mono.
+  - Gate AUD-HIG-01…09 com achados no formato RULE_ID/ROUTE/COMPONENT/REQUIREMENT/SOURCE/STATUS/SEVERITY/
+    EVIDENCE/REMEDIATION/OWNER/VERIFICATION. P0 bloqueia; P1 corrige antes de produção (salvo waiver).
+  - Todo app tem um gate automatizado no `npm test` (no blog: `apps/blog/tests/hig.spec.ts`) e uma auditoria
+    registrada em `apps/<app>/docs/audit/HIG-WEB-AUDIT.{json,md}`, com linha de base e reteste.
+- **Consequências:**
+  - Nenhuma página, rota, template ou componente reutilizável é VERIFIED sem passar pelo gate aplicável;
+    PR com P0/P1 aberto não entra (ADR-M02: merge só com verificações verdes).
+  - O checklist do PR (`.github/pull_request_template.md`) inclui o gate.
+  - Novo app nasce com o gate e a anatomia; não há exceção por produto.
+

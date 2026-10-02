@@ -23,6 +23,7 @@ No diretório do app (`apps/blog`):
 | `npm run typecheck` | typegen do React Router + `tsc -b` |
 | `npm run lint` | ESLint |
 | `npm test` | Playwright: rotas (ADR-06), plain text, design system, superfícies, conteúdo e loja, com screenshots |
+| `HIG_AUDIT=1 npx playwright test tests/hig.spec.ts && node scripts/hig-audit.mjs` | gate UX-GOV-HIG-001 + auditoria em `docs/audit/` (ADR-M03) |
 | `npm run content:check` | Quick Frameworks e arquivos gerados em dia + `tests/content.spec.ts` (ADR-10) |
 | `npm run parity` | histórico: comparação com o site Astro original (não vale para o conteúdo novo) |
 | `npm run deploy` | build + `wrangler deploy` |
@@ -47,4 +48,4 @@ docs/design-system/  especificações (callouts, dados, plain text, hub de rotas
 tests/               Playwright
 ```
 
-Regras do projeto: `CLAUDE.md` (ADR-01 a ADR-11).
+Regras do projeto: `CLAUDE.md` (ADR-01 a ADR-12) e, acima dele, o `CLAUDE.md` da raiz (ADR-M01 a ADR-M03).

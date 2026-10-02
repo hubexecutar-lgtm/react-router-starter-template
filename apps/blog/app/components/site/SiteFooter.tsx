@@ -28,7 +28,7 @@ export function SiteFooter() {
 						<ul className="mt-4 space-y-2.5">
 							{group.items.map((item) => (
 								<li key={item.href}>
-									<a href={item.href} className="text-foreground hover:text-primary text-[0.95rem] transition-colors">
+									<a href={item.href} className="text-foreground hover:text-primary inline-flex min-h-6 items-center text-[0.95rem] transition-colors">
 										{item.label}
 									</a>
 								</li>

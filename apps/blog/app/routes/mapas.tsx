@@ -1,8 +1,9 @@
 // Mapas e modelos (mood board 05): o framework como mapa conceitual em plain text.
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronRight } from "lucide-react";
 
 import type { Route } from "./+types/mapas";
 
+import { PageHero } from "@/components/editorial/PageHero";
 import { SURFACE, SURFACE_LINK } from "@/components/editorial/surface";
 import { AsciiDiagram } from "@/components/plain";
 import { buttonVariants } from "@/components/ui/button";
@@ -44,16 +45,13 @@ export default function Page({ loaderData }: Route.ComponentProps) {
 	const { models, frameworkHref } = loaderData;
 	return (
 		<DefaultLayout>
-			<section className="container pt-12 pb-10 lg:pt-20" aria-labelledby="mapas-title">
-				<p className="rc-eyebrow">Mapas e modelos</p>
-				<h1 id="mapas-title" className="rc-display mt-4 text-5xl sm:text-6xl lg:text-7xl">
-					Framework de Risco Cognitivo
-				</h1>
-				<p className="rc-lead mt-5 max-w-3xl text-lg sm:text-xl">
-					Um mapa para transformar fatores soltos em uma cadeia analisável: do que aumenta a probabilidade ao que
-					reduz, mede e acompanha o risco.
-				</p>
-			</section>
+			<PageHero
+				id="mapas-title"
+				eyebrow="Mapas e modelos"
+				title="Framework de Risco Cognitivo"
+				lead="Um mapa para transformar fatores soltos em uma cadeia analisável: do que aumenta a probabilidade ao que reduz, mede e acompanha o risco."
+				seed={17}
+			/>
 
 			<section className="container grid gap-10 lg:grid-cols-[1.6fr_1fr] lg:gap-14 [&>*]:min-w-0" aria-label="Mapa conceitual">
 				<div className={cn(SURFACE, "self-start p-5 sm:p-8")}>
@@ -93,7 +91,7 @@ export default function Page({ loaderData }: Route.ComponentProps) {
 										<span className="rc-title block text-base">{m.name}</span>
 										<span className="text-muted-foreground mt-1 block text-sm">{m.text}</span>
 									</span>
-									<ArrowRight className="text-primary mt-1 size-4 shrink-0" aria-hidden="true" />
+									<ChevronRight className="text-primary mt-1 size-4 shrink-0" aria-hidden="true" />
 								</a>
 							</li>
 						))}

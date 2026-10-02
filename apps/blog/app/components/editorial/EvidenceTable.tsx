@@ -1,4 +1,5 @@
 // Tabela de evidências do banco (padrão STORE-WIREFRAMES / ADR-09). Sem dados ilustrativos.
+// No celular cada linha vira uma pilha de células rotuladas (ds-table--stack, ADR-12): nada cortado.
 import { ArrowUpRight } from "lucide-react";
 
 import { type Evidence, evidenceYear } from "@/lib/editorial";
@@ -13,8 +14,8 @@ export function EvidenceTable({
 	compact?: boolean;
 }) {
 	return (
-		<div className="overflow-x-auto" role="region" aria-label={caption} tabIndex={0}>
-			<table className="ds-table w-full min-w-[40rem] text-left text-sm">
+		<div className="sm:overflow-x-auto" role="region" aria-label={caption} tabIndex={0}>
+			<table className="ds-table ds-table--stack w-full text-left text-sm sm:min-w-[40rem]">
 				<caption className="sr-only">{caption}</caption>
 				<thead>
 					<tr>
@@ -28,10 +29,10 @@ export function EvidenceTable({
 				<tbody>
 					{items.map((e) => (
 						<tr key={e.id} id={e.id}>
-							<td className="whitespace-nowrap">
+							<td className="whitespace-nowrap" data-label="ID">
 								<code>{e.id}</code>
 							</td>
-							<td>
+							<td data-label="Fonte">
 								<a href={e.url} rel="noopener" className="inline-flex items-start gap-1 font-medium">
 									<span>{e.title}</span>
 									<ArrowUpRight className="mt-0.5 size-3.5 shrink-0" aria-hidden="true" />
@@ -41,15 +42,19 @@ export function EvidenceTable({
 								</span>
 							</td>
 							{!compact && (
-								<td>
+								<td data-label="Tipo">
 									{e.type}
 									<span className="text-muted-foreground block text-xs">{e.epistemicClass}</span>
 								</td>
 							)}
-							<td>
+							<td data-label="Ano">
 								<code>{evidenceYear(e)}</code>
 							</td>
-							{!compact && <td className="text-muted-foreground">{e.supports}</td>}
+							{!compact && (
+								<td className="text-muted-foreground" data-label="O que sustenta">
+									{e.supports}
+								</td>
+							)}
 						</tr>
 					))}
 				</tbody>

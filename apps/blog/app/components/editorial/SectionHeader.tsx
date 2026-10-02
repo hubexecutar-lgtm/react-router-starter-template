@@ -1,4 +1,4 @@
-import { ArrowRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 
 export function SectionHeader({
 	eyebrow,
@@ -26,7 +26,7 @@ export function SectionHeader({
 			</div>
 			{href && (
 				<a href={href} className="rc-link inline-flex items-center gap-1.5 text-sm">
-					{linkLabel} <ArrowRight className="size-4" aria-hidden="true" />
+					{linkLabel} <ChevronRight className="size-4" aria-hidden="true" />
 				</a>
 			)}
 		</div>

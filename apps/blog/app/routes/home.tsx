@@ -8,6 +8,7 @@ import { HeroArt, IMAGES } from "@/components/editorial/HeroArt";
 import { SectionHeader } from "@/components/editorial/SectionHeader";
 import { SURFACE } from "@/components/editorial/surface";
 import { TerritoryCard } from "@/components/editorial/TerritoryCard";
+import { Section } from "@/components/layout/Section";
 import { AsciiDiagram, PlainTextPanel } from "@/components/plain";
 import { buttonVariants } from "@/components/ui/button";
 import { SITE_DESCRIPTION, SITE_TAGLINE } from "@/consts";
@@ -80,7 +81,7 @@ export default function Page({ loaderData }: Route.ComponentProps) {
 			</section>
 
 			{/* Destaque + missão */}
-			<section className="container grid gap-10 pb-16 lg:grid-cols-[1.5fr_1fr] lg:gap-16 [&>*]:min-w-0" aria-label="Destaque">
+			<section className="container mt-[var(--space-section)] grid gap-10 lg:grid-cols-[1.5fr_1fr] lg:gap-16 [&>*]:min-w-0" aria-label="Destaque">
 				{featured && <ArticleCard post={featured} variant="feature" headingLevel={2} />}
 				<aside className="flex flex-col gap-6">
 					<div className={cn(SURFACE, "p-6")}>
@@ -110,40 +111,36 @@ export default function Page({ loaderData }: Route.ComponentProps) {
 			</section>
 
 			{/* Recentes */}
-			<section className="container pb-16" aria-labelledby="recentes">
-				<SectionHeader
-					id="recentes"
-					eyebrow="Artigos recentes"
-					title="Continue pelo framework"
-					href="/blog/"
-					linkLabel="Ver todos os artigos"
-				/>
-				<div className="mt-8 grid gap-4 md:grid-cols-3">
+			<Section
+				id="recentes"
+				eyebrow="Artigos recentes"
+				title="Continue pelo framework"
+				link={{ href: "/blog/", label: "Ver todos os artigos" }}
+			>
+				<div className="grid gap-[var(--table-gap)] md:grid-cols-3">
 					{recent.map((post) => (
 						<ArticleCard key={post.id} post={post} variant="compact" />
 					))}
 				</div>
-			</section>
+			</Section>
 
 			{/* Territórios */}
-			<section className="container pb-16" aria-labelledby="territorios">
-				<SectionHeader
-					id="territorios"
-					eyebrow="Temas"
-					title="Oito territórios, um só modelo"
-					href="/temas/"
-					linkLabel="Ver mapa de temas"
-				/>
-				<div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+			<Section
+				id="territorios"
+				eyebrow="Temas"
+				title="Oito territórios, um só modelo"
+				link={{ href: "/temas/", label: "Ver mapa de temas" }}
+			>
+				<div className="grid gap-[var(--table-gap)] sm:grid-cols-2 lg:grid-cols-4">
 					{TERRITORIES.map((t) => (
 						<TerritoryCard key={t.id} territory={t} count={countBy(t.slug)} />
 					))}
 				</div>
-			</section>
+			</Section>
 
 			{/* Framework + referências */}
 			<section
-				className="container grid gap-10 pb-8 lg:grid-cols-[1.2fr_1fr] lg:gap-16 [&>*]:min-w-0"
+				className="container mt-[var(--space-section)] grid gap-10 lg:grid-cols-[1.2fr_1fr] lg:gap-16 [&>*]:min-w-0"
 				aria-labelledby="framework"
 			>
 				<div>
@@ -172,8 +169,8 @@ export default function Page({ loaderData }: Route.ComponentProps) {
 						linkLabel="Todas as evidências"
 						level={2}
 					/>
-					<div className="mt-8 overflow-x-auto" role="region" aria-labelledby="referencias" tabIndex={0}>
-						<table className="ds-table w-full min-w-[28rem] text-left text-sm">
+					<div className="mt-8 sm:overflow-x-auto" role="region" aria-labelledby="referencias" tabIndex={0}>
+						<table className="ds-table ds-table--stack w-full text-left text-sm sm:min-w-[28rem]">
 							<caption className="sr-only">Referências-padrão-ouro usadas nos artigos</caption>
 							<thead>
 								<tr>
@@ -187,13 +184,17 @@ export default function Page({ loaderData }: Route.ComponentProps) {
 									const t = posts.find((p) => p.contentId === e.contentId);
 									return (
 										<tr key={e.id}>
-											<td>{t ? <a href={t.href}>{t.territory.name}</a> : e.contentId}</td>
-											<td>
-												<a href={e.url} rel="noopener">
-													{e.author}
-												</a>
+											<td data-label="Tema">
+												<div>{t ? <a href={t.href}>{t.territory.name}</a> : e.contentId}</div>
 											</td>
-											<td>
+											<td data-label="Fonte">
+												<div>
+													<a href={e.url} rel="noopener">
+														{e.author}
+													</a>
+												</div>
+											</td>
+											<td data-label="Ano">
 												<code>{evidenceYear(e)}</code>
 											</td>
 										</tr>
