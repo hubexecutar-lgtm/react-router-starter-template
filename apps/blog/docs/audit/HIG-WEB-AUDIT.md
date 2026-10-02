@@ -12,7 +12,7 @@ reflow 320 px, medida ≤ 75 caracteres, sem prosa mono, `alt`, halftone fora do
 | Fase | Resultado |
 |---|---|
 | Linha de base (main @ ab685e2 (antes do RC-UX-HIG-002 PR D)) | 799 verificações · 790 PASS · 0 PARTIAL · 9 FAIL (P0 1, P1 8, P2 0, P3 0) |
-| Reteste (automatizado) | 799 verificações · 799 PASS · 0 PARTIAL · 0 FAIL (P0 0, P1 0, P2 0, P3 0) |
+| Reteste (automatizado) | 846 verificações · 846 PASS · 0 PARTIAL · 0 FAIL (P0 0, P1 0, P2 0, P3 0) |
 | Checklist manual | 9 verificações · 5 PASS · 4 PARTIAL · 0 FAIL (P0 0, P1 0, P2 3, P3 1) |
 
 ## Falhas da linha de base e correção
@@ -56,5 +56,5 @@ reflow 320 px, medida ≤ 75 caracteres, sem prosa mono, `alt`, halftone fora do
 
 `/` · `/about/` · `/admin/` · `/admin/design-system/` · `/admin/handoff/` · `/admin/relatorio-exemplo/` · `/admin/rotas/` · `/blog/` · `/blog/controles-cognitivos/` · `/blog/do-risco-cognitivo-a-execucao-assistida/` · `/blog/eventos-de-risco-cognitivo/` · `/blog/exposicao-cognitiva/` · `/blog/fatores-de-risco-cognitivo/` · `/blog/framework-de-risco-cognitivo/` · `/blog/gestao-do-risco-cognitivo/` · `/blog/indicadores-de-risco-cognitivo/` · `/blog/o-que-e-risco-cognitivo/` · `/buscar/` · `/contact/` · `/evidencias/` · `/faq/` · `/guias/` · `/login/` · `/loja/` · `/loja/agentes/` · `/loja/assets/` · `/loja/ebooks/` · `/loja/html/` · `/loja/pdfs/` · `/loja/prompts/` · `/loja/skills/` · `/loja/skills/skill-001/` · `/loja/workbooks/` · `/mapas/` · `/pricing/` · `/privacy/` · `/rota-inexistente-hig/` · `/signup/` · `/temas/` · `/temas/controles-cognitivos/` · `/temas/eventos-de-risco-cognitivo/` · `/temas/exposicao-cognitiva/` · `/temas/fatores-de-risco-cognitivo/` · `/temas/framework-de-risco-cognitivo/` · `/temas/gestao-do-risco-cognitivo/` · `/temas/indicadores-de-risco-cognitivo/` · `/temas/risco-cognitivo/`
 
-O detalhe completo (todas as 799 verificações automatizadas, inclusive PASS) está em
+O detalhe completo (todas as 846 verificações automatizadas, inclusive PASS) está em
 `HIG-WEB-AUDIT.json`. Para atualizar: `HIG_AUDIT=1 npx playwright test tests/hig.spec.ts && node scripts/hig-audit.mjs`.

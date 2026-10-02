@@ -66,8 +66,8 @@
       "P3": 0
     },
     "retest": {
-      "total": 799,
-      "PASS": 799,
+      "total": 846,
+      "PASS": 846,
       "PARTIAL": 0,
       "FAIL": 0,
       "N/A": 0,
@@ -568,6 +568,19 @@
       {
         "RULE_ID": "AUD-HIG-05",
         "ROUTE": "/",
+        "COMPONENT": "tabelas@390",
+        "REQUIREMENT": "Tabelas não ficam cortadas no celular (empilham em células rotuladas)",
+        "SOURCE": "ADR-12 / HIG Layout",
+        "STATUS": "PASS",
+        "SEVERITY": "P1",
+        "EVIDENCE": "ok",
+        "REMEDIATION": "—",
+        "OWNER": "A DEFINIR",
+        "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
+      },
+      {
+        "RULE_ID": "AUD-HIG-05",
+        "ROUTE": "/",
         "COMPONENT": "página@320",
         "REQUIREMENT": "Sem rolagem horizontal em 320 px",
         "SOURCE": "WCAG 1.4.10 / HIG Layout",
@@ -782,6 +795,19 @@
         "STATUS": "PASS",
         "SEVERITY": "P1",
         "EVIDENCE": "3 campo(s); ok",
+        "REMEDIATION": "—",
+        "OWNER": "A DEFINIR",
+        "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
+      },
+      {
+        "RULE_ID": "AUD-HIG-05",
+        "ROUTE": "/about/",
+        "COMPONENT": "tabelas@390",
+        "REQUIREMENT": "Tabelas não ficam cortadas no celular (empilham em células rotuladas)",
+        "SOURCE": "ADR-12 / HIG Layout",
+        "STATUS": "PASS",
+        "SEVERITY": "P1",
+        "EVIDENCE": "ok",
         "REMEDIATION": "—",
         "OWNER": "A DEFINIR",
         "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
@@ -1010,6 +1036,19 @@
       {
         "RULE_ID": "AUD-HIG-05",
         "ROUTE": "/admin/",
+        "COMPONENT": "tabelas@390",
+        "REQUIREMENT": "Tabelas não ficam cortadas no celular (empilham em células rotuladas)",
+        "SOURCE": "ADR-12 / HIG Layout",
+        "STATUS": "PASS",
+        "SEVERITY": "P1",
+        "EVIDENCE": "ok",
+        "REMEDIATION": "—",
+        "OWNER": "A DEFINIR",
+        "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
+      },
+      {
+        "RULE_ID": "AUD-HIG-05",
+        "ROUTE": "/admin/",
         "COMPONENT": "página@320",
         "REQUIREMENT": "Sem rolagem horizontal em 320 px",
         "SOURCE": "WCAG 1.4.10 / HIG Layout",
@@ -1224,6 +1263,19 @@
         "STATUS": "PASS",
         "SEVERITY": "P1",
         "EVIDENCE": "1 campo(s); ok",
+        "REMEDIATION": "—",
+        "OWNER": "A DEFINIR",
+        "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
+      },
+      {
+        "RULE_ID": "AUD-HIG-05",
+        "ROUTE": "/admin/design-system/",
+        "COMPONENT": "tabelas@390",
+        "REQUIREMENT": "Tabelas não ficam cortadas no celular (empilham em células rotuladas)",
+        "SOURCE": "ADR-12 / HIG Layout",
+        "STATUS": "PASS",
+        "SEVERITY": "P1",
+        "EVIDENCE": "ok",
         "REMEDIATION": "—",
         "OWNER": "A DEFINIR",
         "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
@@ -1452,6 +1504,19 @@
       {
         "RULE_ID": "AUD-HIG-05",
         "ROUTE": "/admin/handoff/",
+        "COMPONENT": "tabelas@390",
+        "REQUIREMENT": "Tabelas não ficam cortadas no celular (empilham em células rotuladas)",
+        "SOURCE": "ADR-12 / HIG Layout",
+        "STATUS": "PASS",
+        "SEVERITY": "P1",
+        "EVIDENCE": "ok",
+        "REMEDIATION": "—",
+        "OWNER": "A DEFINIR",
+        "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
+      },
+      {
+        "RULE_ID": "AUD-HIG-05",
+        "ROUTE": "/admin/handoff/",
         "COMPONENT": "página@320",
         "REQUIREMENT": "Sem rolagem horizontal em 320 px",
         "SOURCE": "WCAG 1.4.10 / HIG Layout",
@@ -1673,6 +1738,19 @@
       {
         "RULE_ID": "AUD-HIG-05",
         "ROUTE": "/admin/relatorio-exemplo/",
+        "COMPONENT": "tabelas@390",
+        "REQUIREMENT": "Tabelas não ficam cortadas no celular (empilham em células rotuladas)",
+        "SOURCE": "ADR-12 / HIG Layout",
+        "STATUS": "PASS",
+        "SEVERITY": "P1",
+        "EVIDENCE": "ok",
+        "REMEDIATION": "—",
+        "OWNER": "A DEFINIR",
+        "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
+      },
+      {
+        "RULE_ID": "AUD-HIG-05",
+        "ROUTE": "/admin/relatorio-exemplo/",
         "COMPONENT": "página@320",
         "REQUIREMENT": "Sem rolagem horizontal em 320 px",
         "SOURCE": "WCAG 1.4.10 / HIG Layout",
@@ -1887,6 +1965,19 @@
         "STATUS": "PASS",
         "SEVERITY": "P1",
         "EVIDENCE": "1 campo(s); ok",
+        "REMEDIATION": "—",
+        "OWNER": "A DEFINIR",
+        "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
+      },
+      {
+        "RULE_ID": "AUD-HIG-05",
+        "ROUTE": "/admin/rotas/",
+        "COMPONENT": "tabelas@390",
+        "REQUIREMENT": "Tabelas não ficam cortadas no celular (empilham em células rotuladas)",
+        "SOURCE": "ADR-12 / HIG Layout",
+        "STATUS": "PASS",
+        "SEVERITY": "P1",
+        "EVIDENCE": "ok",
         "REMEDIATION": "—",
         "OWNER": "A DEFINIR",
         "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
@@ -2115,6 +2206,19 @@
       {
         "RULE_ID": "AUD-HIG-05",
         "ROUTE": "/blog/",
+        "COMPONENT": "tabelas@390",
+        "REQUIREMENT": "Tabelas não ficam cortadas no celular (empilham em células rotuladas)",
+        "SOURCE": "ADR-12 / HIG Layout",
+        "STATUS": "PASS",
+        "SEVERITY": "P1",
+        "EVIDENCE": "ok",
+        "REMEDIATION": "—",
+        "OWNER": "A DEFINIR",
+        "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
+      },
+      {
+        "RULE_ID": "AUD-HIG-05",
+        "ROUTE": "/blog/",
         "COMPONENT": "página@320",
         "REQUIREMENT": "Sem rolagem horizontal em 320 px",
         "SOURCE": "WCAG 1.4.10 / HIG Layout",
@@ -2336,6 +2440,19 @@
       {
         "RULE_ID": "AUD-HIG-05",
         "ROUTE": "/blog/controles-cognitivos/",
+        "COMPONENT": "tabelas@390",
+        "REQUIREMENT": "Tabelas não ficam cortadas no celular (empilham em células rotuladas)",
+        "SOURCE": "ADR-12 / HIG Layout",
+        "STATUS": "PASS",
+        "SEVERITY": "P1",
+        "EVIDENCE": "ok",
+        "REMEDIATION": "—",
+        "OWNER": "A DEFINIR",
+        "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
+      },
+      {
+        "RULE_ID": "AUD-HIG-05",
+        "ROUTE": "/blog/controles-cognitivos/",
         "COMPONENT": "página@320",
         "REQUIREMENT": "Sem rolagem horizontal em 320 px",
         "SOURCE": "WCAG 1.4.10 / HIG Layout",
@@ -2550,6 +2667,19 @@
         "STATUS": "PASS",
         "SEVERITY": "P1",
         "EVIDENCE": "1 campo(s); ok",
+        "REMEDIATION": "—",
+        "OWNER": "A DEFINIR",
+        "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
+      },
+      {
+        "RULE_ID": "AUD-HIG-05",
+        "ROUTE": "/blog/do-risco-cognitivo-a-execucao-assistida/",
+        "COMPONENT": "tabelas@390",
+        "REQUIREMENT": "Tabelas não ficam cortadas no celular (empilham em células rotuladas)",
+        "SOURCE": "ADR-12 / HIG Layout",
+        "STATUS": "PASS",
+        "SEVERITY": "P1",
+        "EVIDENCE": "ok",
         "REMEDIATION": "—",
         "OWNER": "A DEFINIR",
         "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
@@ -2778,6 +2908,19 @@
       {
         "RULE_ID": "AUD-HIG-05",
         "ROUTE": "/blog/eventos-de-risco-cognitivo/",
+        "COMPONENT": "tabelas@390",
+        "REQUIREMENT": "Tabelas não ficam cortadas no celular (empilham em células rotuladas)",
+        "SOURCE": "ADR-12 / HIG Layout",
+        "STATUS": "PASS",
+        "SEVERITY": "P1",
+        "EVIDENCE": "ok",
+        "REMEDIATION": "—",
+        "OWNER": "A DEFINIR",
+        "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
+      },
+      {
+        "RULE_ID": "AUD-HIG-05",
+        "ROUTE": "/blog/eventos-de-risco-cognitivo/",
         "COMPONENT": "página@320",
         "REQUIREMENT": "Sem rolagem horizontal em 320 px",
         "SOURCE": "WCAG 1.4.10 / HIG Layout",
@@ -2999,6 +3142,19 @@
       {
         "RULE_ID": "AUD-HIG-05",
         "ROUTE": "/blog/exposicao-cognitiva/",
+        "COMPONENT": "tabelas@390",
+        "REQUIREMENT": "Tabelas não ficam cortadas no celular (empilham em células rotuladas)",
+        "SOURCE": "ADR-12 / HIG Layout",
+        "STATUS": "PASS",
+        "SEVERITY": "P1",
+        "EVIDENCE": "ok",
+        "REMEDIATION": "—",
+        "OWNER": "A DEFINIR",
+        "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
+      },
+      {
+        "RULE_ID": "AUD-HIG-05",
+        "ROUTE": "/blog/exposicao-cognitiva/",
         "COMPONENT": "página@320",
         "REQUIREMENT": "Sem rolagem horizontal em 320 px",
         "SOURCE": "WCAG 1.4.10 / HIG Layout",
@@ -3220,6 +3376,19 @@
       {
         "RULE_ID": "AUD-HIG-05",
         "ROUTE": "/blog/fatores-de-risco-cognitivo/",
+        "COMPONENT": "tabelas@390",
+        "REQUIREMENT": "Tabelas não ficam cortadas no celular (empilham em células rotuladas)",
+        "SOURCE": "ADR-12 / HIG Layout",
+        "STATUS": "PASS",
+        "SEVERITY": "P1",
+        "EVIDENCE": "ok",
+        "REMEDIATION": "—",
+        "OWNER": "A DEFINIR",
+        "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
+      },
+      {
+        "RULE_ID": "AUD-HIG-05",
+        "ROUTE": "/blog/fatores-de-risco-cognitivo/",
         "COMPONENT": "página@320",
         "REQUIREMENT": "Sem rolagem horizontal em 320 px",
         "SOURCE": "WCAG 1.4.10 / HIG Layout",
@@ -3441,6 +3610,19 @@
       {
         "RULE_ID": "AUD-HIG-05",
         "ROUTE": "/blog/framework-de-risco-cognitivo/",
+        "COMPONENT": "tabelas@390",
+        "REQUIREMENT": "Tabelas não ficam cortadas no celular (empilham em células rotuladas)",
+        "SOURCE": "ADR-12 / HIG Layout",
+        "STATUS": "PASS",
+        "SEVERITY": "P1",
+        "EVIDENCE": "ok",
+        "REMEDIATION": "—",
+        "OWNER": "A DEFINIR",
+        "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
+      },
+      {
+        "RULE_ID": "AUD-HIG-05",
+        "ROUTE": "/blog/framework-de-risco-cognitivo/",
         "COMPONENT": "página@320",
         "REQUIREMENT": "Sem rolagem horizontal em 320 px",
         "SOURCE": "WCAG 1.4.10 / HIG Layout",
@@ -3662,6 +3844,19 @@
       {
         "RULE_ID": "AUD-HIG-05",
         "ROUTE": "/blog/gestao-do-risco-cognitivo/",
+        "COMPONENT": "tabelas@390",
+        "REQUIREMENT": "Tabelas não ficam cortadas no celular (empilham em células rotuladas)",
+        "SOURCE": "ADR-12 / HIG Layout",
+        "STATUS": "PASS",
+        "SEVERITY": "P1",
+        "EVIDENCE": "ok",
+        "REMEDIATION": "—",
+        "OWNER": "A DEFINIR",
+        "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
+      },
+      {
+        "RULE_ID": "AUD-HIG-05",
+        "ROUTE": "/blog/gestao-do-risco-cognitivo/",
         "COMPONENT": "página@320",
         "REQUIREMENT": "Sem rolagem horizontal em 320 px",
         "SOURCE": "WCAG 1.4.10 / HIG Layout",
@@ -3883,6 +4078,19 @@
       {
         "RULE_ID": "AUD-HIG-05",
         "ROUTE": "/blog/indicadores-de-risco-cognitivo/",
+        "COMPONENT": "tabelas@390",
+        "REQUIREMENT": "Tabelas não ficam cortadas no celular (empilham em células rotuladas)",
+        "SOURCE": "ADR-12 / HIG Layout",
+        "STATUS": "PASS",
+        "SEVERITY": "P1",
+        "EVIDENCE": "ok",
+        "REMEDIATION": "—",
+        "OWNER": "A DEFINIR",
+        "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
+      },
+      {
+        "RULE_ID": "AUD-HIG-05",
+        "ROUTE": "/blog/indicadores-de-risco-cognitivo/",
         "COMPONENT": "página@320",
         "REQUIREMENT": "Sem rolagem horizontal em 320 px",
         "SOURCE": "WCAG 1.4.10 / HIG Layout",
@@ -4104,6 +4312,19 @@
       {
         "RULE_ID": "AUD-HIG-05",
         "ROUTE": "/blog/o-que-e-risco-cognitivo/",
+        "COMPONENT": "tabelas@390",
+        "REQUIREMENT": "Tabelas não ficam cortadas no celular (empilham em células rotuladas)",
+        "SOURCE": "ADR-12 / HIG Layout",
+        "STATUS": "PASS",
+        "SEVERITY": "P1",
+        "EVIDENCE": "ok",
+        "REMEDIATION": "—",
+        "OWNER": "A DEFINIR",
+        "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
+      },
+      {
+        "RULE_ID": "AUD-HIG-05",
+        "ROUTE": "/blog/o-que-e-risco-cognitivo/",
         "COMPONENT": "página@320",
         "REQUIREMENT": "Sem rolagem horizontal em 320 px",
         "SOURCE": "WCAG 1.4.10 / HIG Layout",
@@ -4318,6 +4539,19 @@
         "STATUS": "PASS",
         "SEVERITY": "P1",
         "EVIDENCE": "1 campo(s); ok",
+        "REMEDIATION": "—",
+        "OWNER": "A DEFINIR",
+        "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
+      },
+      {
+        "RULE_ID": "AUD-HIG-05",
+        "ROUTE": "/buscar/",
+        "COMPONENT": "tabelas@390",
+        "REQUIREMENT": "Tabelas não ficam cortadas no celular (empilham em células rotuladas)",
+        "SOURCE": "ADR-12 / HIG Layout",
+        "STATUS": "PASS",
+        "SEVERITY": "P1",
+        "EVIDENCE": "ok",
         "REMEDIATION": "—",
         "OWNER": "A DEFINIR",
         "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
@@ -4546,6 +4780,19 @@
       {
         "RULE_ID": "AUD-HIG-05",
         "ROUTE": "/contact/",
+        "COMPONENT": "tabelas@390",
+        "REQUIREMENT": "Tabelas não ficam cortadas no celular (empilham em células rotuladas)",
+        "SOURCE": "ADR-12 / HIG Layout",
+        "STATUS": "PASS",
+        "SEVERITY": "P1",
+        "EVIDENCE": "ok",
+        "REMEDIATION": "—",
+        "OWNER": "A DEFINIR",
+        "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
+      },
+      {
+        "RULE_ID": "AUD-HIG-05",
+        "ROUTE": "/contact/",
         "COMPONENT": "página@320",
         "REQUIREMENT": "Sem rolagem horizontal em 320 px",
         "SOURCE": "WCAG 1.4.10 / HIG Layout",
@@ -4760,6 +5007,19 @@
         "STATUS": "PASS",
         "SEVERITY": "P1",
         "EVIDENCE": "2 campo(s); ok",
+        "REMEDIATION": "—",
+        "OWNER": "A DEFINIR",
+        "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
+      },
+      {
+        "RULE_ID": "AUD-HIG-05",
+        "ROUTE": "/evidencias/",
+        "COMPONENT": "tabelas@390",
+        "REQUIREMENT": "Tabelas não ficam cortadas no celular (empilham em células rotuladas)",
+        "SOURCE": "ADR-12 / HIG Layout",
+        "STATUS": "PASS",
+        "SEVERITY": "P1",
+        "EVIDENCE": "ok",
         "REMEDIATION": "—",
         "OWNER": "A DEFINIR",
         "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
@@ -4988,6 +5248,19 @@
       {
         "RULE_ID": "AUD-HIG-05",
         "ROUTE": "/faq/",
+        "COMPONENT": "tabelas@390",
+        "REQUIREMENT": "Tabelas não ficam cortadas no celular (empilham em células rotuladas)",
+        "SOURCE": "ADR-12 / HIG Layout",
+        "STATUS": "PASS",
+        "SEVERITY": "P1",
+        "EVIDENCE": "ok",
+        "REMEDIATION": "—",
+        "OWNER": "A DEFINIR",
+        "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
+      },
+      {
+        "RULE_ID": "AUD-HIG-05",
+        "ROUTE": "/faq/",
         "COMPONENT": "página@320",
         "REQUIREMENT": "Sem rolagem horizontal em 320 px",
         "SOURCE": "WCAG 1.4.10 / HIG Layout",
@@ -5202,6 +5475,19 @@
         "STATUS": "PASS",
         "SEVERITY": "P1",
         "EVIDENCE": "2 campo(s); ok",
+        "REMEDIATION": "—",
+        "OWNER": "A DEFINIR",
+        "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
+      },
+      {
+        "RULE_ID": "AUD-HIG-05",
+        "ROUTE": "/guias/",
+        "COMPONENT": "tabelas@390",
+        "REQUIREMENT": "Tabelas não ficam cortadas no celular (empilham em células rotuladas)",
+        "SOURCE": "ADR-12 / HIG Layout",
+        "STATUS": "PASS",
+        "SEVERITY": "P1",
+        "EVIDENCE": "ok",
         "REMEDIATION": "—",
         "OWNER": "A DEFINIR",
         "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
@@ -5430,6 +5716,19 @@
       {
         "RULE_ID": "AUD-HIG-05",
         "ROUTE": "/login/",
+        "COMPONENT": "tabelas@390",
+        "REQUIREMENT": "Tabelas não ficam cortadas no celular (empilham em células rotuladas)",
+        "SOURCE": "ADR-12 / HIG Layout",
+        "STATUS": "PASS",
+        "SEVERITY": "P1",
+        "EVIDENCE": "ok",
+        "REMEDIATION": "—",
+        "OWNER": "A DEFINIR",
+        "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
+      },
+      {
+        "RULE_ID": "AUD-HIG-05",
+        "ROUTE": "/login/",
         "COMPONENT": "página@320",
         "REQUIREMENT": "Sem rolagem horizontal em 320 px",
         "SOURCE": "WCAG 1.4.10 / HIG Layout",
@@ -5651,6 +5950,19 @@
       {
         "RULE_ID": "AUD-HIG-05",
         "ROUTE": "/loja/",
+        "COMPONENT": "tabelas@390",
+        "REQUIREMENT": "Tabelas não ficam cortadas no celular (empilham em células rotuladas)",
+        "SOURCE": "ADR-12 / HIG Layout",
+        "STATUS": "PASS",
+        "SEVERITY": "P1",
+        "EVIDENCE": "ok",
+        "REMEDIATION": "—",
+        "OWNER": "A DEFINIR",
+        "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
+      },
+      {
+        "RULE_ID": "AUD-HIG-05",
+        "ROUTE": "/loja/",
         "COMPONENT": "página@320",
         "REQUIREMENT": "Sem rolagem horizontal em 320 px",
         "SOURCE": "WCAG 1.4.10 / HIG Layout",
@@ -5872,6 +6184,19 @@
       {
         "RULE_ID": "AUD-HIG-05",
         "ROUTE": "/loja/agentes/",
+        "COMPONENT": "tabelas@390",
+        "REQUIREMENT": "Tabelas não ficam cortadas no celular (empilham em células rotuladas)",
+        "SOURCE": "ADR-12 / HIG Layout",
+        "STATUS": "PASS",
+        "SEVERITY": "P1",
+        "EVIDENCE": "ok",
+        "REMEDIATION": "—",
+        "OWNER": "A DEFINIR",
+        "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
+      },
+      {
+        "RULE_ID": "AUD-HIG-05",
+        "ROUTE": "/loja/agentes/",
         "COMPONENT": "página@320",
         "REQUIREMENT": "Sem rolagem horizontal em 320 px",
         "SOURCE": "WCAG 1.4.10 / HIG Layout",
@@ -6093,6 +6418,19 @@
       {
         "RULE_ID": "AUD-HIG-05",
         "ROUTE": "/loja/assets/",
+        "COMPONENT": "tabelas@390",
+        "REQUIREMENT": "Tabelas não ficam cortadas no celular (empilham em células rotuladas)",
+        "SOURCE": "ADR-12 / HIG Layout",
+        "STATUS": "PASS",
+        "SEVERITY": "P1",
+        "EVIDENCE": "ok",
+        "REMEDIATION": "—",
+        "OWNER": "A DEFINIR",
+        "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
+      },
+      {
+        "RULE_ID": "AUD-HIG-05",
+        "ROUTE": "/loja/assets/",
         "COMPONENT": "página@320",
         "REQUIREMENT": "Sem rolagem horizontal em 320 px",
         "SOURCE": "WCAG 1.4.10 / HIG Layout",
@@ -6314,6 +6652,19 @@
       {
         "RULE_ID": "AUD-HIG-05",
         "ROUTE": "/loja/ebooks/",
+        "COMPONENT": "tabelas@390",
+        "REQUIREMENT": "Tabelas não ficam cortadas no celular (empilham em células rotuladas)",
+        "SOURCE": "ADR-12 / HIG Layout",
+        "STATUS": "PASS",
+        "SEVERITY": "P1",
+        "EVIDENCE": "ok",
+        "REMEDIATION": "—",
+        "OWNER": "A DEFINIR",
+        "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
+      },
+      {
+        "RULE_ID": "AUD-HIG-05",
+        "ROUTE": "/loja/ebooks/",
         "COMPONENT": "página@320",
         "REQUIREMENT": "Sem rolagem horizontal em 320 px",
         "SOURCE": "WCAG 1.4.10 / HIG Layout",
@@ -6535,6 +6886,19 @@
       {
         "RULE_ID": "AUD-HIG-05",
         "ROUTE": "/loja/html/",
+        "COMPONENT": "tabelas@390",
+        "REQUIREMENT": "Tabelas não ficam cortadas no celular (empilham em células rotuladas)",
+        "SOURCE": "ADR-12 / HIG Layout",
+        "STATUS": "PASS",
+        "SEVERITY": "P1",
+        "EVIDENCE": "ok",
+        "REMEDIATION": "—",
+        "OWNER": "A DEFINIR",
+        "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
+      },
+      {
+        "RULE_ID": "AUD-HIG-05",
+        "ROUTE": "/loja/html/",
         "COMPONENT": "página@320",
         "REQUIREMENT": "Sem rolagem horizontal em 320 px",
         "SOURCE": "WCAG 1.4.10 / HIG Layout",
@@ -6756,6 +7120,19 @@
       {
         "RULE_ID": "AUD-HIG-05",
         "ROUTE": "/loja/pdfs/",
+        "COMPONENT": "tabelas@390",
+        "REQUIREMENT": "Tabelas não ficam cortadas no celular (empilham em células rotuladas)",
+        "SOURCE": "ADR-12 / HIG Layout",
+        "STATUS": "PASS",
+        "SEVERITY": "P1",
+        "EVIDENCE": "ok",
+        "REMEDIATION": "—",
+        "OWNER": "A DEFINIR",
+        "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
+      },
+      {
+        "RULE_ID": "AUD-HIG-05",
+        "ROUTE": "/loja/pdfs/",
         "COMPONENT": "página@320",
         "REQUIREMENT": "Sem rolagem horizontal em 320 px",
         "SOURCE": "WCAG 1.4.10 / HIG Layout",
@@ -6977,6 +7354,19 @@
       {
         "RULE_ID": "AUD-HIG-05",
         "ROUTE": "/loja/prompts/",
+        "COMPONENT": "tabelas@390",
+        "REQUIREMENT": "Tabelas não ficam cortadas no celular (empilham em células rotuladas)",
+        "SOURCE": "ADR-12 / HIG Layout",
+        "STATUS": "PASS",
+        "SEVERITY": "P1",
+        "EVIDENCE": "ok",
+        "REMEDIATION": "—",
+        "OWNER": "A DEFINIR",
+        "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
+      },
+      {
+        "RULE_ID": "AUD-HIG-05",
+        "ROUTE": "/loja/prompts/",
         "COMPONENT": "página@320",
         "REQUIREMENT": "Sem rolagem horizontal em 320 px",
         "SOURCE": "WCAG 1.4.10 / HIG Layout",
@@ -7198,6 +7588,19 @@
       {
         "RULE_ID": "AUD-HIG-05",
         "ROUTE": "/loja/skills/",
+        "COMPONENT": "tabelas@390",
+        "REQUIREMENT": "Tabelas não ficam cortadas no celular (empilham em células rotuladas)",
+        "SOURCE": "ADR-12 / HIG Layout",
+        "STATUS": "PASS",
+        "SEVERITY": "P1",
+        "EVIDENCE": "ok",
+        "REMEDIATION": "—",
+        "OWNER": "A DEFINIR",
+        "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
+      },
+      {
+        "RULE_ID": "AUD-HIG-05",
+        "ROUTE": "/loja/skills/",
         "COMPONENT": "página@320",
         "REQUIREMENT": "Sem rolagem horizontal em 320 px",
         "SOURCE": "WCAG 1.4.10 / HIG Layout",
@@ -7412,6 +7815,19 @@
         "STATUS": "PASS",
         "SEVERITY": "P1",
         "EVIDENCE": "1 campo(s); ok",
+        "REMEDIATION": "—",
+        "OWNER": "A DEFINIR",
+        "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
+      },
+      {
+        "RULE_ID": "AUD-HIG-05",
+        "ROUTE": "/loja/skills/skill-001/",
+        "COMPONENT": "tabelas@390",
+        "REQUIREMENT": "Tabelas não ficam cortadas no celular (empilham em células rotuladas)",
+        "SOURCE": "ADR-12 / HIG Layout",
+        "STATUS": "PASS",
+        "SEVERITY": "P1",
+        "EVIDENCE": "ok",
         "REMEDIATION": "—",
         "OWNER": "A DEFINIR",
         "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
@@ -7640,6 +8056,19 @@
       {
         "RULE_ID": "AUD-HIG-05",
         "ROUTE": "/loja/workbooks/",
+        "COMPONENT": "tabelas@390",
+        "REQUIREMENT": "Tabelas não ficam cortadas no celular (empilham em células rotuladas)",
+        "SOURCE": "ADR-12 / HIG Layout",
+        "STATUS": "PASS",
+        "SEVERITY": "P1",
+        "EVIDENCE": "ok",
+        "REMEDIATION": "—",
+        "OWNER": "A DEFINIR",
+        "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
+      },
+      {
+        "RULE_ID": "AUD-HIG-05",
+        "ROUTE": "/loja/workbooks/",
         "COMPONENT": "página@320",
         "REQUIREMENT": "Sem rolagem horizontal em 320 px",
         "SOURCE": "WCAG 1.4.10 / HIG Layout",
@@ -7861,6 +8290,19 @@
       {
         "RULE_ID": "AUD-HIG-05",
         "ROUTE": "/mapas/",
+        "COMPONENT": "tabelas@390",
+        "REQUIREMENT": "Tabelas não ficam cortadas no celular (empilham em células rotuladas)",
+        "SOURCE": "ADR-12 / HIG Layout",
+        "STATUS": "PASS",
+        "SEVERITY": "P1",
+        "EVIDENCE": "ok",
+        "REMEDIATION": "—",
+        "OWNER": "A DEFINIR",
+        "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
+      },
+      {
+        "RULE_ID": "AUD-HIG-05",
+        "ROUTE": "/mapas/",
         "COMPONENT": "página@320",
         "REQUIREMENT": "Sem rolagem horizontal em 320 px",
         "SOURCE": "WCAG 1.4.10 / HIG Layout",
@@ -8075,6 +8517,19 @@
         "STATUS": "PASS",
         "SEVERITY": "P1",
         "EVIDENCE": "2 campo(s); ok",
+        "REMEDIATION": "—",
+        "OWNER": "A DEFINIR",
+        "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
+      },
+      {
+        "RULE_ID": "AUD-HIG-05",
+        "ROUTE": "/pricing/",
+        "COMPONENT": "tabelas@390",
+        "REQUIREMENT": "Tabelas não ficam cortadas no celular (empilham em células rotuladas)",
+        "SOURCE": "ADR-12 / HIG Layout",
+        "STATUS": "PASS",
+        "SEVERITY": "P1",
+        "EVIDENCE": "ok",
         "REMEDIATION": "—",
         "OWNER": "A DEFINIR",
         "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
@@ -8303,6 +8758,19 @@
       {
         "RULE_ID": "AUD-HIG-05",
         "ROUTE": "/privacy/",
+        "COMPONENT": "tabelas@390",
+        "REQUIREMENT": "Tabelas não ficam cortadas no celular (empilham em células rotuladas)",
+        "SOURCE": "ADR-12 / HIG Layout",
+        "STATUS": "PASS",
+        "SEVERITY": "P1",
+        "EVIDENCE": "ok",
+        "REMEDIATION": "—",
+        "OWNER": "A DEFINIR",
+        "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
+      },
+      {
+        "RULE_ID": "AUD-HIG-05",
+        "ROUTE": "/privacy/",
         "COMPONENT": "página@320",
         "REQUIREMENT": "Sem rolagem horizontal em 320 px",
         "SOURCE": "WCAG 1.4.10 / HIG Layout",
@@ -8524,6 +8992,19 @@
       {
         "RULE_ID": "AUD-HIG-05",
         "ROUTE": "/rota-inexistente-hig/",
+        "COMPONENT": "tabelas@390",
+        "REQUIREMENT": "Tabelas não ficam cortadas no celular (empilham em células rotuladas)",
+        "SOURCE": "ADR-12 / HIG Layout",
+        "STATUS": "PASS",
+        "SEVERITY": "P1",
+        "EVIDENCE": "ok",
+        "REMEDIATION": "—",
+        "OWNER": "A DEFINIR",
+        "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
+      },
+      {
+        "RULE_ID": "AUD-HIG-05",
+        "ROUTE": "/rota-inexistente-hig/",
         "COMPONENT": "página@320",
         "REQUIREMENT": "Sem rolagem horizontal em 320 px",
         "SOURCE": "WCAG 1.4.10 / HIG Layout",
@@ -8738,6 +9219,19 @@
         "STATUS": "PASS",
         "SEVERITY": "P1",
         "EVIDENCE": "2 campo(s); ok",
+        "REMEDIATION": "—",
+        "OWNER": "A DEFINIR",
+        "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
+      },
+      {
+        "RULE_ID": "AUD-HIG-05",
+        "ROUTE": "/signup/",
+        "COMPONENT": "tabelas@390",
+        "REQUIREMENT": "Tabelas não ficam cortadas no celular (empilham em células rotuladas)",
+        "SOURCE": "ADR-12 / HIG Layout",
+        "STATUS": "PASS",
+        "SEVERITY": "P1",
+        "EVIDENCE": "ok",
         "REMEDIATION": "—",
         "OWNER": "A DEFINIR",
         "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
@@ -8966,6 +9460,19 @@
       {
         "RULE_ID": "AUD-HIG-05",
         "ROUTE": "/temas/",
+        "COMPONENT": "tabelas@390",
+        "REQUIREMENT": "Tabelas não ficam cortadas no celular (empilham em células rotuladas)",
+        "SOURCE": "ADR-12 / HIG Layout",
+        "STATUS": "PASS",
+        "SEVERITY": "P1",
+        "EVIDENCE": "ok",
+        "REMEDIATION": "—",
+        "OWNER": "A DEFINIR",
+        "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
+      },
+      {
+        "RULE_ID": "AUD-HIG-05",
+        "ROUTE": "/temas/",
         "COMPONENT": "página@320",
         "REQUIREMENT": "Sem rolagem horizontal em 320 px",
         "SOURCE": "WCAG 1.4.10 / HIG Layout",
@@ -9187,6 +9694,19 @@
       {
         "RULE_ID": "AUD-HIG-05",
         "ROUTE": "/temas/controles-cognitivos/",
+        "COMPONENT": "tabelas@390",
+        "REQUIREMENT": "Tabelas não ficam cortadas no celular (empilham em células rotuladas)",
+        "SOURCE": "ADR-12 / HIG Layout",
+        "STATUS": "PASS",
+        "SEVERITY": "P1",
+        "EVIDENCE": "ok",
+        "REMEDIATION": "—",
+        "OWNER": "A DEFINIR",
+        "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
+      },
+      {
+        "RULE_ID": "AUD-HIG-05",
+        "ROUTE": "/temas/controles-cognitivos/",
         "COMPONENT": "página@320",
         "REQUIREMENT": "Sem rolagem horizontal em 320 px",
         "SOURCE": "WCAG 1.4.10 / HIG Layout",
@@ -9408,6 +9928,19 @@
       {
         "RULE_ID": "AUD-HIG-05",
         "ROUTE": "/temas/eventos-de-risco-cognitivo/",
+        "COMPONENT": "tabelas@390",
+        "REQUIREMENT": "Tabelas não ficam cortadas no celular (empilham em células rotuladas)",
+        "SOURCE": "ADR-12 / HIG Layout",
+        "STATUS": "PASS",
+        "SEVERITY": "P1",
+        "EVIDENCE": "ok",
+        "REMEDIATION": "—",
+        "OWNER": "A DEFINIR",
+        "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
+      },
+      {
+        "RULE_ID": "AUD-HIG-05",
+        "ROUTE": "/temas/eventos-de-risco-cognitivo/",
         "COMPONENT": "página@320",
         "REQUIREMENT": "Sem rolagem horizontal em 320 px",
         "SOURCE": "WCAG 1.4.10 / HIG Layout",
@@ -9629,6 +10162,19 @@
       {
         "RULE_ID": "AUD-HIG-05",
         "ROUTE": "/temas/exposicao-cognitiva/",
+        "COMPONENT": "tabelas@390",
+        "REQUIREMENT": "Tabelas não ficam cortadas no celular (empilham em células rotuladas)",
+        "SOURCE": "ADR-12 / HIG Layout",
+        "STATUS": "PASS",
+        "SEVERITY": "P1",
+        "EVIDENCE": "ok",
+        "REMEDIATION": "—",
+        "OWNER": "A DEFINIR",
+        "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
+      },
+      {
+        "RULE_ID": "AUD-HIG-05",
+        "ROUTE": "/temas/exposicao-cognitiva/",
         "COMPONENT": "página@320",
         "REQUIREMENT": "Sem rolagem horizontal em 320 px",
         "SOURCE": "WCAG 1.4.10 / HIG Layout",
@@ -9850,6 +10396,19 @@
       {
         "RULE_ID": "AUD-HIG-05",
         "ROUTE": "/temas/fatores-de-risco-cognitivo/",
+        "COMPONENT": "tabelas@390",
+        "REQUIREMENT": "Tabelas não ficam cortadas no celular (empilham em células rotuladas)",
+        "SOURCE": "ADR-12 / HIG Layout",
+        "STATUS": "PASS",
+        "SEVERITY": "P1",
+        "EVIDENCE": "ok",
+        "REMEDIATION": "—",
+        "OWNER": "A DEFINIR",
+        "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
+      },
+      {
+        "RULE_ID": "AUD-HIG-05",
+        "ROUTE": "/temas/fatores-de-risco-cognitivo/",
         "COMPONENT": "página@320",
         "REQUIREMENT": "Sem rolagem horizontal em 320 px",
         "SOURCE": "WCAG 1.4.10 / HIG Layout",
@@ -10071,6 +10630,19 @@
       {
         "RULE_ID": "AUD-HIG-05",
         "ROUTE": "/temas/framework-de-risco-cognitivo/",
+        "COMPONENT": "tabelas@390",
+        "REQUIREMENT": "Tabelas não ficam cortadas no celular (empilham em células rotuladas)",
+        "SOURCE": "ADR-12 / HIG Layout",
+        "STATUS": "PASS",
+        "SEVERITY": "P1",
+        "EVIDENCE": "ok",
+        "REMEDIATION": "—",
+        "OWNER": "A DEFINIR",
+        "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
+      },
+      {
+        "RULE_ID": "AUD-HIG-05",
+        "ROUTE": "/temas/framework-de-risco-cognitivo/",
         "COMPONENT": "página@320",
         "REQUIREMENT": "Sem rolagem horizontal em 320 px",
         "SOURCE": "WCAG 1.4.10 / HIG Layout",
@@ -10292,6 +10864,19 @@
       {
         "RULE_ID": "AUD-HIG-05",
         "ROUTE": "/temas/gestao-do-risco-cognitivo/",
+        "COMPONENT": "tabelas@390",
+        "REQUIREMENT": "Tabelas não ficam cortadas no celular (empilham em células rotuladas)",
+        "SOURCE": "ADR-12 / HIG Layout",
+        "STATUS": "PASS",
+        "SEVERITY": "P1",
+        "EVIDENCE": "ok",
+        "REMEDIATION": "—",
+        "OWNER": "A DEFINIR",
+        "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
+      },
+      {
+        "RULE_ID": "AUD-HIG-05",
+        "ROUTE": "/temas/gestao-do-risco-cognitivo/",
         "COMPONENT": "página@320",
         "REQUIREMENT": "Sem rolagem horizontal em 320 px",
         "SOURCE": "WCAG 1.4.10 / HIG Layout",
@@ -10513,6 +11098,19 @@
       {
         "RULE_ID": "AUD-HIG-05",
         "ROUTE": "/temas/indicadores-de-risco-cognitivo/",
+        "COMPONENT": "tabelas@390",
+        "REQUIREMENT": "Tabelas não ficam cortadas no celular (empilham em células rotuladas)",
+        "SOURCE": "ADR-12 / HIG Layout",
+        "STATUS": "PASS",
+        "SEVERITY": "P1",
+        "EVIDENCE": "ok",
+        "REMEDIATION": "—",
+        "OWNER": "A DEFINIR",
+        "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
+      },
+      {
+        "RULE_ID": "AUD-HIG-05",
+        "ROUTE": "/temas/indicadores-de-risco-cognitivo/",
         "COMPONENT": "página@320",
         "REQUIREMENT": "Sem rolagem horizontal em 320 px",
         "SOURCE": "WCAG 1.4.10 / HIG Layout",
@@ -10727,6 +11325,19 @@
         "STATUS": "PASS",
         "SEVERITY": "P1",
         "EVIDENCE": "1 campo(s); ok",
+        "REMEDIATION": "—",
+        "OWNER": "A DEFINIR",
+        "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
+      },
+      {
+        "RULE_ID": "AUD-HIG-05",
+        "ROUTE": "/temas/risco-cognitivo/",
+        "COMPONENT": "tabelas@390",
+        "REQUIREMENT": "Tabelas não ficam cortadas no celular (empilham em células rotuladas)",
+        "SOURCE": "ADR-12 / HIG Layout",
+        "STATUS": "PASS",
+        "SEVERITY": "P1",
+        "EVIDENCE": "ok",
         "REMEDIATION": "—",
         "OWNER": "A DEFINIR",
         "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
