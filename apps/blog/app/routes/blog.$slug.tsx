@@ -65,8 +65,8 @@ export default function Page({ loaderData, params }: Route.ComponentProps) {
 							{post.image && (
 								<img
 									src={post.image}
-									alt=""
-									className="mt-8 aspect-[16/9] w-full rounded-[var(--surface-radius-card)] border border-[var(--border-default)] object-cover"
+									alt={post.imageAlt ?? ""}
+									className="mt-8 aspect-[16/9] w-full rc-cell object-cover"
 								/>
 							)}
 						</header>

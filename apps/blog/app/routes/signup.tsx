@@ -1,6 +1,7 @@
 // /signup/ preservada: inscrição na newsletter (mood board 07), desativada até haver provedor.
 import type { Route } from "./+types/signup";
 
+import { IMAGES } from "@/components/editorial/HeroArt";
 import { NewsletterNotice } from "@/components/editorial/NewsletterNotice";
 import { PageHero } from "@/components/editorial/PageHero";
 import DefaultLayout from "@/layouts/DefaultLayout";
@@ -21,6 +22,7 @@ export default function Page() {
 				eyebrow="Receba novos guias"
 				title="Conteúdo prático no seu e-mail"
 				lead="Novos artigos, modelos e guias para aplicar o framework no dia a dia."
+				image={IMAGES.maoChaves}
 			/>
 			<section className="container max-w-3xl">
 				<NewsletterNotice />

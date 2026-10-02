@@ -222,7 +222,7 @@ export default function Page({ loaderData }: Route.ComponentProps) {
 								data-sort
 								value={sort}
 								onChange={(e) => setSort(e.target.value as typeof sort)}
-								className="border-input bg-background focus-visible:ring-ring/50 h-9 rounded-md border px-2 text-sm outline-none focus-visible:ring-[3px]"
+								className="border-input bg-background focus-visible:ring-ring/50 h-9 rounded-lg border px-2 text-sm outline-none focus-visible:ring-[3px]"
 							>
 								<option value="relevancia">Mais relevantes</option>
 								<option value="recentes">Mais recentes</option>

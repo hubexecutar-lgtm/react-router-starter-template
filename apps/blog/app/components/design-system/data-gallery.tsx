@@ -363,7 +363,7 @@ function DataTable() {
 
   return (
     <div className="flex flex-col gap-4" data-testid="data-table">
-      <div className="overflow-x-auto rounded-xl border">
+      <div className="overflow-x-auto">
         <Table>
           <TableCaption className="sr-only">Territórios editoriais, ordenáveis</TableCaption>
           <TableHeader>

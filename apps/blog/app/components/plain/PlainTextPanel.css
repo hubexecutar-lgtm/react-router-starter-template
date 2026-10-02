@@ -1,16 +1,104 @@
-/* PlainTextPanel — same surface, but long text wraps (annex §6). */
-.plain-text-panel__content {
-  white-space: pre-wrap;
+/* PlainTextPanel — reading view of operational text (annex §6, ADR-12).
+   Text face, not mono: label/value pairs, lists and tables keep their structure on mobile. */
+.plain-surface .plain-read {
+  font-family: var(--plain-caption-font);
+  font-size: var(--plain-read-size);
+  line-height: var(--plain-read-leading);
+  white-space: normal;
   overflow-wrap: anywhere;
   word-break: normal;
-  line-height: var(--plain-line-height-panel);
+}
+.plain-read > * + * {
+  margin-top: 0.875rem;
+}
+.plain-read__heading {
+  margin: 0;
+  font-weight: 600;
+  color: var(--plain-text);
+}
+.plain-read__paragraph,
+.plain-read__intro {
+  margin: 0;
+}
+.plain-read__intro {
+  font-weight: 600;
+}
+.plain-read__pairs {
+  display: grid;
+  gap: 0.75rem 1.5rem;
+  margin: 0;
+}
+.plain-read__pair {
+  display: grid;
+  grid-template-columns: minmax(6.5rem, 11rem) minmax(0, 1fr);
+  gap: 0.25rem 1.5rem;
+  align-items: baseline;
+}
+.plain-read__pair + .plain-read__pair {
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--plain-border);
+}
+.plain-read__pair dt {
+  font-weight: 600;
+  color: var(--plain-text);
+}
+.plain-read__pair dt[data-code] {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+.plain-read__pair dd {
+  margin: 0;
+}
+.plain-read__lead {
+  display: block;
+  font-weight: 600;
+}
+.plain-read__pair dd ul,
+.plain-read__list {
+  margin: 0.25rem 0 0;
+  padding-left: 1.25rem;
+}
+.plain-read__list li + li,
+.plain-read__pair dd li + li {
+  margin-top: 0.25rem;
+}
+.plain-read ul {
+  list-style: disc;
+}
+.plain-read ol {
+  list-style: decimal;
+  font-variant-numeric: tabular-nums;
+}
+.plain-read li::marker {
+  color: var(--plain-muted);
+}
+.plain-read__slot {
+  display: inline-block;
+  min-width: 6rem;
+  border-bottom: 1px dashed var(--plain-muted);
+  color: var(--plain-muted);
+  font-style: italic;
+}
+.plain-read__table {
+  overflow-x: auto;
+}
+.plain-read__table .ds-table {
+  width: 100%;
+  font-size: 0.875rem;
 }
 .plain-text-panel__content[style*="max-height"] {
   overflow-y: auto;
 }
-.plain-surface[data-density="compact"] .plain-text-panel__content {
-  line-height: var(--plain-line-height-compact);
+.plain-surface[data-density="compact"] .plain-read {
+  --plain-read-leading: 1.45;
 }
-.plain-surface[data-density="comfortable"] .plain-text-panel__content {
-  line-height: var(--plain-line-height-comfortable);
+.plain-surface[data-density="comfortable"] .plain-read {
+  --plain-read-leading: 1.75;
+}
+@media (max-width: 640px) {
+  .plain-read__pair {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }

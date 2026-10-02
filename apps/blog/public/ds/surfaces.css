@@ -14,7 +14,7 @@
   --ds-elevation-flat: none;
   --ds-elevation-raised: 0 1px 2px rgb(0 0 0 / 0.04);
   --ds-elevation-overlay: 0 8px 28px rgb(0 0 0 / 0.1);
-  --ds-surface-radius-card: calc(8px * 2 - 4px);
+  --ds-surface-radius-card: 2px;
   --ds-table-radius: 2px;
   --ds-table-gap: 3px;
   --ds-table-head-surface: #eaeae8;
@@ -40,7 +40,7 @@
     --ds-elevation-flat: none;
     --ds-elevation-raised: 0 1px 2px rgb(0 0 0 / 0.4);
     --ds-elevation-overlay: 0 8px 28px rgb(0 0 0 / 0.5);
-    --ds-surface-radius-card: calc(8px * 2 - 4px);
+    --ds-surface-radius-card: 2px;
     --ds-table-radius: 2px;
     --ds-table-gap: 3px;
     --ds-table-head-surface: oklch(0.349 0.003 286.22);
@@ -67,7 +67,7 @@
   --ds-elevation-flat: none;
   --ds-elevation-raised: 0 1px 2px rgb(0 0 0 / 0.4);
   --ds-elevation-overlay: 0 8px 28px rgb(0 0 0 / 0.5);
-  --ds-surface-radius-card: calc(8px * 2 - 4px);
+  --ds-surface-radius-card: 2px;
   --ds-table-radius: 2px;
   --ds-table-gap: 3px;
   --ds-table-head-surface: oklch(0.349 0.003 286.22);

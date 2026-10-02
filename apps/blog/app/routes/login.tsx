@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 
 import type { Route } from "./+types/login";
 
+import { IMAGES } from "@/components/editorial/HeroArt";
 import { PageHero } from "@/components/editorial/PageHero";
 import { buttonVariants } from "@/components/ui/button";
 import DefaultLayout from "@/layouts/DefaultLayout";
@@ -24,6 +25,7 @@ export default function Page() {
 				eyebrow="Acesso"
 				title="Não é preciso entrar"
 				lead="O blog não tem contas de leitor: artigos, mapas, guias e evidências são abertos."
+				image={IMAGES.maoChaves}
 			>
 				<div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
 					<a href="/blog/" className={cn(buttonVariants({ size: "lg" }), "gap-2")}>

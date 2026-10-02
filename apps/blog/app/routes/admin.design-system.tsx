@@ -193,11 +193,11 @@ As quebras de linha e os espaços do autor continuam preservados:
     - item recuado
     - outro item recuado`;
 const storyboard = [
-  { n: '01', title: 'Blog — início', route: '/blog/', image: '/about/1.webp', uses: 'Hero, Button, cards de território, filtros' },
-  { n: '02', title: 'Territórios', route: '/blog/#territorios-title', image: '/about/2.webp', uses: 'Filtro (Button outline sm), cards' },
-  { n: '03', title: 'Artigo', route: ARTICLE, image: '/blog/do-risco-cognitivo-a-execucao-assistida/hero.jpg', uses: 'Prose, capitular, Callout (decision, question, quote, example, note)' },
-  { n: '04', title: 'Painel', route: '/admin', image: '/about/3.webp', uses: 'Cards de acesso, Design System' },
-  { n: '05', title: 'Hub e catálogos', route: '/hub-editorial/', image: '/about/4.webp', uses: 'Ferramentas autônomas (Hub, Skills, Catálogo offline)' },
+  { n: '01', title: 'Blog — início', route: '/blog/', image: '/images/binoculo.webp', uses: 'Hero, Button, cards de território, filtros' },
+  { n: '02', title: 'Territórios', route: '/blog/#territorios-title', image: '/images/equipe-tablet.webp', uses: 'Filtro (Button outline sm), cards' },
+  { n: '03', title: 'Artigo', route: ARTICLE, image: '/images/binoculo.webp', uses: 'Prose, capitular, Callout (decision, question, quote, example, note)' },
+  { n: '04', title: 'Painel', route: '/admin', image: '/images/mao-chaves.webp', uses: 'Cards de acesso, Design System' },
+  { n: '05', title: 'Hub e catálogos', route: '/hub-editorial/', image: '/images/equipe-tablet.webp', uses: 'Ferramentas autônomas (Hub, Skills, Catálogo offline)' },
 ];
 const spacing = [4, 8, 12, 16, 20, 24, 32, 48, 64];
 const radii = [
@@ -287,7 +287,7 @@ export default function DesignSystem({ loaderData }: Route.ComponentProps) {
 
           <div className="mt-8 grid grid-cols-2 gap-3 lg:grid-cols-4">
             {grammarSurfaces.map((g) => (
-              <div key={g.name} className="rc-surface flex flex-col gap-3 rounded-[var(--surface-radius-card)] border border-[var(--border-default)] bg-[var(--surface-subtle)] p-4" data-grammar-surface={g.name}>
+              <div key={g.name} className="rc-surface rc-cell flex flex-col gap-3 p-4" data-grammar-surface={g.name}>
                 <p className="rc-title text-base">{g.n}. {g.name}</p>
                 <p className="text-muted-foreground -mt-2 text-xs">{g.role}</p>
                 <span className="h-20 rounded-lg border border-[var(--border-default)]" style={css(`background: var(${g.token})`)} data-swatch={g.token}></span>
@@ -298,7 +298,7 @@ export default function DesignSystem({ loaderData }: Route.ComponentProps) {
           </div>
 
           <div className="mt-4 grid gap-4 lg:grid-cols-2 [&>*]:min-w-0">
-            <div className="rounded-[var(--surface-radius-card)] border border-[var(--border-default)] p-5" data-testid="grammar-type">
+            <div className="rc-cell p-5" data-testid="grammar-type">
               <p className="rc-eyebrow">Hierarquia tipográfica</p>
               <p className="rc-meta mt-5 normal-case">H1 / Título · Inter Bold 56/64 · {grammar['--foreground']}</p>
               <p className="rc-display mt-2 text-[2.25rem] leading-[1.14] sm:text-[3rem]">Conhecimento para decisões melhores.</p>
@@ -308,7 +308,7 @@ export default function DesignSystem({ loaderData }: Route.ComponentProps) {
               <p className="mt-2 inline-block rounded-lg border border-[var(--border-default)] px-3 py-2 font-mono text-sm">rc_blog_001  v1.0.0  2026-10-02</p>
             </div>
             <div className="flex flex-col gap-4">
-              <div className="rounded-[var(--surface-radius-card)] border border-[var(--border-default)] p-5" data-testid="grammar-actions">
+              <div className="rc-cell p-5" data-testid="grammar-actions">
                 <p className="rc-eyebrow">Botões e ações</p>
                 <div className="mt-4 flex flex-wrap items-center gap-3">
                   <a href="#gramatica" className={cn(buttonVariants({ size: 'lg' }), 'gap-2')}>Ler artigo <ArrowRight className="size-4" aria-hidden="true" /></a>
@@ -316,7 +316,7 @@ export default function DesignSystem({ loaderData }: Route.ComponentProps) {
                   <a href="#gramatica" className="rc-link inline-flex items-center gap-1.5">Saiba mais <ArrowRight className="size-4" aria-hidden="true" /></a>
                 </div>
               </div>
-              <div className="rounded-[var(--surface-radius-card)] border border-[var(--border-default)] p-5">
+              <div className="rc-cell p-5">
                 <p className="rc-eyebrow">Tabela com gutters</p>
                 <div className="mt-3 overflow-x-auto" role="region" aria-label="Tabela com gutters" tabIndex={0}>
                   <table className="ds-table w-full min-w-[22rem] text-left [--table-cell-padding:0.5rem_0.75rem] [--table-font-size:0.875rem]">
@@ -327,23 +327,23 @@ export default function DesignSystem({ loaderData }: Route.ComponentProps) {
               </div>
             </div>
             <div className="grid gap-4 lg:col-span-2 lg:grid-cols-2 [&>*]:min-w-0">
-              <div className="rounded-[var(--surface-radius-card)] border border-[var(--border-default)] p-5">
+              <div className="rc-cell p-5">
                 <p className="rc-eyebrow">Card editorial</p>
-                <article className="mt-3 grid grid-cols-[1fr_6rem] gap-4 rounded-[var(--surface-radius-card)] border border-[var(--border-default)] p-4">
+                <article className="mt-3 grid grid-cols-[1fr_6rem] gap-4 rc-cell p-4">
                   <div>
                     <p className="rc-eyebrow">Artigo</p>
                     <h3 className="rc-title mt-1.5 text-lg">Como lidar com incerteza sem paralisar</h3>
                     <p className="text-muted-foreground mt-1.5 text-sm">Estratégias práticas para decidir quando o futuro não é claro.</p>
                     <p className="rc-meta mt-3">8 min de leitura</p>
                   </div>
-                  <img src="/about/2.webp" alt="" className="aspect-square w-full rounded-lg object-cover" loading="lazy" />
+                  <img src="/images/equipe-tablet.webp" alt="" className="aspect-square w-full rounded-[var(--table-radius)] object-contain" loading="lazy" />
                 </article>
               </div>
-              <div className="rc-surface rounded-[var(--surface-radius-card)] border border-[var(--border-default)] bg-[var(--surface-model)] p-5" data-testid="grammar-model">
+              <div className="rc-surface rounded-[var(--table-radius)] bg-[var(--surface-model)] p-5" data-testid="grammar-model">
                 <p className="rc-eyebrow">Painel de modelo</p>
                 <ol className="mt-3 grid grid-cols-3 gap-2">
                   {grammarSteps.map(({ icon: Icon, title, text }) => (
-                    <li key={title} className="bg-background flex flex-col items-center gap-1.5 rounded-lg border border-[var(--border-default)] p-3 text-center">
+                    <li key={title} className="bg-background flex flex-col items-center gap-1.5 rounded-[var(--table-radius)] p-3 text-center">
                       <Icon className="text-primary size-5" aria-hidden="true" />
                       <span className="text-xs font-semibold">{title}</span>
                       <span className="text-muted-foreground text-[0.6875rem] leading-tight">{text}</span>
@@ -360,8 +360,8 @@ export default function DesignSystem({ loaderData }: Route.ComponentProps) {
           <h2 id="moodboard-title" className={h2}>Mood board</h2>
           <p className={lead}>Imagens em uso, cores e tipografia que definem o tom editorial.</p>
           <div className="mt-8 grid grid-cols-6 grid-rows-2 gap-3">
-            <img src="/blog/do-risco-cognitivo-a-execucao-assistida/hero.jpg" alt="Arte da tecla Ctrl" className="col-span-3 row-span-2 aspect-[4/5] w-full rounded-2xl object-cover sm:col-span-2" />
-            <img src="/about/1.webp" alt="" className="col-span-3 h-full w-full rounded-2xl object-cover sm:col-span-2" />
+            <img src="/images/binoculo.webp" alt="Ilustração de uma mulher observando com um binóculo azul" className="col-span-3 row-span-2 aspect-[4/5] w-full rounded-[var(--table-radius)] object-contain sm:col-span-2" />
+            <img src="/images/equipe-tablet.webp" alt="" className="col-span-3 h-full w-full rounded-[var(--table-radius)] object-contain sm:col-span-2" />
             <div className="col-span-3 flex flex-col justify-between rounded-2xl p-5 sm:col-span-2" style={css("background: var(--color-brand-strong); color: var(--color-brand-on-strong)")}>
               <span className="text-sm font-medium opacity-80">Display · Inter 700</span>
               <span className="text-4xl font-medium tracking-tight">Aa</span>
@@ -371,7 +371,7 @@ export default function DesignSystem({ loaderData }: Route.ComponentProps) {
               <span style={css("background: var(--color-attention-default)")}></span>
               <span style={css("background: var(--color-critical-default)")}></span>
             </div>
-            <img src="/about/4.webp" alt="" className="col-span-3 h-full w-full rounded-2xl object-cover sm:col-span-2" />
+            <img src="/images/mao-chaves.webp" alt="" className="col-span-3 h-full w-full rounded-[var(--table-radius)] object-contain sm:col-span-2" />
           </div>
         </section>
 
@@ -381,8 +381,8 @@ export default function DesignSystem({ loaderData }: Route.ComponentProps) {
           <p className={lead}>A jornada do leitor, quadro a quadro, com os componentes de cada etapa.</p>
           <ol className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {storyboard.map((f, i) => (
-              <li key={i} className="bg-card overflow-hidden rounded-2xl border">
-                <img src={f.image} alt="" loading="lazy" className="aspect-video w-full object-cover" />
+              <li key={i} className="rc-cell overflow-hidden">
+                <img src={f.image} alt="" loading="lazy" className="aspect-video w-full object-contain" />
                 <div className="p-5">
                   <p className="text-primary text-sm font-medium">{f.n}</p>
                   <h3 className="mt-1 text-lg font-medium">{f.title}</h3>
@@ -405,7 +405,7 @@ export default function DesignSystem({ loaderData }: Route.ComponentProps) {
             {families.map((f, i) => (
               <div key={i}>
                 <p className="text-muted-foreground mb-2 font-mono text-xs">{f}</p>
-                <div className="grid grid-cols-11 overflow-hidden rounded-xl border">
+                <div className="grid grid-cols-11 overflow-hidden rounded-[var(--table-radius)] border">
                   {steps.map((st, i) => (
                     <div key={i} className="flex h-14 items-end p-1" style={css(`background: var(--${f}-${st}); color: ${st >= 600 ? 'white' : 'black'}`)}>
                       <span className="font-mono text-[10px]">{st}</span>
@@ -420,7 +420,7 @@ export default function DesignSystem({ loaderData }: Route.ComponentProps) {
           <p className="text-muted-foreground mt-1 text-sm">Alterne o tema no menu para ver os valores provisórios do modo escuro.</p>
           <div className="mt-4 grid gap-4 md:grid-cols-3">
             {families.map((f, i) => (
-              <div key={i} className="overflow-hidden rounded-xl border">
+              <div key={i} className="overflow-hidden rounded-[var(--table-radius)] border">
                 {roles.map((r, i) => (
                   <div key={i} className="flex items-center gap-3 border-b p-3 last:border-b-0">
                     <span className="size-8 shrink-0 rounded-md border" style={css(`background: var(--color-${f}-${r})`)}></span>
@@ -464,7 +464,7 @@ export default function DesignSystem({ loaderData }: Route.ComponentProps) {
           </p>
           <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3" data-testid="surfaces">
             {surfaces.map((sf, i) => (
-              <div key={i} data-surface={sf.name} className={cn('flex min-w-0 flex-col gap-1 rounded-xl border p-4', !['background', 'popover'].includes(sf.name) && 'rc-surface')} style={css(`background: var(${sf.v})`)}>
+              <div key={i} data-surface={sf.name} className={cn('flex min-w-0 flex-col gap-1 rc-cell p-4', !['background', 'popover'].includes(sf.name) && 'rc-surface')} style={css(`background: var(${sf.v})`)}>
                 <p className="text-foreground font-medium">{sf.name}</p>
                 <p className="text-muted-foreground text-sm" data-text="secondary">Texto secundário sobre {sf.name}.</p>
                 {sf.extra ? (
@@ -476,7 +476,7 @@ export default function DesignSystem({ loaderData }: Route.ComponentProps) {
               </div>
             ))}
           </div>
-          <div className="mt-4 grid gap-3 rounded-2xl border p-5 md:grid-cols-3" data-testid="text-ladder">
+          <div className="mt-4 grid gap-3 rc-cell p-5 md:grid-cols-3" data-testid="text-ladder">
             {textLadder.map(([n, v, use], i) => (
               <div key={i} className="flex min-w-0 flex-col gap-1">
                 <p className="text-lg font-medium" style={css(`color: var(${v})`)}>Aa — {n}</p>
@@ -492,7 +492,7 @@ export default function DesignSystem({ loaderData }: Route.ComponentProps) {
           </p>
           <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5" data-testid="chart-palette">
             {chartPalette.map(([n, from, use], i) => (
-              <div key={i} className="flex min-w-0 flex-col gap-2 rounded-xl border p-3">
+              <div key={i} className="flex min-w-0 flex-col gap-2 rc-cell p-3">
                 <span className="h-12 rounded-lg border" data-chart-swatch={n} style={css(`background: var(--${n})`)}></span>
                 <span className="font-mono text-xs">--{n}</span>
                 <span className="text-muted-foreground text-xs">{from}</span>
@@ -502,7 +502,7 @@ export default function DesignSystem({ loaderData }: Route.ComponentProps) {
           </div>
 
           <h3 className="mt-10 text-xl font-medium">Tipografia</h3>
-          <div className="mt-4 flex flex-col gap-6 rounded-2xl border p-6">
+          <div className="mt-4 flex flex-col gap-6 rc-cell p-6">
             <div><p className="text-muted-foreground font-mono text-xs">h1 · display</p><p className="text-3xl tracking-tight sm:text-4xl md:text-5xl lg:text-6xl" style={css("font-family: var(--font-display); font-weight: var(--display-weight)")}>Do risco à execução</p></div>
             <div><p className="text-muted-foreground font-mono text-xs">h2 · seção</p><p className="text-primary text-4xl font-medium" style={css("font-family: var(--font-display)")}>Territórios</p></div>
             <div><p className="text-muted-foreground font-mono text-xs">corpo · text-lg 500</p><p className="text-muted-foreground max-w-xl text-lg font-medium">Compreender o problema. Redesenhar o trabalho. Criar condições para executar.</p></div>
@@ -511,17 +511,17 @@ export default function DesignSystem({ loaderData }: Route.ComponentProps) {
 
           <h3 className="mt-10 text-xl font-medium">Espaçamento, raios, sombras, movimento</h3>
           <div className="mt-4 grid gap-6 md:grid-cols-2">
-            <div className="flex flex-col gap-2 rounded-2xl border p-5">
+            <div className="flex flex-col gap-2 rc-cell p-5">
               {spacing.map((px, i) => (
                 <div key={i} className="flex items-center gap-3"><span className="font-mono text-xs w-10">{px}px</span><span className="bg-primary h-3 rounded-sm" style={css(`width: ${px * 3}px`)}></span></div>
               ))}
             </div>
-            <div className="grid grid-cols-3 gap-3 rounded-2xl border p-5">
+            <div className="grid grid-cols-3 gap-3 rc-cell p-5">
               {radii.map(([n, v], i) => (
                 <div key={i} className="flex flex-col items-center gap-2"><span className="bg-muted size-14 border" style={css(`border-radius: ${v}`)}></span><span className="text-center font-mono text-[10px]">{n}</span></div>
               ))}
             </div>
-            <div className="flex flex-wrap gap-4 rounded-2xl border p-5">
+            <div className="flex flex-wrap gap-4 rc-cell p-5">
               {elevations.map(([n, use, v]) => (
                 <div key={n} className="flex w-40 flex-col gap-2">
                   <span className="bg-background grid h-20 place-items-center rounded-xl border font-mono text-[10px]" style={css(`box-shadow: ${v}`)} data-elevation={n}>{n}</span>
@@ -529,7 +529,7 @@ export default function DesignSystem({ loaderData }: Route.ComponentProps) {
                 </div>
               ))}
             </div>
-            <div className="flex flex-col gap-2 rounded-2xl border p-5 font-mono text-xs">
+            <div className="flex flex-col gap-2 rc-cell p-5 font-mono text-xs">
               <span>--callout-motion-fast: 120ms</span>
               <span>--callout-motion-default: 180ms</span>
               <span>--callout-easing: cubic-bezier(0.2, 0, 0, 1)</span>

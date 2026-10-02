@@ -22,6 +22,7 @@ export function getPostViewsWithBody(): PostWithBody[] {
 				updatedDate: data.updatedDate,
 				minutes: readingTime(body),
 				image: data.image,
+				imageAlt: data.imageAlt,
 				contentId: data.contentId,
 				type: data.type,
 				tags: data.tags,

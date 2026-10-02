@@ -157,21 +157,22 @@ test.describe("flat cards, real overlays", () => {
     return els.evaluateAll((nodes) =>
       nodes.map((el) => {
         const cs = getComputedStyle(el);
-        return { bg: cs.backgroundColor, border: cs.borderTopColor, shadow: cs.boxShadow };
+        return { bg: cs.backgroundColor, borderWidth: cs.borderTopWidth, radius: cs.borderTopLeftRadius, shadow: cs.boxShadow };
       }),
     );
   };
 
   for (const [route, sel] of [
     [SHOWROOM, "[data-testid=kpi]"],
-    ["/admin/", "a.bg-card"],
+    ["/admin/", "a.rc-cell"],
     ["/admin/rotas/", ".route-card"],
     ["/loja/", "[data-slot=card]"],
   ] as const) {
-    test(`${route} ${sel}: neutral surface, subtle border, no shadow`, async ({ page }) => {
+    // ADR-12: a card is a table cell — Subtle fill, no outline, 2px radius, no shadow.
+    test(`${route} ${sel}: table-cell surface, no outline, no shadow`, async ({ page }) => {
       await page.goto(route);
       for (const s of await flat(page, sel)) {
-        expect({ bg: s.bg, border: s.border }).toEqual({ bg: "rgb(245, 245, 244)", border: "rgb(234, 234, 232)" });
+        expect({ bg: s.bg, borderWidth: s.borderWidth, radius: s.radius }).toEqual({ bg: "rgb(245, 245, 244)", borderWidth: "0px", radius: "2px" });
         expect(paintsShadow(s.shadow), `shadow: ${s.shadow}`).toBe(false);
       }
     });
@@ -179,7 +180,7 @@ test.describe("flat cards, real overlays", () => {
 
   test("admin card hover changes surface, never adds a shadow", async ({ page }) => {
     await page.goto("/admin/");
-    const card = page.locator("a.bg-card").first();
+    const card = page.locator("a.rc-cell").first();
     await card.hover();
     await expect.poll(() => card.evaluate((e) => getComputedStyle(e).backgroundColor)).toBe("rgb(240, 240, 238)");
     expect(paintsShadow(await card.evaluate((e) => getComputedStyle(e).boxShadow))).toBe(false);

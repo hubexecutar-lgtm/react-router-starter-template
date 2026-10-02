@@ -24,8 +24,8 @@ export function ArticleCard({
 		return (
 			<article className="group relative" data-territory={post.territory.slug}>
 				{post.image && (
-					<div className="overflow-hidden rounded-[var(--surface-radius-card)] border border-[var(--border-default)]">
-						<img src={post.image} alt="" className="aspect-[16/9] w-full object-cover" loading="lazy" />
+					<div className="rc-cell overflow-hidden">
+						<img src={post.image} alt={post.imageAlt ?? ""} className="aspect-[16/9] w-full object-cover" loading="lazy" />
 					</div>
 				)}
 				<p className="rc-eyebrow mt-6 flex flex-wrap items-center gap-3">
@@ -84,7 +84,7 @@ export function ArticleCard({
 	return (
 		<article className={cn("group relative flex h-full gap-4 p-4", SURFACE_LINK)} data-territory={post.territory.slug}>
 			{post.image && (
-				<img src={post.image} alt="" className="size-24 shrink-0 rounded-[var(--radius-md)] object-cover sm:size-28" loading="lazy" />
+				<img src={post.image} alt={post.imageAlt ?? ""} className="size-24 shrink-0 rounded-[var(--radius-md)] object-cover sm:size-28" loading="lazy" />
 			)}
 			<div className="flex min-w-0 flex-col">
 				<p className="rc-eyebrow text-primary">

@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 
 import type { Route } from "./+types/about";
 
+import { IMAGES } from "@/components/editorial/HeroArt";
 import { PageHero } from "@/components/editorial/PageHero";
 import { SURFACE } from "@/components/editorial/surface";
 import { PlainTextPanel } from "@/components/plain";
@@ -41,6 +42,8 @@ export default function Page() {
 				eyebrow="Sobre o projeto"
 				title="Conhecimento que vira estrutura."
 				lead="O Risco Cognitivo é um blog e um framework sobre como a cognição participa da formação do risco no trabalho — e sobre o que reduz, mede e acompanha esse risco."
+				image={IMAGES.binoculo}
+				seed={3}
 			/>
 
 			<section className="container grid gap-4 md:grid-cols-3" aria-label="Três pilares">
@@ -87,6 +90,14 @@ export default function Page() {
 						Os artigos seguem o workflow de Quick Frameworks: um tópico por vez, fontes verificadas antes da
 						escrita e validação automática da estrutura. O banco editorial vive no Hub Editorial.
 					</p>
+					<img
+						src={IMAGES.equipeTablet.src}
+						alt={IMAGES.equipeTablet.alt}
+						width={IMAGES.equipeTablet.width}
+						height={IMAGES.equipeTablet.height}
+						loading="lazy"
+						className="mt-6 aspect-[4/3] w-full max-w-md object-contain"
+					/>
 					<div className="mt-6">
 						<PlainTextPanel id="ABOUT-PIPELINE-001" kind="procedure" title="Workflow editorial" source={PIPELINE} />
 					</div>
