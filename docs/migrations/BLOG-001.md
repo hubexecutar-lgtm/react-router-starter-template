@@ -122,20 +122,16 @@ Causa: o upload autentica com o JWT da sessão, e o proxy desta sessão de traba
 header `Authorization` de `api.cloudflare.com` pela credencial injetada. Nada foi publicado: o
 Worker continua com a versão anterior (modificada em 2026-10-02T14:27:47Z, antes da sessão).
 
-**Workers Builds (CI da Cloudflare ligado a este repositório).** O CI roda na raiz do repositório:
-`bun install --frozen-lockfile`, `npm run build`, `npm run deploy` (e, nos builds de PR,
-`npx wrangler versions upload`). Depois da migração a raiz virou o workspace, e dois pontos
-quebravam esse fluxo (reproduzidos num clone limpo, sem o painel):
+**Workers Builds (CI da Cloudflare ligado a este repositório).** Configuração usada (Worker
+`react-router-starter-template`, Settings → Builds): Root directory `apps/blog`, build
+`npm run build`, deploy de produção `npx wrangler deploy`, builds de PR `npx wrangler preview`.
+O `npm clean-install` roda dentro de `apps/blog` e resolve o workspace pelo lockfile da raiz.
 
-1. A raiz não tinha script `deploy` (só `deploy:blog`): `npm run deploy` falhava com
-   `Missing script: "deploy"`, depois de install e build passarem. Correção: `deploy` na raiz
-   delega ao app (`npm run deploy -w apps/blog`).
-2. O `wrangler` chamado direto na raiz (preview de PR) não achava Worker e tentava autoconfigurar
-   um projeto. Correção: `.wrangler/deploy/config.json` na raiz aponta para
-   `apps/blog/build/server/wrangler.json`, a configuração gerada pelo build do blog (mecanismo
-   que o próprio build do React Router usa para o redirect em `apps/blog`).
-
-Nenhuma mudança no painel é necessária. Alternativa equivalente: Root directory = `apps/blog`.
+`wrangler preview` exige um bloco `previews` na configuração (o log do build de `bb3ce81`
+falhou com "Your Wrangler configuration is missing a `previews` block"); `apps/blog/wrangler.jsonc`
+declara `"previews": {}`, que o plugin da Cloudflare propaga para `build/server/wrangler.json`.
+Na `main`, antes do merge, o build falha com "root directory not found" porque `apps/blog` ainda
+não existe nessa branch; isso se resolve com o merge.
 
 Para publicar, de um ambiente com credencial própria (máquina local ou CI):
 

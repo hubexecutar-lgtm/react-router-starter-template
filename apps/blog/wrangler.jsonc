@@ -10,5 +10,8 @@
 		"enabled": true,
 		"head_sampling_rate": 1
 	},
-	"upload_source_maps": true
+	"upload_source_maps": true,
+	// Required by `wrangler preview`, the command Workers Builds runs on pull request
+	// branches. Empty: previews use the top-level settings.
+	"previews": {}
 }
