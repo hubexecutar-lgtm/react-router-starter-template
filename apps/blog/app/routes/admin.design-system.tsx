@@ -1,3 +1,5 @@
+import { ArrowRight, CircleDot, Eye, FileText } from 'lucide-react';
+
 import type { Route } from './+types/admin.design-system';
 
 import { ComponentGallery } from '@/components/design-system/component-gallery';
@@ -14,6 +16,7 @@ import { cn } from '@/lib/utils';
 
 const ARTICLE = '/blog/do-risco-cognitivo-a-execucao-assistida/';
 const sections = [
+  { id: 'gramatica', label: 'Gramática visual' },
   { id: 'moodboard', label: 'Mood board' },
   { id: 'storyboard', label: 'Storyboard' },
   { id: 'tokens', label: 'Tokens' },
@@ -223,8 +226,31 @@ const surfaceScale = [
 
 // Hex values shown in this page are read from the token source, never duplicated here.
 export function loader() {
-  return { tokens: Object.fromEntries(surfaceScale.map(([n]) => [n, tokenValue(`--${n}`)])) };
+  return {
+    tokens: Object.fromEntries(surfaceScale.map(([n]) => [n, tokenValue(`--${n}`)])),
+    grammar: Object.fromEntries(
+      [...grammarSurfaces.map((g) => g.token), '--foreground', '--muted-foreground', '--primary'].map((t) => [t, tokenValue(t)]),
+    ),
+  };
 }
+// ---- Visual grammar (mood board 10, ADR-11): four surfaces, type, actions, table, card, model.
+const grammarSurfaces = [
+  { n: '1', name: 'Canvas', role: 'Superfície principal', token: '--background', use: 'Canvas limpo para leitura e foco no conteúdo.' },
+  { n: '2', name: 'Subtle', role: 'Superfície secundária', token: '--surface-subtle', use: 'Blocos, seções e módulos de apoio.' },
+  { n: '3', name: 'Tabular', role: 'Células e tabelas', token: '--surface-tabular', use: 'Tabelas, listas e dados estruturados.' },
+  { n: '4', name: 'Diagram', role: 'Painel de modelo', token: '--surface-model', use: 'Destaque para modelos, fluxos e esquemas.' },
+];
+const grammarTable = [
+  ['Artigo', 'Texto', 'Canvas', 'Conteúdo principal'],
+  ['Guia', 'Passo a passo', 'Subtle', 'Aprendizado prático'],
+  ['Referência', 'Tabela', 'Tabular', 'Dados estruturados'],
+  ['Modelo', 'Diagrama', 'Diagram', 'Explicação visual'],
+];
+const grammarSteps = [
+  { icon: Eye, title: '1. Observar', text: 'Contexto e sinais' },
+  { icon: FileText, title: '2. Analisar', text: 'Modelos e evidências' },
+  { icon: CircleDot, title: '3. Decidir', text: 'Ação no mundo real' },
+];
 const h2 = 'text-primary scroll-mt-28 text-4xl font-medium';
 const lead = 'text-muted-foreground mt-3 max-w-2xl text-lg font-medium';
 
@@ -236,7 +262,7 @@ export const meta: Route.MetaFunction = ({ location }) =>
   });
 
 export default function DesignSystem({ loaderData }: Route.ComponentProps) {
-  const { tokens } = loaderData;
+  const { tokens, grammar } = loaderData;
   return (
     <DefaultLayout>
       <div className="container max-w-5xl pt-12 pb-24 lg:pt-20">
@@ -250,6 +276,85 @@ export default function DesignSystem({ loaderData }: Route.ComponentProps) {
           {sections.map((s, i) => <a key={i} href={`#${s.id}`} className={buttonVariants({ variant: 'outline', size: 'sm' })}>{s.label}</a>)}
         </nav>
 
+        {/* Visual grammar — mood board 10 */}
+        <section id="gramatica" className="mt-20" aria-labelledby="gramatica-title" data-testid="visual-grammar">
+          <p className="rc-eyebrow">Mood board 10 · ADR-11</p>
+          <h2 id="gramatica-title" className="rc-display mt-3 text-5xl">Gramática visual</h2>
+          <p className="rc-lead mt-3 max-w-2xl text-lg">
+            Uma linguagem, três camadas: clareza editorial, estrutura de informação e elementos de modelo. Valores lidos de{' '}
+            <code>app/styles/global.css</code>.
+          </p>
+
+          <div className="mt-8 grid grid-cols-2 gap-3 lg:grid-cols-4">
+            {grammarSurfaces.map((g) => (
+              <div key={g.name} className="rc-surface flex flex-col gap-3 rounded-[var(--surface-radius-card)] border border-[var(--border-default)] bg-[var(--surface-subtle)] p-4" data-grammar-surface={g.name}>
+                <p className="rc-title text-base">{g.n}. {g.name}</p>
+                <p className="text-muted-foreground -mt-2 text-xs">{g.role}</p>
+                <span className="h-20 rounded-lg border border-[var(--border-default)]" style={css(`background: var(${g.token})`)} data-swatch={g.token}></span>
+                <p className="font-mono text-xs">{grammar[g.token]}</p>
+                <p className="text-muted-foreground text-xs">{g.use}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-4 grid gap-4 lg:grid-cols-2 [&>*]:min-w-0">
+            <div className="rounded-[var(--surface-radius-card)] border border-[var(--border-default)] p-5" data-testid="grammar-type">
+              <p className="rc-eyebrow">Hierarquia tipográfica</p>
+              <p className="rc-meta mt-5 normal-case">H1 / Título · Inter Bold 56/64 · {grammar['--foreground']}</p>
+              <p className="rc-display mt-2 text-[2.25rem] leading-[1.14] sm:text-[3rem]">Conhecimento para decisões melhores.</p>
+              <p className="rc-meta mt-6 normal-case">Corpo / Texto · Inter Regular 18/28 · {grammar['--foreground']} / {grammar['--muted-foreground']}</p>
+              <p className="mt-2 text-lg leading-7">Artigos, guias e relatos sobre como pensamos, decidimos e lidamos com incertezas no mundo real.</p>
+              <p className="rc-meta mt-6 normal-case">Mono / Técnico · IBM Plex Mono 14/20 · {grammar['--muted-foreground']}</p>
+              <p className="mt-2 inline-block rounded-lg border border-[var(--border-default)] px-3 py-2 font-mono text-sm">rc_blog_001  v1.0.0  2026-10-02</p>
+            </div>
+            <div className="flex flex-col gap-4">
+              <div className="rounded-[var(--surface-radius-card)] border border-[var(--border-default)] p-5" data-testid="grammar-actions">
+                <p className="rc-eyebrow">Botões e ações</p>
+                <div className="mt-4 flex flex-wrap items-center gap-3">
+                  <a href="#gramatica" className={cn(buttonVariants({ size: 'lg' }), 'gap-2')}>Ler artigo <ArrowRight className="size-4" aria-hidden="true" /></a>
+                  <a href="#gramatica" className={buttonVariants({ variant: 'outline', size: 'lg' })}>Ver todos</a>
+                  <a href="#gramatica" className="rc-link inline-flex items-center gap-1.5">Saiba mais <ArrowRight className="size-4" aria-hidden="true" /></a>
+                </div>
+              </div>
+              <div className="rounded-[var(--surface-radius-card)] border border-[var(--border-default)] p-5">
+                <p className="rc-eyebrow">Tabela com gutters</p>
+                <div className="mt-3 overflow-x-auto" role="region" aria-label="Tabela com gutters" tabIndex={0}>
+                  <table className="ds-table w-full min-w-[22rem] text-left [--table-cell-padding:0.5rem_0.75rem] [--table-font-size:0.875rem]">
+                    <thead><tr><th scope="col">Tópico</th><th scope="col">Formato</th><th scope="col">Camada</th><th scope="col">Uso</th></tr></thead>
+                    <tbody>{grammarTable.map((row) => <tr key={row[0]}>{row.map((c) => <td key={c}>{c}</td>)}</tr>)}</tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div className="grid gap-4 lg:col-span-2 lg:grid-cols-2 [&>*]:min-w-0">
+              <div className="rounded-[var(--surface-radius-card)] border border-[var(--border-default)] p-5">
+                <p className="rc-eyebrow">Card editorial</p>
+                <article className="mt-3 grid grid-cols-[1fr_6rem] gap-4 rounded-[var(--surface-radius-card)] border border-[var(--border-default)] p-4">
+                  <div>
+                    <p className="rc-eyebrow">Artigo</p>
+                    <h3 className="rc-title mt-1.5 text-lg">Como lidar com incerteza sem paralisar</h3>
+                    <p className="text-muted-foreground mt-1.5 text-sm">Estratégias práticas para decidir quando o futuro não é claro.</p>
+                    <p className="rc-meta mt-3">8 min de leitura</p>
+                  </div>
+                  <img src="/about/2.webp" alt="" className="aspect-square w-full rounded-lg object-cover" loading="lazy" />
+                </article>
+              </div>
+              <div className="rc-surface rounded-[var(--surface-radius-card)] border border-[var(--border-default)] bg-[var(--surface-model)] p-5" data-testid="grammar-model">
+                <p className="rc-eyebrow">Painel de modelo</p>
+                <ol className="mt-3 grid grid-cols-3 gap-2">
+                  {grammarSteps.map(({ icon: Icon, title, text }) => (
+                    <li key={title} className="bg-background flex flex-col items-center gap-1.5 rounded-lg border border-[var(--border-default)] p-3 text-center">
+                      <Icon className="text-primary size-5" aria-hidden="true" />
+                      <span className="text-xs font-semibold">{title}</span>
+                      <span className="text-muted-foreground text-[0.6875rem] leading-tight">{text}</span>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Mood board */}
         <section id="moodboard" className="mt-20" aria-labelledby="moodboard-title">
           <h2 id="moodboard-title" className={h2}>Mood board</h2>
@@ -258,7 +363,7 @@ export default function DesignSystem({ loaderData }: Route.ComponentProps) {
             <img src="/blog/do-risco-cognitivo-a-execucao-assistida/hero.jpg" alt="Arte da tecla Ctrl" className="col-span-3 row-span-2 aspect-[4/5] w-full rounded-2xl object-cover sm:col-span-2" />
             <img src="/about/1.webp" alt="" className="col-span-3 h-full w-full rounded-2xl object-cover sm:col-span-2" />
             <div className="col-span-3 flex flex-col justify-between rounded-2xl p-5 sm:col-span-2" style={css("background: var(--color-brand-strong); color: var(--color-brand-on-strong)")}>
-              <span className="text-sm font-medium opacity-80">Display · DM Sans</span>
+              <span className="text-sm font-medium opacity-80">Display · Inter 700</span>
               <span className="text-4xl font-medium tracking-tight">Aa</span>
             </div>
             <div className="col-span-3 grid grid-cols-3 overflow-hidden rounded-2xl sm:col-span-2">
@@ -353,13 +458,13 @@ export default function DesignSystem({ loaderData }: Route.ComponentProps) {
 
           <h3 className="mt-10 text-xl font-medium">Superfícies e texto cinza</h3>
           <p className="text-muted-foreground mt-2 max-w-2xl text-base font-medium">
-            Paleta de cards do sistema com a escada de texto cinza. O cinza extra
-            (<code>--muted-foreground-subtle</code>) mantém AA só sobre card, background e popover;
-            em muted, secondary e accent use <code>--muted-foreground</code>.
+            Paleta de cards do sistema com a escada de texto cinza. O secundário do mockup
+            (<code>--muted-foreground</code>) é AA só no canvas; dentro de superfícies cinza (<code>rc-surface</code>,
+            cards, tabelas, plain) ele vira <code>--muted-foreground-on-gray</code> automaticamente (ADR-11).
           </p>
           <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3" data-testid="surfaces">
             {surfaces.map((sf, i) => (
-              <div key={i} data-surface={sf.name} className="flex min-w-0 flex-col gap-1 rounded-xl border p-4" style={css(`background: var(${sf.v})`)}>
+              <div key={i} data-surface={sf.name} className={cn('flex min-w-0 flex-col gap-1 rounded-xl border p-4', !['background', 'popover'].includes(sf.name) && 'rc-surface')} style={css(`background: var(${sf.v})`)}>
                 <p className="text-foreground font-medium">{sf.name}</p>
                 <p className="text-muted-foreground text-sm" data-text="secondary">Texto secundário sobre {sf.name}.</p>
                 {sf.extra ? (

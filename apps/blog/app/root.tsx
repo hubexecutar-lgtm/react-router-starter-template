@@ -13,16 +13,13 @@ import "@/styles/global.css";
 import { SITE_METADATA } from "@/consts";
 
 export const links: Route.LinksFunction = () => [
-	// Google Fonts
+	// Google Fonts (ADR-11): Inter for display and text, IBM Plex Mono for technical text.
 	{ rel: "preconnect", href: "https://fonts.googleapis.com" },
 	{ rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
 	{
 		rel: "stylesheet",
-		href: "https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
+		href: "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
 	},
-	// Local fonts
-	{ rel: "preload", href: "/fonts/dm-sans/DMSans-Regular.ttf", as: "font", type: "font/ttf", crossOrigin: "anonymous" },
-	{ rel: "preload", href: "/fonts/dm-sans/DMSans-Bold.ttf", as: "font", type: "font/ttf", crossOrigin: "anonymous" },
 	// Favicon
 	...SITE_METADATA.icons.icon.map((icon) => ({ rel: "icon", type: icon.type, sizes: icon.sizes, href: icon.url })),
 	...SITE_METADATA.icons.apple.map((icon) => ({ rel: "apple-touch-icon", sizes: icon.sizes, href: icon.url })),

@@ -5,71 +5,44 @@
 
 @custom-variant dark (&:is(.dark *));
 
-@font-face {
-  font-family: "DM Sans";
-  src: url("/fonts/dm-sans/DMSans-Regular.ttf") format("truetype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "DM Sans";
-  src: url("/fonts/dm-sans/DMSans-Medium.ttf") format("truetype");
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "DM Sans";
-  src: url("/fonts/dm-sans/DMSans-SemiBold.ttf") format("truetype");
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "DM Sans";
-  src: url("/fonts/dm-sans/DMSans-Bold.ttf") format("truetype");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
 :root {
-  /* Design tokens from DESIGN-HANDOFF-001 (hex -> oklch) */
-  --background: oklch(1 0 0); /* color-bg-canvas #FFFFFF */
-  --foreground: #111111; /* text primary */
+  /* Mockup palette (RC-DESIGN-MOCKUPS-001, ADR-11): exact values of mood board 10. */
+  --background: #ffffff; /* Canvas */
+  --foreground: #202124; /* text primary — >= 13:1 on every surface */
   --card: var(--surface-default); /* ADR-09: cards use the neutral surface */
-  --card-foreground: #111111;
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.232 0.004 286.1);
-  --primary: oklch(0.552 0.171 260.25); /* brand blue #306DD4 (ADR-09) */
-  --primary-hover: oklch(0.495 0.164 260.81); /* #255CBD */
-  --primary-soft: oklch(0.966 0.016 262.75); /* #EEF4FF — background only; blue text on it is < 4.5:1 */
-  --primary-foreground: oklch(0.985 0 0);
+  --card-foreground: var(--foreground);
+  --popover: #ffffff;
+  --popover-foreground: var(--foreground);
+  --primary: #2563eb; /* action, links, focus — 5.17:1 on canvas; never as text on --surface-tabular (4.29:1) */
+  --primary-hover: #1d4ed8;
+  --primary-soft: var(--surface-model);
+  --primary-foreground: #ffffff;
   --secondary: var(--surface-hover);
-  --secondary-foreground: #111111;
+  --secondary-foreground: var(--foreground);
   --muted: var(--surface-hover);
-  --muted-foreground: #6a6a72; /* text secondary — AA on every neutral surface */
+  --muted-foreground: #6b7280; /* text secondary on the canvas (4.83:1) */
+  /* AA deviation: #6B7280 is 4.0–4.4:1 on the grays, so gray surfaces swap --muted-foreground
+     for this value (see "Secondary text on gray surfaces" below). */
+  --muted-foreground-on-gray: #5f6670;
   --accent: var(--surface-hover);
-  --accent-foreground: #111111;
+  --accent-foreground: var(--foreground);
   --destructive: oklch(0.577 0.245 27.325);
   --border: var(--border-default);
-  --input: oklch(0.865 0.007 286.26); /* control boundary #D2D2D7: stays stronger than --border */
-  --ring: oklch(0.552 0.171 260.25); /* = --primary */
+  --input: #d1d5db; /* control boundary: stronger than the structural border */
+  --ring: var(--primary);
 
   /* Surfaces & Elevation (ADR-09 / DS-SURFACE-UNIFICATION-001): the one neutral contract.
      Only this block, the --plain-* aliases and the dark overrides hold neutral hex values. */
   --surface-page: var(--background); /* #FFFFFF */
-  --surface-default: #f8f8f8; /* cards, table cells, panels, diagrams */
-  --surface-subtle: #fafafa; /* secondary areas */
-  --surface-hover: #f3f3f3; /* hover; also --muted / --secondary / --accent */
-  --surface-selected: #eeeeee; /* selected item / row */
-  --border-subtle: #f0f0f0;
-  --border-default: #ebebeb; /* structure only: never text, icon or a state by itself */
-  --border-strong: #dadada;
+  --surface-subtle: #f5f5f4; /* Subtle: blocks, sections, support modules */
+  --surface-default: var(--surface-subtle); /* cards, table cells, panels */
+  --surface-tabular: #eaeae8; /* Tabular: table headers, structured data */
+  --surface-model: #eff6ff; /* Diagram: model panels, principles, flows */
+  --surface-hover: #f0f0ee; /* hover; also --muted / --secondary / --accent — keeps --primary at 4.5:1 */
+  --surface-selected: var(--surface-tabular); /* selected item / row */
+  --border-subtle: #f0f0ee;
+  --border-default: #eaeae8; /* structure only: never text, icon or a state by itself */
+  --border-strong: #d6d6d3;
   --elevation-flat: none;
   --elevation-raised: 0 1px 2px rgb(0 0 0 / 0.04); /* controls (xs/sm) */
   --elevation-overlay: 0 8px 28px rgb(0 0 0 / 0.1); /* popover, dialog, drawer, sheet, hover-card */
@@ -87,7 +60,7 @@
   --chart-5: var(--muted-foreground);
   /* Extra-gray text (captions, axis ticks, timestamps). AA only on card/background/popover;
      on muted/secondary surfaces use --muted-foreground. */
-  --muted-foreground-subtle: #727272; /* 4.53:1 on #F8F8F8 — only on card/background/popover */
+  --muted-foreground-subtle: var(--muted-foreground);
 
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
@@ -110,22 +83,20 @@
   --shadow-xl: var(--elevation-overlay);
   --shadow-2xl: var(--elevation-overlay);
 
-  --font-dm-sans: "DM Sans", sans-serif;
+  /* Typography (ADR-11): Inter for display and text, IBM Plex Mono for technical text. */
   --font-inter:
-    -apple-system, BlinkMacSystemFont, "Segoe UI",
-    sans-serif; /* font-family-ui, DESIGN-HANDOFF-001 */
+    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 
-  --font-sans:
-    var(--font-dm-sans), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
   --font-mono:
-    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
-    "Courier New", monospace;
+    "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
 
   /* StyleGlide provides a better abstraction for fonts */
   --display-family: var(--font-sans);
   --text-family: var(--font-inter);
-  --display-weight: 600;
+  --display-weight: 700;
   --text-weight: 400;
 
   /* ===== DS-CALLOUT-001 / PAL-ANNEX-01 ===== */
@@ -215,7 +186,7 @@
   --plain-muted: var(--muted-foreground);
   /* Tables (ADR-05 §15, STORE-WIREFRAMES reference): separated gray cells. */
   --table-surface: var(--surface-default);
-  --table-head-surface: var(--border-default);
+  --table-head-surface: var(--surface-tabular);
   --table-gap: 3px;
   --table-text: var(--plain-text);
   --table-link: var(--primary);
@@ -230,7 +201,7 @@
   --callout-accent-amber: var(--color-attention-default);
   --callout-accent-red: var(--color-critical-default);
   --callout-text-strong: var(--foreground);
-  --callout-text-default: var(--muted-foreground);
+  --callout-text-default: var(--muted-foreground-on-gray); /* callouts sit on tinted/gray surfaces (ADR-11) */
   --callout-border-width: 1px;
   /* Geometry derives from the site's control tokens (Button, --radius, --spacing).
      Handoff pixels were measured on a 3x raster (1170px = 390pt): 56/32/32 -> ~18/11/11. */
@@ -287,7 +258,8 @@
 }
 
 .dark {
-  /* Design tokens from DESIGN-HANDOFF-001 v2 dark palette (hex -> oklch) */
+  /* PROVISIONAL dark theme: the mockups (ADR-11) define only the light theme. These values
+     derive from DESIGN-HANDOFF-001 v2 (hex -> oklch) until a dark spec exists. */
   --background: oklch(0.227 0.004 286.09); /* color-bg-canvas #1c1c1e */
   --foreground: oklch(0.971 0.003 286.35); /* color-text-primary #f5f5f7 */
   --card: oklch(0.294 0.004 286.18); /* color-bg-elevated #2c2c2e */
@@ -337,6 +309,9 @@
   --primary-hover: oklch(0.78 0.13 252.35);
   --primary-soft: oklch(0.3 0.05 260);
   --table-head-surface: var(--surface-selected);
+  --surface-tabular: oklch(0.349 0.003 286.22);
+  --surface-model: oklch(0.3 0.05 260);
+  --muted-foreground-on-gray: var(--muted-foreground);
 
   /* PROVISIONAL — no dark spec in DS-CALLOUT-001; same families, roles inverted
      for a dark canvas. Replace when a dark theme spec exists. */
@@ -562,22 +537,6 @@
   .font-display {
     font-family: var(--font-display);
     font-weight: var(--display-weight);
-    -webkit-font-feature-settings:
-      "ss02" on,
-      "ss03" on,
-      "ss04" on;
-    -moz-font-feature-settings:
-      "ss02" on,
-      "ss03" on,
-      "ss04" on;
-    -ms-font-feature-settings:
-      "ss02" on,
-      "ss03" on,
-      "ss04" on;
-    font-feature-settings:
-      "ss02" on,
-      "ss03" on,
-      "ss04" on; /* Enables the special `a` character and other characters for DM Sans */
   }
   .font-mono {
     font-family: var(--font-mono), monospace;
@@ -790,17 +749,17 @@ body {
 
 /* ===== Editorial (HANDOFF-RC-GLOBAL-DESIGN-CONTENT-001) =====================
    Gramática dos mood boards: título grande e apertado, rótulo mono em caixa alta,
-   lead em cinza. Só tipografia e espaço: cor e superfície continuam nos tokens
-   de ADR-03/ADR-09 (nenhuma matiz ou cinza novo). */
+   lead em cinza. Só tipografia e espaço: cor e superfície vêm dos tokens
+   de ADR-03/ADR-09/ADR-11 (nenhuma matiz ou cinza local). */
 :root {
-  --font-editorial: "Inter", var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --editorial-display-tracking: -0.045em;
-  --editorial-eyebrow-tracking: 0.14em;
+  --font-editorial: var(--font-sans);
+  --editorial-display-tracking: -0.03em; /* Inter Bold 56/64 (mood board 10) */
+  --editorial-eyebrow-tracking: 0.12em;
   --editorial-measure: 68ch;
 }
 @utility rc-display {
   font-family: var(--font-editorial);
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: var(--editorial-display-tracking);
   line-height: 0.98;
   text-wrap: balance;
@@ -831,7 +790,7 @@ body {
 @utility rc-lead {
   font-family: var(--font-editorial);
   color: var(--muted-foreground);
-  line-height: 1.5;
+  line-height: 1.556; /* Inter Regular 18/28 */
   text-wrap: pretty;
 }
 @utility rc-link {
@@ -875,6 +834,34 @@ body {
   display: block;
   max-width: 100%;
   overflow-x: auto;
+}
+
+/* Secondary text on gray surfaces (ADR-11, AA deviation): #6B7280 passes only on the canvas,
+   so every gray surface (Subtle, Tabular, Diagram, hover/selected) swaps it for
+   --muted-foreground-on-gray. Markup keeps using text-muted-foreground. */
+:where(
+    [data-slot="card"],
+    .ds-table,
+    .prose table,
+    .plain-surface,
+    .rc-surface,
+    .bg-card,
+    .bg-muted,
+    .bg-secondary,
+    .bg-accent,
+    .bg-primary-soft,
+    [class*="bg-[var(--surface-default)]"],
+    [class*="bg-[var(--surface-subtle)]"],
+    [class*="bg-[var(--surface-hover)]"],
+    [class*="bg-[var(--surface-selected)]"],
+    [class*="bg-[var(--surface-tabular)]"],
+    [class*="bg-[var(--surface-model)]"]
+  ) {
+  --muted-foreground: var(--muted-foreground-on-gray);
+  /* tokens that alias --muted-foreground resolve on :root, so they are re-pointed here too */
+  --muted-foreground-subtle: var(--muted-foreground-on-gray);
+  --plain-muted: var(--muted-foreground-on-gray);
+  --area-data: var(--muted-foreground-on-gray);
 }
 
 /* Anchors land below the sticky site header. */

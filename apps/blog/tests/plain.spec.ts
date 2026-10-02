@@ -153,7 +153,7 @@ test("AC-06/07 + annex AC-04: both components share the token-driven surface", a
     });
   const diagram = await style("#FLOW-OPS-001");
   const panel = await style("#PANEL-INSTRUCTION-001");
-  expect(diagram).toEqual({ bg: "rgb(248, 248, 248)", border: "rgb(235, 235, 235)", radius: "28px", color: "rgb(17, 17, 17)" });
+  expect(diagram).toEqual({ bg: "rgb(245, 245, 244)", border: "rgb(234, 234, 232)", radius: "28px", color: "rgb(32, 33, 36)" });
   expect(panel).toEqual(diagram);
   const fonts = await page.locator("#FLOW-OPS-001 pre, #PANEL-INSTRUCTION-001 [data-plain-content]").evaluateAll((els) =>
     els.map((e) => getComputedStyle(e).fontFamily),
@@ -256,7 +256,7 @@ test("tables follow the STORE-WIREFRAMES style everywhere", async ({ page }) => 
       const cs = getComputedStyle(el);
       return { collapse: cs.borderCollapse, spacing: cs.borderSpacing.split(" ")[0], th: th.backgroundColor, upper: th.textTransform, td: td.backgroundColor };
     });
-    expect(s, `${url} ${sel}`).toEqual({ collapse: "separate", spacing: "3px", th: "rgb(235, 235, 235)", upper: "uppercase", td: "rgb(248, 248, 248)" });
+    expect(s, `${url} ${sel}`).toEqual({ collapse: "separate", spacing: "3px", th: "rgb(234, 234, 232)", upper: "uppercase", td: "rgb(245, 245, 244)" });
     expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(0);
   }
 });
