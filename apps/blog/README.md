@@ -47,4 +47,4 @@ docs/design-system/  especificações (callouts, dados, plain text, hub de rotas
 tests/               Playwright
 ```
 
-Regras do projeto: `CLAUDE.md` (ADR-01 a ADR-10).
+Regras do projeto: `CLAUDE.md` (ADR-01 a ADR-11).

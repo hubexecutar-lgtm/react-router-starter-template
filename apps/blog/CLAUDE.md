@@ -61,7 +61,7 @@ to `apps/blog/`.
     semântico (`--color-{família}-{subtle,soft,default,strong,on-strong}`) →
     componente (`--callout-*`) → variante (`data-family` / `data-tone`).
     Nunca variante → hex.
-  - O primário do site (#0A6FDB, botões e links) não muda.
+  - O primário do site (botões e links) não pertence às 3 famílias; o valor atual vem do ADR-11 (`#2563EB`).
   - Modo escuro: papéis semânticos invertidos no `.dark`, marcados como PROVISIONAL
     até existir especificação de tema escuro.
 - **Consequências:**
@@ -84,8 +84,8 @@ to `apps/blog/`.
     traço tracejado. Todo gráfico tem `role="group"` + `aria-label` e, quando possível,
     alternativa em tabela.
   - `--muted-foreground-subtle` é o cinza extra do texto (legendas, notas, carimbos de
-    data). Só é AA sobre `card`, `background` e `popover`; sobre `muted`, `secondary` e
-    `accent` use `--muted-foreground`.
+    data). Desde o ADR-11 é igual a `--muted-foreground` e segue a mesma troca automática
+    para o tom AA dentro de superfícies cinza.
   - Novo papel semântico por família `--color-{família}-on-default` (texto sobre a cor
     `default`, usado na ação primária dos callouts).
   - O showroom oficial é `/admin/design-system#dados` (indicadores, 6 tipos de gráfico,
@@ -207,7 +207,7 @@ to `apps/blog/`.
   - Borda neutra é estrutural (contraste ~1,1:1): nunca texto, ícone ou estado só por borda; contorno de
     campos segue em `--input`.
   - Callouts semânticos mantêm suas famílias cromáticas; só o card perde a sombra.
-  - Valores atuais (texto, marca, cinzas): ver o bloco de tokens; a paleta exata dos mockups entra no PR B do RC-DESIGN-MOCKUPS-001.
+  - Valores (texto, marca, cinzas, `--surface-tabular`, `--surface-model`): ADR-11.
 - **Consequências:**
   - Código novo não usa hex neutro nem `shadow-md/lg/xl` fora de overlay (`tests/surfaces.spec.ts`).
   - Mudar a aparência neutra do blog mexe só nesse bloco de tokens.
@@ -245,3 +245,31 @@ to `apps/blog/`.
     inválido, território/evidência inexistente, copy de template no build, página sem pt-BR ou link quebrado.
   - Novo artigo = novo registro QF + `node scripts/build-quick-frameworks.mjs` (ou `npm run build`).
   - A paridade com o site Astro (`tests/parity.spec.ts`) virou registro histórico, fora do `npm test`.
+
+### ADR-11: Identidade visual dos mockups em todas as rotas (RC-DESIGN-MOCKUPS-001)
+
+- **Status:** Aceita — implementada; tema escuro provisório
+- **Contexto:** O usuário enviou 10 mood boards e pediu a refatoração transversal da identidade visual: fundo
+  branco, tipografia, nova paleta, bordas, raio e sombras em todas as rotas, com os **valores exatos do mockup**.
+  Isso inverte as decisões C-02/C-03 da reconciliação anterior (`HANDOFF-RC-GLOBAL-DESIGN-CONTENT-001`), que
+  tinha mantido os tokens antigos. Registro, desvios AA e antes/depois em `docs/handoff/RC-DESIGN-MOCKUPS-001/`.
+- **Decisão:**
+  - Quatro superfícies do mood board 10, só em `app/styles/global.css`: Canvas `#FFFFFF` (`--background`),
+    Subtle `#F5F5F4` (`--surface-subtle` = `--surface-default` = `--card`), Tabular `#EAEAE8`
+    (`--surface-tabular` = cabeçalho de tabela, seleção e `--border-default`) e Diagram `#EFF6FF`
+    (`--surface-model` = `--primary-soft`). O contrato estrutural do ADR-09 (aliases, sem sombra em cards) continua.
+  - Texto `#202124`, secundário `#6B7280`, ação `#2563EB` (hover `#1D4ED8`), também anel de foco.
+  - Tipografia: Inter (display 700, tracking −0,03em; corpo 18/28) e IBM Plex Mono para rótulos, IDs e
+    metadados, carregadas do Google Fonts em `app/root.tsx`. DM Sans/DM Mono saíram. Diagramas plain text
+    continuam em `ui-monospace` (ADR-05).
+  - Botões com raio 8 (`rounded-lg`); `outline` com borda e texto primários; cards com raio 12; chips em pílula.
+  - Desvio AA: `#6B7280` só no canvas. Dentro de superfícies cinza, `global.css` troca `--muted-foreground` por
+    `--muted-foreground-on-gray` `#5F6670` (seletores de card, tabela, plain, `rc-surface` e `bg-[var(--surface-*)]`);
+    nada de texto azul sobre Tabular (4,29:1); `--surface-hover` `#F0F0EE` mantém links ≥ 4,5:1.
+  - Callouts (ADR-03), gráficos (ADR-04) e `--area-*` (ADR-08) não mudam. O showroom
+    `/admin/design-system/#gramatica` reproduz o mood board 10 com os valores lidos de `global.css`.
+- **Consequências:**
+  - `tests/tokens.spec.ts` trava os valores, as fontes, os botões e o contraste dentro das superfícies cinza;
+    `tests/surfaces.spec.ts` impede hex da paleta fora de `global.css`.
+  - Superfície cinza nova: usar `SURFACE` (`components/editorial/surface.ts`), `Card` ou
+    `bg-[var(--surface-*)]` para herdar o tom AA; fundo cinza montado de outro jeito precisa da classe `rc-surface`.

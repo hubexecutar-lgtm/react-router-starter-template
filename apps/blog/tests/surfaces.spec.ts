@@ -46,9 +46,9 @@ test.describe("source contract", () => {
   test("neutral hex values live only in the token layer (global.css)", () => {
     const offenders = src
       .filter((f) => !f.endsWith(join("styles", "global.css")))
-      .filter((f) => /#f8f8f8|#ebebeb/i.test(readFileSync(f, "utf-8")))
+      .filter((f) => /#f8f8f8|#ebebeb|#f5f5f4|#eaeae8|#eff6ff|#2563eb|#202124|#6b7280/i.test(readFileSync(f, "utf-8")))
       .map((f) => relative(ROOT, f));
-    expect(offenders, "#F8F8F8 / #EBEBEB só em app/styles/global.css").toEqual([]);
+    expect(offenders, "hex da paleta só em app/styles/global.css").toEqual([]);
   });
 
   test("shadow-md/lg/xl/2xl only on overlays; no shadow-sm on cards", () => {
@@ -85,13 +85,17 @@ test.describe("tokens", () => {
   test("surface contract values and aliases", async ({ page }) => {
     await page.goto(SHOWROOM);
     const expected: Record<string, string> = {
-      "--surface-default": "rgb(248, 248, 248)",
-      "--surface-subtle": "rgb(250, 250, 250)",
-      "--surface-hover": "rgb(243, 243, 243)",
-      "--surface-selected": "rgb(238, 238, 238)",
-      "--border-subtle": "rgb(240, 240, 240)",
-      "--border-default": "rgb(235, 235, 235)",
-      "--border-strong": "rgb(218, 218, 218)",
+      // mood board 10 (ADR-11): Canvas, Subtle, Tabular, Diagram
+      "--surface-page": "rgb(255, 255, 255)",
+      "--surface-subtle": "rgb(245, 245, 244)",
+      "--surface-default": "rgb(245, 245, 244)",
+      "--surface-tabular": "rgb(234, 234, 232)",
+      "--surface-model": "rgb(239, 246, 255)",
+      "--surface-hover": "rgb(240, 240, 238)",
+      "--surface-selected": "rgb(234, 234, 232)",
+      "--border-subtle": "rgb(240, 240, 238)",
+      "--border-default": "rgb(234, 234, 232)",
+      "--border-strong": "rgb(214, 214, 211)",
     };
     for (const [token, rgb] of Object.entries(expected)) expect(await resolve(page, "background-color", `var(${token})`), token).toBe(rgb);
     expect(await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue("--elevation-flat").trim())).toBe("none");
@@ -104,6 +108,10 @@ test.describe("tokens", () => {
       ["--muted", "--surface-hover"],
       ["--surface-neutral", "--surface-default"],
       ["--surface-neutral-border", "--border-default"],
+      ["--surface-selected", "--surface-tabular"],
+      ["--table-head-surface", "--surface-tabular"],
+      ["--primary-soft", "--surface-model"],
+      ["--plain-accent-soft", "--surface-model"],
     ] as const) {
       expect(await resolve(page, "background-color", `var(${alias})`), alias).toBe(await resolve(page, "background-color", `var(${base})`));
     }
@@ -120,18 +128,20 @@ test.describe("tokens", () => {
       const c = async (fg: string, bg: string) =>
         contrast(page, await resolve(page, "color", `var(${fg})`), await resolve(page, "background-color", `var(${bg})`));
 
-      // primary text on every neutral surface, and secondary gray on all of them
-      for (const bg of ["--surface-page", "--surface-default", "--surface-hover", "--surface-selected"]) {
+      // primary text on every surface; secondary gray: #6B7280 on the canvas, the on-gray
+      // value on every gray surface (ADR-11 AA deviation, applied by scope in global.css)
+      const grays = ["--surface-default", "--surface-hover", "--surface-selected", "--surface-tabular", "--surface-model"];
+      for (const bg of ["--surface-page", ...grays]) {
         expect(await c("--foreground", bg), `foreground on ${bg}`).toBeGreaterThanOrEqual(7);
-        expect(await c("--muted-foreground", bg), `muted-foreground on ${bg}`).toBeGreaterThanOrEqual(4.5);
       }
-      // extra gray only on page/card surfaces
-      for (const bg of ["--surface-page", "--surface-default"]) {
-        expect(await c("--muted-foreground-subtle", bg), `subtle on ${bg}`).toBeGreaterThanOrEqual(4.5);
+      expect(await c("--muted-foreground", "--surface-page"), "muted-foreground on the canvas").toBeGreaterThanOrEqual(4.5);
+      expect(await c("--muted-foreground-subtle", "--surface-page"), "subtle on the canvas").toBeGreaterThanOrEqual(4.5);
+      for (const bg of grays) {
+        expect(await c("--muted-foreground-on-gray", bg), `on-gray secondary on ${bg}`).toBeGreaterThanOrEqual(4.5);
       }
-      // brand blue: links/titles on page + card, and button text on it
-      for (const bg of ["--surface-page", "--surface-default"]) {
-        expect(await c("--primary", bg), `primary on ${bg}`).toBeGreaterThanOrEqual(theme === "light" ? 4.5 : 4.5);
+      // brand blue: links/titles on page, cards, hover and model panels (never on --surface-tabular)
+      for (const bg of ["--surface-page", "--surface-default", "--surface-hover", "--surface-model"]) {
+        expect(await c("--primary", bg), `primary on ${bg}`).toBeGreaterThanOrEqual(4.5);
       }
       expect(await c("--primary-foreground", "--primary"), "button label").toBeGreaterThanOrEqual(4.5);
       if (theme === "light") expect(await c("--primary-foreground", "--primary-hover"), "button label (hover)").toBeGreaterThanOrEqual(4.5);
@@ -161,7 +171,7 @@ test.describe("flat cards, real overlays", () => {
     test(`${route} ${sel}: neutral surface, subtle border, no shadow`, async ({ page }) => {
       await page.goto(route);
       for (const s of await flat(page, sel)) {
-        expect({ bg: s.bg, border: s.border }).toEqual({ bg: "rgb(248, 248, 248)", border: "rgb(235, 235, 235)" });
+        expect({ bg: s.bg, border: s.border }).toEqual({ bg: "rgb(245, 245, 244)", border: "rgb(234, 234, 232)" });
         expect(paintsShadow(s.shadow), `shadow: ${s.shadow}`).toBe(false);
       }
     });
@@ -171,7 +181,7 @@ test.describe("flat cards, real overlays", () => {
     await page.goto("/admin/");
     const card = page.locator("a.bg-card").first();
     await card.hover();
-    await expect.poll(() => card.evaluate((e) => getComputedStyle(e).backgroundColor)).toBe("rgb(243, 243, 243)");
+    await expect.poll(() => card.evaluate((e) => getComputedStyle(e).backgroundColor)).toBe("rgb(240, 240, 238)");
     expect(paintsShadow(await card.evaluate((e) => getComputedStyle(e).boxShadow))).toBe(false);
   });
 
@@ -184,7 +194,7 @@ test.describe("flat cards, real overlays", () => {
     const inCard = await page.locator("[data-slot=card] .ds-table td").first().evaluate((e) => getComputedStyle(e).backgroundColor);
     expect(inCard).toBe(await resolve(page, "background-color", "var(--surface-page)"));
     const standalone = await page.locator("[data-testid=table-reference] .ds-table td").first().evaluate((e) => getComputedStyle(e).backgroundColor);
-    expect(standalone).toBe("rgb(248, 248, 248)");
+    expect(standalone).toBe("rgb(245, 245, 244)");
   });
 
   test("dialog is a real overlay: elevation-overlay shadow, page surface", async ({ page }) => {
@@ -296,8 +306,8 @@ test.describe("standalone tools share the token source", () => {
         await page.waitForLoadState("networkidle");
         const probe = (v: string) => resolve(page, "background-color", v);
         expect(await probe(`var(${token})`)).toBe(await probe("var(--ds-surface-default)"));
-        if (theme === "light") expect(await probe(`var(${token})`)).toBe("rgb(248, 248, 248)");
-        else expect(await probe(`var(${token})`)).not.toBe("rgb(248, 248, 248)");
+        if (theme === "light") expect(await probe(`var(${token})`)).toBe("rgb(245, 245, 244)");
+        else expect(await probe(`var(${token})`)).not.toBe("rgb(245, 245, 244)");
       });
     }
   }
@@ -320,7 +330,7 @@ test.describe("standalone tools share the token source", () => {
       const td = getComputedStyle(el.querySelector("td")!);
       return { collapse: cs.borderCollapse, spacing: cs.borderSpacing.split(" ")[0], th: th.backgroundColor, td: td.backgroundColor, tdBorder: td.borderBottomWidth, radius: td.borderTopLeftRadius };
     });
-    expect(s).toEqual({ collapse: "separate", spacing: "3px", th: "rgb(235, 235, 235)", td: "rgb(248, 248, 248)", tdBorder: "0px", radius: "2px" });
+    expect(s).toEqual({ collapse: "separate", spacing: "3px", th: "rgb(234, 234, 232)", td: "rgb(245, 245, 244)", tdBorder: "0px", radius: "2px" });
   });
 });
 
