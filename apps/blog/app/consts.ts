@@ -8,12 +8,12 @@ export const SITE_DESCRIPTION =
   "Blog e framework sobre risco cognitivo: como atenção, memória e julgamento participam da formação do risco no trabalho, e como identificar, controlar e acompanhar.";
 export const SITE_URL = DEFAULT_BASE_URL;
 
-/** Imagem padrão de compartilhamento: foto do artigo-tese (o og-image do template foi removido). */
+/** Imagem padrão de compartilhamento: a ilustração do binóculo (banco de imagens, ADR-12). */
 const OG_IMAGE = {
-  url: "/blog/do-risco-cognitivo-a-execucao-assistida/hero.jpg",
-  width: 1080,
-  height: 1350,
-  alt: "Uma pessoa sustenta uma enorme tecla Ctrl amarela.",
+  url: "/images/binoculo.webp",
+  width: 593,
+  height: 720,
+  alt: "Ilustração de uma mulher sentada em um banquinho observando com um binóculo azul.",
 };
 
 export const SITE_METADATA = {

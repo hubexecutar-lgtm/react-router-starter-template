@@ -113,23 +113,23 @@ export default function RoutesHub({ loaderData }: Route.ComponentProps) {
         </p>
 
         <dl className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-4" data-testid="hub-summary">
-          <div className="bg-card rounded-xl border p-4"><dt className="text-muted-foreground text-sm">Entradas</dt><dd className="text-3xl font-medium tabular-nums" data-count="total">{counts.total}</dd></div>
-          <div className="bg-card rounded-xl border p-4"><dt className="text-muted-foreground text-sm">Grupos</dt><dd className="text-3xl font-medium tabular-nums">{counts.groups}</dd></div>
-          <div className="bg-card rounded-xl border p-4"><dt className="text-muted-foreground text-sm">Internas expostas</dt><dd className="text-3xl font-medium tabular-nums">{counts.internal}</dd></div>
-          <div className="bg-card rounded-xl border p-4"><dt className="text-muted-foreground text-sm">Links gerados</dt><dd className="text-3xl font-medium tabular-nums">{counts.links}</dd></div>
+          <div className="rc-cell p-4"><dt className="text-muted-foreground text-sm">Entradas</dt><dd className="text-3xl font-medium tabular-nums" data-count="total">{counts.total}</dd></div>
+          <div className="rc-cell p-4"><dt className="text-muted-foreground text-sm">Grupos</dt><dd className="text-3xl font-medium tabular-nums">{counts.groups}</dd></div>
+          <div className="rc-cell p-4"><dt className="text-muted-foreground text-sm">Internas expostas</dt><dd className="text-3xl font-medium tabular-nums">{counts.internal}</dd></div>
+          <div className="rc-cell p-4"><dt className="text-muted-foreground text-sm">Links gerados</dt><dd className="text-3xl font-medium tabular-nums">{counts.links}</dd></div>
         </dl>
         <p className="text-muted-foreground-subtle mt-3 text-sm" data-testid="hub-base"><strong className="text-muted-foreground">Base dos QRs:</strong> <code>{base}</code></p>
 
         <div className="mt-8 flex flex-wrap items-center gap-3" data-hub-hide-print>
           <label className="sr-only" htmlFor="hub-search">Filtrar por nome, rota ou URL</label>
-          <input id="hub-search" type="search" value={q} onChange={(ev) => setQ(ev.target.value)} placeholder="Filtrar por nome, rota ou URL…" className="border-input bg-background h-10 min-w-0 flex-1 basis-64 rounded-md border px-3 text-base" />
+          <input id="hub-search" type="search" value={q} onChange={(ev) => setQ(ev.target.value)} placeholder="Filtrar por nome, rota ou URL…" className="border-input bg-background h-10 min-w-0 flex-1 basis-64 rounded-lg border px-3 text-base" />
           <label className="sr-only" htmlFor="hub-group">Grupo</label>
-          <select id="hub-group" value={group} onChange={(ev) => setGroup(ev.target.value)} className="border-input bg-background h-10 rounded-md border px-3 text-base">
+          <select id="hub-group" value={group} onChange={(ev) => setGroup(ev.target.value)} className="border-input bg-background h-10 rounded-lg border px-3 text-base">
             <option value="">Todos os grupos</option>
             {ROUTE_GROUPS.map((g, i) => <option key={i} value={g}>{g}</option>)}
           </select>
           <label className="sr-only" htmlFor="hub-exposure">Exposição</label>
-          <select id="hub-exposure" value={exposure} onChange={(ev) => setExposure(ev.target.value)} className="border-input bg-background h-10 rounded-md border px-3 text-base">
+          <select id="hub-exposure" value={exposure} onChange={(ev) => setExposure(ev.target.value)} className="border-input bg-background h-10 rounded-lg border px-3 text-base">
             <option value="">Toda exposição</option>
             <option value="public">Pública</option>
             <option value="internal">Interno exposto</option>
@@ -144,7 +144,7 @@ export default function RoutesHub({ loaderData }: Route.ComponentProps) {
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2" id="hub-grid" data-testid="hub-grid">
             {withQr.map((e, i) => (
               <article key={i}
-                className={cn("route-card bg-card flex min-w-0 gap-4 rounded-xl border p-4", !matches(e) && "hidden")}
+                className={cn("route-card rc-cell flex min-w-0 gap-4 p-4", !matches(e) && "hidden")}
                 data-id={e.id}
                 data-kind={e.kind}
                 data-group={e.group}

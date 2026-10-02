@@ -136,7 +136,7 @@ export function ItemFlowchart({ item }: { item: StoreItem }) {
 
 export function ReferenceDisclosure({ item }: { item: StoreItem }) {
   return (
-    <Collapsible className="rounded-lg border">
+    <Collapsible className="rc-cell rc-surface">
       <CollapsibleTrigger className="group focus-visible:ring-ring/50 flex min-h-11 w-full items-center justify-between rounded-lg px-4 text-sm font-medium outline-none focus-visible:ring-[3px]">
         Referências
         <ChevronDown className="size-4 transition-transform group-data-[state=open]:rotate-180" aria-hidden="true" />

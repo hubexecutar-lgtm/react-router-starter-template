@@ -108,9 +108,11 @@ to `apps/blog/`.
   - Os dois usam a mesma base `PlainSurface` (`app/components/plain/`) e só os tokens
     `--plain-*` de `app/styles/global.css`. `--plain-accent` é `var(--primary)`: nada de
     matiz nova (ADR-03).
-  - `AsciiDiagram` preserva geometria (`white-space: pre`, rolagem horizontal);
-    `PlainTextPanel` quebra texto longo (`pre-wrap`). Conteúdo nunca é reescrito, só
-    normalizado (BOM, fim de linha, linhas em branco nas pontas).
+  - `AsciiDiagram` preserva geometria (`white-space: pre`, rolagem horizontal) e é o único lugar
+    com mono de bloco. `PlainTextPanel` mostra uma **visão de leitura estruturada** (emenda do
+    ADR-12): o texto continua sendo a fonte e o que se copia (`[data-plain-source]`), mas o leitor
+    vê lista de definições, listas, tabela e parágrafos na fonte de texto. Conteúdo nunca é
+    reescrito, só normalizado (BOM, fim de linha, linhas em branco nas pontas).
   - Em MDX, o conteúdo vai como `` {`…`} `` filho único ou em blocos ` ```ascii ` /
     ` ```plain `; o plugin `app/lib/plain/remarkPlain.ts` passa o texto verbatim como
     `source`. Em TSX, use `source` (ou `renderTree(json)` para árvores).
@@ -200,7 +202,8 @@ to `apps/blog/`.
   - Camada "Surfaces & Elevation" em `app/styles/global.css`: `--surface-{page,subtle,default,hover,selected}`,
     `--border-{subtle,default,strong}`, `--elevation-{flat,raised,overlay}`. É o único lugar com
     hex neutro; `--plain-*`, `--table-*`, `--card`, `--border`, `--muted` são aliases.
-  - Card, painel, célula de tabela, Plain/Ascii: `surface-default` + `border-default` + **sem sombra**.
+  - Card, painel, célula de tabela, Plain/Ascii: `surface-default` + **sem sombra**; desde o ADR-12
+    o card é a própria célula da tabela (sem contorno, raio 2px).
     Hover por superfície (`surface-hover`), não por sombra.
   - Sombra só indica elevação: `raised` em controles (`shadow-xs/sm`), `overlay` em popover, dialog,
     drawer, sheet, hover-card e menus (`shadow-md…`). Tabela dentro de card usa células na superfície da página.
@@ -262,7 +265,8 @@ to `apps/blog/`.
   - Tipografia: Inter (display 700, tracking −0,03em; corpo 18/28) e IBM Plex Mono para rótulos, IDs e
     metadados, carregadas do Google Fonts em `app/root.tsx`. DM Sans/DM Mono saíram. Diagramas plain text
     continuam em `ui-monospace` (ADR-05).
-  - Botões com raio 8 (`rounded-lg`); `outline` com borda e texto primários; cards com raio 12; chips em pílula.
+  - Botões com raio 8 (`rounded-lg`); `outline` com borda e texto primários; chips em pílula. Cards: ver ADR-12
+    (célula da tabela, raio 2px).
   - Desvio AA: `#6B7280` só no canvas. Dentro de superfícies cinza, `global.css` troca `--muted-foreground` por
     `--muted-foreground-on-gray` `#5F6670` (seletores de card, tabela, plain, `rc-surface` e `bg-[var(--surface-*)]`);
     nada de texto azul sobre Tabular (4,29:1); `--surface-hover` `#F0F0EE` mantém links ≥ 4,5:1.
@@ -273,3 +277,32 @@ to `apps/blog/`.
     `tests/surfaces.spec.ts` impede hex da paleta fora de `global.css`.
   - Superfície cinza nova: usar `SURFACE` (`components/editorial/surface.ts`), `Card` ou
     `bg-[var(--surface-*)]` para herdar o tom AA; fundo cinza montado de outro jeito precisa da classe `rc-surface`.
+
+### ADR-12: Transversal de leitura — cards-célula, plain estruturado, halftone e banco de imagens (RC-UX-HIG-002)
+
+- **Status:** Aceita — implementada (PR C); anatomia de página e gate HIG no PR D
+- **Contexto:** Revisando o site no iPhone, o usuário apontou painéis plain text com corpo em mono corrido,
+  sem estrutura, num blog que é de leitura; pediu cards iguais à tabela, um fundo de bolinhas orgânico
+  (halftone) e as imagens do seu banco. Regra herdada do monorepo: UX-GOV-HIG-001 (Apple HIG + WCAG 2.2 AA).
+- **Decisão:**
+  - **Card = célula da tabela.** Utilitário `rc-cell` (`global.css`): fundo `--table-surface`, sem contorno,
+    raio `--table-radius` (2px), separação por gutter. `SURFACE`, `Card`, painéis plain, callout card, cards
+    do hub e da Loja usam essa célula; o cabeçalho de painel é a faixa Tabular (`--surface-header`), como o
+    `th`. Contorno só em controles (`--input`, raio 8).
+  - **Nada de texto desestruturado.** `PlainTextPanel` estrutura o plain text (`app/lib/plain/structure.ts`):
+    `Rótulo: valor` e `CHAVE␣␣valor` → `<dl>`; `-`/`1.`/`01␣␣` → listas; colunas com cabeçalho em caixa alta →
+    tabela; o resto → parágrafo verbatim. Mono só em diagramas e em termos-identificador. Tokens de texto
+    nomeados: `--text-display/h2/h3/body/small/mono`, `--measure` (68ch), `--measure-lead` (60ch),
+    `--space-section`.
+  - **Halftone orgânico** (`components/editorial/DotField.tsx`): SVG determinístico (ruído de valor com
+    semente), `--dot-color` = `--primary`, decorativo (`aria-hidden`), nunca sob texto. Entra na arte dos
+    heroes (`HeroArt`, `PageHero`) e na faixa acima do rodapé.
+  - **Banco de imagens** em `docs/banco-imagens/` (16 peças, `manifest.json` com transcrição). Nas páginas só
+    entram imagens **sem texto**: hoje binóculo (hero da home e de Sobre, OG), equipe com tablet (Sobre) e mão
+    com chaves (login, cadastro), registradas em `IMAGES` (`HeroArt.tsx`) com `alt` descritivo. Artigos sem
+    ilustração ficam sem imagem; o schema ganhou `imageAlt`.
+- **Consequências:**
+  - `tests/plain.spec.ts` trava o parser e exige que todo painel dos artigos tenha estrutura e não use mono;
+    `tests/surfaces.spec.ts` trava a célula (sem contorno, raio 2px) nos cards.
+  - Imagem nova no site: `tem_texto: false` no manifest, webp em `public/images/`, `alt` e uso registrados.
+

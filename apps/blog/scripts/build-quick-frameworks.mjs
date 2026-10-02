@@ -17,13 +17,9 @@ const BLOG = "content/blog";
 const SEED = "app/data/editorial/seed.json";
 const WPM = 200; // mesma regra de app/lib/reading-time.ts
 
-/** Imagens já existentes no repositório, reaproveitadas (decisão do usuário). */
-const IMAGES = {
-  "CNT-RC-0001": "/about/2.webp",
-  "CNT-RC-0002": "/about/3.webp",
-  "CNT-RC-0003": "/about/1.webp",
-  "CNT-RC-0004": "/about/4.webp",
-};
+// Imagens dos artigos (ADR-12): só ilustrações sem texto do banco (docs/banco-imagens). Hoje nenhum
+// artigo tem ilustração própria; a hierarquia tipográfica e o halftone ocupam o espaço visual.
+const IMAGES = {};
 
 // ------------------------------------------------------------------ parsing
 export function parseRecord(text) {

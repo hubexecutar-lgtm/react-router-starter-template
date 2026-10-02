@@ -17,7 +17,7 @@ export function NewsletterNotice() {
 						id="newsletter-email"
 						type="email"
 						placeholder="Seu melhor e-mail"
-						className="border-input bg-background h-11 flex-1 rounded-md border px-3 text-base disabled:cursor-not-allowed"
+						className="border-input bg-background h-11 flex-1 rounded-lg border px-3 text-base disabled:cursor-not-allowed"
 					/>
 					<button type="submit" className={buttonVariants({ size: "lg" })}>
 						Quero receber

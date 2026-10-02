@@ -1,7 +1,7 @@
 import { Copy } from "lucide-react";
 
 /**
- * Server-rendered copy button. Behaviour lives in src/lib/plain/copy.ts
+ * Server-rendered copy button. Behaviour lives in app/lib/plain/copy.ts
  * (one delegated listener), so blocks need no hydration.
  */
 export function CopyButton({ label = "Copiar conteúdo" }: { label?: string }) {

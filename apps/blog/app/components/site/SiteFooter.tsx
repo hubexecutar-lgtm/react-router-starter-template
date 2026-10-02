@@ -1,12 +1,17 @@
-// Rodapé global: régua fina, wordmark, colunas de navegação e linha mono (mood boards 05 e 07).
+// Rodapé global: faixa de halftone, régua fina, wordmark, colunas de navegação e linha mono (mood boards 05 e 07).
 import { FOOTER_NAV } from "./nav";
 
+import { DotField } from "@/components/editorial/DotField";
 import { SITE_NAME, SITE_TAGLINE } from "@/consts";
 
 export function SiteFooter() {
 	return (
-		<footer className="mt-24 border-t border-[var(--border-default)] lg:mt-32">
-			<div className="container grid gap-12 py-14 md:grid-cols-[1.4fr_repeat(3,1fr)] lg:py-16">
+		<footer className="mt-24 lg:mt-32">
+			{/* faixa de halftone orgânico acima do rodapé: área sem texto (ADR-12) */}
+			<div className="container">
+				<DotField cols={64} rows={5} seed={21} fade="none" className="block h-16 w-full sm:h-20" />
+			</div>
+			<div className="container grid gap-12 border-t border-[var(--border-default)] py-14 md:grid-cols-[1.4fr_repeat(3,1fr)] lg:py-16">
 				<div className="max-w-sm">
 					<a href="/" className="rc-display text-2xl uppercase tracking-[-0.02em]">
 						{SITE_NAME}

@@ -12,6 +12,8 @@ const schema = z.object({
 	pubDate: z.coerce.date(),
 	updatedDate: z.coerce.date().optional(),
 	image: z.string().optional(),
+	/** Texto alternativo da ilustração (ADR-12): obrigatório quando houver `image`. */
+	imageAlt: z.string().optional(),
 	authorImage: z.string().optional(),
 	authorName: z.string().optional(),
 	// Banco editorial (app/data/editorial/seed.json) — HANDOFF-RC-GLOBAL-DESIGN-CONTENT-001

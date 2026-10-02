@@ -14,6 +14,7 @@ export interface PostView {
 	updatedDate?: Date;
 	minutes: number;
 	image?: string;
+	imageAlt?: string;
 	contentId?: string;
 	type: PostData["type"];
 	tags: string[];

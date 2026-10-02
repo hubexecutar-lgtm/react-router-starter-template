@@ -249,7 +249,7 @@ function Specimen({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex min-w-0 flex-col gap-3 rounded-2xl border p-5" data-specimen={name}>
+    <div className="rc-cell flex min-w-0 flex-col gap-3 p-5" data-specimen={name}>
       <p className="text-muted-foreground font-mono text-xs">{name}</p>
       <div className="flex min-w-0 flex-wrap items-center gap-3 overflow-x-auto">{children}</div>
     </div>
@@ -440,7 +440,6 @@ export function ComponentGallery() {
             <Badge variant="outline">Outline</Badge>
             <Badge variant="destructive">Destructive</Badge>
             <Avatar>
-              <AvatarImage src="/avatar/avatar1.png" alt="" />
               <AvatarFallback>RC</AvatarFallback>
             </Avatar>
             <KbdGroup>
@@ -746,9 +745,9 @@ export function ComponentGallery() {
           <Specimen name="carousel">
             <Carousel className="mx-auto w-3/4">
               <CarouselContent>
-                {["/about/1.webp", "/about/2.webp", "/about/3.webp"].map((src) => (
+                {["/images/binoculo.webp", "/images/equipe-tablet.webp", "/images/mao-chaves.webp"].map((src) => (
                   <CarouselItem key={src}>
-                    <img src={src} alt="" className="aspect-video w-full rounded-xl object-cover" />
+                    <img src={src} alt="" className="aspect-video w-full rounded-[var(--table-radius)] object-contain" />
                   </CarouselItem>
                 ))}
               </CarouselContent>
@@ -777,9 +776,9 @@ export function ComponentGallery() {
             <div className="w-32">
               <AspectRatio ratio={4 / 5}>
                 <img
-                  src="/blog/do-risco-cognitivo-a-execucao-assistida/hero.jpg"
+                  src="/images/binoculo.webp"
                   alt=""
-                  className="size-full rounded-xl object-cover"
+                  className="size-full rounded-[var(--table-radius)] object-contain"
                 />
               </AspectRatio>
             </div>

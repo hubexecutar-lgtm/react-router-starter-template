@@ -1,5 +1,5 @@
 // Delegated copy handler for [data-plain-copy] buttons (ADR §10).
-// Copies only the content region ([data-plain-content]) of the closest
+// Copies only the source text ([data-plain-source], else [data-plain-content]) of the closest
 // [data-plain] surface — never the title, the button or metadata.
 // Blocks render as static HTML; this script is progressive enhancement.
 
@@ -25,7 +25,8 @@ function onClick(event: MouseEvent) {
   const button = (event.target as Element | null)?.closest<HTMLButtonElement>("[data-plain-copy]");
   if (!button) return;
   const surface = button.closest("[data-plain]");
-  const content = surface?.querySelector("[data-plain-content]");
+  // Panels keep the original plain text in [data-plain-source]; diagrams copy their <pre>.
+  const content = surface?.querySelector("[data-plain-source]") ?? surface?.querySelector("[data-plain-content]");
   if (!surface || !content) return;
   const text = content.textContent ?? "";
   const label = button.querySelector("[data-plain-copy-label]");

@@ -1,9 +1,10 @@
 // Landing (mood boards 01 e 02). Copy da marca + artigos, territórios e evidências do banco.
-import { ArrowRight, Search } from "lucide-react";
+import { ArrowRight, ChevronRight, Search } from "lucide-react";
 
 import type { Route } from "./+types/home";
 
 import { ArticleCard } from "@/components/editorial/ArticleCard";
+import { HeroArt, IMAGES } from "@/components/editorial/HeroArt";
 import { SectionHeader } from "@/components/editorial/SectionHeader";
 import { SURFACE } from "@/components/editorial/surface";
 import { TerritoryCard } from "@/components/editorial/TerritoryCard";
@@ -35,18 +36,16 @@ export default function Page({ loaderData }: Route.ComponentProps) {
 
 	return (
 		<DefaultLayout>
-			{/* Hero */}
+			{/* Hero — anatomia Apple Developer Programs: título, lead curto, ação, arte (ADR-12) */}
 			<section className="container pt-12 pb-12 lg:pt-20 lg:pb-16" aria-labelledby="hero-title">
-				<div className="grid gap-10 lg:grid-cols-[1.5fr_1fr] lg:gap-16 [&>*]:min-w-0">
-					<div>
-						<h1 id="hero-title" className="rc-display text-[clamp(3.25rem,11vw,8.5rem)] leading-[0.86] uppercase">
+				<div className="grid items-center gap-10 lg:grid-cols-[1.25fr_1fr] lg:gap-16 [&>*]:min-w-0">
+					<div className="flex flex-col gap-6">
+						<h1 id="hero-title" className="rc-display text-[clamp(3.25rem,9vw,7rem)] leading-[0.88] uppercase">
 							Risco
 							<br />
 							Cognitivo
 						</h1>
-						<p className="rc-lead mt-6 text-[clamp(1.5rem,3.2vw,2.5rem)] leading-tight">{SITE_TAGLINE}</p>
-					</div>
-					<div className="flex flex-col justify-end gap-6">
+						<p className="rc-lead text-[clamp(1.5rem,2.6vw,2.125rem)] leading-tight">{SITE_TAGLINE}</p>
 						<p className="rc-lead text-lg sm:text-xl">
 							Como atenção, memória e julgamento participam da formação do risco no trabalho — e como
 							identificar, controlar e acompanhar esse risco antes do erro.
@@ -55,11 +54,11 @@ export default function Page({ loaderData }: Route.ComponentProps) {
 							<a href="/blog/" className={cn(buttonVariants({ size: "lg" }), "gap-2")}>
 								Explorar artigos <ArrowRight className="size-4" aria-hidden="true" />
 							</a>
-							<a href="/about/" className="rc-link">
-								Sobre o projeto
+							<a href="/about/" className="rc-link inline-flex items-center gap-1">
+								Sobre o projeto <ChevronRight className="size-4" aria-hidden="true" />
 							</a>
 						</div>
-						<form action="/buscar/" method="get" role="search" className="relative">
+						<form action="/buscar/" method="get" role="search" className="relative max-w-xl">
 							<label htmlFor="home-search" className="sr-only">
 								Buscar no blog
 							</label>
@@ -72,10 +71,11 @@ export default function Page({ loaderData }: Route.ComponentProps) {
 								name="q"
 								type="search"
 								placeholder="Buscar no blog…"
-								className="border-input bg-background focus-visible:ring-ring/50 focus-visible:border-ring h-11 w-full rounded-md border pr-3 pl-10 text-base outline-none focus-visible:ring-[3px]"
+								className="border-input bg-background focus-visible:ring-ring/50 focus-visible:border-ring h-11 w-full rounded-lg border pr-3 pl-10 text-base outline-none focus-visible:ring-[3px]"
 							/>
 						</form>
 					</div>
+					<HeroArt image={IMAGES.binoculo} seed={3} className="w-full" />
 				</div>
 			</section>
 

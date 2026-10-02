@@ -1,0 +1,193 @@
+{
+  "id": "BANCO-IMAGENS-RC",
+  "versao": "1.0.0",
+  "data": "2026-10-02",
+  "regra": "Nas páginas só entram imagens sem texto (tem_texto=false). As demais ficam no banco para redes, newsletter e materiais fora do site.",
+  "imagens": [
+    {
+      "id": "carrossel-00-capa",
+      "arquivo": "carrossel-00-capa.webp",
+      "original": "AF5A10EE-7804-49BB-963A-6DC0FFFD664E.PNG",
+      "titulo": "Gestão e Controle de Riscos Cognitivos no Trabalho",
+      "tem_texto": true,
+      "transcricao": "CARROSSEL 1/10. Gestão e Controle de Riscos Cognitivos no Trabalho. Identificar, prevenir e controlar riscos para mais foco, bem-estar e melhores resultados. Conhecimento hoje, mais foco amanhã.",
+      "no_site": false,
+      "arquivo_site": null,
+      "usos": []
+    },
+    {
+      "id": "carrossel-01-riscos-cognitivos-existem",
+      "arquivo": "carrossel-01-riscos-cognitivos-existem.webp",
+      "original": "E2E6C238-9BC3-41D4-B36F-CD55E9D26458.PNG",
+      "titulo": "Riscos cognitivos existem",
+      "tem_texto": true,
+      "transcricao": "01 · 2/10. RISCOS COGNITIVOS EXISTEM. Eles nem sempre são visíveis, mas impactam seu foco, decisões e resultados. Exemplos: fadiga mental; distrações constantes; sobrecarga de tarefas; estresse e ansiedade.",
+      "no_site": false,
+      "arquivo_site": null,
+      "usos": []
+    },
+    {
+      "id": "carrossel-02-enxergar-e-o-primeiro-passo",
+      "arquivo": "carrossel-02-enxergar-e-o-primeiro-passo.webp",
+      "original": "D843D6E5-096F-4402-AF1A-55170326E3D5.PNG",
+      "titulo": "Enxergar é o primeiro passo",
+      "tem_texto": true,
+      "transcricao": "02 · 3/10. ENXERGAR É O PRIMEIRO PASSO. Observar padrões, sinais e contextos aumenta a chance de agir antes da falha. Observe: quando os sintomas aparecem? Quais situações aumentam o risco? Que tarefas drenam sua energia? Quais padrões se repetem?",
+      "no_site": false,
+      "arquivo_site": null,
+      "usos": []
+    },
+    {
+      "id": "carrossel-03-o-risco-esta-nos-sinais",
+      "arquivo": "carrossel-03-o-risco-esta-nos-sinais.webp",
+      "original": "88DE50AD-24EE-43A8-81DA-252DAE7A0DFE.PNG",
+      "titulo": "O risco está nos sinais do dia a dia",
+      "tem_texto": true,
+      "transcricao": "03 · 4/10. O RISCO ESTÁ NOS SINAIS DO DIA A DIA. Distrações constantes, sobrecarga de tarefas e contexto desorganizado costumam aparecer antes de grandes falhas. Distrações constantes; sobrecarga de tarefas; prazos irreais; informações demais; contexto desorganizado.",
+      "no_site": false,
+      "arquivo_site": null,
+      "usos": []
+    },
+    {
+      "id": "carrossel-04-a-mente-satura",
+      "arquivo": "carrossel-04-a-mente-satura.webp",
+      "original": "66D47AAF-CA78-4417-9875-224786599DE6.PNG",
+      "titulo": "Quando o risco aumenta, a mente satura",
+      "tem_texto": true,
+      "transcricao": "04 · 5/10. QUANDO O RISCO AUMENTA, A MENTE SATURA. O desempenho cai, os erros crescem e a exaustão aparece. Consequências: queda de produtividade; mais erros e retrabalho; irritabilidade e estresse; sensação de esgotamento.",
+      "no_site": false,
+      "arquivo_site": null,
+      "usos": []
+    },
+    {
+      "id": "carrossel-05-excesso-de-demandas",
+      "arquivo": "carrossel-05-excesso-de-demandas.webp",
+      "original": "351C387E-E0E7-433F-A25C-5960858FF855.PNG",
+      "titulo": "Excesso de demandas prende",
+      "tem_texto": true,
+      "transcricao": "05 · 6/10. EXCESSO DE DEMANDAS PRENDE. Muitas tarefas, muitas trocas, pouco foco. Sinais comuns: lista de tarefas infinita; mudanças de prioridade; muitas reuniões e interrupções; dificuldade de concluir.",
+      "no_site": false,
+      "arquivo_site": null,
+      "usos": []
+    },
+    {
+      "id": "carrossel-06-sem-direcao",
+      "arquivo": "carrossel-06-sem-direcao.webp",
+      "original": "8EE72552-582E-49CC-9187-D9700CD94798.PNG",
+      "titulo": "Sem direção, a energia se perde",
+      "tem_texto": true,
+      "transcricao": "06 · 7/10. SEM DIREÇÃO, A ENERGIA SE PERDE. Falta de prioridade e planejamento geram retrabalho e frustração. Evite: trabalhar sem objetivo claro; dizer 'sim' para tudo; focar no urgente, não no importante; gastar energia com o que não importa.",
+      "no_site": false,
+      "arquivo_site": null,
+      "usos": []
+    },
+    {
+      "id": "carrossel-07-o-ambiente-influencia",
+      "arquivo": "carrossel-07-o-ambiente-influencia.webp",
+      "original": "96E84620-C7F2-43A9-AB68-CC9586A33398.PNG",
+      "titulo": "O ambiente também influencia",
+      "tem_texto": true,
+      "transcricao": "07 · 8/10. O AMBIENTE TAMBÉM INFLUENCIA. Espaço, ruído, iluminação, organização e pessoas afetam diretamente sua capacidade cognitiva. Ajuste o ambiente: reduza ruídos e distrações; organize seu espaço; cuide da iluminação; escolha bem onde trabalha.",
+      "no_site": false,
+      "arquivo_site": null,
+      "usos": []
+    },
+    {
+      "id": "carrossel-08-gestao-e-prevenir",
+      "arquivo": "carrossel-08-gestao-e-prevenir.webp",
+      "original": "A01FA09A-EEC5-4F73-96B0-1770C2B1C6E4.PNG",
+      "titulo": "Gestão é prevenir e criar barreiras simples",
+      "tem_texto": true,
+      "transcricao": "08 · 9/10. GESTÃO É PREVENIR E CRIAR BARREIRAS SIMPLES. Antecipe-se e reduza a probabilidade do risco virar problema. Seu checklist: conheça seus gatilhos; defina prioridades; crie blocos de foco; revise antes de entregar.",
+      "no_site": false,
+      "arquivo_site": null,
+      "usos": []
+    },
+    {
+      "id": "carrossel-09-monitore-ajuste-melhore",
+      "arquivo": "carrossel-09-monitore-ajuste-melhore.webp",
+      "original": "08E58842-6434-4CA0-A1D9-988F90DBFDDA.PNG",
+      "titulo": "Monitore, ajuste e melhore sempre",
+      "tem_texto": true,
+      "transcricao": "09 · 10/10. MONITORE, AJUSTE E MELHORE SEMPRE. Acompanhe seus padrões, avalie o que funcionou e adapte seus controles. Pergunte-se: o que funcionou bem? O que pode ser ajustado? Quais sinais preciso observar? Como posso reduzir ainda mais os riscos? Menos risco. Mais foco. Melhores resultados.",
+      "no_site": false,
+      "arquivo_site": null,
+      "usos": []
+    },
+    {
+      "id": "ilustracao-binoculo",
+      "arquivo": "ilustracao-binoculo.webp",
+      "original": "IMG_1561.JPG",
+      "titulo": "Mulher sentada em um banquinho observa com binóculo azul",
+      "tem_texto": false,
+      "transcricao": null,
+      "no_site": true,
+      "arquivo_site": "public/images/binoculo.webp",
+      "usos": [
+        "/ (hero)",
+        "/about/ (hero)",
+        "imagem OG padrão"
+      ]
+    },
+    {
+      "id": "ilustracao-caminhos-everyone",
+      "arquivo": "ilustracao-caminhos-everyone.webp",
+      "original": "IMG_1563.JPG",
+      "titulo": "Pequenas pessoas caminham entre linhas azuis sinuosas",
+      "tem_texto": true,
+      "transcricao": "everyone",
+      "no_site": false,
+      "arquivo_site": null,
+      "usos": []
+    },
+    {
+      "id": "ilustracao-equipe-tablet",
+      "arquivo": "ilustracao-equipe-tablet.webp",
+      "original": "IMG_1562.JPG",
+      "titulo": "Três pessoas conversam em torno de um tablet, com formas geométricas azuis",
+      "tem_texto": false,
+      "transcricao": null,
+      "no_site": true,
+      "arquivo_site": "public/images/equipe-tablet.webp",
+      "usos": [
+        "/about/ (Como produzimos)"
+      ]
+    },
+    {
+      "id": "ilustracao-lie-flat",
+      "arquivo": "ilustracao-lie-flat.webp",
+      "original": "IMG_1566.JPG",
+      "titulo": "Pessoa deitada sobre o ponteiro de um grande relógio azul",
+      "tem_texto": true,
+      "transcricao": "LIE FLAT · WATCH THE MOBILE PHONE .",
+      "no_site": false,
+      "arquivo_site": null,
+      "usos": []
+    },
+    {
+      "id": "ilustracao-mao-chaves",
+      "arquivo": "ilustracao-mao-chaves.webp",
+      "original": "IMG_1565.JPG",
+      "titulo": "Mão azul segura chaves e um chaveiro",
+      "tem_texto": false,
+      "transcricao": null,
+      "no_site": true,
+      "arquivo_site": "public/images/mao-chaves.webp",
+      "usos": [
+        "/login/",
+        "/signup/"
+      ]
+    },
+    {
+      "id": "ilustracao-think-big",
+      "arquivo": "ilustracao-think-big.webp",
+      "original": "IMG_1564.JPG",
+      "titulo": "Mão grande sobre fundo azul toca um notebook",
+      "tem_texto": true,
+      "transcricao": "THINK BIG",
+      "no_site": false,
+      "arquivo_site": null,
+      "usos": []
+    }
+  ]
+}

@@ -5,6 +5,8 @@ import { expectTheme, useTheme } from "./theme";
 import { isValidPlainText, normalizeText } from "../app/lib/plain/normalizeText";
 import { parseFence } from "../app/lib/plain/remarkPlain";
 import { renderTree } from "../app/lib/plain/renderTree";
+import { structurePlain } from "../app/lib/plain/structure";
+import { scanBlogSlugs } from "../app/lib/routes/scan";
 
 const SHOWROOM = "/admin/design-system/";
 const REPORT = "/admin/relatorio-exemplo/";
@@ -31,6 +33,33 @@ test.describe("plain lib", () => {
     expect(isValidPlainText("├── ok\n\tok")).toBe(true);
     expect(isValidPlainText("bad\u0007")).toBe(false);
     expect(isValidPlainText("lone \ud800")).toBe(false);
+  });
+
+  test("structurePlain turns operational text into reading blocks (ADR-12)", () => {
+    // Label: value → definition list
+    const brief = structurePlain("Problema: peças soltas.\nProcesso: gravata-borboleta.\nProgresso: lacunas visíveis.");
+    expect(brief).toEqual([
+      {
+        type: "pairs",
+        items: [
+          { term: "Problema", lead: "peças soltas.", details: [], code: false },
+          { term: "Processo", lead: "gravata-borboleta.", details: [], code: false },
+          { term: "Progresso", lead: "lacunas visíveis.", details: [], code: false },
+        ],
+      },
+    ]);
+    // KEY  value, with the colon inside the value; indented lines are details
+    const keyed = structurePlain("VALIDAR      validate_output.py: seções\nA0  ORIENTAR\n    nenhuma ação externa");
+    expect(keyed[0]).toMatchObject({ type: "pairs", items: [{ term: "VALIDAR" }, { term: "A0", lead: "ORIENTAR", details: ["nenhuma ação externa"] }] });
+    // intro + numbered list; "01  passo" is a list, not definitions
+    expect(structurePlain("Sequência:\n1. a;\n2. b.")).toEqual([{ type: "list", ordered: true, intro: "Sequência:", items: ["a;", "b."] }]);
+    expect(structurePlain("01  abrir\n02  listar")).toEqual([{ type: "list", ordered: true, intro: undefined, items: ["abrir", "listar"] }]);
+    // column-aligned rows with a caps header → table
+    expect(structurePlain("ID   STAGE   STATUS\nA-1  Boot    OK\nA-2  Map     OK")[0]).toMatchObject({ type: "table", head: ["ID", "STAGE", "STATUS"] });
+    // anything else stays a paragraph, verbatim
+    expect(structurePlain("Texto livre: com dois-pontos no meio de uma frase longa demais para rótulo.")).toEqual([
+      { type: "paragraph", lines: ["Texto livre: com dois-pontos no meio de uma frase longa demais para rótulo."] },
+    ]);
   });
 
   test("fenced ```ascii header lines become props", () => {
@@ -101,7 +130,8 @@ test("AC-01: MDX report preserves template-literal indentation", async ({ page }
   await page.goto(REPORT);
   const flow = await page.locator("#AUTONOMY-FLOW-001 pre").textContent();
   expect(flow).toContain("\nA4\n    ├── executar\n    ├── verificar\n    └── evidenciar");
-  const model = await page.locator("#AUTONOMY-MODEL-001 [data-plain-content]").textContent();
+  // the panel keeps the original plain text as its source (ADR-12); readers see the structured view
+  const model = await page.locator("#AUTONOMY-MODEL-001 [data-plain-source]").textContent();
   expect(model?.startsWith("A0  ORIENTAR\n    nenhuma ação externa\n")).toBe(true);
   // fenced ```ascii block was converted by remarkPlain
   const fenced = page.locator('[data-plain="diagram"][data-kind="architecture"]');
@@ -149,19 +179,23 @@ test("AC-06/07 + annex AC-04: both components share the token-driven surface", a
   const style = (sel: string) =>
     page.locator(sel).evaluate((el) => {
       const cs = getComputedStyle(el);
-      return { bg: cs.backgroundColor, border: cs.borderTopColor, radius: cs.borderTopLeftRadius, color: cs.color };
+      return { bg: cs.backgroundColor, borderWidth: cs.borderTopWidth, radius: cs.borderTopLeftRadius, color: cs.color };
     });
   const diagram = await style("#FLOW-OPS-001");
   const panel = await style("#PANEL-INSTRUCTION-001");
-  expect(diagram).toEqual({ bg: "rgb(245, 245, 244)", border: "rgb(234, 234, 232)", radius: "28px", color: "rgb(32, 33, 36)" });
+  // ADR-12: diagrams and panels are table cells — Subtle fill, no outline, 2px radius
+  expect(diagram).toEqual({ bg: "rgb(245, 245, 244)", borderWidth: "0px", radius: "2px", color: "rgb(32, 33, 36)" });
   expect(panel).toEqual(diagram);
-  const fonts = await page.locator("#FLOW-OPS-001 pre, #PANEL-INSTRUCTION-001 [data-plain-content]").evaluateAll((els) =>
-    els.map((e) => getComputedStyle(e).fontFamily),
+  // the header strip is the table header (Tabular)
+  expect(await page.locator("#PANEL-INSTRUCTION-001 .plain-surface__header").evaluate((e) => getComputedStyle(e).backgroundColor)).toBe(
+    "rgb(234, 234, 232)",
   );
-  expect(fonts.every((f) => /ui-monospace|monospace/.test(f))).toBe(true);
+  // diagrams keep mono geometry; panels read in the text face (no monospaced prose)
+  expect(await page.locator("#FLOW-OPS-001 pre").evaluate((e) => getComputedStyle(e).fontFamily)).toMatch(/monospace/);
+  expect(await page.locator("#PANEL-INSTRUCTION-001 [data-plain-content]").evaluate((e) => getComputedStyle(e).fontFamily)).toMatch(/^"?Inter/);
 
   await page.setViewportSize({ width: 375, height: 800 });
-  expect((await style("#FLOW-OPS-001")).radius).toBe("22px");
+  expect((await style("#FLOW-OPS-001")).radius).toBe("2px");
 });
 
 test("annex AC-06/07: panel text wraps on mobile, diagram keeps geometry", async ({ page }) => {
@@ -170,7 +204,7 @@ test("annex AC-06/07: panel text wraps on mobile, diagram keeps geometry", async
   const panel = await page
     .locator("#PANEL-LONG-001 [data-plain-content]")
     .evaluate((el) => ({ ws: getComputedStyle(el).whiteSpace, fits: el.scrollWidth <= el.clientWidth }));
-  expect(panel).toEqual({ ws: "pre-wrap", fits: true });
+  expect(panel).toEqual({ ws: "normal", fits: true });
   expect(await page.locator("#FLOW-WIDE-001 pre").evaluate((el) => getComputedStyle(el).whiteSpace)).toBe("pre");
 });
 
@@ -259,4 +293,29 @@ test("tables follow the STORE-WIREFRAMES style everywhere", async ({ page }) => 
     expect(s, `${url} ${sel}`).toEqual({ collapse: "separate", spacing: "3px", th: "rgb(234, 234, 232)", upper: "uppercase", td: "rgb(245, 245, 244)" });
     expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(0);
   }
+});
+
+test("every plain panel in the articles reads as structure, never as monospaced prose (ADR-12)", async ({ page }) => {
+  let panels = 0;
+  for (const slug of scanBlogSlugs(process.cwd())) {
+    await page.goto(`/blog/${slug}/`);
+    const found = await page.locator('[data-plain="panel"]').evaluateAll((els) =>
+      els.map((el) => {
+        const content = el.querySelector("[data-plain-content]")!;
+        return {
+          id: el.id,
+          font: getComputedStyle(content).fontFamily,
+          structured: content.querySelectorAll("dl, ol, ul, table").length,
+          source: el.querySelector("[data-plain-source]")?.textContent ?? "",
+        };
+      }),
+    );
+    for (const p of found) {
+      expect(p.font, p.id).not.toMatch(/monospace/);
+      expect(p.structured, `${p.id} has no structure`).toBeGreaterThan(0);
+      expect(p.source.length, `${p.id} keeps its plain-text source`).toBeGreaterThan(0);
+    }
+    panels += found.length;
+  }
+  expect(panels).toBeGreaterThan(0);
 });

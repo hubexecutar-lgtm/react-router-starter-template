@@ -66,7 +66,7 @@ export default function Admin() {
 							<a
 								key={link.href}
 								href={link.href}
-								className="bg-card text-card-foreground hover:bg-muted flex flex-col gap-2 rounded-xl border p-6 transition-colors"
+								className="rc-cell rc-surface text-card-foreground flex flex-col gap-2 p-6 transition-colors hover:bg-[var(--surface-hover)]"
 							>
 								<span className="text-sm font-medium tracking-tight">{link.label}</span>
 								<span className="text-muted-foreground text-sm">{link.description}</span>
