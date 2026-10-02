@@ -1,0 +1,24 @@
+{
+  "id": "EXECUTAR-BLOCK-QF-SKILL-001",
+  "version": "1.0.0",
+  "name": "Executar Block Quick Frameworks",
+  "folder": "executar-block-quick-frameworks",
+  "status": "VERIFIED",
+  "files": [
+    "SKILL.md",
+    "assets/infographic-brief.yaml",
+    "assets/quick-framework-template.md",
+    "evals/acceptance-checklist.md",
+    "evals/cases.yaml",
+    "references/anthropic-design-notes.md",
+    "references/content-contract.yaml",
+    "references/output-contract.yaml",
+    "references/research-contract.yaml",
+    "references/safety-guardrails.yaml",
+    "references/source-contract.yaml",
+    "references/validation-rules.yaml",
+    "scripts/check_skill.py",
+    "scripts/validate_output.py"
+  ],
+  "validation": "STATUS: VERIFIED"
+}

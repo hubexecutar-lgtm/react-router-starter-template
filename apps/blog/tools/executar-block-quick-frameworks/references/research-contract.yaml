@@ -1,0 +1,100 @@
+id: QF-RESEARCH-CONTRACT-001
+versao: 1.0.0
+nome: Contrato de Busca Agentica
+
+metadados:
+  area: Pesquisa e Conteudo
+  fluxo: ENTENDER -> PESQUISAR -> VALIDAR -> ESTRUTURAR -> REDIGIR -> VERIFICAR
+  owner: A DEFINIR
+  status: READY
+  automation_level: A4
+
+entrada:
+  obrigatoria:
+    - topico
+  opcional:
+    - problema
+    - publico
+    - contexto
+    - area
+    - referencias_conhecidas
+    - ferramentas_relacionadas
+
+pesquisa:
+  objetivo: >
+    Encontrar evidencias suficientes para definir o tema, descrever o problema,
+    identificar solucao conhecida, explicar processo, escolher referencia central
+    e sustentar o progresso esperado.
+
+  perguntas_obrigatorias:
+    - O que o tema significa no contexto solicitado?
+    - Qual problema pratico esta associado a ele?
+    - Qual parte do problema permanece sem solucao?
+    - Qual parte possui abordagem ou solucao documentada?
+    - Qual processo e sustentado pelas evidencias?
+    - Quem ou qual organizacao e referencia central e por que?
+    - Qual resultado realista pode ser esperado?
+    - Quais limites, divergencias ou ressalvas existem?
+
+  ordem:
+    1: formular_pergunta_de_pesquisa
+    2: buscar_fontes_primarias
+    3: buscar_fontes_institucionais
+    4: complementar_com_fontes_secundarias
+    5: comparar_afirmacoes
+    6: selecionar_referencia
+    7: montar_mapa_de_evidencias
+    8: redigir
+    9: validar
+    10: entregar
+
+referencia_padrao_ouro:
+  criterio: >
+    Escolher uma unica pessoa ou organizacao apenas quando a centralidade
+    no tema puder ser sustentada por fontes confiaveis.
+  justificar_por:
+    - formacao_funcao_ou_reconhecimento
+    - contribuicao_documentada
+    - mudanca_no_campo
+  proibido:
+    - escolher_apenas_por_popularidade
+    - usar_fama_como_evidencia
+    - inventar_titulo
+    - inventar_premio
+    - inventar_citacao
+    - declarar_consenso_sem_fonte
+
+mapa_de_evidencias:
+  campos:
+    - afirmacao
+    - tipo
+    - fonte
+    - data
+    - aplicabilidade
+    - confianca
+  tipos:
+    - fato
+    - interpretacao
+    - hipotese
+    - recomendacao_pratica
+
+tratamento_de_conflitos:
+  regra: >
+    Quando fontes confiaveis divergirem, registrar a divergencia,
+    explicar o que cada fonte sustenta e evitar conclusao absoluta.
+  estado: CONFLITO
+
+lacunas:
+  regra: >
+    Se a busca nao sustentar uma afirmacao necessaria, usar A DEFINIR
+    ou reformular a afirmacao para o nivel realmente sustentado.
+  proibido: inferencia_silenciosa
+
+criterio_de_conclusao:
+  exige:
+    - problema_definido
+    - evidencia_suficiente
+    - referencia_justificada_ou_a_definir
+    - processo_sustentado
+    - limites_registrados
+    - fontes_rastreaveis

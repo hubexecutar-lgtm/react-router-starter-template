@@ -35,7 +35,7 @@ const THEME_SCRIPT = `(function(){var s=localStorage.getItem('theme');var d=wind
 
 export function Layout({ children }: { children: React.ReactNode }) {
 	return (
-		<html lang="en" suppressHydrationWarning>
+		<html lang="pt-BR" suppressHydrationWarning>
 			<head>
 				<meta charSet="utf-8" />
 				<meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -43,7 +43,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 				<Meta />
 				<Links />
 			</head>
-			<body className="h-screen antialiased">
+			<body className="bg-background text-foreground min-h-screen antialiased">
 				{children}
 				<ScrollRestoration />
 				<Scripts />

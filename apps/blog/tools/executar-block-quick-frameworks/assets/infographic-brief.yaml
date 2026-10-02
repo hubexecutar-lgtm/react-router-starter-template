@@ -1,0 +1,31 @@
+id: QF-INFOGRAPHIC-BRIEF-001
+versao: 1.0.0
+formato:
+  proporcao: "16:9"
+  quantidade: 1
+  objetivo: Sintetizar problema, processo e progresso em tres etapas.
+
+composicao:
+  titulo:
+    funcao: Identificar o tema em uma frase curta.
+  etapa_1:
+    nome: Problema
+    conteudo: Dor ou obstaculo central.
+    visual: Figura simples associada ao contexto cotidiano.
+  etapa_2:
+    nome: Processo
+    conteudo: Caminho Entender -> Estruturar -> Executar.
+    visual: Figura ou sequencia simples que represente a acao.
+  etapa_3:
+    nome: Progresso
+    conteudo: Mudanca observavel esperada.
+    visual: Figura que represente melhoria realista.
+
+regras:
+  - usar_texto_curto
+  - uma_ideia_principal_por_etapa
+  - manter_relacao_visual_com_contexto
+  - evitar_decoracao_sem_funcao
+  - evitar_excesso_de_dados
+  - nao_inventar_estatisticas
+  - incluir_fonte_se_houver_numero_ou_afirmacao_factual

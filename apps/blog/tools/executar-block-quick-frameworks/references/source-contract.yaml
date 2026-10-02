@@ -1,0 +1,86 @@
+id: QF-SOURCE-CONTRACT-001
+versao: 1.0.0
+nome: Contrato de Fontes e Evidencias
+
+principio:
+  regra: >
+    Quanto maior a importancia da afirmacao, maior deve ser a qualidade,
+    proximidade e atualidade da fonte usada para sustenta-la.
+
+hierarquia:
+  1:
+    tipo: fonte_original
+    exemplos:
+      - artigo_original
+      - livro_do_autor
+      - norma
+      - base_oficial
+      - documento_primario
+  2:
+    tipo: instituicao_oficial
+    exemplos:
+      - governo
+      - universidade
+      - sociedade_cientifica
+      - organismo_internacional
+  3:
+    tipo: pesquisa_academica
+    exemplos:
+      - revisao_sistematica
+      - meta_analise
+      - estudo_revisado_por_pares
+  4:
+    tipo: fonte_secundaria_confiavel
+    exemplos:
+      - editora_academica
+      - publicacao_especializada
+      - jornalismo_de_alta_qualidade
+
+regras:
+  - usar_fonte_primaria_para_credencial_quando_disponivel
+  - conferir_data_em_assuntos_atuais
+  - conferir_populacao_e_contexto_de_estudos
+  - nao_extrapolar_estudo_alem_do_que_ele_demonstra
+  - preferir_multiplas_fontes_para_afirmacoes_centrais
+  - distinguir_evidencia_de_opiniao
+  - distinguir_correlacao_de_causalidade
+  - nunca_inventar_url
+  - nunca_inventar_titulo
+  - nunca_inventar_autoria
+  - nunca_inventar_citacao
+
+citacoes:
+  citacao_direta:
+    maximo_palavras: 12
+    fonte_obrigatoria: true
+    regra: >
+      Usar somente quando a formulacao original acrescentar valor.
+      Caso contrario, parafrasear com atribuicao.
+  parafrase:
+    atribuicao_obrigatoria: true
+
+atualidade:
+  regra: >
+    Em temas que mudam com o tempo, confirmar informacoes em fonte atual
+    e registrar o periodo ao qual a evidencia se aplica.
+
+referencia_padrao_ouro:
+  evidencia_minima:
+    - credencial_ou_funcao_verificavel
+    - contribuicao_verificavel
+    - influencia_ou_mudanca_documentada
+  se_nao_houver_consenso:
+    acao: >
+      Descrever a pessoa ou organizacao como referencia importante,
+      sem afirmar que e a unica ou definitiva.
+
+fontes_finais:
+  limite_palavras_descritivas: 70
+  cada_item:
+    - titulo
+    - autor_ou_instituicao
+    - ano
+    - link
+  regra: >
+    O limite de 70 palavras vale para texto descritivo, nao para URLs,
+    titulos bibliograficos ou identificadores necessarios.

@@ -1,0 +1,86 @@
+---
+contentId: CNT-RC-0004
+slug: eventos-de-risco-cognitivo
+territory: eventos-de-risco-cognitivo
+title: "Eventos de risco cognitivo: o que, de fato, aconteceu?"
+seoTitle: "Eventos de risco cognitivo: deslizes, lapsos, enganos e violações"
+description: "Deslize, lapso, engano e violação têm mecanismos diferentes e pedem respostas diferentes. Aprenda a descrever o que aconteceu antes de corrigir."
+tags: [eventos, erro humano, deslizes, lapsos, investigação]
+evidence: [EVD-RC-0006, EVD-RC-0013]
+pubDate: 2026-10-01
+---
+
+# Eventos de risco cognitivo: o que, de fato, aconteceu?
+
+## 1. Contexto
+Você sai de casa e esquece a chave; em outro dia, pega a saída errada porque seguiu o caminho de sempre; em outro, escolhe um atalho que parecia lógico e se perde. Os três terminam em atraso, mas não são o mesmo evento. No trabalho, chamar tudo de “erro” mistura situações com causas diferentes, e a correção escolhida costuma não servir para nenhuma delas.
+
+## 2. 5W2H
+
+| Variável | Síntese |
+|---|---|
+| O que? | Ocorrência observável em que a cognição contribuiu para falha. |
+| Por quê? | Tipos diferentes de evento exigem controles diferentes. |
+| Onde? | Em registros de incidentes, retrabalho e quase-acidentes. |
+| Quando? | Logo após a ocorrência, antes que a memória se perca. |
+| Quem? | Quem viveu o evento e quem investiga sem culpar. |
+| Como? | Descrevendo o que aconteceu e classificando o mecanismo. |
+| Quanto? | Uma descrição curta por evento já permite comparar padrões. |
+
+## 3. Referência padrão-ouro
+James Reason, psicólogo da Universidade de Manchester, é referência central na classificação de erros. Em *Human Error* (1990) e no artigo do BMJ de 2000, ele separa falhas de execução (deslizes e lapsos), falhas de planejamento (enganos) e violações. Ele também mostrou que cada tipo tem mecanismo próprio e pede uma forma própria de gestão de risco.
+
+## 4. Problema existente
+**Definição.** Registrar todo evento apenas como “erro”.
+**Identificação.** Bases de incidentes com uma única categoria genérica.
+**Explicação.** Sem distinguir o mecanismo, não se sabe se o problema foi atenção, memória, regra ou conhecimento.
+**Fechamento.** A mesma correção — retreinar — é aplicada a tudo.
+
+## 5. Problema solucionado
+**Definição.** Existe uma taxonomia consolidada de tipos de erro.
+**Identificação.** Reason (2000) distingue deslizes e lapsos, enganos baseados em regra ou conhecimento e violações.
+**Explicação.** Deslizes pedem lembretes e barreiras; enganos pedem informação; violações pedem rever regras e incentivos.
+**Fechamento.** O controle passa a corresponder ao mecanismo.
+
+## 6. Processo
+1. **Entender:** descrever o evento em linguagem neutra, sem julgamento.
+2. **Estruturar:** classificar o mecanismo e ligar aos fatores presentes.
+3. **Executar:** escolher o controle adequado ao tipo de evento.
+
+## 7. Visão do sistema
+
+```mermaid
+flowchart LR
+  A[Tudo vira erro] --> B[Mecanismos misturados]
+  B --> C[Entender o que aconteceu]
+  C --> D[Estruturar por tipo de evento]
+  D --> E[Executar controle específico]
+  E --> F[Correção que funciona]
+```
+
+## 8. Progresso esperado
+Antes, esquecer um passo e escolher a regra errada recebiam o mesmo treinamento. Ao separar lapso de engano, a equipe usa checklist para o primeiro e instrução clara para o segundo, e acompanha se cada tipo diminui.
+
+## 9. Aviso
+Classificar o evento não é atribuir culpa. A taxonomia descreve mecanismos; a análise continua nas condições do sistema.
+
+## 10. Next 01-02-03
+**Next 01 — Entender:** reescreva três ocorrências recentes sem adjetivos.
+**Next 02 — Estruturar:** classifique-as como deslize, lapso, engano ou violação.
+**Next 03 — Executar:** aplique um controle por tipo e registre o efeito.
+
+```mermaid
+flowchart LR
+  A[Next 01: Entender] --> B[Next 02: Estruturar]
+  B --> C[Next 03: Executar]
+  C --> D[Resultado observável]
+```
+
+## 11. Fontes e aprofundamento
+- Human error: models and management — James Reason, BMJ, 2000 — https://doi.org/10.1136/bmj.320.7237.768
+- The Field Guide to Human Error Investigations — Sidney Dekker, 2002 — https://www.routledge.com/The-Field-Guide-to-Human-Error-Investigations/Dekker/p/book/9781138704268
+
+## 12. Infográfico 16:9
+**Problema:** tudo vira “erro” — uma única gaveta etiquetada.
+**Processo:** quatro gavetas — deslize, lapso, engano, violação —, cada uma com seu controle.
+**Progresso:** correções específicas — setas de cada gaveta para uma ação diferente.

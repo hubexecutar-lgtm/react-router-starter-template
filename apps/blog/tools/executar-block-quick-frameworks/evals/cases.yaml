@@ -1,0 +1,50 @@
+id: QF-EVALS-001
+versao: 1.0.0
+
+casos:
+  - id: EVAL-001
+    entrada:
+      topico: Gestao por objetivos
+      area: Gestao
+    esperado:
+      pesquisa_web: true
+      referencia_candidata: Peter Drucker
+      exigir_validacao_da_referencia: true
+      cinco_w_dois_h: completo
+      processo_tres_etapas: true
+      mermaid: true
+      infografico_16_9: true
+      fontes: rastreaveis
+
+  - id: EVAL-002
+    entrada:
+      topico: Procrastinacao em TDAH
+      area: Saude e produtividade
+    esperado:
+      pesquisa_web: true
+      tema_alto_risco: true
+      aviso: necessario
+      evitar_diagnostico_individual: true
+      referencia_deve_ser_validada: true
+      processo_tres_etapas: true
+      fontes_primarias_e_cientificas: priorizadas
+
+  - id: EVAL-003
+    entrada:
+      topico: Product Market Fit
+      area: Produto
+    esperado:
+      pesquisa_web: true
+      verificar_origem_do_conceito: true
+      nao_forcar_referencia_unica_se_houver_disputa: true
+      registrar_divergencia: true
+      processo_tres_etapas: true
+      fontes: rastreaveis
+
+  - id: EVAL-004
+    entrada:
+      topico: Tema com referencia pouco clara
+    esperado:
+      referencia_padrao_ouro: A DEFINIR
+      proibido_inventar_referencia: true
+      explicar_limite_da_evidencia: true

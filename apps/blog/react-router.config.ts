@@ -1,8 +1,7 @@
 import type { Config } from "@react-router/dev/config";
 import { readdirSync } from "node:fs";
 
-
-import { ENDPOINTS, PAGES } from "./app/data/pages";
+import { ENDPOINTS, PAGES, TERRITORY_PATHS } from "./app/data/pages";
 import { STORE_PATHS } from "./app/features/store/data/paths";
 
 // Every page of the blog is static: prerender them all at build time (the Worker still
@@ -15,7 +14,7 @@ function blogPaths(): string[] {
 
 export default {
 	ssr: true,
-	prerender: () => [...PAGES, ...ENDPOINTS, ...blogPaths(), ...STORE_PATHS],
+	prerender: () => [...PAGES, ...ENDPOINTS, ...TERRITORY_PATHS, ...blogPaths(), ...STORE_PATHS],
 	future: {
 		unstable_viteEnvironmentApi: true,
 	},

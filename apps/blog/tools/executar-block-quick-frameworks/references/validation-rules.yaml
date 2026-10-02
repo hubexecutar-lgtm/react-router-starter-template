@@ -1,0 +1,45 @@
+id: QF-VALIDATION-001
+versao: 1.0.0
+
+reprovar_se:
+  - contexto_ausente
+  - contexto_sem_exemplo_cotidiano
+  - cinco_w_dois_h_incompleto
+  - cinco_w_dois_h_acima_de_12_palavras
+  - referencia_sem_justificativa
+  - citacao_sem_fonte
+  - citacao_acima_de_12_palavras
+  - problema_sem_dor_identificavel
+  - problema_sem_evidencia
+  - processo_sem_tres_etapas
+  - processo_sem_entender_estruturar_executar
+  - bloco_principal_acima_de_300_palavras
+  - visao_mermaid_ausente
+  - progresso_sem_ligacao_com_dor
+  - progresso_sem_exemplo_cotidiano
+  - progresso_acima_de_50_palavras
+  - aviso_acima_de_30_palavras
+  - proximos_passos_acima_de_100_palavras
+  - mermaid_next_ausente
+  - fontes_acima_de_70_palavras_descritivas
+  - fonte_inventada
+  - afirmacao_central_sem_evidencia
+  - promessa_de_resultado
+  - ferramenta_sem_relacao_funcional
+
+aprovar_se:
+  - estrutura_completa
+  - ordem_preservada
+  - linguagem_clara
+  - problema_definido
+  - solucao_ligada_ao_problema
+  - processo_aplicavel
+  - progresso_observavel
+  - referencia_validada_ou_lacuna_declarada
+  - fontes_rastreaveis
+  - limites_de_palavras_respeitados
+  - briefing_16_9_presente
+
+estado_final:
+  aprovado: VERIFIED
+  reprovado: BLOCKED

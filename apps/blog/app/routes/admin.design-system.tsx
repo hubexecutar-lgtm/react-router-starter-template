@@ -9,6 +9,7 @@ import { CALLOUT_VARIANTS, CALLOUT_VARIANT_NAMES } from '@/components/ui/callout
 import DefaultLayout from '@/layouts/DefaultLayout';
 import { css } from '@/lib/css';
 import { seo } from '@/lib/seo';
+import { tokenValue } from '@/lib/tokens.server';
 import { cn } from '@/lib/utils';
 
 const ARTICLE = '/blog/do-risco-cognitivo-a-execucao-assistida/';
@@ -65,11 +66,11 @@ const storeRows = [
   ['(estados)', 'CatalogSkeleton / CatalogEmpty / CatalogError', 'catalog-states.tsx', 'status, resultados', 'LOADING/EMPTY/ERROR'],
 ];
 const plainTokens = [
-  ['--plain-surface', '#F8F8F8 (escuro: --card)'],
-  ['--plain-border', '#EBEBEB (escuro: --border)'],
-  ['--plain-text', '#000000 (escuro: --foreground)'],
-  ['--plain-accent', 'var(--primary) — sem matiz nova'],
-  ['--plain-accent-soft', 'var(--color-brand-subtle)'],
+  ['--plain-surface', 'alias de --surface-default'],
+  ['--plain-border', 'alias de --border-default'],
+  ['--plain-text', 'alias de --foreground'],
+  ['--plain-accent', 'var(--primary)'],
+  ['--plain-accent-soft', 'var(--primary-soft)'],
   ['--plain-radius-desktop / mobile', '28px / 22px'],
   ['--plain-font', 'ui-monospace, SFMono-Regular, Menlo…'],
   ['--plain-font-size', 'clamp(0.875rem, 1.6vw, 1.125rem)'],
@@ -204,7 +205,26 @@ const radii = [
   ['callout-md (= radius-lg)', 'var(--callout-radius-md)'],
   ['callout-lg (= radius-xl)', 'var(--callout-radius-lg)'],
 ];
-const shadows = ['shadow-xs', 'shadow-sm', 'shadow-md', 'shadow-lg', 'shadow-xl'];
+const elevations = [
+  ['elevation-flat', 'cards, painéis, células de tabela', 'var(--elevation-flat)'],
+  ['elevation-raised', 'controles (escala xs e sm)', 'var(--elevation-raised)'],
+  ['elevation-overlay', 'popover, dialog, drawer, sheet, hover-card', 'var(--elevation-overlay)'],
+];
+const surfaceScale = [
+  ['surface-page', 'fundo da página'],
+  ['surface-subtle', 'áreas secundárias'],
+  ['surface-default', 'cards, células, painéis, diagramas'],
+  ['surface-hover', 'hover (= --muted / --accent)'],
+  ['surface-selected', 'item ou linha selecionada'],
+  ['border-subtle', 'divisões leves'],
+  ['border-default', 'borda padrão (só estrutura)'],
+  ['border-strong', 'ênfase estrutural'],
+];
+
+// Hex values shown in this page are read from the token source, never duplicated here.
+export function loader() {
+  return { tokens: Object.fromEntries(surfaceScale.map(([n]) => [n, tokenValue(`--${n}`)])) };
+}
 const h2 = 'text-primary scroll-mt-28 text-4xl font-medium';
 const lead = 'text-muted-foreground mt-3 max-w-2xl text-lg font-medium';
 
@@ -215,10 +235,11 @@ export const meta: Route.MetaFunction = ({ location }) =>
     pathname: location.pathname,
   });
 
-export default function DesignSystem() {
+export default function DesignSystem({ loaderData }: Route.ComponentProps) {
+  const { tokens } = loaderData;
   return (
     <DefaultLayout>
-      <div className="container max-w-5xl pt-32 pb-24 lg:pt-44">
+      <div className="container max-w-5xl pt-12 pb-24 lg:pt-20">
         <p className="text-muted-foreground text-sm font-medium"><a href="/admin" className="hover:underline">Painel</a> / Design System</p>
         <h1 className="mt-2 text-3xl tracking-tight sm:text-4xl md:text-5xl lg:text-6xl">Design System</h1>
         <p className={lead}>
@@ -315,6 +336,21 @@ export default function DesignSystem() {
             ))}
           </div>
 
+          <h3 className="mt-10 text-xl font-medium">Superfícies, bordas e elevação</h3>
+          <p className="text-muted-foreground mt-2 max-w-2xl text-base font-medium">
+            Um único contrato neutro (ADR-09): cards, células, painéis e diagramas usam <code>surface-default</code> + <code>border-default</code> e
+            nenhuma sombra. Sombra indica elevação real (overlays). O <code>--plain-*</code> é só alias.
+          </p>
+          <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4" data-testid="surface-scale">
+            {surfaceScale.map(([n, use]) => (
+              <div key={n} className="flex min-w-0 flex-col gap-2">
+                <span className="h-14 rounded-lg border" data-surface-token={n} style={css(`background: var(--${n})`)}></span>
+                <span className="font-mono text-xs">--{n}</span>
+                <span className="text-muted-foreground text-xs">claro: {n === 'surface-page' ? 'branco' : tokens[n]} · {use}</span>
+              </div>
+            ))}
+          </div>
+
           <h3 className="mt-10 text-xl font-medium">Superfícies e texto cinza</h3>
           <p className="text-muted-foreground mt-2 max-w-2xl text-base font-medium">
             Paleta de cards do sistema com a escada de texto cinza. O cinza extra
@@ -381,7 +417,12 @@ export default function DesignSystem() {
               ))}
             </div>
             <div className="flex flex-wrap gap-4 rounded-2xl border p-5">
-              {shadows.map((sh, i) => <span key={i} className={cn('bg-card grid size-20 place-items-center rounded-xl font-mono text-[10px]', sh)}>{sh}</span>)}
+              {elevations.map(([n, use, v]) => (
+                <div key={n} className="flex w-40 flex-col gap-2">
+                  <span className="bg-background grid h-20 place-items-center rounded-xl border font-mono text-[10px]" style={css(`box-shadow: ${v}`)} data-elevation={n}>{n}</span>
+                  <span className="text-muted-foreground text-xs">{use}</span>
+                </div>
+              ))}
             </div>
             <div className="flex flex-col gap-2 rounded-2xl border p-5 font-mono text-xs">
               <span>--callout-motion-fast: 120ms</span>

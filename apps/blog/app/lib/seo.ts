@@ -1,4 +1,5 @@
 // Head metadata shared by every page (port of the Astro BaseHead component).
+// `title` is the page title; the site template (`%s | Risco Cognitivo`) is applied here.
 import type { MetaDescriptor } from "react-router";
 
 import { SITE_METADATA, SITE_TITLE, SITE_URL } from "@/consts";
@@ -8,11 +9,13 @@ type SeoInput = {
 	description?: string;
 	image?: string;
 	pathname: string;
+	/** Páginas sem valor de busca (ex.: formulários desativados). */
+	noindex?: boolean;
 };
 
-export function seo({ title, description, image, pathname }: SeoInput): MetaDescriptor[] {
+export function seo({ title, description, image, pathname, noindex }: SeoInput): MetaDescriptor[] {
 	const url = new URL(pathname, SITE_URL).href;
-	const finalTitle = title || SITE_METADATA.title.default;
+	const finalTitle = title ? SITE_METADATA.title.template.replace("%s", title) : SITE_METADATA.title.default;
 	const finalDescription = description || SITE_METADATA.description;
 	const og = SITE_METADATA.openGraph.images[0];
 	const imageURL = new URL(image || og.url, url).href;
@@ -20,7 +23,7 @@ export function seo({ title, description, image, pathname }: SeoInput): MetaDesc
 
 	return [
 		{ title: finalTitle },
-		{ name: "robots", content: `${robots.index ? "index" : "noindex"}, ${robots.follow ? "follow" : "nofollow"}` },
+		{ name: "robots", content: `${robots.index && !noindex ? "index" : "noindex"}, ${robots.follow ? "follow" : "nofollow"}` },
 		{ name: "keywords", content: SITE_METADATA.keywords.join(", ") },
 		{ name: "author", content: SITE_METADATA.authors[0].name },
 		{ name: "creator", content: SITE_METADATA.creator },
@@ -30,6 +33,7 @@ export function seo({ title, description, image, pathname }: SeoInput): MetaDesc
 		{ name: "title", content: finalTitle },
 		{ name: "description", content: finalDescription },
 		{ property: "og:type", content: "website" },
+		{ property: "og:locale", content: "pt_BR" },
 		{ property: "og:url", content: url },
 		{ property: "og:site_name", content: SITE_METADATA.openGraph.siteName },
 		{ property: "og:title", content: finalTitle },
@@ -43,6 +47,5 @@ export function seo({ title, description, image, pathname }: SeoInput): MetaDesc
 		{ property: "twitter:title", content: finalTitle },
 		{ property: "twitter:description", content: finalDescription },
 		{ property: "twitter:image", content: imageURL },
-		{ property: "twitter:creator", content: SITE_METADATA.twitter.creator },
 	];
 }

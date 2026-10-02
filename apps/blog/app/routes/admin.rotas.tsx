@@ -104,7 +104,7 @@ export default function RoutesHub({ loaderData }: Route.ComponentProps) {
   return (
     <DefaultLayout>
       <style dangerouslySetInnerHTML={{ __html: PRINT_CSS }} />
-      <div className="container max-w-5xl pt-32 pb-24 lg:pt-44">
+      <div className="container max-w-5xl pt-12 pb-24 lg:pt-20">
         <p className="text-muted-foreground text-sm font-medium" data-hub-hide-print><a href="/admin" className="hover:underline">Painel</a> / Rotas e links</p>
         <h1 className="mt-2 text-3xl tracking-tight sm:text-4xl md:text-5xl lg:text-6xl">Rotas e links</h1>
         <p className="text-muted-foreground mt-3 max-w-2xl text-lg font-medium">
@@ -144,7 +144,7 @@ export default function RoutesHub({ loaderData }: Route.ComponentProps) {
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2" id="hub-grid" data-testid="hub-grid">
             {withQr.map((e, i) => (
               <article key={i}
-                className={cn("route-card bg-card flex min-w-0 gap-4 rounded-xl border p-4 shadow-sm", !matches(e) && "hidden")}
+                className={cn("route-card bg-card flex min-w-0 gap-4 rounded-xl border p-4", !matches(e) && "hidden")}
                 data-id={e.id}
                 data-kind={e.kind}
                 data-group={e.group}

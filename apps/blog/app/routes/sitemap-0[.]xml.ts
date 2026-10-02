@@ -1,13 +1,13 @@
-// Sitemap of every page and article (replaces @astrojs/sitemap; same markup and order).
+// Sitemap of every page, territory and published article (replaces @astrojs/sitemap; same markup).
 import { SITE_URL } from "@/consts";
-import { PAGES } from "@/data/pages";
+import { PAGES, TERRITORY_PATHS } from "@/data/pages";
 import { STORE_PATHS } from "@/features/store/data/paths";
-import { getPosts } from "@/lib/content";
+import { getPosts } from "@/lib/posts.server";
 import { xmlResponse } from "@/lib/xml";
 
 export function loader() {
 	const paths = [
-		...new Set([...PAGES, ...STORE_PATHS, ...getPosts().map((p) => `/blog/${p.id}/`)]),
+		...new Set([...PAGES, ...TERRITORY_PATHS, ...STORE_PATHS, ...getPosts().map((p) => p.href)]),
 	].sort();
 	const urls = paths.map((p) => `<url><loc>${new URL(p, SITE_URL).href}</loc></url>`).join("");
 	return xmlResponse(

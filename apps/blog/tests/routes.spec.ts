@@ -99,16 +99,16 @@ test.describe("/admin/rotas/", () => {
     expect(await visible()).toBe(1);
     await page.getByLabel("Filtrar por nome, rota ou URL").fill("");
 
-    await page.getByLabel("Grupo").selectOption("Blog");
+    await page.getByLabel("Grupo", { exact: true }).selectOption("Blog");
     const blog = await visible();
     expect(blog).toBeGreaterThan(1);
     expect(blog).toBeLessThan(all);
-    await page.getByLabel("Grupo").selectOption("");
+    await page.getByLabel("Grupo", { exact: true }).selectOption("");
 
-    await page.getByLabel("Exposição").selectOption("internal");
+    await page.getByLabel("Exposição", { exact: true }).selectOption("internal");
     const internal = await page.locator(".route-card:not(.hidden)").evaluateAll((els) => els.map((e) => e.getAttribute("data-group")));
     expect(new Set(internal)).toEqual(new Set(["Interno (admin)"]));
-    await page.getByLabel("Exposição").selectOption("");
+    await page.getByLabel("Exposição", { exact: true }).selectOption("");
 
     await page.getByLabel("Filtrar por nome, rota ou URL").fill("zzz-inexistente");
     expect(await visible()).toBe(0);

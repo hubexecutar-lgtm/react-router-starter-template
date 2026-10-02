@@ -1,0 +1,50 @@
+---
+title: Handoff — Knowledge Work Skills (Anthropic upstream)
+description: Estado canônico da adaptação de HANDOFF-KNOWLEDGE-WORK-SKILLS-001 (upstream anthropics/knowledge-work-plugins e anthropics/skills) para este repositório.
+eyebrow: Interno · admin
+---
+
+import { PlainTextPanel } from '@/components/plain';
+
+# Handoff — Knowledge Work Skills
+
+Versão enxuta de `HANDOFF-KNOWLEDGE-WORK-SKILLS-001` (v2.0.0), adaptada ao escopo deste
+repositório: os artefatos de saída (`.dependencies/`, `07-execucao/`, `governance/*.md`)
+não são replicados aqui — o estado vive só nesta página e em
+[`docs/HANDOFF-ANTHROPIC-ADAPTATION.md`](https://github.com/executar-23/risco-cognitivo-blog/blob/main/docs/HANDOFF-ANTHROPIC-ADAPTATION.md),
+proporcional a "alimentar um blog", não à burocracia completa do contrato original.
+`WIP=1`, lacuna vira `A DEFINIR`, conclusão só com evidência (mesma regra do Prompt
+Adaptativo 07-Execução citado pelo usuário).
+
+<PlainTextPanel id="HANDOFF-ESTADO-001" kind="status" title="Plain text">
+{`
+ID                STAGE          STATUS      DEPENDS_ON   NEXT_ACTION
+HKW-01-BOOTSTRAP  Bootstrap      VERIFIED    -            -
+HKW-02-INVENTORY  Inventory      VERIFIED    HKW-01       -
+HKW-03-MAPPING    Mapping        VERIFIED    HKW-02       -
+HKW-04-REMAP      Route remap    VERIFIED    HKW-03       -
+HKW-05-COPY       Copy campaign  BLOCKED     HKW-04       aguarda CAMPAIGN_BRIEFING
+                                                           (ver docs/copy-campaign/
+                                                           ROUTE_REMAPPING.md)
+
+STOP CONDITION    DECISION_REQUIRED em HKW-05
+WHY               EXECUTAR_UX_COPY_ROUTE_MASTER_V2.csv depende de
+                   CAMPAIGN_BRIEFING (STEP A do PROMPT-CAMPAIGN-SITE-COPY-002)
+                   para message_goal/campaign_stage/funnel_job/icp_scope; esse
+                   documento não foi enviado nesta sessão.
+IMPACT             linhas ROUTE-*/GLOBAL-CAMPAIGN-* do CSV ficam sem copy final
+NEXT_UNLOCKED_NODE envio do CAMPAIGN_BRIEFING pelo usuário
+`}
+</PlainTextPanel>
+
+## Componentes upstream avaliados (Stage 05 — Mapping)
+
+| Componente | Papel neste projeto | Status |
+|---|---|---|
+| `marketing/skills/campaign-plan` | Motor de planejamento da campanha (objetivo, audiência, mensagem, canais) | MAPPED |
+| `small-business/skills/build-agent` | Referência de automação — só ativa se surgir rotina recorrente concreta | REVIEWED, não instanciado |
+| `small-business/skills/build-connector` | Só entra se `build-agent` precisar de sistema externo não conectado | REVIEWED, não instanciado |
+| `productivity/skills/{start,update,task-management}` | Sincronização de tarefas e varredura de contexto do repo | MAPPED |
+| `sales/skills/log-activity` | Apenas registro de atividade CRM — não é engine geral de automação | REVIEWED, fora de escopo |
+
+Proveniência completa (repositório, commit, licença) em `docs/HANDOFF-ANTHROPIC-ADAPTATION.md`.

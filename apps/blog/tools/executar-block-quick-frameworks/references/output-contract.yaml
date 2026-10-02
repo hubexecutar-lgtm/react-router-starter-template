@@ -1,0 +1,96 @@
+id: QF-OUTPUT-CONTRACT-001
+versao: 1.0.0
+nome: Contrato de Saida Deterministica
+
+estrutura:
+  1:
+    id: contexto
+    titulo: Contexto
+    formato: paragrafo
+  2:
+    id: cinco_w_dois_h
+    titulo: 5W2H
+    formato: tabela
+  3:
+    id: referencia_padrao_ouro
+    titulo: Referencia padrao-ouro
+    formato: paragrafo
+  4:
+    id: problema_existente
+    titulo: Problema existente
+    formato: texto_guiado
+  5:
+    id: problema_solucionado
+    titulo: Problema solucionado
+    formato: texto_guiado
+  6:
+    id: processo
+    titulo: Processo
+    formato: tres_etapas
+  7:
+    id: visao_do_sistema
+    titulo: Visao do sistema
+    formato: mermaid
+  8:
+    id: progresso_esperado
+    titulo: Progresso esperado
+    formato: paragrafo
+  9:
+    id: aviso
+    titulo: Aviso
+    formato: paragrafo_opcional
+  10:
+    id: proximos_passos
+    titulo: Next 01-02-03
+    formato: tres_acoes_e_mermaid
+  11:
+    id: fontes
+    titulo: Fontes e aprofundamento
+    formato: lista_curta
+  12:
+    id: infografico
+    titulo: Infografico 16:9
+    formato: briefing
+
+limites:
+  cinco_w_dois_h_por_campo: 12
+  citacao_direta: 12
+  bloco_principal_total: 300
+  progresso_esperado: 50
+  aviso: 30
+  proximos_passos_total: 100
+  fontes_texto_descritivo: 70
+
+mermaid:
+  visao_do_sistema:
+    obrigatorio: true
+    maximo_nos: 8
+    fluxo_preferido: >
+      Problema -> Causa -> Entender -> Estruturar -> Executar -> Progresso
+  proximos_passos:
+    obrigatorio: true
+    fluxo: >
+      Next 01 Entender -> Next 02 Estruturar -> Next 03 Executar -> Resultado
+
+infografico:
+  proporcao: "16:9"
+  quantidade: 1
+  estrutura:
+    etapa_1:
+      titulo: Problema
+      conteudo: explicacao_breve
+      figura: associada_ao_contexto
+    etapa_2:
+      titulo: Processo
+      conteudo: explicacao_breve
+      figura: associada_ao_contexto
+    etapa_3:
+      titulo: Progresso
+      conteudo: explicacao_breve
+      figura: associada_ao_contexto
+
+regras:
+  - nao_exibir_raciocinio_interno
+  - exibir_apenas_conclusoes_sustentadas
+  - manter_links_clicaveis_quando_o_ambiente_permitir
+  - conservar_ordem_das_secoes

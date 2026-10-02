@@ -105,6 +105,11 @@ Verificado sem diferença: em `post-5.mdx`, `<HeaderLink onclick="alert('clicked
 
 ## 6. Pendências herdadas (não corrigidas, por decisão de paridade)
 
+> **Atualização (RC-DESIGN-MOCKUPS-001, PR A):** identidade do template, páginas do template, posts
+> de demonstração e `SITE_URL = https://example.com` foram resolvidos pelo port do redesign editorial
+> (ADR-10 de `apps/blog/CLAUDE.md`). Segue pendente a proteção de `/admin/*`. A paridade da seção 4
+> continua sendo o registro da migração; `tests/parity.spec.ts` não vale mais para o conteúdo novo.
+
 - Identidade do template: `SITE_TITLE` "Mainline - Modern Astro Template", metadados e
   palavras-chave do shadcnblocks, home `/` e páginas about/pricing/faq/login/signup do template,
   política de privacidade em inglês.

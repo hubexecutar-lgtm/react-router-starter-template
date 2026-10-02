@@ -22,8 +22,9 @@ No diretório do app (`apps/blog`):
 | `npm run preview` | build + Worker local (workerd) |
 | `npm run typecheck` | typegen do React Router + `tsc -b` |
 | `npm run lint` | ESLint |
-| `npm test` | Playwright: rotas (ADR-06), plain text e design system, com screenshots |
-| `npm run parity` | compara cada rota com o deploy de referência do site original |
+| `npm test` | Playwright: rotas (ADR-06), plain text, design system, superfícies, conteúdo e loja, com screenshots |
+| `npm run content:check` | Quick Frameworks e arquivos gerados em dia + `tests/content.spec.ts` (ADR-10) |
+| `npm run parity` | histórico: comparação com o site Astro original (não vale para o conteúdo novo) |
 | `npm run deploy` | build + `wrangler deploy` |
 
 ## Estrutura
@@ -33,16 +34,17 @@ app/
   routes.ts          todas as rotas (registre também em app/data/routes.ts — ADR-06)
   routes/            páginas, RSS, sitemaps e o 404 (catch-all)
   layouts/           DefaultLayout, BasicLayout, ReportLayout
-  components/        blocks, ui (shadcn), plain, design-system
-  lib/               content (coleção do blog), seo, plain, routes/scan
-  data/              pages.ts (sitemap/prerender), routes.ts (hub de rotas)
+  components/        site (header/footer), editorial, ui (shadcn), plain, design-system
+  lib/               content + posts (coleção do blog), editorial (banco), seo, plain, routes/scan
+  data/              pages.ts (sitemap/prerender), routes.ts (hub de rotas), editorial/ (seed + Quick Frameworks)
   styles/global.css  tokens do design system
 content/
-  blog/              artigos (.md/.mdx com frontmatter validado por zod)
-  pages/             páginas MDX (privacy, relatório de exemplo)
-public/              assets e ferramentas estáticas (hub-editorial, skills, catalogo-offline)
+  blog/              artigos (.mdx gerados dos Quick Frameworks; frontmatter validado por zod)
+  pages/             páginas MDX (privacy, relatório de exemplo, handoff)
+public/              assets, ferramentas estáticas (hub-editorial, skills, catalogo-offline), ds/surfaces.css e _redirects
+scripts/             prebuild: Quick Frameworks → MDX, seed do Hub, tokens das ferramentas
 docs/design-system/  especificações (callouts, dados, plain text, hub de rotas)
 tests/               Playwright
 ```
 
-Regras do projeto: `CLAUDE.md` (ADR-01 a ADR-07).
+Regras do projeto: `CLAUDE.md` (ADR-01 a ADR-10).

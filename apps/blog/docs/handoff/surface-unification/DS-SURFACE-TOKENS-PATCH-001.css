@@ -1,0 +1,49 @@
+/* DS-SURFACE-TOKENS-PATCH-001
+   Proposed semantic contract. Adapt token syntax to the repository's current format. */
+
+:root {
+  --surface-canvas: var(--background);
+  --surface-neutral: #F8F8F8;
+  --surface-neutral-border: #EBEBEB;
+  --surface-neutral-strong: var(--muted);
+
+  --surface-shadow-flat: none;
+  --surface-shadow-raised: var(--shadow-sm);
+  --surface-shadow-overlay: var(--shadow-md);
+
+  --surface-radius-card: var(--radius-xl);
+  --surface-radius-cell: var(--radius-sm);
+
+  --plain-surface: var(--surface-neutral);
+  --plain-border: var(--surface-neutral-border);
+}
+
+.ds-card {
+  background: var(--surface-neutral);
+  border: 1px solid var(--surface-neutral-border);
+  border-radius: var(--surface-radius-card);
+  box-shadow: var(--surface-shadow-flat);
+}
+
+.ds-table {
+  border-collapse: separate;
+  border-spacing: 4px;
+  background: var(--surface-canvas);
+}
+
+.ds-table th,
+.ds-table td {
+  background: var(--surface-neutral);
+  border: 0;
+  box-shadow: none;
+}
+
+.ds-table th {
+  text-transform: uppercase;
+}
+
+.ds-plain-surface {
+  background: var(--surface-neutral);
+  border: 1px solid var(--surface-neutral-border);
+  box-shadow: none;
+}
