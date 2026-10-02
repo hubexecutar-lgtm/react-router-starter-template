@@ -122,13 +122,20 @@ Causa: o upload autentica com o JWT da sessão, e o proxy desta sessão de traba
 header `Authorization` de `api.cloudflare.com` pela credencial injetada. Nada foi publicado: o
 Worker continua com a versão anterior (modificada em 2026-10-02T14:27:47Z, antes da sessão).
 
-**Workers Builds (CI da Cloudflare ligado a este repositório):** depois da migração, o Worker
-`react-router-starter-template` precisa de **Root directory = `apps/blog`** nas configurações de
-build (painel: Workers & Pages → react-router-starter-template → Settings → Builds). Sem isso, o
-build falha antes de começar: a Cloudflare valida o `name` do `wrangler.jsonc` no diretório raiz
-configurado, e a raiz do repositório agora é o workspace, sem Worker próprio
-([monorepos](https://developers.cloudflare.com/workers/ci-cd/builds/advanced-setups/#monorepos)).
-Comandos: build `npm run build`, deploy `npx wrangler deploy` (padrões).
+**Workers Builds (CI da Cloudflare ligado a este repositório).** O CI roda na raiz do repositório:
+`bun install --frozen-lockfile`, `npm run build`, `npm run deploy` (e, nos builds de PR,
+`npx wrangler versions upload`). Depois da migração a raiz virou o workspace, e dois pontos
+quebravam esse fluxo (reproduzidos num clone limpo, sem o painel):
+
+1. A raiz não tinha script `deploy` (só `deploy:blog`): `npm run deploy` falhava com
+   `Missing script: "deploy"`, depois de install e build passarem. Correção: `deploy` na raiz
+   delega ao app (`npm run deploy -w apps/blog`).
+2. O `wrangler` chamado direto na raiz (preview de PR) não achava Worker e tentava autoconfigurar
+   um projeto. Correção: `.wrangler/deploy/config.json` na raiz aponta para
+   `apps/blog/build/server/wrangler.json`, a configuração gerada pelo build do blog (mecanismo
+   que o próprio build do React Router usa para o redirect em `apps/blog`).
+
+Nenhuma mudança no painel é necessária. Alternativa equivalente: Root directory = `apps/blog`.
 
 Para publicar, de um ambiente com credencial própria (máquina local ou CI):
 

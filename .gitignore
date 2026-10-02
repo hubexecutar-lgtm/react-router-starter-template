@@ -193,6 +193,10 @@ dist
 
 ### Wrangler ###
 .wrangler/
+# Root redirect to the blog build output: Workers Builds runs wrangler from the repo root.
+!/.wrangler/
+/.wrangler/*
+!/.wrangler/deploy/
 .env*
 !.env.example
 .dev.vars*
