@@ -65,6 +65,8 @@ export const ROUTES: HubEntry[] = [
   // ---------------------------------------------------------------- Blog
   { id: "blog-index", title: "Blog — início", group: "Blog", kind: "route", path: "/blog/", description: "Home editorial com territórios e artigos.", exposure: "public", addedAt: "2026-09-30", source: SRC },
 
+  { id: "loja", title: "Loja", group: "Site", kind: "route", path: "/loja/", description: "Store Hub: skills, agentes, prompts, e-books, PDFs, HTML, workbooks e assets (dados de exemplo). Catálogos em /loja/<tipo>/ e detalhe em /loja/<tipo>/<slug>/.", exposure: "public", addedAt: "2026-10-02", source: "Risco-cognitivo-blog@c3a4219 (claude/trusting-gates-go053v)" },
+
   // ---------------------------------------------------------------- Ferramentas públicas
   { id: "hub-editorial", title: "Hub Editorial", group: "Ferramentas públicas", kind: "route", path: "/hub-editorial/", description: "Painel de gestão do pipeline editorial.", exposure: "public", addedAt: "2026-09-30", source: SRC },
   { id: "skills", title: "Catálogo de Skills EXECUTAR", group: "Ferramentas públicas", kind: "route", path: "/skills/", description: "Catálogo navegável com busca e filtros.", exposure: "public", addedAt: "2026-09-30", source: SRC },
