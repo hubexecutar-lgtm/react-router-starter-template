@@ -1,0 +1,144 @@
+---
+title: Relatório de Governança de Agentes
+description: Exemplo de relatório composto com Markdown, PlainTextPanel e AsciiDiagram (ANX-ADR-BLOG-ASCII-001-A).
+eyebrow: Relatório de exemplo
+---
+
+import { AsciiDiagram, PlainTextPanel } from '@/components/plain';
+
+# Relatório de Governança de Agentes
+
+Este relatório descreve o modelo de autonomia e controle utilizado para workflows baseados em agentes.
+
+## Modelo de autonomia
+
+<PlainTextPanel id="AUTONOMY-MODEL-001" kind="definition" title="Plain text">
+{`
+A0  ORIENTAR
+    nenhuma ação externa
+A1  PREPARAR
+    agente produz plano ou artefato
+    sistema externo permanece inalterado
+A2  HUMAN-IN-THE-LOOP
+    agente prepara a ação
+    humano autoriza a execução
+A3  EXECUTAR
+    agente modifica sistemas
+    dentro das permissões autorizadas
+A4  EXECUTAR + VERIFICAR + EVIDENCIAR
+    executar
+    verificar resultado
+    registrar evidência
+    produzir estado final
+`}
+</PlainTextPanel>
+
+## Progressão
+
+O nível de autonomia deve crescer somente depois que controles adequados estiverem disponíveis.
+
+<AsciiDiagram id="AUTONOMY-FLOW-001" kind="flowchart" title="Progressão operacional">
+{`
+A0
+│
+├── orientação
+│
+▼
+A1
+│
+├── preparação
+│
+▼
+A2
+│
+├── aprovação humana
+│
+▼
+A3
+│
+├── execução autorizada
+│
+▼
+A4
+    ├── executar
+    ├── verificar
+    └── evidenciar
+`}
+</AsciiDiagram>
+
+## Regra operacional
+
+<PlainTextPanel id="AUTONOMY-RULE-001" kind="instruction" title="Plain text">
+{`
+Não iniciar workflows novos diretamente em A3 ou A4.
+Sequência inicial:
+1. definir escopo;
+2. identificar ferramentas;
+3. mapear permissões;
+4. identificar ações irreversíveis;
+5. definir aprovação humana;
+6. executar em A1/A2;
+7. coletar evidências;
+8. ampliar autonomia somente após validação.
+`}
+</PlainTextPanel>
+
+## Pipeline de publicação
+
+A mesma estrutura pode ser escrita com a sintaxe curta de bloco cercado, que o renderer converte em `AsciiDiagram`.
+
+```ascii
+id: REPORT-PIPELINE-001
+kind: architecture
+title: Do conteúdo ao blog
+CONTEÚDO
+│
+├── Markdown
+├── MDX
+├── CMS
+├── JSON
+└── AI Generator
+      │
+      ▼
+ASCII NORMALIZER
+      │
+      ├── valida UTF-8
+      ├── preserva whitespace
+      ├── normaliza line endings
+      └── valida propriedades
+      │
+      ▼
+<AsciiDiagram />
+      │
+      ├── Design Tokens
+      ├── Responsive
+      ├── Copy
+      ├── Accessibility
+      └── Metadata
+      │
+      ▼
+BLOG / REACT
+```
+
+## Estado final
+
+<PlainTextPanel id="REPORT-STATE-001" kind="status" title="Plain text">
+{`
+STATUS
+READY_FOR_IMPLEMENTATION
+DECISÃO
+ADOTADA
+COMPONENTES
+PlainSurface
+PlainTextPanel
+AsciiDiagram
+VALIDAÇÃO
+responsividade       REQUIRED
+acessibilidade       REQUIRED
+clipboard            REQUIRED
+UTF-8                REQUIRED
+design tokens        REQUIRED
+NEXT
+implementar componentes React
+`}
+</PlainTextPanel>

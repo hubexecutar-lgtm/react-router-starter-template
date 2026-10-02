@@ -200,4 +200,8 @@ dist
 
 ### React Router ###
 .react-router/
-/build/
+build/
+
+### Playwright ###
+test-results/
+playwright-report/
