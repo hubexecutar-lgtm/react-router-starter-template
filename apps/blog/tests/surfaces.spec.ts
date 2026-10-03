@@ -166,7 +166,6 @@ test.describe("flat cards, real overlays", () => {
     [SHOWROOM, "[data-testid=kpi]"],
     ["/admin/", "a.rc-cell"],
     ["/admin/rotas/", ".route-card"],
-    ["/loja/", "[data-slot=card]"],
   ] as const) {
     // ADR-12: a card is a table cell — Subtle fill, no outline, 2px radius, no shadow.
     test(`${route} ${sel}: table-cell surface, no outline, no shadow`, async ({ page }) => {
@@ -218,26 +217,8 @@ test.describe("flat cards, real overlays", () => {
   });
 });
 
-// HANDOFF-RC-GLOBAL-DESIGN-CONTENT-001: the same contract on every editorial route and tool.
-const EDITORIAL = [
-  "/",
-  "/blog/",
-  "/blog/o-que-e-risco-cognitivo/",
-  "/temas/",
-  "/temas/controles-cognitivos/",
-  "/mapas/",
-  "/guias/",
-  "/evidencias/",
-  "/buscar/?q=risco",
-  "/about/",
-  "/faq/",
-  "/contact/",
-  "/pricing/",
-  "/signup/",
-  "/login/",
-  "/privacy/",
-  "/rota-inexistente/",
-];
+// Site do zero (ADR-13): o mesmo contrato em toda rota do site novo.
+const EDITORIAL = ["/", "/artigos/risco-cognitivo/", "/rota-inexistente/"];
 
 test.describe("editorial routes", () => {
   for (const route of EDITORIAL) {
@@ -280,70 +261,24 @@ test.describe("editorial routes", () => {
 
   test("keyboard: skip link and visible focus on the primary nav", async ({ page }) => {
     await page.setViewportSize({ width: 1363, height: 900 });
-    await page.goto("/blog/");
+    await page.goto("/");
     await page.keyboard.press("Tab");
     const skip = page.getByRole("link", { name: "Pular para o conteúdo" });
     await expect(skip).toBeFocused();
     await expect(skip).toBeVisible();
-    await page.keyboard.press("Tab");
+    // Sem navegação principal (ADR-13): o próximo foco é o link do wordmark, com anel visível.
     await page.keyboard.press("Tab");
     const focused = page.locator(":focus");
-    const ring = await focused.evaluate((e) => getComputedStyle(e).boxShadow);
-    expect(paintsShadow(ring) || ring.includes("rgb"), "focus ring").toBe(true);
-    await expect(page.locator('header nav[aria-label="Principal"] a[aria-current="page"]')).toHaveText("Artigos");
-  });
-});
-
-test.describe("standalone tools share the token source", () => {
-  for (const [route, token] of [
-    ["/hub-editorial/", "--surface"],
-    ["/skills/", "--c-surface"],
-    ["/catalogo-offline/", "--surface"],
-  ] as const) {
-    for (const theme of ["light", "dark"] as const) {
-      test(`${route} ${theme}: neutral surface and border come from /ds/surfaces.css`, async ({ page }) => {
-        await page.emulateMedia({ colorScheme: theme });
-        await page.goto(route);
-        await page.waitForLoadState("networkidle");
-        const probe = (v: string) => resolve(page, "background-color", v);
-        expect(await probe(`var(${token})`)).toBe(await probe("var(--ds-surface-default)"));
-        if (theme === "light") expect(await probe(`var(${token})`)).toBe("rgb(245, 245, 244)");
-        else expect(await probe(`var(${token})`)).not.toBe("rgb(245, 245, 244)");
-      });
-    }
-  }
-
-  test("Hub dashboard table: segmented cells, header surface, no row borders", async ({ page }) => {
-    await page.goto("/hub-editorial/");
-    // The Hub renders with React/Babel from cdnjs; the contract under test is its CSS, so a
-    // static table with the same classes is injected (works offline and behind proxies).
-    await page.evaluate(() => {
-      const wrap = document.createElement("div");
-      wrap.className = "dash-table-wrap";
-      wrap.innerHTML = '<table class="dash-table"><thead><tr><th>ID</th></tr></thead><tbody><tr><td>CNT-RC-0001</td></tr></tbody></table>';
-      document.body.prepend(wrap);
-    });
-    const table = page.locator(".dash-table").first();
-    await expect(table).toBeVisible();
-    const s = await table.evaluate((el) => {
-      const cs = getComputedStyle(el);
-      const th = getComputedStyle(el.querySelector("th")!);
-      const td = getComputedStyle(el.querySelector("td")!);
-      return { collapse: cs.borderCollapse, spacing: cs.borderSpacing.split(" ")[0], th: th.backgroundColor, td: td.backgroundColor, tdBorder: td.borderBottomWidth, radius: td.borderTopLeftRadius };
-    });
-    expect(s).toEqual({ collapse: "separate", spacing: "3px", th: "rgb(234, 234, 232)", td: "rgb(245, 245, 244)", tdBorder: "0px", radius: "2px" });
+    const ring = await focused.evaluate((e) => getComputedStyle(e).boxShadow + " " + getComputedStyle(e).outlineStyle);
+    expect(paintsShadow(ring) || ring.includes("rgb") || !ring.endsWith("none"), "focus ring").toBe(true);
   });
 });
 
 test.describe("visual regression (minimum routes)", () => {
   const shots: [string, string][] = [
     ["admin", "/admin/"],
-    ["blog", "/blog/"],
-    ["article", "/blog/do-risco-cognitivo-a-execucao-assistida/"],
-    ["loja", "/loja/"],
+    ["artigo", "/artigos/risco-cognitivo/"],
     ["home", "/"],
-    ["temas", "/temas/"],
-    ["evidencias", "/evidencias/"],
   ];
   for (const [name, route] of shots) {
     for (const [label, size] of [["desktop", { width: 1280, height: 900 }], ["mobile", { width: 390, height: 844 }]] as const) {

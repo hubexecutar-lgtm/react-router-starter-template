@@ -7,28 +7,26 @@ import type { Route } from "./+types/admin.rotas";
 import { buttonVariants } from "@/components/ui/button";
 import { ROUTE_GROUPS, ROUTES, absoluteUrl, baseUrl, type HubEntry } from "@/data/routes";
 import DefaultLayout from "@/layouts/DefaultLayout";
-import { getPosts } from "@/lib/content";
+import { getStories } from "@/lib/articles";
 import { seo } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 
-// Hub de rotas e links (ADR-06). A fonte é app/data/routes.ts; os artigos vêm da coleção do blog.
+// Hub de rotas e links (ADR-06). A fonte é app/data/routes.ts; os artigos vêm de content/artigos.
 export async function loader({ context }: Route.LoaderArgs) {
   const env = (context.cloudflare?.env ?? {}) as { PUBLIC_ROUTES_BASE_URL?: string };
   const base = baseUrl(env.PUBLIC_ROUTES_BASE_URL);
-  const blogEntries: HubEntry[] = getPosts()
-    .map((p) => ({
-      id: `blog-${p.id}`,
-      title: p.data.title,
-      group: "Blog" as const,
-      kind: "route" as const,
-      path: `/blog/${p.id}/`,
-      exposure: "public" as const,
-      addedAt: p.data.pubDate.toISOString().slice(0, 10),
-      source: "content/blog",
-    }))
-    .sort((a, b) => a.path.localeCompare(b.path));
+  const articleEntries: HubEntry[] = getStories().map((st) => ({
+    id: `artigo-${st.slug}`,
+    title: st.title,
+    group: "Artigos" as const,
+    kind: "route" as const,
+    path: st.href,
+    exposure: "public" as const,
+    addedAt: "2026-10-03",
+    source: "content/artigos",
+  }));
 
-  const entries = [...ROUTES, ...blogEntries].sort(
+  const entries = [...ROUTES, ...articleEntries].sort(
     (a, b) => ROUTE_GROUPS.indexOf(a.group) - ROUTE_GROUPS.indexOf(b.group),
   );
 

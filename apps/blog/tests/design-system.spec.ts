@@ -4,7 +4,6 @@ import { expect, test, type Page } from "@playwright/test";
 import { contrast, expectTheme, useTheme } from "./theme";
 
 const SHOWROOM = "/admin/design-system/";
-const ARTICLE = "/blog/do-risco-cognitivo-a-execucao-assistida/";
 const WIDTHS = [320, 375, 768, 1024, 1440];
 
 test.describe("Callout — visual regression", () => {
@@ -14,17 +13,6 @@ test.describe("Callout — visual regression", () => {
       await page.goto(SHOWROOM);
       await expect(page.getByTestId("callout-reference")).toHaveScreenshot(`reference-${width}.png`);
       await expect(page.getByTestId("callout-variants")).toHaveScreenshot(`variants-${width}.png`);
-      const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
-      expect(overflow).toBeLessThanOrEqual(0);
-    });
-
-    test(`article callouts @${width}px`, async ({ page }) => {
-      await page.setViewportSize({ width, height: 900 });
-      await page.goto(ARTICLE);
-      const callouts = page.locator("[data-callout]");
-      await expect(callouts).toHaveCount(7);
-      await expect(callouts.first()).toHaveScreenshot(`article-decision-${width}.png`);
-      // no horizontal overflow at any width
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
       expect(overflow).toBeLessThanOrEqual(0);
     });
@@ -144,19 +132,11 @@ test("full anatomy: header, emblem only in outline, footer actions on the right"
     expect(c.rightGap).toBeLessThanOrEqual(17);
     expect(c.titleMono).toBe(true);
   }
-  // short callouts stay compact
-  await page.goto(ARTICLE);
-  const layouts = await page.locator("[data-callout]").evaluateAll((els) =>
-    els.map((e) => `${e.getAttribute("data-variant")}:${e.getAttribute("data-layout")}`),
-  );
-  expect(layouts.filter((l) => l.startsWith("question") || l.startsWith("quote")).every((l) => l.endsWith("compact"))).toBe(true);
-  expect(layouts.filter((l) => /^(decision|example|note):/.test(l)).every((l) => l.endsWith("full"))).toBe(true);
 });
 
 test("axe: no serious or critical issues in callouts and article", async ({ page }) => {
   for (const [url, include] of [
     [SHOWROOM, "#callouts"],
-    [ARTICLE, "article, main"],
   ] as const) {
     await page.goto(url);
     await page.waitForLoadState("networkidle");

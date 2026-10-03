@@ -68,25 +68,3 @@ export function HeroArt({
     </div>
   );
 }
-
-/** Ilustrações sem texto em uso no site (docs/banco-imagens/manifest.json). */
-export const IMAGES = {
-  binoculo: {
-    src: "/images/binoculo.webp",
-    alt: "Ilustração de uma mulher sentada em um banquinho observando com um binóculo azul.",
-    width: 593,
-    height: 720,
-  },
-  equipeTablet: {
-    src: "/images/equipe-tablet.webp",
-    alt: "Ilustração de três pessoas conversando em torno de um tablet, com formas geométricas azuis.",
-    width: 954,
-    height: 748,
-  },
-  maoChaves: {
-    src: "/images/mao-chaves.webp",
-    alt: "Ilustração de uma mão azul segurando chaves e um chaveiro.",
-    width: 640,
-    height: 1136,
-  },
-} satisfies Record<string, HeroImage>;

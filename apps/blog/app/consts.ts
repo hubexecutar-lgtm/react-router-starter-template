@@ -3,18 +3,9 @@ import { DEFAULT_BASE_URL } from "@/data/routes";
 
 export const SITE_NAME = "Risco Cognitivo";
 export const SITE_TAGLINE = "Conhecimento que vira estrutura.";
-export const SITE_TITLE = "Risco Cognitivo — fatores, exposição e controles do trabalho cognitivo";
-export const SITE_DESCRIPTION =
-  "Blog e framework sobre risco cognitivo: como atenção, memória e julgamento participam da formação do risco no trabalho, e como identificar, controlar e acompanhar.";
+export const SITE_TITLE = "Risco Cognitivo";
+export const SITE_DESCRIPTION = "Artigos do projeto Risco Cognitivo.";
 export const SITE_URL = DEFAULT_BASE_URL;
-
-/** Imagem padrão de compartilhamento: a ilustração do binóculo (banco de imagens, ADR-12). */
-const OG_IMAGE = {
-  url: "/images/binoculo.webp",
-  width: 593,
-  height: 720,
-  alt: "Ilustração de uma mulher sentada em um banquinho observando com um binóculo azul.",
-};
 
 export const SITE_METADATA = {
   title: {
@@ -22,16 +13,6 @@ export const SITE_METADATA = {
     template: `%s | ${SITE_NAME}`,
   },
   description: SITE_DESCRIPTION,
-  keywords: [
-    "risco cognitivo",
-    "fatores de risco cognitivo",
-    "exposição cognitiva",
-    "erro humano",
-    "fatores humanos",
-    "gestão de risco",
-    "carga mental",
-    "controles cognitivos",
-  ],
   authors: [{ name: SITE_NAME }],
   creator: SITE_NAME,
   publisher: SITE_NAME,
@@ -52,12 +33,10 @@ export const SITE_METADATA = {
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
     siteName: SITE_NAME,
-    images: [OG_IMAGE],
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
-    images: [OG_IMAGE.url],
   },
 };

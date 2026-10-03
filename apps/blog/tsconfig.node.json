@@ -1,6 +1,6 @@
 {
 	"extends": "./tsconfig.json",
-	"include": ["vite.config.ts", "react-router.config.ts", "playwright.config.ts", "app/data/pages.ts", "app/data/editorial/seed.json", "app/lib/plain/remarkPlain.ts", "app/lib/plain/types.ts", "app/features/store/data/**/*", "app/features/store/types/**/*"],
+	"include": ["vite.config.ts", "react-router.config.ts", "playwright.config.ts", "app/data/pages.ts", "app/lib/articles-fs.ts", "app/lib/plain/remarkPlain.ts", "app/lib/plain/types.ts"],
 	"compilerOptions": {
 		"composite": true,
 		"strict": true,

@@ -523,11 +523,11 @@ export function ComponentGallery() {
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem>
-                  <BreadcrumbLink href="/blog">Blog</BreadcrumbLink>
+                  <BreadcrumbLink href="/admin">Painel</BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
-                  <BreadcrumbPage>Artigo</BreadcrumbPage>
+                  <BreadcrumbPage>Design System</BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
@@ -570,8 +570,8 @@ export function ComponentGallery() {
             <NavigationMenu>
               <NavigationMenuList>
                 <NavigationMenuItem>
-                  <NavigationMenuLink href="/blog" className={navigationMenuTriggerStyle()}>
-                    Blog
+                  <NavigationMenuLink href="/admin" className={navigationMenuTriggerStyle()}>
+                    Painel
                   </NavigationMenuLink>
                 </NavigationMenuItem>
               </NavigationMenuList>
