@@ -1,0 +1,712 @@
+{
+  "url": "http://localhost:4332/",
+  "label": "before",
+  "capturedAt": "2026-10-03T14:12:31.330Z",
+  "widths": {
+    "390": {
+      "viewport": 390,
+      "pageHeight": 8122,
+      "overflowX": 0,
+      "sticky": [
+        {
+          "tag": "header",
+          "position": "sticky",
+          "h": 65,
+          "bg": "oklab(0.999994 0.0000455678 0.0000200868 / 0.85)",
+          "backdrop": "blur(8px)"
+        }
+      ],
+      "sections": [
+        {
+          "heading": "RiscoCognitivo",
+          "box": {
+            "x": 0,
+            "y": 65,
+            "w": 390,
+            "h": 853
+          },
+          "bg": "rgba(0, 0, 0, 0)",
+          "paddingTop": 48,
+          "paddingBottom": 48,
+          "marginTop": 0,
+          "contentWidth": 342,
+          "textAlign": "start",
+          "card": null
+        },
+        {
+          "heading": "O que é risco cognitivo?",
+          "box": {
+            "x": 0,
+            "y": 982,
+            "w": 390,
+            "h": 1268
+          },
+          "bg": "rgba(0, 0, 0, 0)",
+          "paddingTop": 0,
+          "paddingBottom": 0,
+          "marginTop": 64,
+          "contentWidth": 342,
+          "textAlign": "start",
+          "card": {
+            "radius": "2px",
+            "bg": "rgb(245, 245, 244)",
+            "padding": "24px"
+          }
+        },
+        {
+          "heading": "Continue pelo framework",
+          "box": {
+            "x": 0,
+            "y": 2314,
+            "w": 390,
+            "h": 782
+          },
+          "bg": "rgba(0, 0, 0, 0)",
+          "paddingTop": 0,
+          "paddingBottom": 0,
+          "marginTop": 64,
+          "contentWidth": 342,
+          "textAlign": "start",
+          "card": {
+            "radius": "2px",
+            "bg": "rgb(245, 245, 244)",
+            "padding": "16px"
+          }
+        },
+        {
+          "heading": "Oito territórios, um só modelo",
+          "box": {
+            "x": 0,
+            "y": 3160,
+            "w": 390,
+            "h": 1487
+          },
+          "bg": "rgba(0, 0, 0, 0)",
+          "paddingTop": 0,
+          "paddingBottom": 0,
+          "marginTop": 64,
+          "contentWidth": 342,
+          "textAlign": "start",
+          "card": {
+            "radius": "2px",
+            "bg": "rgb(245, 245, 244)",
+            "padding": "20px"
+          }
+        },
+        {
+          "heading": "Como os elementos se conectam",
+          "box": {
+            "x": 0,
+            "y": 4711,
+            "w": 390,
+            "h": 2145
+          },
+          "bg": "rgba(0, 0, 0, 0)",
+          "paddingTop": 0,
+          "paddingBottom": 0,
+          "marginTop": 64,
+          "contentWidth": 342,
+          "textAlign": "start",
+          "card": null
+        }
+      ],
+      "sectionCount": 5,
+      "h1": {
+        "text": "RiscoCognitivo",
+        "fontSize": 52,
+        "fontWeight": "700",
+        "lineHeight": 45.8,
+        "letterSpacing": "-1.56px",
+        "color": "rgb(32, 33, 36)",
+        "textAlign": "start",
+        "widthCh": 12,
+        "box": {
+          "x": 24,
+          "y": 113,
+          "w": 342,
+          "h": 92
+        }
+      },
+      "h2": {
+        "text": "O que é risco cognitivo?",
+        "fontSize": 36,
+        "fontWeight": "700",
+        "lineHeight": 40,
+        "letterSpacing": "-1.08px",
+        "color": "rgb(32, 33, 36)",
+        "textAlign": "start",
+        "widthCh": 18,
+        "box": {
+          "x": 24,
+          "y": 1035,
+          "w": 342,
+          "h": 80
+        }
+      },
+      "h2Count": 5,
+      "h3": {
+        "text": "Fatores de risco cognitivo: o que aumenta a probabilidade de",
+        "fontSize": 18,
+        "fontWeight": "700",
+        "lineHeight": 28,
+        "letterSpacing": "-0.45px",
+        "color": "rgb(32, 33, 36)",
+        "textAlign": "start",
+        "widthCh": 32,
+        "box": {
+          "x": 40,
+          "y": 2480,
+          "w": 310,
+          "h": 56
+        }
+      },
+      "heroParagraphs": [
+        {
+          "text": "Conhecimento que vira estrutura.",
+          "fontSize": 24,
+          "fontWeight": "400",
+          "lineHeight": 30,
+          "letterSpacing": "normal",
+          "color": "rgb(107, 114, 128)",
+          "textAlign": "start",
+          "widthCh": 26,
+          "box": {
+            "x": 24,
+            "y": 229,
+            "w": 342,
+            "h": 60
+          }
+        },
+        {
+          "text": "Como atenção, memória e julgamento participam da formação do",
+          "fontSize": 18,
+          "fontWeight": "400",
+          "lineHeight": 28,
+          "letterSpacing": "normal",
+          "color": "rgb(107, 114, 128)",
+          "textAlign": "start",
+          "widthCh": 34,
+          "box": {
+            "x": 24,
+            "y": 313,
+            "w": 342,
+            "h": 112
+          }
+        },
+        {
+          "text": "Artigo em destaqueRisco Cognitivo",
+          "fontSize": 12,
+          "fontWeight": "500",
+          "lineHeight": 16.8,
+          "letterSpacing": "1.44px",
+          "color": "rgb(107, 114, 128)",
+          "textAlign": "start",
+          "widthCh": 40,
+          "box": {
+            "x": 24,
+            "y": 1006,
+            "w": 342,
+            "h": 17
+          }
+        }
+      ],
+      "ctas": [
+        {
+          "text": "Explorar artigos",
+          "h": 40,
+          "radius": "8px",
+          "padding": "0px 16px",
+          "fontSize": 14,
+          "fontWeight": "500",
+          "bg": "rgb(37, 99, 235)"
+        }
+      ],
+      "footer": {
+        "box": {
+          "x": 0,
+          "y": 6952,
+          "w": 390,
+          "h": 1170
+        },
+        "bg": "rgb(255, 255, 255)",
+        "navGroups": 3
+      },
+      "stickyAfterScroll": [
+        {
+          "tag": "header",
+          "h": 65
+        }
+      ]
+    },
+    "768": {
+      "viewport": 768,
+      "pageHeight": 5331,
+      "overflowX": 0,
+      "sticky": [
+        {
+          "tag": "header",
+          "position": "sticky",
+          "h": 65,
+          "bg": "oklab(0.999994 0.0000455678 0.0000200868 / 0.85)",
+          "backdrop": "blur(8px)"
+        }
+      ],
+      "sections": [
+        {
+          "heading": "RiscoCognitivo",
+          "box": {
+            "x": 0,
+            "y": 65,
+            "w": 768,
+            "h": 1100
+          },
+          "bg": "rgba(0, 0, 0, 0)",
+          "paddingTop": 48,
+          "paddingBottom": 48,
+          "marginTop": 0,
+          "contentWidth": 720,
+          "textAlign": "start",
+          "card": null
+        },
+        {
+          "heading": "O que é risco cognitivo?",
+          "box": {
+            "x": 0,
+            "y": 1243,
+            "w": 768,
+            "h": 920
+          },
+          "bg": "rgba(0, 0, 0, 0)",
+          "paddingTop": 0,
+          "paddingBottom": 0,
+          "marginTop": 78.4,
+          "contentWidth": 720,
+          "textAlign": "start",
+          "card": {
+            "radius": "2px",
+            "bg": "rgb(245, 245, 244)",
+            "padding": "24px"
+          }
+        },
+        {
+          "heading": "Continue pelo framework",
+          "box": {
+            "x": 0,
+            "y": 2241,
+            "w": 768,
+            "h": 388
+          },
+          "bg": "rgba(0, 0, 0, 0)",
+          "paddingTop": 0,
+          "paddingBottom": 0,
+          "marginTop": 78.4,
+          "contentWidth": 720,
+          "textAlign": "start",
+          "card": {
+            "radius": "2px",
+            "bg": "rgb(245, 245, 244)",
+            "padding": "16px"
+          }
+        },
+        {
+          "heading": "Oito territórios, um só modelo",
+          "box": {
+            "x": 0,
+            "y": 2708,
+            "w": 768,
+            "h": 756
+          },
+          "bg": "rgba(0, 0, 0, 0)",
+          "paddingTop": 0,
+          "paddingBottom": 0,
+          "marginTop": 78.4,
+          "contentWidth": 720,
+          "textAlign": "start",
+          "card": {
+            "radius": "2px",
+            "bg": "rgb(245, 245, 244)",
+            "padding": "20px"
+          }
+        },
+        {
+          "heading": "Como os elementos se conectam",
+          "box": {
+            "x": 0,
+            "y": 3542,
+            "w": 768,
+            "h": 1154
+          },
+          "bg": "rgba(0, 0, 0, 0)",
+          "paddingTop": 0,
+          "paddingBottom": 0,
+          "marginTop": 78.4,
+          "contentWidth": 720,
+          "textAlign": "start",
+          "card": null
+        }
+      ],
+      "sectionCount": 5,
+      "h1": {
+        "text": "RiscoCognitivo",
+        "fontSize": 69.1,
+        "fontWeight": "700",
+        "lineHeight": 60.8,
+        "letterSpacing": "-2.0736px",
+        "color": "rgb(32, 33, 36)",
+        "textAlign": "start",
+        "widthCh": 20,
+        "box": {
+          "x": 24,
+          "y": 113,
+          "w": 720,
+          "h": 122
+        }
+      },
+      "h2": {
+        "text": "O que é risco cognitivo?",
+        "fontSize": 48,
+        "fontWeight": "700",
+        "lineHeight": 48,
+        "letterSpacing": "-1.44px",
+        "color": "rgb(32, 33, 36)",
+        "textAlign": "start",
+        "widthCh": 28,
+        "box": {
+          "x": 24,
+          "y": 1296,
+          "w": 720,
+          "h": 48
+        }
+      },
+      "h2Count": 5,
+      "h3": {
+        "text": "Fatores de risco cognitivo: o que aumenta a probabilidade de",
+        "fontSize": 18,
+        "fontWeight": "700",
+        "lineHeight": 28,
+        "letterSpacing": "-0.45px",
+        "color": "rgb(32, 33, 36)",
+        "textAlign": "start",
+        "widthCh": 22,
+        "box": {
+          "x": 40,
+          "y": 2375,
+          "w": 206,
+          "h": 112
+        }
+      },
+      "heroParagraphs": [
+        {
+          "text": "Conhecimento que vira estrutura.",
+          "fontSize": 24,
+          "fontWeight": "400",
+          "lineHeight": 30,
+          "letterSpacing": "normal",
+          "color": "rgb(107, 114, 128)",
+          "textAlign": "start",
+          "widthCh": 54,
+          "box": {
+            "x": 24,
+            "y": 259,
+            "w": 720,
+            "h": 30
+          }
+        },
+        {
+          "text": "Como atenção, memória e julgamento participam da formação do",
+          "fontSize": 20,
+          "fontWeight": "400",
+          "lineHeight": 28,
+          "letterSpacing": "normal",
+          "color": "rgb(107, 114, 128)",
+          "textAlign": "start",
+          "widthCh": 65,
+          "box": {
+            "x": 24,
+            "y": 313,
+            "w": 720,
+            "h": 56
+          }
+        },
+        {
+          "text": "Artigo em destaqueRisco Cognitivo",
+          "fontSize": 12,
+          "fontWeight": "500",
+          "lineHeight": 16.8,
+          "letterSpacing": "1.44px",
+          "color": "rgb(107, 114, 128)",
+          "textAlign": "start",
+          "widthCh": 57,
+          "box": {
+            "x": 24,
+            "y": 1267,
+            "w": 490,
+            "h": 17
+          }
+        }
+      ],
+      "ctas": [
+        {
+          "text": "Explorar artigos",
+          "h": 40,
+          "radius": "8px",
+          "padding": "0px 16px",
+          "fontSize": 14,
+          "fontWeight": "500",
+          "bg": "rgb(37, 99, 235)"
+        }
+      ],
+      "footer": {
+        "box": {
+          "x": 0,
+          "y": 4793,
+          "w": 768,
+          "h": 538
+        },
+        "bg": "rgb(255, 255, 255)",
+        "navGroups": 3
+      },
+      "stickyAfterScroll": [
+        {
+          "tag": "header",
+          "h": 65
+        }
+      ]
+    },
+    "1440": {
+      "viewport": 1440,
+      "pageHeight": 4038,
+      "overflowX": 0,
+      "sticky": [
+        {
+          "tag": "header",
+          "position": "sticky",
+          "h": 73,
+          "bg": "oklab(0.999994 0.0000455678 0.0000200868 / 0.85)",
+          "backdrop": "blur(8px)"
+        }
+      ],
+      "sections": [
+        {
+          "heading": "RiscoCognitivo",
+          "box": {
+            "x": 110,
+            "y": 73,
+            "w": 1220,
+            "h": 648
+          },
+          "bg": "rgba(0, 0, 0, 0)",
+          "paddingTop": 80,
+          "paddingBottom": 64,
+          "marginTop": 0,
+          "contentWidth": 1172,
+          "textAlign": "start",
+          "card": null
+        },
+        {
+          "heading": "O que é risco cognitivo?",
+          "box": {
+            "x": 110,
+            "y": 833,
+            "w": 1220,
+            "h": 759
+          },
+          "bg": "rgba(0, 0, 0, 0)",
+          "paddingTop": 0,
+          "paddingBottom": 0,
+          "marginTop": 112,
+          "contentWidth": 665,
+          "textAlign": "start",
+          "card": {
+            "radius": "2px",
+            "bg": "rgb(245, 245, 244)",
+            "padding": "24px"
+          }
+        },
+        {
+          "heading": "Continue pelo framework",
+          "box": {
+            "x": 110,
+            "y": 1704,
+            "w": 1220,
+            "h": 315
+          },
+          "bg": "rgba(0, 0, 0, 0)",
+          "paddingTop": 0,
+          "paddingBottom": 0,
+          "marginTop": 112,
+          "contentWidth": 1172,
+          "textAlign": "start",
+          "card": {
+            "radius": "2px",
+            "bg": "rgb(245, 245, 244)",
+            "padding": "16px"
+          }
+        },
+        {
+          "heading": "Oito territórios, um só modelo",
+          "box": {
+            "x": 110,
+            "y": 2131,
+            "w": 1220,
+            "h": 479
+          },
+          "bg": "rgba(0, 0, 0, 0)",
+          "paddingTop": 0,
+          "paddingBottom": 0,
+          "marginTop": 112,
+          "contentWidth": 1172,
+          "textAlign": "start",
+          "card": {
+            "radius": "2px",
+            "bg": "rgb(245, 245, 244)",
+            "padding": "20px"
+          }
+        },
+        {
+          "heading": "Como os elementos se conectam",
+          "box": {
+            "x": 110,
+            "y": 2722,
+            "w": 1220,
+            "h": 683
+          },
+          "bg": "rgba(0, 0, 0, 0)",
+          "paddingTop": 0,
+          "paddingBottom": 0,
+          "marginTop": 112,
+          "contentWidth": 604,
+          "textAlign": "start",
+          "card": null
+        }
+      ],
+      "sectionCount": 5,
+      "h1": {
+        "text": "RiscoCognitivo",
+        "fontSize": 112,
+        "fontWeight": "700",
+        "lineHeight": 98.6,
+        "letterSpacing": "-3.36px",
+        "color": "rgb(32, 33, 36)",
+        "textAlign": "start",
+        "widthCh": 10,
+        "box": {
+          "x": 134,
+          "y": 153,
+          "w": 616,
+          "h": 197
+        }
+      },
+      "h2": {
+        "text": "O que é risco cognitivo?",
+        "fontSize": 48,
+        "fontWeight": "700",
+        "lineHeight": 48,
+        "letterSpacing": "-1.44px",
+        "color": "rgb(32, 33, 36)",
+        "textAlign": "start",
+        "widthCh": 26,
+        "box": {
+          "x": 134,
+          "y": 885,
+          "w": 665,
+          "h": 48
+        }
+      },
+      "h2Count": 5,
+      "h3": {
+        "text": "Fatores de risco cognitivo: o que aumenta a probabilidade de",
+        "fontSize": 18,
+        "fontWeight": "700",
+        "lineHeight": 28,
+        "letterSpacing": "-0.45px",
+        "color": "rgb(32, 33, 36)",
+        "textAlign": "start",
+        "widthCh": 37,
+        "box": {
+          "x": 150,
+          "y": 1843,
+          "w": 357,
+          "h": 56
+        }
+      },
+      "heroParagraphs": [
+        {
+          "text": "Conhecimento que vira estrutura.",
+          "fontSize": 34,
+          "fontWeight": "400",
+          "lineHeight": 42.5,
+          "letterSpacing": "normal",
+          "color": "rgb(107, 114, 128)",
+          "textAlign": "start",
+          "widthCh": 33,
+          "box": {
+            "x": 134,
+            "y": 374,
+            "w": 616,
+            "h": 43
+          }
+        },
+        {
+          "text": "Como atenção, memória e julgamento participam da formação do",
+          "fontSize": 20,
+          "fontWeight": "400",
+          "lineHeight": 28,
+          "letterSpacing": "normal",
+          "color": "rgb(107, 114, 128)",
+          "textAlign": "start",
+          "widthCh": 55,
+          "box": {
+            "x": 134,
+            "y": 441,
+            "w": 616,
+            "h": 84
+          }
+        },
+        {
+          "text": "Artigo em destaqueRisco Cognitivo",
+          "fontSize": 12,
+          "fontWeight": "500",
+          "lineHeight": 16.8,
+          "letterSpacing": "1.44px",
+          "color": "rgb(107, 114, 128)",
+          "textAlign": "start",
+          "widthCh": 57,
+          "box": {
+            "x": 134,
+            "y": 857,
+            "w": 490,
+            "h": 17
+          }
+        }
+      ],
+      "ctas": [
+        {
+          "text": "Explorar artigos",
+          "h": 40,
+          "radius": "8px",
+          "padding": "0px 16px",
+          "fontSize": 14,
+          "fontWeight": "500",
+          "bg": "rgb(37, 99, 235)"
+        }
+      ],
+      "footer": {
+        "box": {
+          "x": 0,
+          "y": 3533,
+          "w": 1440,
+          "h": 505
+        },
+        "bg": "rgb(255, 255, 255)",
+        "navGroups": 3
+      },
+      "stickyAfterScroll": [
+        {
+          "tag": "header",
+          "h": 73
+        }
+      ]
+    }
+  }
+}

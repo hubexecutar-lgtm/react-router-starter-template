@@ -1,6 +1,6 @@
 # HIG-WEB-AUDIT — apps/blog
 
-Gerado por `scripts/hig-audit.mjs` em 2026-10-02. Regra: **UX-GOV-HIG-001** (`docs/governance/UX-GOV-HIG-001.md`,
+Gerado por `scripts/hig-audit.mjs` em 2026-10-03. Regra: **UX-GOV-HIG-001** (`docs/governance/UX-GOV-HIG-001.md`,
 ADR-M03). Gate automatizado: `tests/hig.spec.ts` (axe WCAG 2.0/2.1/2.2 A+AA, títulos, landmarks, alvos ≥ 24 px,
 reflow 320 px, medida ≤ 75 caracteres, sem prosa mono, `alt`, halftone fora do texto, foco visível) em
 47 rotas, a 1440, 390 e 320 px, mais amostra no tema escuro.

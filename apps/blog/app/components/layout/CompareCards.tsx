@@ -30,11 +30,18 @@ export function CompareCards({ options }: { options: CompareOption[] }) {
 							</li>
 						))}
 					</ul>
-					<div className="mt-auto flex flex-wrap items-center gap-x-6 gap-y-3 pt-8">
-						<a href={o.cta.href} className={cn(buttonVariants({ size: "lg", variant: i === 0 ? "default" : "outline" }))}>
+					{o.more && (
+						<div className="mt-6">
+							<ChevronLink href={o.more.href}>{o.more.label}</ChevronLink>
+						</div>
+					)}
+					<div className="mt-auto pt-8">
+						<a
+							href={o.cta.href}
+							className={cn(buttonVariants({ size: "lg", variant: i === 0 ? "default" : "outline" }), "w-full")}
+						>
 							{o.cta.label}
 						</a>
-						{o.more && <ChevronLink href={o.more.href}>{o.more.label}</ChevronLink>}
 					</div>
 				</article>
 			))}

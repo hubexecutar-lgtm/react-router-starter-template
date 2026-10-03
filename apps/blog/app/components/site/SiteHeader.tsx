@@ -1,6 +1,8 @@
 // Cabeçalho global (mood boards 01, 04, 07 e 09): barra plana sobre o canvas,
 // wordmark tipográfico + tagline mono, item ativo em azul sublinhado, busca e tema.
 // Renderizado no servidor: a navegação funciona sem JavaScript.
+// AUD-WEB-001-05: barra fixa de 48/52 px (--header-h), translúcida com desfoque, como a barra
+// local da referência.
 import { useEffect, useRef, useState } from "react";
 
 import { Menu, Search, X } from "lucide-react";
@@ -33,8 +35,8 @@ export function SiteHeader() {
 	}, [open]);
 
 	return (
-		<header className="bg-background/95 supports-[backdrop-filter]:bg-background/85 sticky top-0 z-50 border-b border-[var(--border-default)] backdrop-blur">
-			<div className="container flex h-16 items-center gap-2 sm:gap-4 lg:h-[4.5rem]">
+		<header className="bg-background/95 supports-[backdrop-filter]:bg-background/80 sticky top-0 z-50 border-b border-[var(--border-default)] backdrop-blur-[20px] backdrop-saturate-[1.8]">
+			<div className="container flex h-[var(--header-h)] items-center gap-2 sm:gap-4">
 				<a href="/" className="flex min-h-10 min-w-0 shrink-0 items-center gap-3" aria-label={`${SITE_NAME} — página inicial`}>
 					<span className="rc-display text-[0.95rem] leading-none tracking-[-0.02em] whitespace-nowrap uppercase min-[360px]:text-[1.1rem] sm:text-xl">
 						{SITE_NAME}
@@ -56,7 +58,7 @@ export function SiteHeader() {
 											"relative inline-flex h-10 items-center rounded-md px-3 text-[0.95rem] font-medium transition-colors",
 											"hover:bg-[var(--surface-hover)] focus-visible:ring-ring/50 outline-none focus-visible:ring-[3px]",
 											active
-												? "text-primary after:bg-primary after:absolute after:inset-x-3 after:-bottom-[13px] after:h-0.5 after:rounded-full lg:after:-bottom-[17px]"
+												? "text-primary after:bg-primary after:absolute after:inset-x-3 after:-bottom-[7px] after:h-0.5 after:rounded-full"
 												: "text-foreground",
 										)}
 									>

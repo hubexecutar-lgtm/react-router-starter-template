@@ -1,0 +1,93 @@
+{
+  "base": "http://localhost:4331",
+  "widths": {
+    "390": {
+      "overflowX": 0,
+      "sections": [
+        "hero-title",
+        "missao",
+        "Destaque",
+        "recentes",
+        "territorios",
+        "referencias",
+        "framework",
+        "acesso"
+      ],
+      "overlaps": [],
+      "clipped": [],
+      "focusStops": 45,
+      "focusInvisible": []
+    },
+    "768": {
+      "overflowX": 0,
+      "sections": [
+        "hero-title",
+        "missao",
+        "Destaque",
+        "recentes",
+        "territorios",
+        "referencias",
+        "framework",
+        "acesso"
+      ],
+      "overlaps": [],
+      "clipped": [],
+      "focusStops": 45,
+      "focusInvisible": []
+    },
+    "1440": {
+      "overflowX": 0,
+      "sections": [
+        "hero-title",
+        "missao",
+        "Destaque",
+        "recentes",
+        "territorios",
+        "referencias",
+        "framework",
+        "acesso"
+      ],
+      "overlaps": [],
+      "clipped": [],
+      "focusStops": 45,
+      "focusInvisible": []
+    }
+  },
+  "links": {
+    "/": 200,
+    "/blog/": 200,
+    "/temas/": 200,
+    "/mapas/": 200,
+    "/guias/": 200,
+    "/evidencias/": 200,
+    "/loja/": 200,
+    "/about/": 200,
+    "/buscar/": 200,
+    "/temas/risco-cognitivo/": 200,
+    "/blog/o-que-e-risco-cognitivo/": 200,
+    "/blog/fatores-de-risco-cognitivo/": 200,
+    "/blog/exposicao-cognitiva/": 200,
+    "/blog/eventos-de-risco-cognitivo/": 200,
+    "/temas/fatores-de-risco-cognitivo/": 200,
+    "/temas/exposicao-cognitiva/": 200,
+    "/temas/eventos-de-risco-cognitivo/": 200,
+    "/temas/controles-cognitivos/": 200,
+    "/temas/indicadores-de-risco-cognitivo/": 200,
+    "/temas/gestao-do-risco-cognitivo/": 200,
+    "/temas/framework-de-risco-cognitivo/": 200,
+    "/blog/controles-cognitivos/": 200,
+    "/blog/indicadores-de-risco-cognitivo/": 200,
+    "/blog/gestao-do-risco-cognitivo/": 200,
+    "/blog/framework-de-risco-cognitivo/": 200,
+    "/pricing/": 200,
+    "/rss.xml": 200,
+    "/faq/": 200,
+    "/signup/": 200,
+    "/contact/": 200,
+    "/privacy/": 200,
+    "/hub-editorial/": 200,
+    "/skills/": 200,
+    "/admin/": 200
+  },
+  "failures": []
+}

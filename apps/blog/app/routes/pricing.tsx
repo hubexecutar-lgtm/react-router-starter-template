@@ -5,6 +5,7 @@ import type { Route } from "./+types/pricing";
 import { PageHero } from "@/components/editorial/PageHero";
 import { CompareCards } from "@/components/layout/CompareCards";
 import { Section } from "@/components/layout/Section";
+import { ACCESS_OPTIONS } from "@/data/access";
 import seed from "@/data/editorial/seed.json";
 import DefaultLayout from "@/layouts/DefaultLayout";
 import { getPosts } from "@/lib/posts.server";
@@ -41,32 +42,7 @@ export default function Page({ loaderData }: Route.ComponentProps) {
 				lead="Todos os artigos, mapas, guias e evidências do blog são de leitura livre, sem cadastro. Outros formatos derivam dos mesmos artigos."
 			/>
 			<Section id="comparar" eyebrow="Explore os formatos" title="Leitura aberta e produtos do ecossistema">
-				<CompareCards
-					options={[
-						{
-							title: "Ler o Risco Cognitivo",
-							subtitle: "Aberto · sem cadastro",
-							benefits: [
-								"Todos os artigos e ensaios do framework",
-								"Mapas, guias e o modelo de análise para copiar",
-								"Banco de evidências com autor, ano e link",
-								"Feed RSS para acompanhar novas publicações",
-							],
-							cta: { href: "/blog/", label: "Ler os artigos" },
-							more: { href: "/rss.xml", label: "Assinar o RSS" },
-						},
-						{
-							title: "Produtos EXECUTAR",
-							subtitle: "Catálogo de exemplo",
-							benefits: [
-								"Skills, agentes e prompts para aplicar o método",
-								"E-books, PDFs e workbooks derivados dos artigos",
-								"Ferramentas HTML e assets de apoio",
-							],
-							cta: { href: "/loja/", label: "Ver a loja" },
-						},
-					]}
-				/>
+				<CompareCards options={ACCESS_OPTIONS} />
 			</Section>
 
 			<Section id="canais" eyebrow="Canais" title="Formatos previstos no banco editorial" lead="Fonte: banco editorial (Hub Editorial), canais e ativos derivados.">

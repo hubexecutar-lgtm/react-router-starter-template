@@ -2,7 +2,7 @@
   "id": "HIG-WEB-AUDIT-BLOG",
   "rule": "UX-GOV-HIG-001 (ADR-M03)",
   "app": "apps/blog",
-  "date": "2026-10-02",
+  "date": "2026-10-03",
   "baseline_ref": "main @ ab685e2 (antes do RC-UX-HIG-002 PR D)",
   "routes": [
     "/",
@@ -599,7 +599,7 @@
         "SOURCE": "WCAG 2.2 AA",
         "STATUS": "PASS",
         "SEVERITY": "P1",
-        "EVIDENCE": "31 regras ok",
+        "EVIDENCE": "30 regras ok",
         "REMEDIATION": "—",
         "OWNER": "A DEFINIR",
         "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
@@ -2471,7 +2471,7 @@
         "SOURCE": "WCAG 2.2 AA",
         "STATUS": "PASS",
         "SEVERITY": "P1",
-        "EVIDENCE": "28 regras ok",
+        "EVIDENCE": "29 regras ok",
         "REMEDIATION": "—",
         "OWNER": "A DEFINIR",
         "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
@@ -2939,7 +2939,7 @@
         "SOURCE": "WCAG 2.2 AA",
         "STATUS": "PASS",
         "SEVERITY": "P1",
-        "EVIDENCE": "28 regras ok",
+        "EVIDENCE": "29 regras ok",
         "REMEDIATION": "—",
         "OWNER": "A DEFINIR",
         "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
@@ -3173,7 +3173,7 @@
         "SOURCE": "WCAG 2.2 AA",
         "STATUS": "PASS",
         "SEVERITY": "P1",
-        "EVIDENCE": "28 regras ok",
+        "EVIDENCE": "29 regras ok",
         "REMEDIATION": "—",
         "OWNER": "A DEFINIR",
         "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
@@ -3407,7 +3407,7 @@
         "SOURCE": "WCAG 2.2 AA",
         "STATUS": "PASS",
         "SEVERITY": "P1",
-        "EVIDENCE": "28 regras ok",
+        "EVIDENCE": "29 regras ok",
         "REMEDIATION": "—",
         "OWNER": "A DEFINIR",
         "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
@@ -3641,7 +3641,7 @@
         "SOURCE": "WCAG 2.2 AA",
         "STATUS": "PASS",
         "SEVERITY": "P1",
-        "EVIDENCE": "28 regras ok",
+        "EVIDENCE": "29 regras ok",
         "REMEDIATION": "—",
         "OWNER": "A DEFINIR",
         "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
@@ -3875,7 +3875,7 @@
         "SOURCE": "WCAG 2.2 AA",
         "STATUS": "PASS",
         "SEVERITY": "P1",
-        "EVIDENCE": "28 regras ok",
+        "EVIDENCE": "29 regras ok",
         "REMEDIATION": "—",
         "OWNER": "A DEFINIR",
         "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
@@ -4109,7 +4109,7 @@
         "SOURCE": "WCAG 2.2 AA",
         "STATUS": "PASS",
         "SEVERITY": "P1",
-        "EVIDENCE": "28 regras ok",
+        "EVIDENCE": "29 regras ok",
         "REMEDIATION": "—",
         "OWNER": "A DEFINIR",
         "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
@@ -4343,7 +4343,7 @@
         "SOURCE": "WCAG 2.2 AA",
         "STATUS": "PASS",
         "SEVERITY": "P1",
-        "EVIDENCE": "28 regras ok",
+        "EVIDENCE": "29 regras ok",
         "REMEDIATION": "—",
         "OWNER": "A DEFINIR",
         "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
@@ -5045,7 +5045,7 @@
         "SOURCE": "WCAG 2.2 AA",
         "STATUS": "PASS",
         "SEVERITY": "P1",
-        "EVIDENCE": "27 regras ok",
+        "EVIDENCE": "28 regras ok",
         "REMEDIATION": "—",
         "OWNER": "A DEFINIR",
         "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
@@ -8321,7 +8321,7 @@
         "SOURCE": "WCAG 2.2 AA",
         "STATUS": "PASS",
         "SEVERITY": "P1",
-        "EVIDENCE": "23 regras ok",
+        "EVIDENCE": "24 regras ok",
         "REMEDIATION": "—",
         "OWNER": "A DEFINIR",
         "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
