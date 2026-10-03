@@ -82,8 +82,8 @@
 	 * Blog Risco Cognitivo controlado pelo CMS (/admin)
 	 */
 	"vars": {
-		"BLOG_REPO": "executar-23/Risco-cognitivo-blog",
-		"BLOG_URL": "https://risco-cognitivo-blog.executar-rotina-8b7.workers.dev"
+		"BLOG_REPO": "hubexecutar-lgtm/react-router-starter-template",
+		"BLOG_URL": "https://react-router-starter-template.hub-executar.workers.dev"
 	},
 	"workers_dev": true,
 	"upload_source_maps": true

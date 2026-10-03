@@ -25,6 +25,10 @@ jobs:
           cache: npm
       - name: Install (raiz do monorepo, lockfile único)
         run: npm ci
+      - name: Pré-voo do agente (offline)
+        run: npm run doctor -w apps/workflow -- --offline
+      - name: Sintaxe do bootstrap
+        run: bash -n apps/workflow/scripts/bootstrap.sh
       - name: Generate AI registry
         run: npm run registry:generate -w apps/workflow
       - name: TypeScript

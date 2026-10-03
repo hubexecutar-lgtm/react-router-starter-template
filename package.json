@@ -13,6 +13,8 @@
 		"typecheck": "npm run typecheck --workspaces --if-present",
 		"test": "npm run test --workspaces --if-present",
 		"deploy": "npm run deploy -w apps/blog",
-		"deploy:blog": "npm run deploy -w apps/blog"
+		"deploy:blog": "npm run deploy -w apps/blog",
+		"doctor": "npm run doctor -w apps/workflow",
+		"bootstrap": "npm run bootstrap -w apps/workflow"
 	}
 }

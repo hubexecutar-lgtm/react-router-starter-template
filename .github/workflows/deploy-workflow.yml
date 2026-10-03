@@ -1,0 +1,62 @@
+name: Deploy workflow (Cloudflare)
+
+# Publica o Worker do workflow (página, /api, CMS /admin, MCP /mcp) depois de cada merge na main que o altera.
+# Usa o mesmo comando do agente: npm run bootstrap -w apps/workflow (cria R2/KV se faltarem, grava segredos, faz deploy, confere).
+# Sem os secrets abaixo o job só avisa e termina (não falha o merge).
+#   CLOUDFLARE_API_TOKEN  token com permissões Workers Scripts, Workers KV, R2 e Workflows (Edit)
+#   CLOUDFLARE_ACCOUNT_ID id da conta Cloudflare de destino
+#   EXECUTAR_AGENT_TOKEN  vira o secret AGENT_TOKEN do Worker (mínimo 24 caracteres)
+#   ADMIN_TOKEN           vira o secret ADMIN_TOKEN do Worker (login do /admin e do MCP)
+on:
+  push:
+    branches: [main]
+    paths:
+      - "apps/workflow/**"
+      - ".claude/**"
+      - "plugins/**"
+      - "package-lock.json"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-workflow
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      EXECUTAR_AGENT_TOKEN: ${{ secrets.EXECUTAR_AGENT_TOKEN }}
+      ADMIN_TOKEN: ${{ secrets.ADMIN_TOKEN }}
+    steps:
+      - name: Conferir secrets
+        id: gate
+        run: |
+          missing=""
+          for v in CLOUDFLARE_API_TOKEN CLOUDFLARE_ACCOUNT_ID EXECUTAR_AGENT_TOKEN ADMIN_TOKEN; do
+            [ -n "${!v}" ] || missing="$missing $v"
+          done
+          if [ -n "$missing" ]; then
+            echo "::notice title=Deploy do workflow ignorado::Faltam secrets do repositório:$missing. Veja docs/AGENT-RUNBOOK.md."
+            echo "run=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/checkout@v4
+        if: steps.gate.outputs.run == 'true'
+      - uses: actions/setup-node@v4
+        if: steps.gate.outputs.run == 'true'
+        with:
+          node-version: 24
+          cache: npm
+      - name: Instalar (raiz do monorepo)
+        if: steps.gate.outputs.run == 'true'
+        run: npm ci
+      - name: Publicar e conferir
+        if: steps.gate.outputs.run == 'true'
+        run: npm run bootstrap -w apps/workflow

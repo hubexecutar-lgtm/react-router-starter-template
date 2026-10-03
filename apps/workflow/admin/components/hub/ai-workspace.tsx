@@ -256,7 +256,7 @@ export function AIProfileView({ entityId, onBack, onDiagram, onWorkflows }: { en
   if (error) return <div className="p-6"><Button variant="ghost" onClick={onBack}><ArrowLeft /> Voltar</Button><div className="mt-4 rounded-xl bg-[var(--color-critical-subtle)] p-4 text-sm text-[var(--color-critical-default)]">{error}</div></div>;
   if (!entity) return <div className="p-6 text-sm text-muted-foreground">Carregando perfil…</div>;
 
-  const sourceUrl = "https://github.com/executar-23/workflows-starter-template/blob/main/" + entity.sourcePath;
+  const sourceUrl = "https://github.com/hubexecutar-lgtm/react-router-starter-template/blob/main/" + entity.sourcePath;
   return (
     <div className="space-y-5 p-4 md:p-6">
       <Button variant="ghost" size="sm" onClick={onBack}><ArrowLeft /> Registro de IA</Button>

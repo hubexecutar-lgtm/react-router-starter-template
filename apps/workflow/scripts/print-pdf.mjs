@@ -1,11 +1,14 @@
 #!/usr/bin/env node
 // Gera o PDF A4 do working process a partir da página publicada no Cloudflare.
-// Uso: node scripts/print-pdf.mjs <defId> [--base URL] [--out arquivo.pdf] [--run runId]
+// Uso (da raiz do monorepo): npm run pdf -w apps/workflow -- <defId>
+//   (ou, dentro de apps/workflow: node scripts/print-pdf.mjs <defId>)
+//   Caminhos relativos de --out valem a partir de onde o npm foi chamado (INIT_CWD): da raiz, out/cadeia/<id>/…
+// Args:    <defId> [--base URL] [--out arquivo.pdf] [--run runId]
 // Requer Playwright (global ou local) e Chromium (PLAYWRIGHT_BROWSERS_PATH).
 import { createRequire } from "node:module";
 import { execSync } from "node:child_process";
 import { mkdirSync } from "node:fs";
-import { dirname } from "node:path";
+import { dirname, resolve } from "node:path";
 
 const argv = process.argv.slice(2);
 const opt = (name, fallback) => {
@@ -18,7 +21,10 @@ const base = (
 	process.env.EXECUTAR_URL ||
 	"https://workflows-starter-template.hub-executar.workers.dev"
 ).replace(/\/$/, "");
-const out = opt("out", `out/cadeia/${defId ?? "padrao"}/workflow-${defId ?? "padrao"}.pdf`);
+const out = resolve(
+	process.env.INIT_CWD || process.cwd(),
+	opt("out", `out/cadeia/${defId ?? "padrao"}/workflow-${defId ?? "padrao"}.pdf`),
+);
 const run = opt("run");
 
 function loadPlaywright() {

@@ -34,7 +34,7 @@ Entregáveis:
 4. Relatório único: dependências, otimização e o PDF.
 5. Runbook em Markdown tabular.
 
-`.mcp.json` registra o conector `executar` (Streamable HTTP + OAuth) em `https://workflows-starter-template.hub-executar.workers.dev/mcp`. A autorização pede o `ADMIN_TOKEN` do Worker.
+`.mcp.json` registra o conector `executar` (Streamable HTTP + OAuth) em `${EXECUTAR_URL}/mcp` (padrão `https://workflows-starter-template.hub-executar.workers.dev`; defina `EXECUTAR_URL` para outro endereço). A autorização pede o `ADMIN_TOKEN` do Worker.
 
 Ferramentas expostas:
 - `cadeia_prompt`
@@ -50,7 +50,7 @@ Os demais IDs verbais não usam hooks.
 
 ## Instalação
 ```text
-/plugin marketplace add executar-23/workflows-starter-template
+/plugin marketplace add hubexecutar-lgtm/react-router-starter-template
 /plugin install executar-cop@executar
 ```
 Para desenvolvimento local: `claude --plugin-dir plugins/executar-cop`.
