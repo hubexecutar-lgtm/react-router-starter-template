@@ -332,7 +332,7 @@ const TOOLS: Tool[] = [
 		name: "report_pdf_url",
 		title: "URL do PDF do workflow",
 		description:
-			"URLs do fluxograma e da página de impressão A4 (?print=1) da definição. Abra a printUrl e use Imprimir → Salvar como PDF, ou rode scripts/print-pdf.mjs.",
+			"URLs do fluxograma e da página de impressão A4 (?print=1) da definição. Abra a printUrl e use Imprimir → Salvar como PDF, ou rode `npm run pdf -w apps/workflow -- <id>` (da raiz do monorepo).",
 		inputSchema: {
 			type: "object",
 			required: ["definitionId"],
@@ -346,7 +346,7 @@ const TOOLS: Tool[] = [
 			return {
 				url: abs(ctx, urls.url),
 				printUrl: abs(ctx, urls.printUrl),
-				script: `node scripts/print-pdf.mjs ${id}`,
+				script: `npm run pdf -w apps/workflow -- ${id}`,
 			};
 		},
 	},

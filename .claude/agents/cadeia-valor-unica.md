@@ -27,7 +27,7 @@ WIP = 1, e use um único arquivo de estado em `out/cadeia/<slug>/ESTADO.md`.
 3. Na etapa 06:
    - Valide no servidor: `node .claude/skills/executar-flow/scripts/flow.mjs def-validate out/cadeia/<slug>/workflow-<slug>.json --edges out/cadeia/<slug>/mapa-dependencias.json`.
    - Só com aprovação explícita registrada no ESTADO, publique com `flow.mjs def-upload …`.
-   - Gere o PDF com `node scripts/print-pdf.mjs <slug>`.
+   - Gere o PDF com `npm run pdf -w apps/workflow -- <slug>`.
 4. Na etapa 07, escreva o relatório único e o runbook. Depois envie os artefatos com
    `flow.mjs def-put <slug> <arquivo>`: fonte.md, mapa-dependencias.json/.csv, otimizacao.json,
    estrutura.json, arvore-roadmap.txt, arvore-visual.json/.html, workflow-<slug>.json/.pdf,

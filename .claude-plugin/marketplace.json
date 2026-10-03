@@ -1,6 +1,6 @@
 {
 	"name": "executar",
-	"owner": { "name": "executar-23", "url": "https://github.com/executar-23" },
+	"owner": { "name": "hubexecutar-lgtm", "url": "https://github.com/hubexecutar-lgtm" },
 	"metadata": {
 		"description": "Plugins do Programa EXECUTAR: orquestrador CMD-COP com a Cadeia de Valor Única (MCP no Worker Cloudflare) e o workflow agent-handoff (plan → execute → verify).",
 		"version": "0.4.0"

@@ -266,7 +266,7 @@ def etapa06(d, rel, mapa):
             rel.e("06", f"working process viola arestas bloqueantes: {viol}")
     pdfs = sorted(d.glob("workflow-*.pdf"))
     if not pdfs:
-        rel.a("06", "PDF do workflow ainda não gerado (scripts/print-pdf.mjs)")
+        rel.a("06", "PDF do workflow ainda não gerado (npm run pdf -w apps/workflow -- <slug>)")
     rel.p("06", f"{files[0].name}: {len(nodes)} nós, {sum(1 for n in nodes if n.get('kind') in WORK_KINDS)} casas")
     return wf
 

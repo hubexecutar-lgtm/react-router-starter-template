@@ -4,18 +4,16 @@ Implementação do workflow editorial do Programa EXECUTAR sobre o template ofic
 
 ## Deploy
 
-Após merge para `main`, use:
-
-https://deploy.workers.cloudflare.com/?url=https://github.com/executar-23/workflows-starter-template
-
-Ou via Wrangler:
+Um comando publica tudo do zero (R2, KV, segredos, deploy e conferência), em qualquer conta Cloudflare:
 
 ```bash
-npm install
-npm run deploy
+# na raiz do monorepo, com EXECUTAR_AGENT_TOKEN no ambiente (mínimo 24 caracteres)
+npm run bootstrap -w apps/workflow
 ```
 
-O `wrangler.jsonc` está configurado com `workers_dev: true`. Depois do deploy, a URL pública será informada pelo Wrangler no formato `https://programa-executar-workflow.<subdomain>.workers.dev`.
+Ele é idempotente: cria o bucket `executar-artifacts` e o KV `OAUTH_KV` se faltarem, grava `AGENT_TOKEN` (de `EXECUTAR_AGENT_TOKEN`) e `ADMIN_TOKEN` (de `ADMIN_TOKEN`; se faltar, é gerado e guardado em `~/.local/state/executar/admin-token`, sem imprimir), faz o deploy e roda o `doctor`. Pré-requisito que só um humano resolve: R2 habilitado na conta (dash.cloudflare.com → R2). Para só conferir o ambiente e o Worker: `npm run doctor -w apps/workflow`.
+
+Após o merge na `main`, o workflow `.github/workflows/deploy-workflow.yml` roda o mesmo `bootstrap` se os secrets do GitHub estiverem configurados (ver `docs/AGENT-RUNBOOK.md`). O `wrangler.jsonc` usa `workers_dev: true`; a URL pública sai na saída do deploy.
 
 ## API
 

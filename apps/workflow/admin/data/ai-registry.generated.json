@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-03T10:41:42.295Z",
+  "generatedAt": "2026-10-03T11:52:51.668Z",
   "entities": [
     {
       "id": "agent-analytics-agent",
@@ -36,15 +36,15 @@
       "area": "Core Agents",
       "status": "REGISTERED",
       "version": "A DEFINIR",
-      "headline": "Publica conteúdo do CMS (Hub Editorial) no blog Risco Cognitivo. Executa tarefas despachadas com executor agent:blog-publisher (botão \"Publicar no blog\" no /admin) — escreve src/content/blog/<slug.mdx no repositório executar-23/Risco-cognitivo-blog a partir do conteúdo, brief, argumentos, evidências e produção, abre um PR pronto para revisão (nunca draft) e conclui a tarefa com --pr-url e --slug. Use via /executar-flow com o taskId.",
-      "summary": "Você é o Blog Publisher do Programa EXECUTAR. Você transforma um conteúdo aprovado no CMS em um post do blog Risco Cognitivo e entrega um PR pronto para revisão. Quem publica de fato é o merge humano, que dispara o deploy do blog.",
+      "headline": "Publica conteúdo do CMS (Hub Editorial) no blog Risco Cognitivo (apps/blog deste monorepo). Executa tarefas despachadas com executor agent:blog-publisher (botão \"Publicar no blog\" no /admin) — escreve o registro Quick Framework em apps/blog/app/data/editorial/quick-frameworks/<ContentID.md, roda o gerador do blog, abre um PR pronto para revisão (nunca draft) e conclui a tarefa com --pr-url e --slug. Use via /executar-flow com o taskId.",
+      "summary": "Você é o Blog Publisher do Programa EXECUTAR. Você transforma um conteúdo aprovado no CMS em um post do blog Risco Cognitivo e entrega um PR pronto para revisão. Quem publica de fato é o merge humano, que dispara o deploy do blog (Workers Builds).",
       "capabilities": [
-        "Se /home/user/risco-cognitivo-blog existir e git -C … remote get-url origin for executar-23/risco-cognitivo-blog, use-o: git fetch origin main && git checkout -B cms/<slug origin/m",
-        "Senão, clone https://github.com/executar-23/risco-cognitivo-blog e crie o branch a partir da main.",
-        "frontmatter: title, description e pubDate (data de hoje, YYYY-MM-DD); image, authorName e authorImage só se vierem nos dados;",
-        "corpo: a produção de texto como base, com argumentos e evidências citados com fonte; destaques com <Callout (ADR-02), importando como os outros MDX do blog;",
+        "frontmatter: contentId, slug, territory, title, description, pubDate (hoje, YYYY-MM-DD); seoTitle, tags e evidence (IDs EVD-RC-NNNN) só se vierem nos dados;",
+        "corpo: as 12 seções do template, com a produção de texto como base e argumentos e evidências citados com fonte;",
         "dado ausente vira TBD e entra em GAP. Não invente números, citações nem fontes.",
-        "Nunca faça merge, push na main nem PR em draft."
+        "python3 apps/blog/tools/executar-block-quick-frameworks/scripts/validateoutput.py apps/blog/app/data/editorial/quick-frameworks/<ContentID.md (precisa passar);",
+        "cd apps/blog && node scripts/build-quick-frameworks.mjs (gera content/blog/<slug.mdx e faz o upsert do seed só deste ContentID);",
+        "quando possível, npm run content:check -w apps/blog (precisa do Playwright; se não rodar, registre em GAP)."
       ],
       "dependsOn": [],
       "blocks": [],
@@ -71,7 +71,7 @@
         "Opcional: data de início do ciclo, restrições e aprovações já concedidas. Se a data faltar, use",
         "Valide no servidor: node .claude/skills/executar-flow/scripts/flow.mjs def-validate out/cadeia/<slug/workflow-<slug.json --edges out/cadeia/<slug/mapa-dependencias.json.",
         "Só com aprovação explícita registrada no ESTADO, publique com flow.mjs def-upload ….",
-        "Gere o PDF com node scripts/print-pdf.mjs <slug.",
+        "Gere o PDF com npm run pdf -w apps/workflow -- <slug.",
         "Nada inventado. Lacuna vira A DEFINIR/GAP. Divergência vira CONFLICT, com as duas fontes."
       ],
       "dependsOn": [],

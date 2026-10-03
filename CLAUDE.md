@@ -23,6 +23,7 @@ docs/      decisões e evidências do monorepo (docs/migrations/*)
 - `.claude/agents/` e `.claude/skills/`: subagentes e skills do fluxo EXECUTAR (`clp-orchestrator`, `research-agent`, `plano-ops-agent`, `analytics-agent`, `blog-publisher`, `cadeia-valor-unica`, `executar-flow`, handoff). Servem a todos os apps.
 - `plugins/executar-cop` (0.4.0) e `plugins/agent-handoff` (0.4.2), com marketplace em `.claude-plugin/marketplace.json`.
 - `.handoff/`: estado do Agent Handoff (`config.md`, `backlog.md`). Itens abertos viram issues no GitHub.
+- Pré-voo e publicação: `npm run doctor -w apps/workflow` confere ambiente e Worker; `npm run bootstrap -w apps/workflow` publica do zero. Runbook e prompt de passagem para outro agente: `docs/AGENT-RUNBOOK.md`.
 - Operação do fluxo: `apps/workflow/CLAUDE.md` (variáveis `EXECUTAR_URL` e `EXECUTAR_AGENT_TOKEN`, `/executar-flow`, `/cadeia-unica`).
 
 ## ADRs do monorepo

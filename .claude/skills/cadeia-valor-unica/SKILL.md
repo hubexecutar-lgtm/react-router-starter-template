@@ -152,7 +152,7 @@ No claude.ai, use o conector MCP `executar` (`/mcp`), com as mesmas operações:
   2. Rodar `flow.mjs def-validate workflow-<slug>.json --edges mapa-dependencias.json`, que exige PASS sem arestas violadas.
   3. **Com aprovação:** `flow.mjs def-upload …`.
   4. `flow.mjs def-put <slug> <arquivo>` para cada artefato.
-  5. PDF: `node scripts/print-pdf.mjs <slug>` (Playwright), ou abrir a `printUrl` e Imprimir → Salvar como PDF.
+  5. PDF: `npm run pdf -w apps/workflow -- <slug>` (Playwright), ou abrir a `printUrl` e Imprimir → Salvar como PDF.
 - **OUTPUT CONTRACT:** `workflow-<slug>.json`, `workflow-<slug>.pdf` e a resposta do upload (revision, url, printUrl) registrada no ESTADO.
 - **VALIDATION:**
   - `def-validate` OK;

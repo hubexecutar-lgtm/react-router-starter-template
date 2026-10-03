@@ -6,7 +6,7 @@ import type { HubStore } from "~/lib/hub/use-hub-store";
 
 // Entrypoint único: conteúdo do CMS ↔ campanha no workflow ↔ post do blog.
 
-const BLOG_URL = "https://risco-cognitivo-blog.executar-rotina-8b7.workers.dev";
+const BLOG_URL = "https://react-router-starter-template.hub-executar.workers.dev";
 
 const STATUS_LABEL: Record<string, string> = {
 	queued: "Na fila",

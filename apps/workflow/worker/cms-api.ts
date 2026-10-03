@@ -9,10 +9,15 @@ const PUBLISHABLE = ["ACEITO", "VALIDADA", "PRONTO", "AGENDADO"];
 export const CMS_RUN = "cms";
 const POSTS_TTL_S = 600;
 
-type Vars = { BLOG_REPO?: string; BLOG_URL?: string };
-const blogRepo = (env: Env) => (env as Env & Vars).BLOG_REPO || "executar-23/Risco-cognitivo-blog";
-const blogUrl = (env: Env) =>
-	((env as Env & Vars).BLOG_URL || "https://risco-cognitivo-blog.executar-rotina-8b7.workers.dev").replace(/\/$/, "");
+type Vars = { BLOG_REPO?: string; BLOG_URL?: string; GITHUB_TOKEN?: string };
+export const DEFAULT_BLOG_REPO = "hubexecutar-lgtm/react-router-starter-template";
+export const DEFAULT_BLOG_URL = "https://react-router-starter-template.hub-executar.workers.dev";
+/** Pasta do blog dentro do monorepo e dos arquivos que o fluxo de publicação toca. */
+export const BLOG_APP_DIR = "apps/blog";
+export const BLOG_POSTS_DIR = `${BLOG_APP_DIR}/content/blog`;
+export const BLOG_QF_DIR = `${BLOG_APP_DIR}/app/data/editorial/quick-frameworks`;
+const blogRepo = (env: Env) => (env as Env & Vars).BLOG_REPO || DEFAULT_BLOG_REPO;
+const blogUrl = (env: Env) => ((env as Env & Vars).BLOG_URL || DEFAULT_BLOG_URL).replace(/\/$/, "");
 const board = (env: Env) => env.TASK_BOARD.get(env.TASK_BOARD.idFromName("global"));
 
 export const slugify = (value: string) =>
@@ -53,7 +58,16 @@ function section(title: string, records: HubRecord[] | undefined) {
 	].join("\n\n");
 }
 
+/** Território do blog (TAX-RC-*) = slug da "Rota editorial" do CMS ("Fatores de Risco Cognitivo" → fatores-de-risco-cognitivo). */
+export const territorySlug = (content: HubRecord) => slugify(String(content.Rota_editorial ?? ""));
+
+/** IDs EVD-RC-NNNN citados nos registros ligados, sem repetição e em ordem. */
+export const evidenceIds = (related: Record<string, HubRecord[]>) =>
+	[...new Set(JSON.stringify(related.evidence ?? []).match(/EVD-RC-\d{4}/g) ?? [])].sort();
+
 // Prompt self-contained da publicação (estrutura de prompt-self-contained.md).
+// O blog (apps/blog, ADR-10) gera o .mdx a partir de um registro Quick Framework: o agente escreve o
+// registro e roda o gerador; nunca edita o .mdx à mão.
 export function buildPublishPrompt(
 	env: Env,
 	taskId: string,
@@ -61,15 +75,19 @@ export function buildPublishPrompt(
 	related: Record<string, HubRecord[]>,
 ) {
 	const title = text(content.Titulo_final || content.Titulo_trabalho);
+	const contentId = text(content.Content_ID);
 	const saved = String(content.Blog_slug || "");
 	const slug = isSlug(saved) ? saved : slugify(String(content.Titulo_final || content.Titulo_trabalho || content.Content_ID));
+	const territory = territorySlug(content) || "TBD";
+	const evidence = evidenceIds(related);
 	const repo = blogRepo(env);
+	const record = `${BLOG_QF_DIR}/${contentId}.md`;
 	return [
 		`<tarefa id="${taskId}">`,
 		"  <contexto>",
-		`    Blog Risco Cognitivo (${repo}, Astro). Publicação do conteúdo ${text(content.Content_ID)} · "${title}", pedida no CMS (Hub Editorial) do Programa EXECUTAR. Status editorial: ${text(content.Status_editorial)}.`,
+		`    Blog Risco Cognitivo (${repo}, app em ${BLOG_APP_DIR}, React Router 7). Publicação do conteúdo ${contentId} · "${title}", pedida no CMS (Hub Editorial) do Programa EXECUTAR. Status editorial: ${text(content.Status_editorial)}.`,
 		"  </contexto>",
-		`  <objetivo>Abrir um Pull Request pronto para revisão (não draft) no repositório ${repo} com o post src/content/blog/${slug}.mdx, escrito a partir dos dados abaixo.</objetivo>`,
+		`  <objetivo>Abrir um Pull Request pronto para revisão (não draft) no repositório ${repo} com o registro Quick Framework ${record} e os arquivos que o gerador do blog produz a partir dele, escrito a partir dos dados abaixo.</objetivo>`,
 		"  <entrada>",
 		"## Conteúdo (CMS)",
 		...Object.entries(content)
@@ -84,66 +102,84 @@ export function buildPublishPrompt(
 		"  </entrada>",
 		"  <restricoes>",
 		"    Não invente dado, citação, número ou fonte ausente: use TBD e liste como GAP na conclusão.",
-		"    Frontmatter obrigatório conforme src/content.config.ts do blog: title, description, pubDate; image/authorName/authorImage só se existirem nos dados.",
-		"    Destaques editoriais usam <Callout> (ADR-02 do blog, src/components/ui/callout.tsx); não crie estilos ad hoc.",
-		"    ADR-01 do blog: branch a partir da main e PR pronto para revisão, NUNCA em draft.",
-		`    Branch: cms/${slug}. Não altere outros posts nem configuração do blog.`,
+		`    Frontmatter do registro (todos obrigatórios; o gerador do blog quebra se faltar algum): contentId: ${contentId}; slug: ${slug}; territory: ${territory}; title; seoTitle (sem dado próprio, repita o title); description; tags (lista; use [] se não houver dado); evidence (lista de IDs EVD-RC-NNNN${evidence.length ? `, aqui: [${evidence.join(", ")}]` : "; use [] se não houver"}); pubDate (hoje, YYYY-MM-DD).`,
+		`    territory precisa existir na taxonomia do blog (${BLOG_APP_DIR}/app/data/editorial/seed.json, campo Slug sem as barras). Se ${territory} não existir, pare e relate como bloqueio.`,
+		`    Formato do registro: template ${BLOG_APP_DIR}/tools/executar-block-quick-frameworks/assets/quick-framework-template.md; valide com python3 ${BLOG_APP_DIR}/tools/executar-block-quick-frameworks/scripts/validate_output.py ${record}.`,
+		`    Não edite o .mdx gerado à mão: ele sai de node scripts/build-quick-frameworks.mjs (rode dentro de ${BLOG_APP_DIR}), que também atualiza ${BLOG_APP_DIR}/app/data/editorial/seed.json só para ${contentId}.`,
+		"    ADR-01/ADR-M02 do monorepo: branch a partir da main e PR pronto para revisão, NUNCA em draft.",
+		`    Branch: cms/${slug}. Só mudam o registro, o .mdx gerado e o upsert do seed deste conteúdo; nenhum outro post nem configuração.`,
 		"  </restricoes>",
 		"  <passos>",
-		"    Criar o branch e escrever o MDX com o texto da produção, apoiado nos argumentos e nas evidências (com fontes).",
-		"    Rodar o build do blog quando possível (npm ci && npm run build) e corrigir só o próprio post.",
+		`    Criar o branch e escrever ${record} com o texto da produção, apoiado nos argumentos e nas evidências (com fontes).`,
+		`    Validar o registro, rodar o gerador e, quando possível, npm ci na raiz e npm run content:check -w ${BLOG_APP_DIR}; corrigir só o próprio conteúdo.`,
 		"    Abrir o PR (não draft) e concluir a tarefa com --pr-url e --slug.",
 		"  </passos>",
-		"  <criterio_de_conclusao>PR aberto, não draft, em https://github.com/" + repo + "/pull/<n>, contendo somente o novo post; tarefa concluída com --pr-url e --slug.</criterio_de_conclusao>",
-		`  <formato_de_saida>Arquivo src/content/blog/${slug}.mdx + PR no GitHub. Após o merge, o post fica em ${blogUrl(env)}/blog/${slug}/.</formato_de_saida>`,
-		"  <evidencia_esperada>URL do PR, slug, lista de fontes usadas e GAPs.</evidencia_esperada>",
+		`  <criterio_de_conclusao>PR aberto, não draft, em https://github.com/${repo}/pull/<n>, contendo somente os arquivos deste conteúdo; tarefa concluída com --pr-url e --slug.</criterio_de_conclusao>`,
+		`  <formato_de_saida>${record} + ${BLOG_POSTS_DIR}/${slug}.mdx (gerado) + PR no GitHub. Após o merge, o post fica em ${blogUrl(env)}/blog/${slug}/.</formato_de_saida>`,
+		"  <evidencia_esperada>URL do PR, slug, território, lista de fontes usadas, resultado do validador e do content:check, e GAPs.</evidencia_esperada>",
 		"</tarefa>",
 	].join("\n");
 }
 
 type GitHubEntry = { name: string; type: string; html_url: string };
-
 type BlogPost = { slug: string; file: string | null; url: string; githubUrl: string };
 
-// Alternativa quando a API do GitHub recusa o IP do Worker (403 por limite compartilhado):
-// o RSS público do blog lista os mesmos posts.
-async function listPostsFromRss(env: Env): Promise<BlogPost[]> {
-	const res = await fetch(`${blogUrl(env)}/rss.xml`, { headers: { "User-Agent": "executar-cms" } });
-	if (!res.ok) throw new Error(`RSS do blog respondeu ${res.status}`);
-	const xml = await res.text();
-	const slugs = new Set<string>();
-	for (const m of xml.matchAll(/<link>[^<]*\/blog\/([a-z0-9-]+)\/?<\/link>/g)) slugs.add(m[1]);
-	return [...slugs].map((slug) => ({
-		slug,
-		file: null,
-		url: `${blogUrl(env)}/blog/${slug}/`,
-		githubUrl: `https://github.com/${blogRepo(env)}/tree/main/src/content/blog`,
-	}));
+const POST_FILE = /\.mdx?$/;
+
+export function postsFromGithub(env: Env, entries: GitHubEntry[]): BlogPost[] {
+	return entries
+		.filter((e) => e.type === "file" && POST_FILE.test(e.name))
+		.map((e) => {
+			const slug = e.name.replace(POST_FILE, "");
+			return { slug, file: e.name, url: `${blogUrl(env)}/blog/${slug}/`, githubUrl: e.html_url };
+		});
 }
 
-async function listBlogPosts(env: Env): Promise<BlogPost[]> {
-	const repo = blogRepo(env);
-	const api = `https://api.github.com/repos/${repo}/contents/src/content/blog`;
-	const cache = (caches as unknown as { default: Cache }).default;
-	const cacheKey = new Request(api);
-	let res = await cache.match(cacheKey);
-	if (!res) {
-		const live = await fetch(api, {
-			headers: { "User-Agent": "executar-cms", Accept: "application/vnd.github+json" },
+/** Resposta de https://data.jsdelivr.com/v1/packages/gh/<repo>@main?structure=flat (público, sem credencial). */
+export function postsFromJsdelivr(env: Env, data: { files?: { name: string }[] }): BlogPost[] {
+	const prefix = `/${BLOG_POSTS_DIR}/`;
+	return (data.files ?? [])
+		.filter((f) => f.name.startsWith(prefix) && !f.name.slice(prefix.length).includes("/") && POST_FILE.test(f.name))
+		.map((f) => {
+			const file = f.name.slice(prefix.length);
+			const slug = file.replace(POST_FILE, "");
+			return {
+				slug,
+				file,
+				url: `${blogUrl(env)}/blog/${slug}/`,
+				githubUrl: `https://github.com/${blogRepo(env)}/blob/main/${BLOG_POSTS_DIR}/${file}`,
+			};
 		});
-		if (!live.ok) return listPostsFromRss(env);
+}
+
+async function cachedJson(url: string, headers: Record<string, string>): Promise<unknown | null> {
+	const cache = (caches as unknown as { default: Cache }).default;
+	const key = new Request(url);
+	let res = await cache.match(key);
+	if (!res) {
+		const live = await fetch(url, { headers: { "User-Agent": "executar-cms", ...headers } });
+		if (!live.ok) return null;
 		res = new Response(await live.text(), {
 			headers: { "Content-Type": "application/json", "Cache-Control": `max-age=${POSTS_TTL_S}` },
 		});
-		await cache.put(cacheKey, res.clone());
+		await cache.put(key, res.clone());
 	}
-	const entries = (await res.json()) as GitHubEntry[];
-	return entries
-		.filter((e) => e.type === "file" && /\.mdx?$/.test(e.name))
-		.map((e) => {
-			const slug = e.name.replace(/\.mdx?$/, "");
-			return { slug, file: e.name, url: `${blogUrl(env)}/blog/${slug}/`, githubUrl: e.html_url };
-		});
+	return res.json();
+}
+
+// 1) API do GitHub (com GITHUB_TOKEN, se existir, para fugir do limite compartilhado do IP do Worker);
+// 2) jsDelivr, que serve repositórios públicos sem credencial. O RSS do blog não serve: fica atrás do Access.
+async function listBlogPosts(env: Env): Promise<BlogPost[]> {
+	const repo = blogRepo(env);
+	const token = (env as Env & Vars).GITHUB_TOKEN;
+	const github = await cachedJson(`https://api.github.com/repos/${repo}/contents/${BLOG_POSTS_DIR}`, {
+		Accept: "application/vnd.github+json",
+		...(token ? { Authorization: `Bearer ${token}` } : {}),
+	});
+	if (Array.isArray(github)) return postsFromGithub(env, github as GitHubEntry[]);
+	const cdn = await cachedJson(`https://data.jsdelivr.com/v1/packages/gh/${repo}@main?structure=flat`, {});
+	if (cdn && typeof cdn === "object") return postsFromJsdelivr(env, cdn as { files?: { name: string }[] });
+	throw new Error("GitHub e jsDelivr indisponíveis");
 }
 
 /** Rotas /api/cms/* e /api/workflows/publish (sessão de administrador). */

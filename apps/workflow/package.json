@@ -63,7 +63,10 @@
 		"preview": "npm run build && vite preview",
 		"pdf": "node scripts/print-pdf.mjs",
 		"test": "vitest run",
-		"registry:generate": "node scripts/generate-ai-registry.mjs"
+		"registry:generate": "node scripts/generate-ai-registry.mjs",
+		"doctor": "node scripts/doctor.mjs",
+		"bootstrap": "bash scripts/bootstrap.sh",
+		"bootstrap:selftest": "bash scripts/bootstrap.selftest.sh"
 	},
 	"type": "module"
 }

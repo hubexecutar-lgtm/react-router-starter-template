@@ -1,15 +1,35 @@
 {
 	"permissions": {
 		"allow": [
-			"Bash(node .claude/skills/executar-flow/scripts/flow.mjs:*)",
-			"Bash(python3 .claude/skills/plano-operacional-rastreavel/scripts/validar_plano.py:*)",
 			"WebSearch",
 			"WebFetch",
 			"Write(.handoff/**)",
 			"Edit(.handoff/**)",
 			"Write(out/**)",
 			"Edit(out/**)",
-			"Bash(npm run agent:token)"
+			"Bash(node .claude/skills/:*)",
+			"Bash(python3 .claude/skills/:*)",
+			"Bash(node apps/workflow/scripts/:*)",
+			"Bash(npm ci)",
+			"Bash(npm run doctor:*)",
+			"Bash(npm run pdf:*)",
+			"Bash(npm run build:*)",
+			"Bash(npm run lint:*)",
+			"Bash(npm run typecheck:*)",
+			"Bash(npm test:*)",
+			"Bash(npm run test:*)",
+			"Bash(npx tsc:*)",
+			"Bash(npx vitest:*)",
+			"Bash(cd apps/blog && node scripts/build-quick-frameworks.mjs:*)",
+			"Bash(python3 apps/blog/tools/executar-block-quick-frameworks/scripts/validate_output.py:*)",
+			"Bash(npm run content:check -w apps/blog)",
+			"Bash(git status:*)",
+			"Bash(git diff:*)",
+			"Bash(git log:*)",
+			"Bash(git switch:*)",
+			"Bash(git fetch:*)",
+			"Write(apps/blog/app/data/editorial/quick-frameworks/**)",
+			"Edit(apps/blog/app/data/editorial/quick-frameworks/**)"
 		]
 	},
 	"hooks": {
@@ -20,6 +40,17 @@
 					{
 						"type": "command",
 						"command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/auto-approve-handoff.js\""
+					}
+				]
+			}
+		],
+		"SessionStart": [
+			{
+				"hooks": [
+					{
+						"type": "command",
+						"command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/session-start.sh\"",
+						"timeout": 300
 					}
 				]
 			}
