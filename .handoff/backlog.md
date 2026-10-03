@@ -41,3 +41,7 @@
 - [ ] #34 O `EXECUTAR_AGENT_TOKEN` (e `EXECUTAR_URL`) precisa ser copiado pelo usuário para as variáveis de ambiente da Routine/ambiente cloud (Edit → variáveis de ambiente); sem isso a fila não é processada. Nunca colar o token no chat.
 - [ ] #35 Publicação real de teste no blog (abre PR em `executar-23/Risco-cognitivo-blog`) não foi executada: pede confirmação do usuário; rodar "Publicar no blog" num conteúdo publicável e conferir o PR pronto (não draft).
 
+
+> Origem: /verify agent-readiness (2026-10-03)
+
+- [ ] #39 `WebFetch` e `WebSearch` estão livres na allowlist (`.claude/settings.json`), herdados do fluxo original e usados pelos agentes de pesquisa: avaliar restringir por domínio. Deploy (`npm run bootstrap`) e troca de segredo (`npm run agent:token`) já exigem aprovação.

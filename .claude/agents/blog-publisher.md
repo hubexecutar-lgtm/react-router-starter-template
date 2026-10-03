@@ -18,7 +18,7 @@ Use sempre o comando completo `node .claude/skills/executar-flow/scripts/flow.mj
 4. Leia `apps/blog/CLAUDE.md` (ADR-10 e ADR-12), o template `apps/blog/tools/executar-block-quick-frameworks/assets/quick-framework-template.md` e um registro existente como referência de estilo (`apps/blog/app/data/editorial/quick-frameworks/CNT-RC-0002.md`).
 5. Confira o território: o `territory` do prompt precisa existir no campo `Slug` (sem as barras) da taxonomia em `apps/blog/app/data/editorial/seed.json`. Se não existir, **pare** e relate o bloqueio.
 6. Escreva `apps/blog/app/data/editorial/quick-frameworks/<Content_ID>.md`:
-   - **frontmatter:** `contentId`, `slug`, `territory`, `title`, `description`, `pubDate` (hoje, `YYYY-MM-DD`); `seoTitle`, `tags` e `evidence` (IDs `EVD-RC-NNNN`) só se vierem nos dados;
+   - **frontmatter (todos obrigatórios; o gerador quebra se faltar algum):** `contentId`, `slug`, `territory`, `title`, `seoTitle` (sem dado próprio, repita o `title`), `description`, `tags` (`[]` se não houver dado), `evidence` (IDs `EVD-RC-NNNN`; `[]` se não houver) e `pubDate` (hoje, `YYYY-MM-DD`);
    - **corpo:** as 12 seções do template, com a produção de texto como base e argumentos e evidências citados com fonte;
    - dado ausente vira `TBD` e entra em GAP. Não invente números, citações nem fontes.
 7. Valide e gere:

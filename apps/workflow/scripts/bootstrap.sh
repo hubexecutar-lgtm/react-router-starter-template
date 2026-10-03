@@ -57,12 +57,12 @@ fi
 
 # ---------------------------------------------------------------- 3. KV (OAuth do MCP)
 say "Garantindo o KV OAUTH_KV"
-CURRENT_ID="$(node -e 'const s=require("fs").readFileSync("wrangler.jsonc","utf8");const m=/"binding":\s*"OAUTH_KV",\s*"id":\s*"([0-9a-f]{32})"/.exec(s);console.log(m?m[1]:"")')"
+CURRENT_ID="$(node -e 'const s=require("fs").readFileSync("wrangler.jsonc","utf8");const m=/"binding":\s*"OAUTH_KV",\s*"id":\s*"([0-9a-f]{32})"/.exec(s);console.log(m?m[1]:"")')" || die "Não consegui ler apps/workflow/wrangler.jsonc."
 [ -n "$CURRENT_ID" ] || die "Binding OAUTH_KV com id não encontrado em apps/workflow/wrangler.jsonc."
 KV_ID="$(printf '%s' "$KV_JSON" | CURRENT_ID="$CURRENT_ID" KV_TITLE="$KV_TITLE" node -e '
 const list=JSON.parse(require("fs").readFileSync(0,"utf8"));
 const byId=list.find(n=>n.id===process.env.CURRENT_ID); if(byId){console.log(byId.id);process.exit(0)}
-const byTitle=list.find(n=>n.title===process.env.KV_TITLE); console.log(byTitle?byTitle.id:"")')"
+const byTitle=list.find(n=>n.title===process.env.KV_TITLE); console.log(byTitle?byTitle.id:"")')" || die "A lista de KV da Cloudflare veio em formato inesperado (esperado JSON)."
 if [ -z "$KV_ID" ]; then
 	wr kv namespace create "$KV_TITLE" >"$LOG" 2>&1 || { cat "$LOG" >&2; die "Falha ao criar o KV $KV_TITLE."; }
 	KV_ID="$(grep -oE '[0-9a-f]{32}' "$LOG" | head -1)"
@@ -87,17 +87,30 @@ if ! $DEPLOY_CMD 2>&1 | tee "$LOG"; then
 	fi
 fi
 WORKER_URL="$(grep -oE 'https://[a-zA-Z0-9.-]+\.workers\.dev' "$LOG" | head -1 || true)"
-[ -n "$WORKER_URL" ] || say "  URL do Worker não detectada na saída; defina EXECUTAR_URL antes de rodar o doctor."
+
 
 # ---------------------------------------------------------------- 5. segredos
 say "Gravando segredos"
-HAVE="$(wr secret list 2>/dev/null | node -e 'try{console.log(JSON.parse(require("fs").readFileSync(0,"utf8")).map(s=>s.name).join(" "))}catch{console.log("")}')"
-if [ -z "${ADMIN_TOKEN:-}" ] && [[ " $HAVE " != *" ADMIN_TOKEN "* ]]; then
-	STATE="${XDG_STATE_HOME:-$HOME/.local/state}/executar"
-	mkdir -p "$STATE" && chmod 700 "$STATE"
-	ADMIN_TOKEN="$(node -e 'console.log(require("crypto").randomBytes(32).toString("base64url"))')"
-	( umask 077; printf '%s\n' "$ADMIN_TOKEN" >"$STATE/admin-token" )
-	say "  ADMIN_TOKEN gerado e guardado em $STATE/admin-token (modo 600; valor não impresso)"
+STATE="${XDG_STATE_HOME:-$HOME/.local/state}/executar"
+HAVE_KNOWN=0
+HAVE=""
+if SECRET_LIST="$(wr secret list 2>"$LOG")" && HAVE="$(printf '%s' "$SECRET_LIST" | node -e 'console.log(JSON.parse(require("fs").readFileSync(0,"utf8")).map(s=>s.name).join(" "))' 2>/dev/null)"; then
+	HAVE_KNOWN=1
+fi
+if [ -z "${ADMIN_TOKEN:-}" ]; then
+	if [ "$HAVE_KNOWN" = 0 ]; then
+		say "  não consegui listar os segredos do Worker: ADMIN_TOKEN fica como está (nada é gerado nem sobrescrito)"
+	elif [[ " $HAVE " != *" ADMIN_TOKEN "* ]]; then
+		mkdir -p "$STATE" && chmod 700 "$STATE"
+		if [ -s "$STATE/admin-token" ]; then
+			ADMIN_TOKEN="$(cat "$STATE/admin-token")"
+			say "  ADMIN_TOKEN reaproveitado de $STATE/admin-token"
+		else
+			ADMIN_TOKEN="$(node -e 'console.log(require("crypto").randomBytes(32).toString("base64url"))')"
+			( umask 077; printf '%s\n' "$ADMIN_TOKEN" >"$STATE/admin-token" )
+			say "  ADMIN_TOKEN gerado e guardado em $STATE/admin-token (modo 600; valor não impresso)"
+		fi
+	fi
 fi
 SECRETS="$(AGENT="$EXECUTAR_AGENT_TOKEN" ADMIN="${ADMIN_TOKEN:-}" node -e 'const o={AGENT_TOKEN:process.env.AGENT};if(process.env.ADMIN)o.ADMIN_TOKEN=process.env.ADMIN;console.log(JSON.stringify(o))')"
 printf '%s' "$SECRETS" | wr secret bulk >"$LOG" 2>&1 || { cat "$LOG" >&2; die "Falha ao gravar os segredos."; }
@@ -106,10 +119,16 @@ unset SECRETS
 
 # ---------------------------------------------------------------- 6. doctor
 say "Conferindo o Worker publicado"
-if [ -n "$WORKER_URL" ]; then export EXECUTAR_URL="$WORKER_URL"; fi
-node "$APP/scripts/doctor.mjs"
 if [ -n "$WORKER_URL" ]; then
+	export EXECUTAR_URL="$WORKER_URL"
+	node "$APP/scripts/doctor.mjs"
 	echo
 	say "Worker no ar: $WORKER_URL"
 	say "Exporte EXECUTAR_URL=$WORKER_URL nas variáveis do ambiente do agente, se for diferente do padrão."
+elif [ -n "${EXECUTAR_URL:-}" ]; then
+	node "$APP/scripts/doctor.mjs"
+else
+	say "  URL do Worker não detectada e EXECUTAR_URL não definido: conferência de rede pulada (o token não é enviado a nenhuma URL padrão)."
+	say "  Defina EXECUTAR_URL com a URL impressa pelo deploy e rode: npm run doctor -w apps/workflow"
+	node "$APP/scripts/doctor.mjs" --offline
 fi

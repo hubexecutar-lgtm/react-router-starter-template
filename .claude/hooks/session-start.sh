@@ -12,7 +12,10 @@ DOCTOR="apps/workflow/scripts/doctor.mjs"
 [ -f "$DOCTOR" ] || exit 0
 if [ -n "${EXECUTAR_AGENT_TOKEN:-}" ]; then ARGS=""; else ARGS="--offline"; fi
 # shellcheck disable=SC2086
-OUT="$(timeout 40 node "$DOCTOR" $ARGS 2>&1)"
+if command -v timeout >/dev/null 2>&1; then RUN="timeout 40 node"; else RUN="node"; fi
+# shellcheck disable=SC2086
+OUT="$($RUN "$DOCTOR" $ARGS 2>&1)"
+if [ -z "$OUT" ]; then echo "! Pré-voo não produziu saída: rode 'npm run doctor -w apps/workflow'."; exit 0; fi
 PROBLEMS="$(printf '%s\n' "$OUT" | grep -E -A1 '^(✗|!)' || true)"
 if [ -n "$PROBLEMS" ]; then
 	echo "Pré-voo EXECUTAR (npm run doctor) encontrou pendências:"

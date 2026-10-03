@@ -99,6 +99,10 @@ describe("publicação no blog via agente", () => {
 		expect(task?.prompt).toContain("apps/blog/app/data/editorial/quick-frameworks/CNT-RC-0002.md");
 		expect(task?.prompt).toContain("territory: fatores-de-risco-cognitivo");
 		expect(task?.prompt).toContain("node scripts/build-quick-frameworks.mjs");
+		// o gerador do blog exige seoTitle, tags e evidence
+		expect(task?.prompt).toContain("seoTitle");
+		expect(task?.prompt).toContain("tags (lista; use [] se não houver dado)");
+		expect(task?.prompt).toContain("evidence (lista de IDs EVD-RC-NNNN");
 		expect(task?.prompt).not.toContain("src/content/blog");
 		expect(task?.prompt).toContain("<criterio_de_conclusao>");
 		expect((await hub().get("content", "content-1"))?.Blog_PR).toContain("despachada");

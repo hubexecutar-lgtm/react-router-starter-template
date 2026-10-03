@@ -27,8 +27,10 @@ jobs:
         run: npm ci
       - name: Pré-voo do agente (offline)
         run: npm run doctor -w apps/workflow -- --offline
-      - name: Sintaxe do bootstrap
-        run: bash -n apps/workflow/scripts/bootstrap.sh
+      - name: Pré-voo em JSON (ok = true)
+        run: node apps/workflow/scripts/doctor.mjs --offline --json | node -e 'const r=JSON.parse(require("fs").readFileSync(0,"utf8")); if(!r.ok||!r.results.length) process.exit(1)'
+      - name: Autoteste do bootstrap (wrangler simulado)
+        run: npm run bootstrap:selftest -w apps/workflow
       - name: Generate AI registry
         run: npm run registry:generate -w apps/workflow
       - name: TypeScript

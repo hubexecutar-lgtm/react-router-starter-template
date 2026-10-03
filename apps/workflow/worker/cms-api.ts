@@ -102,7 +102,7 @@ export function buildPublishPrompt(
 		"  </entrada>",
 		"  <restricoes>",
 		"    Não invente dado, citação, número ou fonte ausente: use TBD e liste como GAP na conclusão.",
-		`    Frontmatter do registro (obrigatório): contentId: ${contentId}; slug: ${slug}; territory: ${territory}; title; description; pubDate (hoje, YYYY-MM-DD). Opcionais, só se houver dado: seoTitle, tags, evidence${evidence.length ? ` (${evidence.join(", ")})` : ""}.`,
+		`    Frontmatter do registro (todos obrigatórios; o gerador do blog quebra se faltar algum): contentId: ${contentId}; slug: ${slug}; territory: ${territory}; title; seoTitle (sem dado próprio, repita o title); description; tags (lista; use [] se não houver dado); evidence (lista de IDs EVD-RC-NNNN${evidence.length ? `, aqui: [${evidence.join(", ")}]` : "; use [] se não houver"}); pubDate (hoje, YYYY-MM-DD).`,
 		`    territory precisa existir na taxonomia do blog (${BLOG_APP_DIR}/app/data/editorial/seed.json, campo Slug sem as barras). Se ${territory} não existir, pare e relate como bloqueio.`,
 		`    Formato do registro: template ${BLOG_APP_DIR}/tools/executar-block-quick-frameworks/assets/quick-framework-template.md; valide com python3 ${BLOG_APP_DIR}/tools/executar-block-quick-frameworks/scripts/validate_output.py ${record}.`,
 		`    Não edite o .mdx gerado à mão: ele sai de node scripts/build-quick-frameworks.mjs (rode dentro de ${BLOG_APP_DIR}), que também atualiza ${BLOG_APP_DIR}/app/data/editorial/seed.json só para ${contentId}.`,
