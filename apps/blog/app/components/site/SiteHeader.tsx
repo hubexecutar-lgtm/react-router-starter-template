@@ -5,7 +5,7 @@
 // local da referência.
 import { useEffect, useRef, useState } from "react";
 
-import { Menu, Search, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useLocation } from "react-router";
 
 import { PRIMARY_NAV, isActive } from "./nav";
@@ -45,7 +45,7 @@ export function SiteHeader() {
 					<span className="rc-eyebrow hidden max-w-[11rem] text-[0.625rem] leading-snug xl:block">{SITE_TAGLINE}</span>
 				</a>
 
-				<nav aria-label="Principal" className="ml-auto max-lg:hidden">
+				<nav aria-label="Principal" className={cn("ml-auto max-lg:hidden", !PRIMARY_NAV.length && "hidden")}>
 					<ul className="flex items-center gap-1">
 						{PRIMARY_NAV.map((item) => {
 							const active = isActive(pathname, item.href);
@@ -71,18 +71,11 @@ export function SiteHeader() {
 				</nav>
 
 				<div className="ml-auto flex items-center gap-0.5 sm:gap-1.5 lg:ml-2 lg:border-l lg:border-[var(--border-default)] lg:pl-3">
-					<a
-						href="/buscar/"
-						className={cn(iconButton, isActive(pathname, "/buscar/") ? "text-primary" : "text-foreground")}
-						aria-label="Buscar no blog"
-					>
-						<Search className="size-5" aria-hidden="true" />
-					</a>
 					<ThemeToggle />
 					<button
 						ref={toggleRef}
 						type="button"
-						className={cn(iconButton, "lg:hidden")}
+						className={cn(iconButton, "lg:hidden", !PRIMARY_NAV.length && "hidden")}
 						aria-expanded={open}
 						aria-controls="site-menu"
 						data-menu-toggle
@@ -97,7 +90,7 @@ export function SiteHeader() {
 			<nav
 				id="site-menu"
 				aria-label="Principal (menu)"
-				className={cn("border-t border-[var(--border-default)] lg:hidden", !open && "hidden")}
+				className={cn("border-t border-[var(--border-default)] lg:hidden", (!open || !PRIMARY_NAV.length) && "hidden")}
 				data-menu
 			>
 				<ul className="container flex flex-col py-2">

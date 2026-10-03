@@ -314,3 +314,35 @@ to `apps/blog/`.
     `tests/surfaces.spec.ts` trava a célula (sem contorno, raio 2px) nos cards.
   - Imagem nova no site: `tem_texto: false` no manifest, webp em `public/images/`, `alt` e uso registrados.
 
+
+### ADR-13: Site do zero — rotas, artigos e páginas públicas removidos (RC-RESET-001)
+
+- **Status:** Aceita — implementada. Substitui, no que diz respeito às rotas e ao conteúdo públicos, os ADR-07
+  (rotas), ADR-08 (Loja) e ADR-10 (conteúdo editorial a partir do banco). Os ADR-02 a 05, 09, 11 e 12 seguem
+  valendo para tokens, superfícies e componentes.
+- **Contexto:** O usuário decidiu remontar o site do zero: front-end novo, com artigos e imagens novos
+  consumindo os tokens novos. O estado anterior fica recuperável no histórico do git (último commit com o site
+  completo: `24108cd`, merge do PR #18).
+- **Decisão:**
+  - Removidos: todas as rotas públicas (`/about`, `/contact`, `/faq`, `/pricing`, `/privacy`, `/login`, `/signup`,
+    `/blog`, `/temas`, `/mapas`, `/guias`, `/evidencias`, `/buscar`, `/loja`), `rss.xml` e os sitemaps; os artigos
+    (`content/blog`) e a página de privacidade; a Loja (`app/features/store`); o banco editorial
+    (`app/data/editorial`) e as libs que o liam; os componentes de conteúdo (cards de artigo, território,
+    evidência, filtros, newsletter); as ferramentas estáticas (`/hub-editorial`, `/skills`, `/catalogo-offline`);
+    os scripts do pipeline editorial; os testes de conteúdo, loja e paridade.
+  - Ficam: o Worker, o shell (`DefaultLayout`, `SiteHeader`, `SiteFooter`, tema), os componentes de UI e
+    `plain`, os tokens do `global.css`, o `/admin` (painel, design system, hub de rotas, handoff, relatório) e o
+    404. O site público tem só a home provisória (`/`).
+  - As três ilustrações de `public/images/` ficam porque o showroom `/admin/design-system` as usa como espécime.
+  - A navegação (`site/nav.ts`) começa vazia e o cabeçalho esconde o menu; cada página nova entra em `routes.ts`,
+    `data/pages.ts`, `data/routes.ts` (ADR-06) e `nav.ts`.
+  - URLs antigas não têm redirecionamento: caem no 404.
+- **Consequências:**
+  - O gate HIG cobre 7 rotas; `routes:check` e `surfaces.spec` seguem a nova lista.
+  - O agente `blog-publisher` e a ferramenta `tools/executar-block-quick-frameworks` gravam em
+    `app/data/editorial/quick-frameworks`, que não existe mais: esse fluxo fica parado até o novo modelo de
+    conteúdo (ADR seguinte).
+  - Sem página de privacidade, a pendência AUD-HIG-08 passa a bloquear a divulgação do site (ver
+    `docs/audit/HIG-WEB-AUDIT.md`).
+  - Os documentos históricos em `docs/` (ADR, handoffs, auditorias antigas) citam rotas que não existem mais e
+    ficam como registro.

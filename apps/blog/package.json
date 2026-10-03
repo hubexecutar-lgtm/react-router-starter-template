@@ -4,7 +4,7 @@
 	"private": true,
 	"type": "module",
 	"scripts": {
-		"prebuild": "node scripts/build-quick-frameworks.mjs && node scripts/sync-editorial-seed.mjs && node scripts/export-surface-tokens.mjs",
+		"prebuild": "node scripts/export-surface-tokens.mjs",
 		"build": "react-router build",
 		"cf-typegen": "wrangler types && react-router typegen",
 		"check": "tsc -b && react-router build && wrangler deploy --dry-run",
@@ -16,9 +16,7 @@
 		"format": "prettier -w .",
 		"test": "playwright test",
 		"test:visual": "playwright test tests/design-system.spec.ts tests/plain.spec.ts",
-		"routes:check": "playwright test tests/routes.spec.ts",
-		"parity": "PARITY=1 playwright test tests/parity.spec.ts",
-		"content:check": "node scripts/build-quick-frameworks.mjs --check && playwright test tests/content.spec.ts"
+		"routes:check": "playwright test tests/routes.spec.ts"
 	},
 	"dependencies": {
 		"@hookform/resolvers": "^5.2.2",

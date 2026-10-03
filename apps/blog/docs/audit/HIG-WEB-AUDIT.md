@@ -3,7 +3,7 @@
 Gerado por `scripts/hig-audit.mjs` em 2026-10-03. Regra: **UX-GOV-HIG-001** (`docs/governance/UX-GOV-HIG-001.md`,
 ADR-M03). Gate automatizado: `tests/hig.spec.ts` (axe WCAG 2.0/2.1/2.2 A+AA, títulos, landmarks, alvos ≥ 24 px,
 reflow 320 px, medida ≤ 75 caracteres, sem prosa mono, `alt`, halftone fora do texto, foco visível) em
-47 rotas, a 1440, 390 e 320 px, mais amostra no tema escuro.
+7 rotas, a 1440, 390 e 320 px, mais amostra no tema escuro.
 
 **Release: PASS** — P0/P1 abertos: 0.
 
@@ -12,8 +12,8 @@ reflow 320 px, medida ≤ 75 caracteres, sem prosa mono, `alt`, halftone fora do
 | Fase | Resultado |
 |---|---|
 | Linha de base (main @ ab685e2 (antes do RC-UX-HIG-002 PR D)) | 799 verificações · 790 PASS · 0 PARTIAL · 9 FAIL (P0 1, P1 8, P2 0, P3 0) |
-| Reteste (automatizado) | 846 verificações · 846 PASS · 0 PARTIAL · 0 FAIL (P0 0, P1 0, P2 0, P3 0) |
-| Checklist manual | 9 verificações · 5 PASS · 4 PARTIAL · 0 FAIL (P0 0, P1 0, P2 3, P3 1) |
+| Reteste (automatizado) | 126 verificações · 126 PASS · 0 PARTIAL · 0 FAIL (P0 0, P1 0, P2 0, P3 0) |
+| Checklist manual | 8 verificações · 4 PASS · 4 PARTIAL · 0 FAIL (P0 0, P1 0, P2 3, P3 1) |
 
 ## Falhas da linha de base e correção
 
@@ -34,7 +34,7 @@ reflow 320 px, medida ≤ 75 caracteres, sem prosa mono, `alt`, halftone fora do
 | Regra | Rota | Componente | Status | Sev. | Evidência | Correção |
 |---|---|---|---|---|---|---|
 | AUD-HIG-08 | `/admin/*` | rotas internas | PARTIAL | P2 | Sem guarda de autenticação no app (ADR-06, "Interno exposto"); o host de produção inteiro está atrás do Cloudflare Access | Waiver: Cloudflare Access protege o host; guarda no app quando o site for público (BLOG-001 §8) |
-| AUD-HIG-08 | `/privacy/` | política de privacidade | PARTIAL | P2 | A página descreve tema em localStorage, Hub local, Cloudflare e Google Fonts (Inter e IBM Plex Mono); controlador e canal ainda "a definir" | Definir controlador e canal de contato e atualizar /privacy/ |
+| AUD-HIG-08 | `todas` | política de privacidade | PARTIAL | P2 | A página /privacy/ foi removida (ADR-13) e o site ainda carrega Inter e IBM Plex Mono do Google Fonts; não há política nem canal de direitos publicados. | Publicar a política (controlador e canal de contato) junto com o novo front-end, antes de divulgar o site |
 | AUD-HIG-06 | `todas (tema escuro)` | tokens .dark | PARTIAL | P3 | Escuro derivado e marcado PROVISIONAL (ADR-11); contraste AA verificado por amostra no gate | Especificar o tema escuro |
 | AUD-HIG-05 | `todas` | navegadores | PARTIAL | P2 | Gate executado em Chromium (1440, 390 e 320 px; iPhone emulado por viewport); o container não tem WebKit | Rodar a checagem visual no Safari real (iOS e macOS) no host de produção |
 
@@ -42,19 +42,18 @@ reflow 320 px, medida ≤ 75 caracteres, sem prosa mono, `alt`, halftone fora do
 
 | Regra | Rota | Componente | Status | Sev. | Evidência | Correção |
 |---|---|---|---|---|---|---|
-| AUD-HIG-01 | `todas` | PageHero / Section / FeatureBlock | PASS | P1 | Heroes em PageHero (about, faq, contact, pricing, login, signup, 404, blog, temas, mapas, evidencias, guias) e home; seções via Section/FeatureRow; capturas em  | — |
-| AUD-HIG-02 | `todas` | SiteHeader (menu), FilterChips, buscar, FAQ, ThemeToggle | PASS | P1 | Menu móvel fecha com Esc e devolve o foco (content.spec); filtros voltam a "Todos" e refletem a URL; busca mantém ?q; perguntas em <details> nativo; tema revers | — |
+| AUD-HIG-01 | `todas` | PageHero / Section | PASS | P1 | Site do zero (ADR-13): 404 usa PageHero; a home provisória tem h1, lead e landmarks. As seções com "Saiba mais ›" voltam com o novo front-end e entram neste gat | — |
+| AUD-HIG-02 | `todas` | SiteHeader (menu), ThemeToggle | PASS | P1 | Menu móvel fecha com Esc e devolve o foco quando há navegação (hoje vazia); skip link e foco visível cobertos em surfaces.spec; tema reversível. | — |
 | AUD-HIG-03 | `todas` | tokens (global.css), rc-cell, Button, ChevronLink | PASS | P1 | tokens.spec e surfaces.spec travam valores, célula (sem contorno, raio 2px) e ausência de hex fora de global.css | — |
-| AUD-HIG-04 | `todas` | navegação e anatomia | PASS | P2 | Leads ≤ 60ch, parágrafos ≤ 68ch (--measure), plain text estruturado (dl/listas/tabela), FAQ e painéis recolhíveis | — |
+| AUD-HIG-04 | `todas` | navegação e anatomia | PASS | P2 | Leads ≤ 60ch, parágrafos ≤ 68ch (--measure) e plain text estruturado nas páginas existentes (home, 404, /admin/*). | — |
 | AUD-HIG-08 | `/admin/*` | rotas internas | PARTIAL | P2 | Sem guarda de autenticação no app (ADR-06, "Interno exposto"); o host de produção inteiro está atrás do Cloudflare Access | Waiver: Cloudflare Access protege o host; guarda no app quando o site for público (BLOG-001 §8) |
-| AUD-HIG-08 | `/privacy/` | política de privacidade | PARTIAL | P2 | A página descreve tema em localStorage, Hub local, Cloudflare e Google Fonts (Inter e IBM Plex Mono); controlador e canal ainda "a definir" | Definir controlador e canal de contato e atualizar /privacy/ |
-| AUD-HIG-09 | `/loja/*` | estados de carregando, vazio e erro | PASS | P1 | store.spec cobre carregando, vazio, erro com "Tentar novamente" | — |
+| AUD-HIG-08 | `todas` | política de privacidade | PARTIAL | P2 | A página /privacy/ foi removida (ADR-13) e o site ainda carrega Inter e IBM Plex Mono do Google Fonts; não há política nem canal de direitos publicados. | Publicar a política (controlador e canal de contato) junto com o novo front-end, antes de divulgar o site |
 | AUD-HIG-06 | `todas (tema escuro)` | tokens .dark | PARTIAL | P3 | Escuro derivado e marcado PROVISIONAL (ADR-11); contraste AA verificado por amostra no gate | Especificar o tema escuro |
 | AUD-HIG-05 | `todas` | navegadores | PARTIAL | P2 | Gate executado em Chromium (1440, 390 e 320 px; iPhone emulado por viewport); o container não tem WebKit | Rodar a checagem visual no Safari real (iOS e macOS) no host de produção |
 
 ## Rotas cobertas
 
-`/` · `/about/` · `/admin/` · `/admin/design-system/` · `/admin/handoff/` · `/admin/relatorio-exemplo/` · `/admin/rotas/` · `/blog/` · `/blog/controles-cognitivos/` · `/blog/do-risco-cognitivo-a-execucao-assistida/` · `/blog/eventos-de-risco-cognitivo/` · `/blog/exposicao-cognitiva/` · `/blog/fatores-de-risco-cognitivo/` · `/blog/framework-de-risco-cognitivo/` · `/blog/gestao-do-risco-cognitivo/` · `/blog/indicadores-de-risco-cognitivo/` · `/blog/o-que-e-risco-cognitivo/` · `/buscar/` · `/contact/` · `/evidencias/` · `/faq/` · `/guias/` · `/login/` · `/loja/` · `/loja/agentes/` · `/loja/assets/` · `/loja/ebooks/` · `/loja/html/` · `/loja/pdfs/` · `/loja/prompts/` · `/loja/skills/` · `/loja/skills/skill-001/` · `/loja/workbooks/` · `/mapas/` · `/pricing/` · `/privacy/` · `/rota-inexistente-hig/` · `/signup/` · `/temas/` · `/temas/controles-cognitivos/` · `/temas/eventos-de-risco-cognitivo/` · `/temas/exposicao-cognitiva/` · `/temas/fatores-de-risco-cognitivo/` · `/temas/framework-de-risco-cognitivo/` · `/temas/gestao-do-risco-cognitivo/` · `/temas/indicadores-de-risco-cognitivo/` · `/temas/risco-cognitivo/`
+`/` · `/admin/` · `/admin/design-system/` · `/admin/handoff/` · `/admin/relatorio-exemplo/` · `/admin/rotas/` · `/rota-inexistente-hig/`
 
-O detalhe completo (todas as 846 verificações automatizadas, inclusive PASS) está em
+O detalhe completo (todas as 126 verificações automatizadas, inclusive PASS) está em
 `HIG-WEB-AUDIT.json`. Para atualizar: `HIG_AUDIT=1 npx playwright test tests/hig.spec.ts && node scripts/hig-audit.mjs`.

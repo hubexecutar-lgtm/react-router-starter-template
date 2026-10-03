@@ -1,20 +1,12 @@
 import type { Config } from "@react-router/dev/config";
-import { readdirSync } from "node:fs";
 
-import { ENDPOINTS, PAGES, TERRITORY_PATHS } from "./app/data/pages";
-import { STORE_PATHS } from "./app/features/store/data/paths";
+import { PAGES } from "./app/data/pages";
 
-// Every page of the blog is static: prerender them all at build time (the Worker still
-// serves SSR for anything else, including the 404 page).
-function blogPaths(): string[] {
-	return readdirSync(new URL("./content/blog", import.meta.url))
-		.filter((f) => /\.(md|mdx)$/.test(f))
-		.map((f) => `/blog/${f.replace(/\.(md|mdx)$/, "")}/`);
-}
-
+// Todas as páginas são estáticas: prerender em build (o Worker segue servindo SSR para o resto,
+// inclusive o 404).
 export default {
 	ssr: true,
-	prerender: () => [...PAGES, ...ENDPOINTS, ...TERRITORY_PATHS, ...blogPaths(), ...STORE_PATHS],
+	prerender: () => [...PAGES],
 	future: {
 		unstable_viteEnvironmentApi: true,
 	},

@@ -20,10 +20,6 @@ export function SiteFooter() {
 							{SITE_NAME}
 						</a>
 						<p className="rc-lead mt-3">{SITE_TAGLINE}</p>
-						<p className="text-muted-foreground mt-4 text-sm leading-relaxed">
-							Fatores, exposição, eventos, controles e indicadores do trabalho cognitivo — com fontes à vista e
-							distinção clara entre evidência e framework próprio.
-						</p>
 					</div>
 					{FOOTER_NAV.map((group) => (
 						<nav key={group.title} aria-label={group.title}>
@@ -42,7 +38,7 @@ export function SiteFooter() {
 				</div>
 				<div className="border-t border-[var(--border-strong)]">
 					<div className="container flex flex-col gap-2 py-6 sm:flex-row sm:items-center sm:justify-between">
-						<p className="rc-meta">{SITE_NAME} / Pensamento melhor, decisões mais claras.</p>
+						<p className="rc-meta">{SITE_NAME}</p>
 						<p className="rc-meta">
 							<a href="/admin/" className="hover:text-foreground transition-colors">
 								Painel interno

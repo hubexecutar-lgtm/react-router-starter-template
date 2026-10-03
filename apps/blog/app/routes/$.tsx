@@ -28,17 +28,11 @@ export default function NotFound() {
 			<PageHero
 				eyebrow="Erro 404"
 				title="Página não encontrada"
-				lead="O endereço não existe ou mudou de lugar. Os artigos de demonstração antigos foram substituídos pelos territórios do framework."
+				lead="O endereço não existe ou mudou de lugar."
 			>
-				<div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
-					<a href="/blog/" className={cn(buttonVariants({ size: "lg" }), "gap-2")}>
-						Ver os artigos <ArrowRight className="size-4" aria-hidden="true" />
-					</a>
-					<a href="/temas/" className="rc-link">
-						Mapa de temas
-					</a>
-					<a href="/buscar/" className="rc-link">
-						Buscar
+				<div className="mt-8">
+					<a href="/" className={cn(buttonVariants({ size: "lg" }), "gap-2")}>
+						Ir para a página inicial <ArrowRight className="size-4" aria-hidden="true" />
 					</a>
 				</div>
 			</PageHero>

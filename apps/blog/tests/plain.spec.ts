@@ -6,7 +6,6 @@ import { isValidPlainText, normalizeText } from "../app/lib/plain/normalizeText"
 import { parseFence } from "../app/lib/plain/remarkPlain";
 import { renderTree } from "../app/lib/plain/renderTree";
 import { structurePlain } from "../app/lib/plain/structure";
-import { scanBlogSlugs } from "../app/lib/routes/scan";
 
 const SHOWROOM = "/admin/design-system/";
 const REPORT = "/admin/relatorio-exemplo/";
@@ -279,7 +278,6 @@ test("tables follow the STORE-WIREFRAMES style everywhere", async ({ page }) => 
   for (const [url, sel] of [
     [SHOWROOM, "[data-testid=table-reference] table"],
     [SHOWROOM, "[data-testid=data-table] table"],
-    ["/blog/do-risco-cognitivo-a-execucao-assistida/", ".prose table"],
   ] as const) {
     await page.goto(url);
     const t = page.locator(sel).first();
@@ -295,10 +293,10 @@ test("tables follow the STORE-WIREFRAMES style everywhere", async ({ page }) => 
   }
 });
 
-test("every plain panel in the articles reads as structure, never as monospaced prose (ADR-12)", async ({ page }) => {
+test("every plain panel in the report keeps its source and never reads as monospaced prose (ADR-12)", async ({ page }) => {
   let panels = 0;
-  for (const slug of scanBlogSlugs(process.cwd())) {
-    await page.goto(`/blog/${slug}/`);
+  for (const url of [REPORT]) {
+    await page.goto(url);
     const found = await page.locator('[data-plain="panel"]').evaluateAll((els) =>
       els.map((el) => {
         const content = el.querySelector("[data-plain-content]")!;
@@ -312,7 +310,7 @@ test("every plain panel in the articles reads as structure, never as monospaced 
     );
     for (const p of found) {
       expect(p.font, p.id).not.toMatch(/monospace/);
-      expect(p.structured, `${p.id} has no structure`).toBeGreaterThan(0);
+      // Estrutura (dl/listas/tabela) é exigida dos painéis dos artigos (tests/stories.spec.ts); o relatório pode ter parágrafos.
       expect(p.source.length, `${p.id} keeps its plain-text source`).toBeGreaterThan(0);
     }
     panels += found.length;

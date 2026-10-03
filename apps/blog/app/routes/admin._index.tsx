@@ -24,32 +24,12 @@ const links = [
 		label: "Handoff — Knowledge Work Skills",
 		description: "Estado da adaptação de HANDOFF-KNOWLEDGE-WORK-SKILLS-001 e da campanha de copy.",
 	},
-	{
-		href: "/blog",
-		label: "Blog",
-		description: "Artigos publicados no site — conteúdo editorial do Risco Cognitivo.",
-	},
-	{
-		href: "/hub-editorial/",
-		label: "Hub Editorial",
-		description: "Painel de gestão do pipeline editorial (Risco Cognitivo).",
-	},
-	{
-		href: "/skills/",
-		label: "Catálogo de Skills EXECUTAR",
-		description: "Catálogo navegável de skills do ecossistema EXECUTAR, com busca e filtros.",
-	},
-	{
-		href: "/catalogo-offline/",
-		label: "Catálogo EXECUTAR (offline)",
-		description: "Versão offline do catálogo de skills, com detalhamento 3P por item.",
-	},
 ];
 
 export const meta: Route.MetaFunction = ({ location }) =>
 	seo({
 		title: "Painel",
-		description: "Painel de acesso ao blog e às ferramentas do ecossistema EXECUTAR.",
+		description: "Painel interno do site.",
 		pathname: location.pathname,
 	});
 

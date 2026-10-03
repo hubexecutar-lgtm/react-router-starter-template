@@ -3,7 +3,7 @@ import jsQR from "jsqr";
 import { PNG } from "pngjs";
 
 import { DEFAULT_BASE_URL, ROUTES, ROUTE_GROUPS, absoluteUrl } from "../app/data/routes";
-import { GENERATED_ROUTES, scanBlogSlugs, scanPages, scanPublicTools } from "../app/lib/routes/scan";
+import { GENERATED_ROUTES, scanPages, scanPublicTools } from "../app/lib/routes/scan";
 
 // Workflow "toda nova rota ou link gerado entra no hub" (ADR-06).
 // `npm run routes:check` roda este arquivo.
@@ -11,7 +11,7 @@ const ROOT = process.cwd();
 const registered = new Set(ROUTES.filter((r) => r.kind === "route").map((r) => r.path));
 
 test.describe("registry ↔ repository", () => {
-  test("every page, static tool and blog post is registered (or listed automatically)", () => {
+  test("every page and static tool is registered", () => {
     const real = new Set<string>([...scanPages(ROOT), ...scanPublicTools(ROOT), ...GENERATED_ROUTES]);
     const missing = [...real].filter((p) => !registered.has(p)).sort();
     expect(
@@ -27,13 +27,6 @@ test.describe("registry ↔ repository", () => {
       orphans,
       `Entradas registradas que não existem no código:\n  ${orphans.join("\n  ")}\nRemova a entrada ou crie a rota.`,
     ).toEqual([]);
-  });
-
-  test("blog posts are picked up from the collection", () => {
-    expect(scanBlogSlugs(ROOT).length).toBeGreaterThan(0);
-    for (const slug of scanBlogSlugs(ROOT)) {
-      expect(registered.has(`/blog/${slug}/`), `${slug} é listado automaticamente; não registre à mão`).toBe(false);
-    }
   });
 
   test("entries are well-formed and unique", () => {
@@ -68,7 +61,7 @@ test.describe("/admin/rotas/", () => {
     await page.goto("/admin/rotas/");
     const cards = page.locator(".route-card");
     const total = await cards.count();
-    expect(total).toBeGreaterThanOrEqual(ROUTES.length + scanBlogSlugs(ROOT).length);
+    expect(total).toBeGreaterThanOrEqual(ROUTES.length);
     await expect(page.getByTestId("hub-summary").locator("[data-count=total]")).toHaveText(String(total));
     await expect(page.getByTestId("hub-base")).toContainText(DEFAULT_BASE_URL);
 
@@ -99,7 +92,7 @@ test.describe("/admin/rotas/", () => {
     expect(await visible()).toBe(1);
     await page.getByLabel("Filtrar por nome, rota ou URL").fill("");
 
-    await page.getByLabel("Grupo", { exact: true }).selectOption("Blog");
+    await page.getByLabel("Grupo", { exact: true }).selectOption("Interno (admin)");
     const blog = await visible();
     expect(blog).toBeGreaterThan(1);
     expect(blog).toBeLessThan(all);
@@ -115,10 +108,10 @@ test.describe("/admin/rotas/", () => {
     await expect(page.locator("[data-hub-empty]")).toBeVisible();
     await page.getByLabel("Filtrar por nome, rota ou URL").fill("");
 
-    const card = page.locator('.route-card[data-id="faq"]');
+    const card = page.locator('.route-card[data-id="home"]');
     await card.getByRole("button", { name: "Copiar URL" }).click();
     await expect(card.getByRole("button")).toContainText("Copiado");
-    expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(`${DEFAULT_BASE_URL}/faq/`);
+    expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(`${DEFAULT_BASE_URL}/`);
   });
 
   test("is listed in the admin panel, and has no horizontal overflow", async ({ page }) => {

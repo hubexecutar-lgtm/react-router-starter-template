@@ -33,12 +33,12 @@ test("palette tokens carry the mockup values", async ({ page }) => {
 });
 
 test("typography: Inter 700 for display, IBM Plex Mono for technical text", async ({ page }) => {
-  await page.goto("/blog/o-que-e-risco-cognitivo/");
+  await page.goto("/admin/rotas/");
   await page.evaluate(() => document.fonts.ready);
   const h1 = await page.locator("h1").evaluate((e) => ({ family: getComputedStyle(e).fontFamily, weight: getComputedStyle(e).fontWeight }));
   expect(h1.family.split(",")[0].replace(/"/g, "").trim()).toBe("Inter");
   expect(h1.weight).toBe("700");
-  const mono = await page.locator(".rc-eyebrow").first().evaluate((e) => getComputedStyle(e).fontFamily);
+  const mono = await page.locator(".rc-eyebrow, .rc-meta").first().evaluate((e) => getComputedStyle(e).fontFamily);
   expect(mono.split(",")[0].replace(/"/g, "").trim()).toBe("IBM Plex Mono");
   const body = await page.evaluate(() => getComputedStyle(document.body).fontFamily);
   expect(body.split(",")[0].replace(/"/g, "").trim()).toBe("Inter");
@@ -49,9 +49,10 @@ test("secondary text switches to the AA gray inside gray surfaces", async ({ pag
   const onCanvas = await page.locator("main .rc-lead").first().evaluate((e) => getComputedStyle(e).color);
   expect(onCanvas).toBe("rgb(107, 114, 128)");
   // editorial surface (SURFACE) and shadcn card
-  const inSurface = await page.locator("main .rc-surface .rc-eyebrow").first().evaluate((e) => getComputedStyle(e).color);
+  await page.goto("/admin/rotas/");
+  const inSurface = await page.locator("main .rc-surface .rc-eyebrow, main .rc-cell .text-muted-foreground").first().evaluate((e) => getComputedStyle(e).color);
   expect(inSurface).toBe("rgb(95, 102, 112)");
-  for (const route of ["/loja/", "/temas/", "/evidencias/"]) {
+  for (const route of ["/admin/", SHOWROOM]) {
     await page.goto(route);
     const pairs = await page
       .locator("main :is(.rc-surface, [data-slot=card]) :is(.text-muted-foreground, .rc-eyebrow, .rc-meta)")
