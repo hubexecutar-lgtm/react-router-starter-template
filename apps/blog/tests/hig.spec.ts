@@ -4,6 +4,7 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
 import { useTheme } from "./theme";
+import { readyArticleSlugs } from "../app/lib/articles-fs";
 import { scanPages } from "../app/lib/routes/scan";
 
 // Gate UX-GOV-HIG-001 (ADR-M03 do monorepo, ADR-12 do blog): Apple HIG + WCAG 2.2 AA + HTML
@@ -25,7 +26,7 @@ type Finding = {
 };
 
 const PAGES = scanPages().filter((p) => p.endsWith("/"));
-export const HIG_ROUTES = [...new Set([...PAGES, "/rota-inexistente-hig/"])];
+export const HIG_ROUTES = [...new Set([...PAGES, ...readyArticleSlugs().map((s) => `/artigos/${s}/`), "/rota-inexistente-hig/"])];
 
 const RULES = {
   axe: ["AUD-HIG-07", "Sem violação séria ou crítica do axe (WCAG 2.0/2.1/2.2 A e AA)", "WCAG 2.2 AA"],
@@ -285,7 +286,7 @@ test.describe("gate UX-GOV-HIG-001", () => {
 
   test("AUD-HIG-06 tema escuro mantém contraste (amostra)", async ({ page }) => {
     await useTheme(page, "dark");
-    for (const route of ["/", "/admin/", "/admin/rotas/"]) {
+    for (const route of ["/", "/artigos/risco-cognitivo/", "/admin/"]) {
       await page.goto(route, { waitUntil: "networkidle" });
       const axe = await new AxeBuilder({ page }).withRules(["color-contrast"]).analyze();
       expect(axe.violations.map((v) => `${route} ${v.id}×${v.nodes.length}`)).toEqual([]);

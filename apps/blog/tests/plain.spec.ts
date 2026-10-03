@@ -51,6 +51,20 @@ test.describe("plain lib", () => {
     const keyed = structurePlain("VALIDAR      validate_output.py: seções\nA0  ORIENTAR\n    nenhuma ação externa");
     expect(keyed[0]).toMatchObject({ type: "pairs", items: [{ term: "VALIDAR" }, { term: "A0", lead: "ORIENTAR", details: ["nenhuma ação externa"] }] });
     // intro + numbered list; "01  passo" is a list, not definitions
+    // "TÍTULO EM CAIXA ALTA" + texto: definição (palavras, sem mono); blocos seguidos viram uma só lista
+    const titled = structurePlain("DEFINIÇÃO DE TRABALHO\nRisco é a possibilidade.\n\nTESE\nA cognição pode ser fonte.\nOutra linha.");
+    expect(titled).toEqual([
+      {
+        type: "pairs",
+        items: [
+          { term: "DEFINIÇÃO DE TRABALHO", details: ["Risco é a possibilidade."], code: false },
+          { term: "TESE", details: ["A cognição pode ser fonte.", "Outra linha."], code: false },
+        ],
+      },
+    ]);
+    // lista logo depois do título fica como estava; tabela e "KEY␣␣valor" não são sequestrados
+    expect(structurePlain("REGRAS\n- um\n- dois")[0]).toMatchObject({ type: "paragraph" });
+    expect(structurePlain("ID   STAGE   STATUS\nA-1  Boot    OK\nA-2  Map     OK")[0]).toMatchObject({ type: "table" });
     expect(structurePlain("Sequência:\n1. a;\n2. b.")).toEqual([{ type: "list", ordered: true, intro: "Sequência:", items: ["a;", "b."] }]);
     expect(structurePlain("01  abrir\n02  listar")).toEqual([{ type: "list", ordered: true, intro: undefined, items: ["abrir", "listar"] }]);
     // column-aligned rows with a caps header → table

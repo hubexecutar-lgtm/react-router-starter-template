@@ -4,7 +4,7 @@ import { DEFAULT_BASE_URL } from "@/data/routes";
 export const SITE_NAME = "Risco Cognitivo";
 export const SITE_TAGLINE = "Conhecimento que vira estrutura.";
 export const SITE_TITLE = "Risco Cognitivo";
-export const SITE_DESCRIPTION = "Risco Cognitivo: site em construção.";
+export const SITE_DESCRIPTION = "Artigos do projeto Risco Cognitivo.";
 export const SITE_URL = DEFAULT_BASE_URL;
 
 export const SITE_METADATA = {

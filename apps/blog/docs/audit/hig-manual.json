@@ -2,12 +2,12 @@
   {
     "RULE_ID": "AUD-HIG-01",
     "ROUTE": "todas",
-    "COMPONENT": "PageHero / Section",
+    "COMPONENT": "StoriesHome / ArticleHero / PageHero",
     "REQUIREMENT": "Cada página declara propósito (eyebrow + h1 + lead curto) e um caminho primário; cada seção tem título e link \"Saiba mais ›\"",
     "SOURCE": "HIG Design Principles: Purpose; developer.apple.com/programs (anatomia)",
     "STATUS": "PASS",
     "SEVERITY": "P1",
-    "EVIDENCE": "Site do zero (ADR-13): 404 usa PageHero; a home provisória tem h1, lead e landmarks. As seções com \"Saiba mais ›\" voltam com o novo front-end e entram neste gate.",
+    "EVIDENCE": "Home (título, categorias, destaque, grade), artigo (hero, coluna de leitura) e 404 declaram propósito com h1 e lead; os tokens vêm do handoff (ADR-14). Seções com \"Saiba mais ›\" voltam com as próximas páginas.",
     "REMEDIATION": "—",
     "OWNER": "A DEFINIR",
     "VERIFICATION": "Revisão manual 1440/390 + tests/hig.spec.ts (um h1, níveis sem salto)"
@@ -46,7 +46,7 @@
     "SOURCE": "HIG Design Principles: Simplicity; HIG Layout",
     "STATUS": "PASS",
     "SEVERITY": "P2",
-    "EVIDENCE": "Leads ≤ 60ch, parágrafos ≤ 68ch (--measure) e plain text estruturado nas páginas existentes (home, 404, /admin/*).",
+    "EVIDENCE": "Coluna de leitura de 637,5 px, parágrafos ≤ 75 caracteres por linha, plain text estruturado nos painéis do artigo (tests/stories.spec.ts) e 404 com ação única.",
     "REMEDIATION": "—",
     "OWNER": "A DEFINIR",
     "VERIFICATION": "tests/hig.spec.ts (medida, sem prosa mono) + plain.spec"

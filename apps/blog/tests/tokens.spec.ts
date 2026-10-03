@@ -46,7 +46,7 @@ test("typography: Inter 700 for display, IBM Plex Mono for technical text", asyn
 
 test("secondary text switches to the AA gray inside gray surfaces", async ({ page }) => {
   await page.goto("/");
-  const onCanvas = await page.locator("main .rc-lead").first().evaluate((e) => getComputedStyle(e).color);
+  const onCanvas = await page.locator("main .stories-meta").first().evaluate((e) => getComputedStyle(e).color);
   expect(onCanvas).toBe("rgb(107, 114, 128)");
   // editorial surface (SURFACE) and shadcn card
   await page.goto("/admin/rotas/");

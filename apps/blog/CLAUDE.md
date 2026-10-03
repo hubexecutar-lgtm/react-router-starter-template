@@ -346,3 +346,36 @@ to `apps/blog/`.
     `docs/audit/HIG-WEB-AUDIT.md`).
   - Os documentos históricos em `docs/` (ADR, handoffs, auditorias antigas) citam rotas que não existem mais e
     ficam como registro.
+
+### ADR-14: Front-end novo sobre os tokens do handoff OPENAI-STORIES-DESIGN-001 (RC-FRONT-001)
+
+- **Status:** Aceita — implementada (só front-end). Sucede o ADR-13 no que toca à Home: deixa de ser provisória.
+- **Contexto:** Depois do reset (ADR-13), o usuário enviou um artigo (`risco-cognitivo.mdx`), duas ilustrações e o
+  handoff `OPENAI_STORIES_CAPTURE_HANDOFF_v1.0.0` (capturas e medidas da home "Stories" e de um artigo da OpenAI),
+  pedindo que artigos e imagens consumam **os novos tokens** e que os valores do handoff sejam usados **literais**.
+- **Decisão:**
+  - **Tokens:** bloco `OPENAI-STORIES-DESIGN-001` no `global.css`, com os nomes do handoff (`--ref-gutter`,
+    `--ref-h1-*`, `--ref-h2-*`, `--ref-body-*`, `--ref-quote-*`, `--ref-caption-*`, `--ref-reading-width`,
+    `--ref-wide-width`) mais as medidas do handoff que não vinham como token (cabeçalho 64, card 306,75, destaque
+    968,25 × 544,64, hero 694, espaços de 24, 64 e 120 px). Utilitários `stories-container/h1/h2/body/quote/caption/meta`.
+    Os tokens do PR #18 (`--content-max`, `--gutter`, `--section-pad-y`…) seguem valendo só para o `/admin`.
+  - **Divergências assumidas:** Inter no lugar de "OpenAI Sans" (a fonte não veio no handoff); hero **claro**, porque
+    a arte é ilustração sobre branco e não foto escurecida; abaixo de 1024 px a escala é **proposta nossa**, já que a
+    referência responde 403 ao container e não tem medida mobile.
+  - **Conteúdo:** artigos em `content/artigos/*.mdx`, validados por `app/lib/articles.ts` (zod; só
+    `status: "ready"` é publicado) e prerenderizados em `/artigos/:slug/` (`react-router.config.ts` lê os slugs por
+    `app/lib/articles-fs.ts`). Os MDX ficam como o autor enviou; a ilustração de cada artigo é registrada por slug em
+    `app/data/article-media.ts`, e o `# título` do MDX é suprimido porque o h1 está no hero. Imagem nova: webp em duas
+    larguras (836 e 1672) em `public/images/`, com `alt`, `width` e `height`.
+  - **Home:** `StoriesHome` (título, categorias, ordenação, destaque + pilha, grade de 4 colunas, "Carregar mais"),
+    com estado na URL (`?categoria=`, `?ordem=`). Componentes em `app/components/stories/`.
+  - **Fixtures:** `/admin/stories-fixtures/` (noindex, dados sintéticos) valida o que o conteúdo real ainda não usa
+    (grade cheia, paginação, citação, carrossel, par assimétrico, figura, CTA).
+  - **Parser plain text:** blocos "TÍTULO EM CAIXA ALTA + texto" viram lista de definições (palavras, sem mono),
+    para que os painéis do artigo novo cumpram a regra de estrutura do ADR-12.
+- **Consequências:**
+  - `tests/stories.spec.ts` trava os tokens literais nos elementos reais e roda no `npm test`.
+  - Medidas do handoff (só números, sem captura nem texto da referência): `docs/design-system/OPENAI-STORIES-MEASURES.md`.
+    Auditoria: `docs/audit/aud-web-002/`.
+  - Fora desta etapa: CMS, API, banco, preview, busca, filtro por tópicos, alternância grade/lista, vídeo e exemplos
+    de conversa, rodapé de cinco colunas e a política de privacidade (AUD-HIG-08).

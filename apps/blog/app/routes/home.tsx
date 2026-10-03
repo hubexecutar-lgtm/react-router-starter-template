@@ -1,25 +1,25 @@
-// Home provisória do site novo (ADR-13): só o shell e a abertura, sobre os tokens de anatomia
-// (--content-max, --gutter, --section-pad-y, --text-hero). As seções entram uma a uma.
+// Home do site novo (RC-FRONT-001): composição "Stories" do handoff OPENAI-STORIES-DESIGN-001, sobre os
+// tokens --ref-* do global.css e os artigos de content/artigos.
 import type { Route } from "./+types/home";
 
-import { SITE_DESCRIPTION, SITE_NAME, SITE_TAGLINE } from "@/consts";
+import { StoriesHome } from "@/components/stories/StoriesHome";
+import { SITE_DESCRIPTION } from "@/consts";
+import { SHARE_IMAGE } from "@/data/article-media";
 import DefaultLayout from "@/layouts/DefaultLayout";
+import { getStories } from "@/lib/articles";
 import { seo } from "@/lib/seo";
 
-export const meta: Route.MetaFunction = ({ location }) => seo({ description: SITE_DESCRIPTION, pathname: location.pathname });
+export function loader() {
+	return { stories: getStories() };
+}
 
-export default function Page() {
+export const meta: Route.MetaFunction = ({ location }) =>
+	seo({ title: undefined, description: SITE_DESCRIPTION, image: SHARE_IMAGE.src, pathname: location.pathname });
+
+export default function Page({ loaderData }: Route.ComponentProps) {
 	return (
 		<DefaultLayout>
-			<section className="container py-[var(--section-pad-y)]" aria-labelledby="hero-title">
-				<div className="flex flex-col items-center gap-6 text-center">
-					<h1 id="hero-title" className="rc-display text-[length:var(--text-hero)] leading-[0.92] uppercase">
-						{SITE_NAME}
-					</h1>
-					<p className="rc-title text-[length:var(--text-hero-lead)] leading-snug font-medium">{SITE_TAGLINE}</p>
-					<p className="rc-lead mx-auto text-lg">Site em construção.</p>
-				</div>
-			</section>
+			<StoriesHome stories={loaderData.stories} title="Artigos" />
 		</DefaultLayout>
 	);
 }

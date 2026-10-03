@@ -32,6 +32,10 @@ const isLabel = (line: string) => {
   if (term.split(/\s+/).length > 4 || /^(https?|mailto)$/i.test(term) || /^\d+$/.test(term)) return null;
   return { term, value: (m[2] ?? "").trim() };
 };
+// "DEFINIÇÃO DE TRABALHO" alone on a line, followed by text: a titled block (RC-FRONT-001). A line that is only
+// capitals and single spaces, with at least 3 letters, no colon and no column gap.
+const CAPS_TITLE = /^(?!.*\s{2})(?=.*\p{L}.*\p{L}.*\p{L})[\p{Lu}\d][\p{Lu}\d ·&/'-]*$/u;
+const isListLine = (line: string) => BULLET.test(line) || NUMBERED.test(line) || STEP.test(line.trim());
 // "KEY   value" — the first column ends at 2+ spaces.
 const KEYED = /^(\S(?:\S| (?! ))*)\s{2,}(.+)$/;
 
@@ -132,7 +136,18 @@ function blocksFrom(lines: string[]): PlainBlock[] {
 /** Splits normalized plain text into reading blocks (paragraph per blank-line chunk). */
 export function structurePlain(text: string): PlainBlock[] {
   const out: PlainBlock[] = [];
+  // consecutive "TITLE + text" chunks read as one definition list (words, never mono)
+  let titled: PlainPair[] = [];
+  const flushTitled = () => {
+    if (titled.length) out.push({ type: "pairs", items: titled });
+    titled = [];
+  };
   for (const chunk of chunks(text)) {
+    if (chunk.length >= 2 && CAPS_TITLE.test(chunk[0].trim()) && !chunk.slice(1).some(isListLine) && !tableFrom(chunk)) {
+      titled.push({ term: chunk[0].trim(), details: chunk.slice(1).map((l) => l.trim()), code: false });
+      continue;
+    }
+    flushTitled();
     const head = HEADING.exec(chunk[0].trim());
     const body = head ? chunk.slice(1) : chunk;
     if (head) out.push({ type: "heading", text: head[1] });
@@ -150,5 +165,6 @@ export function structurePlain(text: string): PlainBlock[] {
     }
     out.push(...blocksFrom(body));
   }
+  flushTitled();
   return out;
 }

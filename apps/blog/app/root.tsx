@@ -24,7 +24,6 @@ export const links: Route.LinksFunction = () => [
 	...SITE_METADATA.icons.icon.map((icon) => ({ rel: "icon", type: icon.type, sizes: icon.sizes, href: icon.url })),
 	...SITE_METADATA.icons.apple.map((icon) => ({ rel: "apple-touch-icon", sizes: icon.sizes, href: icon.url })),
 	...SITE_METADATA.icons.shortcut.map((icon) => ({ rel: "shortcut icon", href: icon.url })),
-	{ rel: "sitemap", href: "/sitemap-index.xml" },
 ];
 
 // Applied before paint to prevent the theme from flashing (localStorage or system preference).

@@ -3,6 +3,7 @@ import jsQR from "jsqr";
 import { PNG } from "pngjs";
 
 import { DEFAULT_BASE_URL, ROUTES, ROUTE_GROUPS, absoluteUrl } from "../app/data/routes";
+import { readyArticleSlugs } from "../app/lib/articles-fs";
 import { GENERATED_ROUTES, scanPages, scanPublicTools } from "../app/lib/routes/scan";
 
 // Workflow "toda nova rota ou link gerado entra no hub" (ADR-06).
@@ -27,6 +28,14 @@ test.describe("registry ↔ repository", () => {
       orphans,
       `Entradas registradas que não existem no código:\n  ${orphans.join("\n  ")}\nRemova a entrada ou crie a rota.`,
     ).toEqual([]);
+  });
+
+  test("published articles are listed automatically, never registered by hand", () => {
+    const slugs = readyArticleSlugs(ROOT);
+    expect(slugs.length).toBeGreaterThan(0);
+    for (const slug of slugs) {
+      expect(registered.has(`/artigos/${slug}/`), `${slug} é listado automaticamente; não registre à mão`).toBe(false);
+    }
   });
 
   test("entries are well-formed and unique", () => {
@@ -61,7 +70,7 @@ test.describe("/admin/rotas/", () => {
     await page.goto("/admin/rotas/");
     const cards = page.locator(".route-card");
     const total = await cards.count();
-    expect(total).toBeGreaterThanOrEqual(ROUTES.length);
+    expect(total).toBeGreaterThanOrEqual(ROUTES.length + readyArticleSlugs(ROOT).length);
     await expect(page.getByTestId("hub-summary").locator("[data-count=total]")).toHaveText(String(total));
     await expect(page.getByTestId("hub-base")).toContainText(DEFAULT_BASE_URL);
 

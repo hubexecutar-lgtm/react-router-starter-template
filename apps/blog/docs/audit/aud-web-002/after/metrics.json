@@ -1,0 +1,708 @@
+{
+  "capturedAt": "2026-10-03T16:23:53.915Z",
+  "base": "http://localhost:4331",
+  "routes": {
+    "home": {
+      "390": {
+        "pageHeight": 981,
+        "overflowX": 0,
+        "header": {
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "letterSpacing": "normal",
+          "fontWeight": "400",
+          "x": 0,
+          "y": 0,
+          "w": 390,
+          "h": 64
+        },
+        "h1": {
+          "fontSize": "28.48px",
+          "lineHeight": "33.0083px",
+          "letterSpacing": "-0.84016px",
+          "fontWeight": "500",
+          "x": 32,
+          "y": 112,
+          "w": 326,
+          "h": 33
+        },
+        "h2": {
+          "fontSize": "28.48px",
+          "lineHeight": "33.0083px",
+          "letterSpacing": "-0.84016px",
+          "fontWeight": "500",
+          "x": 32,
+          "y": 472.38,
+          "w": 326,
+          "h": 99
+        },
+        "p": {
+          "fontSize": "14px",
+          "lineHeight": "19.6px",
+          "letterSpacing": "normal",
+          "fontWeight": "500",
+          "x": 32,
+          "y": 595.38,
+          "w": 326,
+          "h": 19.59
+        },
+        "toolbar": {
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "letterSpacing": "normal",
+          "fontWeight": "400",
+          "x": 32,
+          "y": 161,
+          "w": 326,
+          "h": 40
+        },
+        "featuredImage": {
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "letterSpacing": "normal",
+          "fontWeight": "400",
+          "x": 32,
+          "y": 265,
+          "w": 326,
+          "h": 183.38
+        }
+      },
+      "768": {
+        "pageHeight": 1237,
+        "overflowX": 0,
+        "header": {
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "letterSpacing": "normal",
+          "fontWeight": "400",
+          "x": 0,
+          "y": 0,
+          "w": 768,
+          "h": 64
+        },
+        "h1": {
+          "fontSize": "40.576px",
+          "lineHeight": "47.0276px",
+          "letterSpacing": "-1.19699px",
+          "fontWeight": "500",
+          "x": 32,
+          "y": 112,
+          "w": 704,
+          "h": 47.02
+        },
+        "h2": {
+          "fontSize": "40.576px",
+          "lineHeight": "47.0276px",
+          "letterSpacing": "-1.19699px",
+          "fontWeight": "500",
+          "x": 32,
+          "y": 699.02,
+          "w": 704,
+          "h": 94.03
+        },
+        "p": {
+          "fontSize": "14px",
+          "lineHeight": "19.6px",
+          "letterSpacing": "normal",
+          "fontWeight": "500",
+          "x": 32,
+          "y": 817.05,
+          "w": 529.45,
+          "h": 19.59
+        },
+        "toolbar": {
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "letterSpacing": "normal",
+          "fontWeight": "400",
+          "x": 32,
+          "y": 175.02,
+          "w": 704,
+          "h": 40
+        },
+        "featuredImage": {
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "letterSpacing": "normal",
+          "fontWeight": "400",
+          "x": 32,
+          "y": 279.02,
+          "w": 704,
+          "h": 396
+        }
+      },
+      "1363": {
+        "pageHeight": 1435,
+        "overflowX": 0,
+        "header": {
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "letterSpacing": "normal",
+          "fontWeight": "400",
+          "x": 0,
+          "y": 0,
+          "w": 1363,
+          "h": 64
+        },
+        "h1": {
+          "fontSize": "46.8432px",
+          "lineHeight": "54.2918px",
+          "letterSpacing": "-1.38216px",
+          "fontWeight": "500",
+          "x": 32,
+          "y": 152,
+          "w": 1299,
+          "h": 54.3
+        },
+        "h2": {
+          "fontSize": "46.8432px",
+          "lineHeight": "54.2918px",
+          "letterSpacing": "-1.38216px",
+          "fontWeight": "500",
+          "x": 32,
+          "y": 894.94,
+          "w": 968.25,
+          "h": 108.59
+        },
+        "p": {
+          "fontSize": "14px",
+          "lineHeight": "19.6px",
+          "letterSpacing": "normal",
+          "fontWeight": "500",
+          "x": 32,
+          "y": 1027.53,
+          "w": 529.45,
+          "h": 19.59
+        },
+        "toolbar": {
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "letterSpacing": "normal",
+          "fontWeight": "400",
+          "x": 32,
+          "y": 222.3,
+          "w": 1299,
+          "h": 40
+        },
+        "featuredImage": {
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "letterSpacing": "normal",
+          "fontWeight": "400",
+          "x": 32,
+          "y": 326.3,
+          "w": 968.25,
+          "h": 544.64
+        }
+      }
+    },
+    "artigo": {
+      "390": {
+        "pageHeight": 14235,
+        "overflowX": 0,
+        "header": {
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "letterSpacing": "normal",
+          "fontWeight": "400",
+          "x": 0,
+          "y": 494,
+          "w": 390,
+          "h": 64
+        },
+        "h1": {
+          "fontSize": "36px",
+          "lineHeight": "36.1908px",
+          "letterSpacing": "-1.08px",
+          "fontWeight": "500",
+          "x": 32,
+          "y": 136,
+          "w": 326,
+          "h": 144.75
+        },
+        "h2": {
+          "fontSize": "28.48px",
+          "lineHeight": "33.0083px",
+          "letterSpacing": "-0.84016px",
+          "fontWeight": "500",
+          "x": 32,
+          "y": 1898.88,
+          "w": 326,
+          "h": 99
+        },
+        "p": {
+          "fontSize": "17px",
+          "lineHeight": "27.999px",
+          "letterSpacing": "-0.17px",
+          "fontWeight": "400",
+          "x": 32,
+          "y": 304.75,
+          "w": 326,
+          "h": 112
+        },
+        "readingColumn": {
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "letterSpacing": "normal",
+          "fontWeight": "400",
+          "x": 32,
+          "y": 744.13,
+          "w": 326,
+          "h": 13029.02
+        },
+        "heroImage": {
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "letterSpacing": "normal",
+          "fontWeight": "400",
+          "x": 32,
+          "y": 488.75,
+          "w": 326,
+          "h": 183.38
+        },
+        "caption": {
+          "fontSize": "14px",
+          "lineHeight": "21px",
+          "letterSpacing": "normal",
+          "fontWeight": "400",
+          "x": 32,
+          "y": 7123.39,
+          "w": 326,
+          "h": 83
+        }
+      },
+      "768": {
+        "pageHeight": 10639,
+        "overflowX": 0,
+        "header": {
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "letterSpacing": "normal",
+          "fontWeight": "400",
+          "x": 0,
+          "y": 112,
+          "w": 768,
+          "h": 64
+        },
+        "h1": {
+          "fontSize": "51.456px",
+          "lineHeight": "51.7287px",
+          "letterSpacing": "-1.54368px",
+          "fontWeight": "500",
+          "x": 32,
+          "y": 136,
+          "w": 704,
+          "h": 155.16
+        },
+        "h2": {
+          "fontSize": "40.576px",
+          "lineHeight": "47.0276px",
+          "letterSpacing": "-1.19699px",
+          "fontWeight": "500",
+          "x": 65.25,
+          "y": 1735.59,
+          "w": 637.5,
+          "h": 94.03
+        },
+        "p": {
+          "fontSize": "17px",
+          "lineHeight": "27.999px",
+          "letterSpacing": "-0.17px",
+          "fontWeight": "400",
+          "x": 86,
+          "y": 315.16,
+          "w": 596,
+          "h": 56
+        },
+        "readingColumn": {
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "letterSpacing": "normal",
+          "fontWeight": "400",
+          "x": 65.25,
+          "y": 911.16,
+          "w": 637.5,
+          "h": 9232.31
+        },
+        "heroImage": {
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "letterSpacing": "normal",
+          "fontWeight": "400",
+          "x": 32,
+          "y": 443.16,
+          "w": 704,
+          "h": 396
+        },
+        "caption": {
+          "fontSize": "14px",
+          "lineHeight": "21px",
+          "letterSpacing": "normal",
+          "fontWeight": "400",
+          "x": 65.25,
+          "y": 5597.64,
+          "w": 637.5,
+          "h": 62
+        }
+      },
+      "1363": {
+        "pageHeight": 12120,
+        "overflowX": 0,
+        "header": {
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "letterSpacing": "normal",
+          "fontWeight": "400",
+          "x": 0,
+          "y": 374,
+          "w": 1363,
+          "h": 64
+        },
+        "h1": {
+          "fontSize": "61.6864px",
+          "lineHeight": "62.0103px",
+          "letterSpacing": "-1.85059px",
+          "fontWeight": "500",
+          "x": 280.5,
+          "y": 184,
+          "w": 802,
+          "h": 186.05
+        },
+        "h2": {
+          "fontSize": "46.8432px",
+          "lineHeight": "54.2918px",
+          "letterSpacing": "-1.38216px",
+          "fontWeight": "500",
+          "x": 362.75,
+          "y": 2169.14,
+          "w": 637.5,
+          "h": 108.59
+        },
+        "p": {
+          "fontSize": "17px",
+          "lineHeight": "27.999px",
+          "letterSpacing": "-0.17px",
+          "fontWeight": "400",
+          "x": 383.5,
+          "y": 394.05,
+          "w": 596,
+          "h": 56
+        },
+        "readingColumn": {
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "letterSpacing": "normal",
+          "fontWeight": "400",
+          "x": 362.75,
+          "y": 1296.7,
+          "w": 637.5,
+          "h": 10290.88
+        },
+        "heroImage": {
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "letterSpacing": "normal",
+          "fontWeight": "400",
+          "x": 142.25,
+          "y": 570.05,
+          "w": 1078.5,
+          "h": 606.66
+        },
+        "caption": {
+          "fontSize": "14px",
+          "lineHeight": "21px",
+          "letterSpacing": "normal",
+          "fontWeight": "400",
+          "x": 362.75,
+          "y": 6531.63,
+          "w": 637.5,
+          "h": 62
+        }
+      }
+    },
+    "fixtures": {
+      "390": {
+        "pageHeight": 10057,
+        "overflowX": 0,
+        "header": {
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "letterSpacing": "normal",
+          "fontWeight": "400",
+          "x": 0,
+          "y": 36,
+          "w": 390,
+          "h": 64
+        },
+        "h1": {
+          "fontSize": "28.48px",
+          "lineHeight": "33.0083px",
+          "letterSpacing": "-0.84016px",
+          "fontWeight": "500",
+          "x": 32,
+          "y": 187.75,
+          "w": 326,
+          "h": 33
+        },
+        "h2": {
+          "fontSize": "28.48px",
+          "lineHeight": "33.0083px",
+          "letterSpacing": "-0.84016px",
+          "fontWeight": "500",
+          "x": 32,
+          "y": 624.13,
+          "w": 326,
+          "h": 132
+        },
+        "p": {
+          "fontSize": "12px",
+          "lineHeight": "16.8px",
+          "letterSpacing": "1.44px",
+          "fontWeight": "500",
+          "x": 32,
+          "y": 96,
+          "w": 326,
+          "h": 16.8
+        },
+        "toolbar": {
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "letterSpacing": "normal",
+          "fontWeight": "400",
+          "x": 32,
+          "y": 236.75,
+          "w": 326,
+          "h": 116
+        },
+        "featuredImage": {
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "letterSpacing": "normal",
+          "fontWeight": "400",
+          "x": 32,
+          "y": 416.75,
+          "w": 326,
+          "h": 183.38
+        },
+        "smallCardImage": {
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "letterSpacing": "normal",
+          "fontWeight": "400",
+          "x": 32,
+          "y": 839.72,
+          "w": 326,
+          "h": 326
+        },
+        "quote": {
+          "fontSize": "23.02px",
+          "lineHeight": "30.3864px",
+          "letterSpacing": "-0.5755px",
+          "fontWeight": "500",
+          "x": 32,
+          "y": 7920.16,
+          "w": 326,
+          "h": 60.75
+        },
+        "caption": {
+          "fontSize": "14px",
+          "lineHeight": "22.96px",
+          "letterSpacing": "normal",
+          "fontWeight": "400",
+          "x": 32,
+          "y": 7996.91,
+          "w": 326,
+          "h": 22.95
+        }
+      },
+      "768": {
+        "pageHeight": 7872,
+        "overflowX": 0,
+        "header": {
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "letterSpacing": "normal",
+          "fontWeight": "400",
+          "x": 0,
+          "y": 18,
+          "w": 768,
+          "h": 64
+        },
+        "h1": {
+          "fontSize": "40.576px",
+          "lineHeight": "47.0276px",
+          "letterSpacing": "-1.19699px",
+          "fontWeight": "500",
+          "x": 32,
+          "y": 187.75,
+          "w": 704,
+          "h": 47.02
+        },
+        "h2": {
+          "fontSize": "40.576px",
+          "lineHeight": "47.0276px",
+          "letterSpacing": "-1.19699px",
+          "fontWeight": "500",
+          "x": 32,
+          "y": 774.77,
+          "w": 704,
+          "h": 94.03
+        },
+        "p": {
+          "fontSize": "12px",
+          "lineHeight": "16.8px",
+          "letterSpacing": "1.44px",
+          "fontWeight": "500",
+          "x": 32,
+          "y": 96,
+          "w": 489.67,
+          "h": 16.8
+        },
+        "toolbar": {
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "letterSpacing": "normal",
+          "fontWeight": "400",
+          "x": 32,
+          "y": 250.77,
+          "w": 704,
+          "h": 40
+        },
+        "featuredImage": {
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "letterSpacing": "normal",
+          "fontWeight": "400",
+          "x": 32,
+          "y": 354.77,
+          "w": 704,
+          "h": 396
+        },
+        "smallCardImage": {
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "letterSpacing": "normal",
+          "fontWeight": "400",
+          "x": 32,
+          "y": 952.39,
+          "w": 332,
+          "h": 332
+        },
+        "quote": {
+          "fontSize": "29.5662px",
+          "lineHeight": "39.0274px",
+          "letterSpacing": "-0.739155px",
+          "fontWeight": "500",
+          "x": 32,
+          "y": 4876.89,
+          "w": 704,
+          "h": 78.03
+        },
+        "caption": {
+          "fontSize": "14px",
+          "lineHeight": "22.96px",
+          "letterSpacing": "normal",
+          "fontWeight": "400",
+          "x": 32,
+          "y": 4970.92,
+          "w": 529.45,
+          "h": 22.95
+        }
+      },
+      "1363": {
+        "pageHeight": 6428,
+        "overflowX": 0,
+        "header": {
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "letterSpacing": "normal",
+          "fontWeight": "400",
+          "x": 0,
+          "y": 0,
+          "w": 1363,
+          "h": 64
+        },
+        "h1": {
+          "fontSize": "46.8432px",
+          "lineHeight": "54.2918px",
+          "letterSpacing": "-1.38216px",
+          "fontWeight": "500",
+          "x": 32,
+          "y": 227.75,
+          "w": 1299,
+          "h": 54.3
+        },
+        "h2": {
+          "fontSize": "46.8432px",
+          "lineHeight": "54.2918px",
+          "letterSpacing": "-1.38216px",
+          "fontWeight": "500",
+          "x": 32,
+          "y": 970.69,
+          "w": 968.25,
+          "h": 108.59
+        },
+        "p": {
+          "fontSize": "12px",
+          "lineHeight": "16.8px",
+          "letterSpacing": "1.44px",
+          "fontWeight": "500",
+          "x": 32,
+          "y": 96,
+          "w": 489.67,
+          "h": 16.8
+        },
+        "toolbar": {
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "letterSpacing": "normal",
+          "fontWeight": "400",
+          "x": 32,
+          "y": 298.05,
+          "w": 1299,
+          "h": 40
+        },
+        "featuredImage": {
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "letterSpacing": "normal",
+          "fontWeight": "400",
+          "x": 32,
+          "y": 402.05,
+          "w": 968.25,
+          "h": 544.64
+        },
+        "smallCardImage": {
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "letterSpacing": "normal",
+          "fontWeight": "400",
+          "x": 1024.25,
+          "y": 402.05,
+          "w": 306.75,
+          "h": 306.75
+        },
+        "quote": {
+          "fontSize": "29.5662px",
+          "lineHeight": "39.0274px",
+          "letterSpacing": "-0.739155px",
+          "fontWeight": "500",
+          "x": 122.8,
+          "y": 3518.83,
+          "w": 1117.41,
+          "h": 39.03
+        },
+        "caption": {
+          "fontSize": "14px",
+          "lineHeight": "22.96px",
+          "letterSpacing": "normal",
+          "fontWeight": "400",
+          "x": 32,
+          "y": 3573.86,
+          "w": 529.45,
+          "h": 22.95
+        }
+      }
+    }
+  }
+}

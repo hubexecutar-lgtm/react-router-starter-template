@@ -991,3 +991,124 @@ body {
 html {
   scroll-padding-top: 5.5rem;
 }
+
+/* ===== OPENAI-STORIES-DESIGN-001 (RC-FRONT-001) =====================================================
+   Tokens do handoff, valores LITERAIS observados em viewport 1363×936, DPR 1 (design/tokens.desktop.css).
+   Não são o CSS-fonte original e só há medida desktop: 390/768 são medidos à parte (docs/audit/aud-web-002).
+   Divergência registrada: a fonte da referência (OpenAI Sans) não existe aqui; os mesmos tamanhos, pesos,
+   entrelinhas e tracking usam a Inter já carregada (ADR-11), então a quebra de linha pode diferir.
+   Os tokens do PR #18 (--content-max, --section-pad-y…) seguem valendo para o /admin (ADR-14). */
+:root {
+  --ref-font: var(--font-inter);
+  --ref-bg: var(--background);
+  --ref-text: var(--foreground);
+  --ref-gutter: 32px;
+  --ref-grid-gap: 24px;
+  --ref-h1-size: 61.6864px;
+  --ref-h1-line: 62.0103px;
+  --ref-h1-tracking: -1.85059px;
+  --ref-h2-size: 46.8432px;
+  --ref-h2-line: 54.2918px;
+  --ref-h2-tracking: -1.38216px;
+  --ref-body-size: 17px;
+  --ref-body-line: 27.999px;
+  --ref-body-tracking: -0.17px;
+  --ref-quote-size: 29.5662px;
+  --ref-quote-line: 39.0274px;
+  --ref-quote-tracking: -0.739155px;
+  --ref-caption-size: 14px;
+  --ref-caption-line: 22.96px;
+  --ref-meta-size: 14px; /* data do card: 14/19.6, peso 500 */
+  --ref-meta-line: 19.6px;
+  --ref-reading-width: 637.5px;
+  --ref-wide-width: 1078.5px;
+  /* medidas do handoff que não vinham como token (Home e artigo, desktop) */
+  --ref-header-h: 64px;
+  --ref-feature-w: 968.25px; /* 3 colunas de card + 2 gaps */
+  --ref-feature-h: 544.64px; /* 16:9 */
+  --ref-card-w: 306.75px; /* imagem quadrada */
+  --ref-hero-h: 694px;
+  --ref-hero-title-w: 802px;
+  --ref-hero-lead-w: 596px;
+  --ref-section-gap: 120px; /* entre blocos do artigo (legenda → h2, texto → mídia) */
+  --ref-block-gap: 24px; /* entre parágrafos e entre h2 e o 1º parágrafo */
+  --ref-card-gap-y: 64px; /* entre cards empilhados e entre linhas da grade */
+  --ref-pill-radius: 40px; /* CTA em cápsula */
+  --ref-control-radius: 4px; /* botões Filtro/Classificar */
+}
+
+/* Espaços verticais abaixo de 1024 px: proposta (ver acima). */
+@media (width < 64rem) {
+  :root {
+    --ref-section-gap: 4.5rem;
+    --ref-card-gap-y: 2.5rem;
+  }
+}
+
+@utility stories-container {
+  margin-inline: auto;
+  padding-inline: var(--ref-gutter);
+  width: 100%;
+}
+/* Abaixo de 1024 px a escala é PROPOSTA minha, não medida: a referência responde 403 ao container (BLOCKED) e o
+   handoff trata o responsivo como hipótese. Entrelinha e tracking ficam proporcionais ao corpo (razões derivadas
+   dos tokens). De 1024 px em diante valem os tokens literais. */
+@utility stories-h1 {
+  font-family: var(--ref-font);
+  font-size: clamp(2.25rem, 1.2rem + 4.2vw, var(--ref-h1-size));
+  line-height: 1.0053;
+  letter-spacing: -0.03em;
+  font-weight: 500;
+  text-wrap: balance;
+  @media (width >= 64rem) {
+    font-size: var(--ref-h1-size);
+    line-height: var(--ref-h1-line);
+    letter-spacing: var(--ref-h1-tracking);
+  }
+}
+@utility stories-h2 {
+  font-family: var(--ref-font);
+  font-size: clamp(1.75rem, 1rem + 3.2vw, var(--ref-h2-size));
+  line-height: 1.159;
+  letter-spacing: -0.0295em;
+  font-weight: 500;
+  text-wrap: balance;
+  @media (width >= 64rem) {
+    font-size: var(--ref-h2-size);
+    line-height: var(--ref-h2-line);
+    letter-spacing: var(--ref-h2-tracking);
+  }
+}
+@utility stories-body {
+  font-family: var(--ref-font);
+  font-size: var(--ref-body-size);
+  line-height: var(--ref-body-line);
+  letter-spacing: var(--ref-body-tracking);
+  font-weight: 400;
+}
+@utility stories-quote {
+  font-family: var(--ref-font);
+  font-size: clamp(1.375rem, 1rem + 1.8vw, var(--ref-quote-size));
+  line-height: 1.32;
+  letter-spacing: -0.025em;
+  font-weight: 500;
+  text-wrap: balance;
+  @media (width >= 64rem) {
+    font-size: var(--ref-quote-size);
+    line-height: var(--ref-quote-line);
+    letter-spacing: var(--ref-quote-tracking);
+  }
+}
+@utility stories-caption {
+  font-family: var(--ref-font);
+  font-size: var(--ref-caption-size);
+  line-height: var(--ref-caption-line);
+  font-weight: 400;
+}
+@utility stories-meta {
+  font-family: var(--ref-font);
+  font-size: var(--ref-meta-size);
+  line-height: var(--ref-meta-line);
+  font-weight: 500;
+  color: var(--muted-foreground);
+}

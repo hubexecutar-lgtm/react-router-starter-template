@@ -20,6 +20,11 @@ const links = [
 		description: "Relatório composto com Markdown, PlainTextPanel e AsciiDiagram (ADR-05).",
 	},
 	{
+		href: "/admin/stories-fixtures/",
+		label: "Fixtures Stories",
+		description: "Composição da Home e blocos de artigo com dados sintéticos, para comparar com o handoff.",
+	},
+	{
 		href: "/admin/handoff/",
 		label: "Handoff — Knowledge Work Skills",
 		description: "Estado da adaptação de HANDOFF-KNOWLEDGE-WORK-SKILLS-001 e da campanha de copy.",

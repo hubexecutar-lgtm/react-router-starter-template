@@ -3,7 +3,7 @@
 Gerado por `scripts/hig-audit.mjs` em 2026-10-03. Regra: **UX-GOV-HIG-001** (`docs/governance/UX-GOV-HIG-001.md`,
 ADR-M03). Gate automatizado: `tests/hig.spec.ts` (axe WCAG 2.0/2.1/2.2 A+AA, títulos, landmarks, alvos ≥ 24 px,
 reflow 320 px, medida ≤ 75 caracteres, sem prosa mono, `alt`, halftone fora do texto, foco visível) em
-7 rotas, a 1440, 390 e 320 px, mais amostra no tema escuro.
+9 rotas, a 1440, 390 e 320 px, mais amostra no tema escuro.
 
 **Release: PASS** — P0/P1 abertos: 0.
 
@@ -12,7 +12,7 @@ reflow 320 px, medida ≤ 75 caracteres, sem prosa mono, `alt`, halftone fora do
 | Fase | Resultado |
 |---|---|
 | Linha de base (main @ ab685e2 (antes do RC-UX-HIG-002 PR D)) | 799 verificações · 790 PASS · 0 PARTIAL · 9 FAIL (P0 1, P1 8, P2 0, P3 0) |
-| Reteste (automatizado) | 126 verificações · 126 PASS · 0 PARTIAL · 0 FAIL (P0 0, P1 0, P2 0, P3 0) |
+| Reteste (automatizado) | 162 verificações · 162 PASS · 0 PARTIAL · 0 FAIL (P0 0, P1 0, P2 0, P3 0) |
 | Checklist manual | 8 verificações · 4 PASS · 4 PARTIAL · 0 FAIL (P0 0, P1 0, P2 3, P3 1) |
 
 ## Falhas da linha de base e correção
@@ -42,10 +42,10 @@ reflow 320 px, medida ≤ 75 caracteres, sem prosa mono, `alt`, halftone fora do
 
 | Regra | Rota | Componente | Status | Sev. | Evidência | Correção |
 |---|---|---|---|---|---|---|
-| AUD-HIG-01 | `todas` | PageHero / Section | PASS | P1 | Site do zero (ADR-13): 404 usa PageHero; a home provisória tem h1, lead e landmarks. As seções com "Saiba mais ›" voltam com o novo front-end e entram neste gat | — |
+| AUD-HIG-01 | `todas` | StoriesHome / ArticleHero / PageHero | PASS | P1 | Home (título, categorias, destaque, grade), artigo (hero, coluna de leitura) e 404 declaram propósito com h1 e lead; os tokens vêm do handoff (ADR-14). Seções c | — |
 | AUD-HIG-02 | `todas` | SiteHeader (menu), ThemeToggle | PASS | P1 | Menu móvel fecha com Esc e devolve o foco quando há navegação (hoje vazia); skip link e foco visível cobertos em surfaces.spec; tema reversível. | — |
 | AUD-HIG-03 | `todas` | tokens (global.css), rc-cell, Button, ChevronLink | PASS | P1 | tokens.spec e surfaces.spec travam valores, célula (sem contorno, raio 2px) e ausência de hex fora de global.css | — |
-| AUD-HIG-04 | `todas` | navegação e anatomia | PASS | P2 | Leads ≤ 60ch, parágrafos ≤ 68ch (--measure) e plain text estruturado nas páginas existentes (home, 404, /admin/*). | — |
+| AUD-HIG-04 | `todas` | navegação e anatomia | PASS | P2 | Coluna de leitura de 637,5 px, parágrafos ≤ 75 caracteres por linha, plain text estruturado nos painéis do artigo (tests/stories.spec.ts) e 404 com ação única. | — |
 | AUD-HIG-08 | `/admin/*` | rotas internas | PARTIAL | P2 | Sem guarda de autenticação no app (ADR-06, "Interno exposto"); o host de produção inteiro está atrás do Cloudflare Access | Waiver: Cloudflare Access protege o host; guarda no app quando o site for público (BLOG-001 §8) |
 | AUD-HIG-08 | `todas` | política de privacidade | PARTIAL | P2 | A página /privacy/ foi removida (ADR-13) e o site ainda carrega Inter e IBM Plex Mono do Google Fonts; não há política nem canal de direitos publicados. | Publicar a política (controlador e canal de contato) junto com o novo front-end, antes de divulgar o site |
 | AUD-HIG-06 | `todas (tema escuro)` | tokens .dark | PARTIAL | P3 | Escuro derivado e marcado PROVISIONAL (ADR-11); contraste AA verificado por amostra no gate | Especificar o tema escuro |
@@ -53,7 +53,7 @@ reflow 320 px, medida ≤ 75 caracteres, sem prosa mono, `alt`, halftone fora do
 
 ## Rotas cobertas
 
-`/` · `/admin/` · `/admin/design-system/` · `/admin/handoff/` · `/admin/relatorio-exemplo/` · `/admin/rotas/` · `/rota-inexistente-hig/`
+`/` · `/admin/` · `/admin/design-system/` · `/admin/handoff/` · `/admin/relatorio-exemplo/` · `/admin/rotas/` · `/admin/stories-fixtures/` · `/artigos/risco-cognitivo/` · `/rota-inexistente-hig/`
 
-O detalhe completo (todas as 126 verificações automatizadas, inclusive PASS) está em
+O detalhe completo (todas as 162 verificações automatizadas, inclusive PASS) está em
 `HIG-WEB-AUDIT.json`. Para atualizar: `HIG_AUDIT=1 npx playwright test tests/hig.spec.ts && node scripts/hig-audit.mjs`.

@@ -218,7 +218,7 @@ test.describe("flat cards, real overlays", () => {
 });
 
 // Site do zero (ADR-13): o mesmo contrato em toda rota do site novo.
-const EDITORIAL = ["/", "/rota-inexistente/"];
+const EDITORIAL = ["/", "/artigos/risco-cognitivo/", "/rota-inexistente/"];
 
 test.describe("editorial routes", () => {
   for (const route of EDITORIAL) {
@@ -277,6 +277,7 @@ test.describe("editorial routes", () => {
 test.describe("visual regression (minimum routes)", () => {
   const shots: [string, string][] = [
     ["admin", "/admin/"],
+    ["artigo", "/artigos/risco-cognitivo/"],
     ["home", "/"],
   ];
   for (const [name, route] of shots) {

@@ -1,4 +1,4 @@
-// Páginas estáticas do site (prerender). Site do zero (ADR-13): home e painel interno.
+// Páginas estáticas do site (prerender). Os artigos entram por react-router.config.ts (content/artigos).
 export const PAGES = [
 	"/",
 	"/admin/",
@@ -6,4 +6,5 @@ export const PAGES = [
 	"/admin/handoff/",
 	"/admin/relatorio-exemplo/",
 	"/admin/rotas/",
+	"/admin/stories-fixtures/",
 ] as const;
