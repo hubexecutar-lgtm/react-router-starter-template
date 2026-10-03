@@ -1,0 +1,6 @@
+# Capturas da referência (developer.apple.com) e composições com ela: evidência local, nunca versionadas.
+ref/
+compare/
+# Recortes por seção e capturas após rolagem: regeneráveis com scripts/ux-compare.mjs.
+*/section-*.png
+*/scrolled-*.png

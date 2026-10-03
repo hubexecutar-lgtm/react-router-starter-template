@@ -1,6 +1,7 @@
 // Arte do hero (ADR-12): ilustração sem texto do banco + halftone orgânico ao lado.
 // O halftone fica mascarado fora da área da ilustração (que tem fundo branco opaco),
-// então nunca recorta a figura nem passa por trás de texto.
+// então nunca recorta a figura nem passa por trás de texto. `wide` é a faixa sob o hero centralizado
+// da home (AUD-WEB-001-03).
 import { DotField } from "./DotField";
 
 import { cn } from "@/lib/utils";
@@ -10,12 +11,38 @@ export type HeroImage = { src: string; alt: string; width: number; height: numbe
 export function HeroArt({
   image,
   seed = 11,
+  wide = false,
   className,
 }: {
   image?: HeroImage;
   seed?: number;
+  /** Faixa larga sob o texto centralizado (AUD-WEB-001-03): figura no centro, halftone nas laterais. */
+  wide?: boolean;
   className?: string;
 }) {
+  if (wide) {
+    return (
+      <div className={cn("relative isolate aspect-[4/3] sm:aspect-[16/9] lg:aspect-[2/1]", className)} data-hero-art>
+        <DotField
+          cols={48}
+          rows={24}
+          seed={seed}
+          fade="none"
+          className="absolute inset-0 -z-10 h-full w-full [mask-image:radial-gradient(ellipse_at_center,transparent_0%,transparent_30%,black_62%)]"
+        />
+        {image && (
+          <img
+            src={image.src}
+            alt={image.alt}
+            width={image.width}
+            height={image.height}
+            className="absolute inset-y-0 left-1/2 h-full w-auto max-w-[70%] -translate-x-1/2 object-contain"
+            fetchPriority="high"
+          />
+        )}
+      </div>
+    );
+  }
   return (
     <div className={cn("relative isolate", image ? "aspect-[5/4]" : "aspect-[4/3]", className)} data-hero-art>
       <DotField
