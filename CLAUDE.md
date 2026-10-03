@@ -7,6 +7,7 @@ Guidance for Claude Code (and other AI agents) working in this repository.
 ```
 apps/      um diretório por produto (deploy independente)
   blog/    Risco Cognitivo — React Router 7 + Cloudflare Workers (ver apps/blog/CLAUDE.md)
+  workflow/ Programa EXECUTAR — Workflows + Durable Objects + R2 + CMS (/admin) + MCP (ver apps/workflow/CLAUDE.md)
 packages/  código compartilhado entre produtos (vazio até o segundo produto precisar)
 docs/      decisões e evidências do monorepo (docs/migrations/*)
 ```
@@ -16,6 +17,13 @@ docs/      decisões e evidências do monorepo (docs/migrations/*)
 - Scripts da raiz delegam aos apps: `npm run dev` (blog), `npm run build`,
   `npm run typecheck`, `npm run test`, `npm run deploy:blog`.
 - Cada app mantém seus próprios ADRs no `CLAUDE.md` do app; leia-o antes de mexer no app.
+
+## Agentes, skills e plugins (raiz)
+
+- `.claude/agents/` e `.claude/skills/`: subagentes e skills do fluxo EXECUTAR (`clp-orchestrator`, `research-agent`, `plano-ops-agent`, `analytics-agent`, `blog-publisher`, `cadeia-valor-unica`, `executar-flow`, handoff). Servem a todos os apps.
+- `plugins/executar-cop` (0.4.0) e `plugins/agent-handoff` (0.4.2), com marketplace em `.claude-plugin/marketplace.json`.
+- `.handoff/`: estado do Agent Handoff (`config.md`, `backlog.md`). Itens abertos viram issues no GitHub.
+- Operação do fluxo: `apps/workflow/CLAUDE.md` (variáveis `EXECUTAR_URL` e `EXECUTAR_AGENT_TOKEN`, `/executar-flow`, `/cadeia-unica`).
 
 ## ADRs do monorepo
 

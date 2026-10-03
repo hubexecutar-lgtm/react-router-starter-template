@@ -1,0 +1,86 @@
+/**
+ * For more details on how to configure Wrangler, refer to:
+ * https://developers.cloudflare.com/workers/wrangler/configuration/
+ */
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "workflows-starter-template",
+	"main": "scripts/inline-entry.js",
+	"compatibility_date": "2025-10-08",
+	"observability": {
+		"enabled": true
+	},
+	/**
+	 * Workflows
+	 * Define Workflows to orchestrate multi-step processes
+	 * https://developers.cloudflare.com/workflows/
+	 */
+	"workflows": [
+		{
+			"name": "programa-executar-editorial",
+			"binding": "MY_WORKFLOW",
+			"class_name": "MyWorkflow"
+		}
+	],
+	/**
+	 * Durable Objects
+	 * Used for WebSocket state management and real-time updates
+	 * https://developers.cloudflare.com/durable-objects/
+	 */
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "WORKFLOW_STATUS",
+				"class_name": "WorkflowStatusDO"
+			},
+			{
+				"name": "TASK_BOARD",
+				"class_name": "TaskBoardDO"
+			},
+			{
+				"name": "HUB_STORE",
+				"class_name": "HubStoreDO"
+			}
+		]
+	},
+	/**
+	 * Migrations
+	 * Required for Durable Objects
+	 */
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": ["WorkflowStatusDO"]
+		},
+		{
+			"tag": "v2",
+			"new_sqlite_classes": ["TaskBoardDO"]
+		},
+		{
+			"tag": "v3",
+			"new_sqlite_classes": ["HubStoreDO"]
+		}
+	],
+	/**
+	 * R2: entregáveis reais do fluxo (campaigns/{cmp}/runs/{run}/{nó}/...)
+	 */
+	// OAuth do conector MCP (/mcp): clientes, grants e tokens.
+	"kv_namespaces": [
+		{ "binding": "OAUTH_KV", "id": "098ae084fbd94a588b06eca0f8c78a41" }
+	],
+	"r2_buckets": [
+		{
+			"binding": "ARTIFACTS",
+			"bucket_name": "executar-artifacts"
+		}
+	],
+	/**
+	 * Blog Risco Cognitivo controlado pelo CMS (/admin)
+	 */
+	"vars": {
+		"BLOG_REPO": "executar-23/Risco-cognitivo-blog",
+		"BLOG_URL": "https://risco-cognitivo-blog.executar-rotina-8b7.workers.dev"
+	},
+	"workers_dev": true,
+	"upload_source_maps": true
+}
