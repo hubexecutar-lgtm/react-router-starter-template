@@ -1,0 +1,69 @@
+{
+	"name": "workflows-starter-template",
+	"description": "Interactive starter template demonstrating Cloudflare Workflows with real-time status updates",
+	"cloudflare": {
+		"label": "Workflows Starter",
+		"products": [
+			"Workers",
+			"Workflows",
+			"Durable Objects"
+		],
+		"categories": [
+			"starter"
+		],
+		"publish": true,
+		"preview_image_url": "https://imagedelivery.net/wSMYJvS3Xw-n339CbDyDIA/4380d39a-b907-437c-e784-500fcc10cb00/preview",
+		"preview_icon_url": "https://imagedelivery.net/wSMYJvS3Xw-n339CbDyDIA/6d6e9a49-5c10-4ef6-bfa8-b6577a656300/public",
+		"docs_url": "https://developers.cloudflare.com/workflows/"
+	},
+	"dependencies": {
+		"@cloudflare/workers-oauth-provider": "^1.2.1",
+		"@radix-ui/react-label": "^2.1.15",
+		"@radix-ui/react-slot": "^1.3.3",
+		"@tailwindcss/typography": "^0.5.20",
+		"class-variance-authority": "^0.7.1",
+		"clsx": "^2.1.1",
+		"lucide-react": "^1.49.0",
+		"react": "19.2.1",
+		"react-dom": "19.2.1",
+		"tailwind-merge": "^3.7.0",
+		"tw-animate-css": "^1.4.0"
+	},
+	"devDependencies": {
+		"@cloudflare/vite-plugin": "1.52.1",
+		"@cloudflare/vitest-pool-workers": "0.21.3",
+		"@eslint/js": "9.39.1",
+		"@tailwindcss/vite": "4.1.17",
+		"@types/react": "19.2.7",
+		"@types/react-dom": "19.2.3",
+		"@vitejs/plugin-react-swc": "4.0.0",
+		"@vitest/runner": "4.1.10",
+		"@vitest/snapshot": "4.1.10",
+		"eslint": "9.39.2",
+		"eslint-plugin-react-hooks": "7.0.1",
+		"eslint-plugin-react-refresh": "0.4.24",
+		"globals": "16.5.0",
+		"tailwindcss": "4.1.17",
+		"typescript": "5.9.3",
+		"typescript-eslint": "8.48.0",
+		"vite": "^7.0.0",
+		"vitest": "4.1.10",
+		"wrangler": "4.136.1"
+	},
+	"private": true,
+	"scripts": {
+		"build": "node scripts/generate-ai-registry.mjs && node scripts/embed-cadeia-prompt.mjs && tsc -b && vite build",
+		"cf-typegen": "wrangler types",
+		"check": "node scripts/generate-ai-registry.mjs && tsc && wrangler deploy --dry-run",
+		"deploy": "npm run build && wrangler deploy",
+		"agent:token": "bash scripts/sync-agent-token.sh",
+		"deploy:inline": "npm run build && node scripts/build-inline-assets.mjs && wrangler deploy -c wrangler.inline.jsonc",
+		"dev": "node scripts/generate-ai-registry.mjs && vite",
+		"lint": "eslint .",
+		"preview": "npm run build && vite preview",
+		"pdf": "node scripts/print-pdf.mjs",
+		"test": "vitest run",
+		"registry:generate": "node scripts/generate-ai-registry.mjs"
+	},
+	"type": "module"
+}
