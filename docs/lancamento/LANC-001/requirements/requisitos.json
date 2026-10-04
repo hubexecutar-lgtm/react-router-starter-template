@@ -1,0 +1,900 @@
+{
+  "id": "RC-LANC-001-REQ",
+  "versao": "0.2.0",
+  "data": "2026-10-04",
+  "legenda": {
+    "prioridade": {
+      "P0": "fundação ou regra que bloqueia o resto",
+      "P1": "primeira onda de valor",
+      "P2": "segunda onda",
+      "P3": "depois / depende de lacuna"
+    },
+    "status": {
+      "READY": "pronto para /plan",
+      "NEEDS_CONFIRMATION": "depende de pergunta Q* em 01-DECISOES",
+      "BLOCKED": "depende de GAP*",
+      "BACKLOG": "fora desta onda",
+      "DONE": "em main; preencher entregue_em (PR) no requisito"
+    }
+  },
+  "epicos": [
+    {
+      "id": "EP-01",
+      "nome": "Marca e ícones",
+      "pr": "PR-A"
+    },
+    {
+      "id": "EP-02",
+      "nome": "Tokens: interface, ilustração, gráficos e motion",
+      "pr": "PR-B"
+    },
+    {
+      "id": "EP-03",
+      "nome": "Shell e navegação v6/v7",
+      "pr": "PR-C"
+    },
+    {
+      "id": "EP-04",
+      "nome": "Imagens e bloco de imagem do artigo",
+      "pr": "PR-D"
+    },
+    {
+      "id": "EP-05",
+      "nome": "Conteúdo canônico — 3 pilares",
+      "pr": "PR-E"
+    },
+    {
+      "id": "EP-06",
+      "nome": "Arquitetura de informação e jornada",
+      "pr": "PR-F"
+    },
+    {
+      "id": "EP-07",
+      "nome": "Modelo de dados do grafo causal (Teia Única)",
+      "pr": "PR-G"
+    },
+    {
+      "id": "EP-08",
+      "nome": "Mapa causal mobile-first — Explorar e Detalhe",
+      "pr": "PR-H"
+    },
+    {
+      "id": "EP-09",
+      "nome": "Personalizar",
+      "pr": "PR-I"
+    },
+    {
+      "id": "EP-10",
+      "nome": "Ferramentas cognitivas (substitui a Loja) e Resultado",
+      "pr": "PR-J"
+    },
+    {
+      "id": "EP-11",
+      "nome": "Medição e performance",
+      "pr": "PR-K"
+    },
+    {
+      "id": "EP-12",
+      "nome": "Adapters da Teia Única (Quick Framework, Ferramentas, registries)",
+      "pr": "PR-L"
+    }
+  ],
+  "requisitos": [
+    {
+      "id": "RQ-001",
+      "epico": "EP-01",
+      "tipo": "FR",
+      "titulo": "Favicon e ícones do pacote BRAND-ASSET-LOGO-001",
+      "descricao": "Substituir apps/blog/public/favicon/* por favicon.ico (16/32/48/64), PNG 16/32/96, apple-touch-icon 180, PWA 192/512 e maskable 512; links em root.tsx conforme o README do pacote; site.webmanifest com nome Risco Cognitivo.",
+      "prioridade": "P0",
+      "status": "READY",
+      "depende_de": [],
+      "fonte": "intake/LOGO_FAVICON_PACKAGE_v1.0.0; CF-10",
+      "criterio_aceite": "Os 5 <link> do README presentes no HTML de todas as rotas; manifest válido; arquivos com o sha256 do MANIFEST; npm test verde"
+    },
+    {
+      "id": "RQ-002",
+      "epico": "EP-01",
+      "tipo": "FR",
+      "titulo": "Logo como identidade em JSON-LD e social",
+      "descricao": "Usar logo-transparent e social/logo-square-1200x1200 como Organization.logo no JSON-LD e como avatar; OG das páginas continua usando a imagem de hero.",
+      "prioridade": "P2",
+      "status": "READY",
+      "depende_de": [
+        "RQ-001",
+        "RQ-045"
+      ],
+      "fonte": "intake/LOGO_FAVICON_PACKAGE_v1.0.0",
+      "criterio_aceite": "Organization.logo aponta para arquivo publicado; validador de dados estruturados sem erro"
+    },
+    {
+      "id": "RQ-003",
+      "epico": "EP-01",
+      "tipo": "RULE",
+      "titulo": "Regras de uso do logo",
+      "descricao": "Definir tamanho mínimo, área de respiro e fundos permitidos antes de usar o logo em cabeçalho.",
+      "prioridade": "P2",
+      "status": "BLOCKED",
+      "depende_de": [],
+      "fonte": "GAP-04; CF-10; OWNER Leonardo decide (DEC-U10)",
+      "criterio_aceite": "Regras registradas no ADR de marca"
+    },
+    {
+      "id": "RQ-010",
+      "epico": "EP-02",
+      "tipo": "RULE",
+      "titulo": "ADR-13 do blog: Brand Local v7 como identidade única",
+      "descricao": "Registrar em apps/blog/CLAUDE.md que a paleta e a tipografia de interface são as do v7 (= ADR-11), que o amarelo/preto do v6 foi descartado e que RC-BRAND-STYLING-001 é só a camada de ilustração e vetor.",
+      "prioridade": "P0",
+      "status": "READY",
+      "depende_de": [],
+      "fonte": "DEC-U1; DEC-U2; DEC-U3; CF-01; CF-03",
+      "criterio_aceite": "ADR-13 com status Aceita, citado por PR-B a PR-H"
+    },
+    {
+      "id": "RQ-011",
+      "epico": "EP-02",
+      "tipo": "FR",
+      "titulo": "Camada de tokens de ilustração e vetor --illu-*",
+      "descricao": "Em global.css: --illu-ink #18346F, --illu-blue #3155E7, --illu-coral #F28F83, --illu-blue-soft #A9BFF4, --illu-canvas #F4F6F1. Uso restrito a SVG, ilustrações e fundos decorativos.",
+      "prioridade": "P0",
+      "status": "READY",
+      "depende_de": [
+        "RQ-010"
+      ],
+      "fonte": "DEC-U3; CF-01; RC-BRAND-STYLING-001",
+      "criterio_aceite": "tests/surfaces.spec.ts impede esses hex fora de global.css; nenhum seletor de texto usa --illu-coral ou --illu-blue-soft"
+    },
+    {
+      "id": "RQ-012",
+      "epico": "EP-02",
+      "tipo": "RULE",
+      "titulo": "Contraste de objetos gráficos ≥ 3:1",
+      "descricao": "Marca gráfica com significado (nó, aresta, série, ícone de estado) ≥ 3:1 contra o fundo. Coral (2,33:1) e azul claro (1,83:1) só como preenchimento decorativo ou com contorno ≥ 3:1; nunca como texto nem como único indicador.",
+      "prioridade": "P0",
+      "status": "READY",
+      "depende_de": [
+        "RQ-011"
+      ],
+      "fonte": "CF-02; FT-07; WCAG 2.2 1.4.11",
+      "criterio_aceite": "Teste de contraste dos tokens de grafo no tokens.spec.ts; axe sem violação de contraste"
+    },
+    {
+      "id": "RQ-013",
+      "epico": "EP-02",
+      "tipo": "RULE",
+      "titulo": "Gráficos continuam no ADR-04",
+      "descricao": "Séries de gráfico usam --chart-*; o mapa causal usa --primary para ênfase causal e forma + rótulo para tipo de nó.",
+      "prioridade": "P1",
+      "status": "READY",
+      "depende_de": [
+        "RQ-010"
+      ],
+      "fonte": "CF-01; ADR-04",
+      "criterio_aceite": "Nenhum hex novo em componentes de gráfico"
+    },
+    {
+      "id": "RQ-014",
+      "epico": "EP-02",
+      "tipo": "FR",
+      "titulo": "Tokens de motion do v7",
+      "descricao": "--ease cubic-bezier(.22,1,.36,1); durações nomeadas; keyframes heroReveal (opacity 0→1, translateY 18px→0). Tudo vira 'none' sob prefers-reduced-motion.",
+      "prioridade": "P0",
+      "status": "READY",
+      "depende_de": [
+        "RQ-010"
+      ],
+      "fonte": "DEC-U1; FT-02",
+      "criterio_aceite": "Com emulação reduced-motion, nenhuma animação nem transição maior que 0,01s; tokens.spec.ts trava --ease"
+    },
+    {
+      "id": "RQ-015",
+      "epico": "EP-02",
+      "tipo": "FR",
+      "titulo": "Tokens de componentes novos",
+      "descricao": "--radius-sheet 20px (topo do bottom sheet), --radius-node pílula, --shadow-overlay para drawer e sheet. Cards continuam célula 2px (ADR-12).",
+      "prioridade": "P1",
+      "status": "READY",
+      "depende_de": [
+        "RQ-010"
+      ],
+      "fonte": "CF-04; FT-03",
+      "criterio_aceite": "surfaces.spec.ts continua exigindo 2px nos cards"
+    },
+    {
+      "id": "RQ-020",
+      "epico": "EP-03",
+      "tipo": "FR",
+      "titulo": "Nav global no desktop (≥ 900px)",
+      "descricao": "Links visíveis (Artigos · Mapa · Ferramentas · Sobre) e trilha de categorias inline; sem botão de menu.",
+      "prioridade": "P0",
+      "status": "READY",
+      "depende_de": [
+        "RQ-010",
+        "RQ-050"
+      ],
+      "fonte": "DEC-U1; FT-04; CF-12; Q1; DEC-U6",
+      "criterio_aceite": "Em 1280px os links estão visíveis e o drawer não existe no DOM acessível"
+    },
+    {
+      "id": "RQ-021",
+      "epico": "EP-03",
+      "tipo": "FR",
+      "titulo": "Drawer e barra inferior no mobile (< 900px)",
+      "descricao": "Botão de menu abre drawer (largura min(84vw,360px)); barra inferior com 3 itens (Início · Mapa · Ferramentas).",
+      "prioridade": "P0",
+      "status": "READY",
+      "depende_de": [
+        "RQ-010",
+        "RQ-050"
+      ],
+      "fonte": "DEC-U1; FT-04; CF-12; Q1; DEC-U6",
+      "criterio_aceite": "Em 390px: barra inferior com 3 destinos; drawer abre e fecha por toque"
+    },
+    {
+      "id": "RQ-022",
+      "epico": "EP-03",
+      "tipo": "FR",
+      "titulo": "Chrome que esconde junto no scroll",
+      "descricao": "Nav superior e barra inferior escondem juntas ao rolar para baixo e voltam ao rolar para cima; ficam visíveis com o drawer aberto e quando o foco do teclado está nelas.",
+      "prioridade": "P1",
+      "status": "READY",
+      "depende_de": [
+        "RQ-020",
+        "RQ-021"
+      ],
+      "fonte": "intake/README.md (v6 item 1); DEC-U1",
+      "criterio_aceite": "Teste Playwright: rolar 600px esconde, rolar -100px mostra; Tab na nav mostra"
+    },
+    {
+      "id": "RQ-023",
+      "epico": "EP-03",
+      "tipo": "NFR",
+      "titulo": "Drawer acessível",
+      "descricao": "aria-expanded no botão, foco preso, Esc fecha, foco volta ao botão, fundo inert.",
+      "prioridade": "P0",
+      "status": "READY",
+      "depende_de": [
+        "RQ-021"
+      ],
+      "fonte": "ADR-M03; UX-GOV-HIG-001",
+      "criterio_aceite": "hig.spec.ts sem P0/P1; teste de teclado do drawer"
+    },
+    {
+      "id": "RQ-024",
+      "epico": "EP-03",
+      "tipo": "FR",
+      "titulo": "Hero com heroReveal",
+      "descricao": "Hero das páginas aplica heroReveal (RQ-014) sem atrasar o LCP (texto visível no primeiro paint com reduced-motion).",
+      "prioridade": "P1",
+      "status": "READY",
+      "depende_de": [
+        "RQ-014"
+      ],
+      "fonte": "DEC-U1; FT-02",
+      "criterio_aceite": "LCP sem regressão em relação a main"
+    },
+    {
+      "id": "RQ-025",
+      "epico": "EP-03",
+      "tipo": "NFR",
+      "titulo": "Alvos de toque de 44px na nav e no mapa",
+      "descricao": "Itens da barra inferior, do drawer e nós do mapa com alvo ≥ 44×44px (o gate geral continua ≥ 24px).",
+      "prioridade": "P0",
+      "status": "READY",
+      "depende_de": [
+        "RQ-021"
+      ],
+      "fonte": "RC-MOBILE-CAUSAL-MAP-UI-001 (touch.minimum_target)",
+      "criterio_aceite": "Teste mede bounding box ≥ 44px"
+    },
+    {
+      "id": "RQ-026",
+      "epico": "EP-03",
+      "tipo": "FR",
+      "titulo": "Carrossel com scroll-snap, sem autoplay",
+      "descricao": "Seção Explorar com scroll-snap (v7), operável por teclado e botões; sem rotação automática.",
+      "prioridade": "P1",
+      "status": "READY",
+      "depende_de": [
+        "RQ-010"
+      ],
+      "fonte": "FT-01; Índex de rotas §10",
+      "criterio_aceite": "Sem setInterval/autoplay; setas e Tab percorrem os itens"
+    },
+    {
+      "id": "RQ-030",
+      "epico": "EP-04",
+      "tipo": "CONTENT",
+      "titulo": "Importar as 6 ilustrações RC_* para o banco",
+      "descricao": "WebP em public/images com variantes 16:9 e retrato; entradas no docs/banco-imagens/manifest.json com tem_texto false, alt descritivo e uso.",
+      "prioridade": "P1",
+      "status": "READY",
+      "depende_de": [],
+      "fonte": "FT-05; FT-06; ADR-12",
+      "criterio_aceite": "manifest com 6 entradas novas; cada uso tem alt; peso ≤ 250 KB por variante"
+    },
+    {
+      "id": "RQ-031",
+      "epico": "EP-04",
+      "tipo": "RULE",
+      "titulo": "Imagens REF_* nunca publicadas",
+      "descricao": "As 3 referências de terceiros (Bauhaus, edifício em corte, mapa urbano) ficam só no intake como referência de estilo.",
+      "prioridade": "P0",
+      "status": "READY",
+      "depende_de": [],
+      "fonte": "FT-06",
+      "criterio_aceite": "Nenhum arquivo REF_* em public/"
+    },
+    {
+      "id": "RQ-032",
+      "epico": "EP-04",
+      "tipo": "FR",
+      "titulo": "Bloco de imagem vertical 100vh em todo artigo",
+      "descricao": "Todo artigo tem imagem (decisão do usuário): bloco vertical 100vh com art direction (retrato no mobile, 16:9 no desktop), sem cortar pessoa nem cérebro; artigo sem ilustração própria usa a do seu pilar. Emenda ao ADR-12 ('artigo sem ilustração fica sem imagem' deixa de valer).",
+      "prioridade": "P1",
+      "status": "READY",
+      "depende_de": [
+        "RQ-030"
+      ],
+      "fonte": "DEC-U1; CF-11; Q2; DEC-U7",
+      "criterio_aceite": "Teste falha se algum artigo publicado não renderizar imagem; <picture> com 2 fontes; reflow 320px verde"
+    },
+    {
+      "id": "RQ-033",
+      "epico": "EP-04",
+      "tipo": "NFR",
+      "titulo": "Imagens sem regressão de LCP/CLS",
+      "descricao": "Imagem de hero com fetchpriority=high, width/height explícitos, lazy fora da primeira dobra.",
+      "prioridade": "P1",
+      "status": "READY",
+      "depende_de": [
+        "RQ-030"
+      ],
+      "fonte": "RQ-110",
+      "criterio_aceite": "CLS ≤ 0,1 nas rotas com imagem"
+    },
+    {
+      "id": "RQ-040",
+      "epico": "EP-05",
+      "tipo": "CONTENT",
+      "titulo": "Home com o texto canônico RC-LP-001",
+      "descricao": "Texto do RC-LP-001 sem reescrita, na anatomia de página (hero, 3 seções de pilar com 'Saiba mais ›', 'Por onde começar?'), na ordem Problema → Conhecimento → Ferramenta → Ação.",
+      "prioridade": "P1",
+      "status": "READY",
+      "depende_de": [
+        "RQ-020",
+        "RQ-030"
+      ],
+      "fonte": "CF-14; Q7; RC-LP-001; DEC-U12",
+      "criterio_aceite": "Texto idêntico ao canônico (teste compara parágrafos); hig.spec verde"
+    },
+    {
+      "id": "RQ-041",
+      "epico": "EP-05",
+      "tipo": "CONTENT",
+      "titulo": "Publicar os 4 artigos canônicos",
+      "descricao": "RC-ART-P1-001, RC-ART-P2-001, RC-ART-P3-001 e RC-ART-MASTER-001 como artigos novos pelo pipeline editorial, mantendo IDs e texto.",
+      "prioridade": "P1",
+      "status": "READY",
+      "depende_de": [
+        "RQ-032"
+      ],
+      "fonte": "FT-05; Q7; DEC-U12",
+      "criterio_aceite": "4 rotas /blog/:slug novas no hub (ADR-06) e no sitemap"
+    },
+    {
+      "id": "RQ-042",
+      "epico": "EP-05",
+      "tipo": "CONTENT",
+      "titulo": "Fontes RC-SRC-001 como referências",
+      "descricao": "As 12 fontes viram referências nos artigos e entradas em /evidencias.",
+      "prioridade": "P1",
+      "status": "READY",
+      "depende_de": [
+        "RQ-041"
+      ],
+      "fonte": "RC-SRC-001",
+      "criterio_aceite": "Cada fonte com link funcionando"
+    },
+    {
+      "id": "RQ-043",
+      "epico": "EP-05",
+      "tipo": "RULE",
+      "titulo": "Rótulo de conceito metodológico",
+      "descricao": "'Processo neuroadaptativo' e a cadeia Risco → Compensação → Solução aparecem como conceitos do projeto, nunca como norma ou constructo científico.",
+      "prioridade": "P0",
+      "status": "READY",
+      "depende_de": [],
+      "fonte": "CF-15; RC-EDITORIAL-PACK-001 README",
+      "criterio_aceite": "Revisão editorial no PR; nenhum texto atribui o conceito a ISO/W3C"
+    },
+    {
+      "id": "RQ-044",
+      "epico": "EP-05",
+      "tipo": "FR",
+      "titulo": "Bloco 'Próximo passo' no fim de todo artigo",
+      "descricao": "Artigos terminam com um CTA contextual (mapa ou ferramenta) e conteúdos relacionados; o modelo de 9 partes (Promessa → Próximo passo) vale para artigos novos.",
+      "prioridade": "P2",
+      "status": "READY",
+      "depende_de": [
+        "RQ-053"
+      ],
+      "fonte": "Índex de rotas §3 e §7",
+      "criterio_aceite": "Todo artigo tem exatamente 1 CTA primário no bloco final"
+    },
+    {
+      "id": "RQ-045",
+      "epico": "EP-05",
+      "tipo": "FR",
+      "titulo": "JSON-LD BlogPosting nos artigos",
+      "descricao": "headline, datePublished, dateModified, author, image e publisher (Organization com logo).",
+      "prioridade": "P1",
+      "status": "READY",
+      "depende_de": [
+        "RQ-041"
+      ],
+      "fonte": "FT-08; Índex de rotas §12",
+      "criterio_aceite": "Rich Results Test sem erro em 1 artigo de amostra"
+    },
+    {
+      "id": "RQ-046",
+      "epico": "EP-05",
+      "tipo": "DATA",
+      "titulo": "Pilares como taxonomia",
+      "descricao": "Pilar 1 Riscos Cognitivos, Pilar 2 Processos Neuroadaptativos, Pilar 3 Ferramentas e Soluções mapeados para /temas e para os nós do grafo.",
+      "prioridade": "P1",
+      "status": "READY",
+      "depende_de": [],
+      "fonte": "RC-LP-001",
+      "criterio_aceite": "Todo artigo canônico tem pilar"
+    },
+    {
+      "id": "RQ-050",
+      "epico": "EP-06",
+      "tipo": "FR",
+      "titulo": "Menu principal Artigos · Mapa · Ferramentas · Sobre",
+      "descricao": "Rótulos novos sobre URLs mantidas: Artigos → /blog, Mapa → /mapas, Sobre → /about; Ferramentas → /ferramentas (Ferramentas cognitivas, substitui a Loja, RQ-103).",
+      "prioridade": "P0",
+      "status": "READY",
+      "depende_de": [],
+      "fonte": "CF-12; CF-13; Q1; Q3; DEC-U6; DEC-U8",
+      "criterio_aceite": "Menu igual no desktop, no drawer e no rodapé-diretório"
+    },
+    {
+      "id": "RQ-051",
+      "epico": "EP-06",
+      "tipo": "RULE",
+      "titulo": "Toda rota nova no hub e no sitemap",
+      "descricao": "Rotas novas (/mapas/explorar, /mapas/explorar/:fatorId, /mapas/personalizar, /ferramentas) entram em app/data/routes.ts.",
+      "prioridade": "P0",
+      "status": "READY",
+      "depende_de": [],
+      "fonte": "ADR-06",
+      "criterio_aceite": "npm run routes:check verde"
+    },
+    {
+      "id": "RQ-052",
+      "epico": "EP-06",
+      "tipo": "FR",
+      "titulo": "Quatro perguntas em toda página",
+      "descricao": "Onde estou (eyebrow ou breadcrumb), o que significa (lead), por que importa (seção) e próxima ação (CTA primário).",
+      "prioridade": "P1",
+      "status": "READY",
+      "depende_de": [
+        "RQ-020"
+      ],
+      "fonte": "Índex de rotas (regra transversal)",
+      "criterio_aceite": "hig.spec verifica eyebrow, h1, lead e 1 CTA primário por região"
+    },
+    {
+      "id": "RQ-053",
+      "epico": "EP-06",
+      "tipo": "RULE",
+      "titulo": "Escada de CTA e 1 CTA primário por região",
+      "descricao": "CTA 0 continuar lendo → 1 exemplo → 2 explorar o mapa → 3 usar a ferramenta → 4 salvar resultado → 5 guia → 6 solução.",
+      "prioridade": "P1",
+      "status": "READY",
+      "depende_de": [],
+      "fonte": "Índex de rotas §7; neurodesign regra 01",
+      "criterio_aceite": "Nenhuma região com 2 botões primários"
+    },
+    {
+      "id": "RQ-054",
+      "epico": "EP-06",
+      "tipo": "FR",
+      "titulo": "Blog como índice por problemas",
+      "descricao": "Chips Atenção · Memória · Sobrecarga · Interrupções · Decisão · Organização e 'Explore por' Problemas · Processos · Contextos · Soluções · Ferramentas.",
+      "prioridade": "P2",
+      "status": "READY",
+      "depende_de": [
+        "RQ-062"
+      ],
+      "fonte": "Índex de rotas §2",
+      "criterio_aceite": "Chips filtram a lista e são links compartilháveis"
+    },
+    {
+      "id": "RQ-060",
+      "epico": "EP-07",
+      "tipo": "DATA",
+      "titulo": "Schema canônico único do grafo",
+      "descricao": "Armazenamento no formato CORRELATION_RECORD da Teia Única (nós e arestas tipados, proveniência, papel epistêmico, status); o mapa é projeção para 9 tipos visuais (06-DATA-SPEC).",
+      "prioridade": "P1",
+      "status": "READY",
+      "depende_de": [],
+      "fonte": "CF-05; CF-09; Teia CORRELATION_RECORD; RC-MOBILE causal_data_model; CF-17",
+      "criterio_aceite": "npm test valida o grafo contra CORRELATION_RECORD.schema.json e as 7 regras do 06-DATA-SPEC §5"
+    },
+    {
+      "id": "RQ-061",
+      "epico": "EP-07",
+      "tipo": "RULE",
+      "titulo": "Cadeia causal canônica",
+      "descricao": "Objetivo → Contexto → Demanda → Vulnerabilidade → Exposição → Risco → Evento → Impacto → Compensação → Controle/Solução → Resultado → Medição → Aprendizado.",
+      "prioridade": "P1",
+      "status": "READY",
+      "depende_de": [],
+      "fonte": "CF-05; Q8; DEC-U13",
+      "criterio_aceite": "Enum de tipos do schema = esta cadeia + evidence"
+    },
+    {
+      "id": "RQ-062",
+      "epico": "EP-07",
+      "tipo": "DATA",
+      "titulo": "Grafo inicial a partir dos artigos canônicos",
+      "descricao": "Nós do vocabulário P1/P3 (interrupção, troca de tarefa, sobrecarga, ambiguidade, pressão temporal, perda de contexto, retrabalho, erro; compensações externalização, redução, explicitação, automação). Relação não explícita no texto = E_INFERRED + PROPOSED.",
+      "prioridade": "P1",
+      "status": "READY",
+      "depende_de": [
+        "RQ-060"
+      ],
+      "fonte": "CF-06; Teia (regra de fonte de verdade); CF-16",
+      "criterio_aceite": "Todo nó cita o artigo de origem; nenhuma relação inferida aparece como evidência"
+    },
+    {
+      "id": "RQ-063",
+      "epico": "EP-07",
+      "tipo": "RULE",
+      "titulo": "Nenhum número sem evidência",
+      "descricao": "Valor quantitativo publicado exige evidence_id e fonte verificável; valores de mockup ('+42%', barras) não entram.",
+      "prioridade": "P0",
+      "status": "READY",
+      "depende_de": [],
+      "fonte": "AC-005; CF-06",
+      "criterio_aceite": "Teste falha se nó ou aresta tiver métrica sem evidence_ids"
+    },
+    {
+      "id": "RQ-064",
+      "epico": "EP-07",
+      "tipo": "RULE",
+      "titulo": "Onde vive o código do grafo",
+      "descricao": "Em apps/blog até o workflow consumir o mesmo grafo; então packages/rc-graph (ADR-M01).",
+      "prioridade": "P2",
+      "status": "READY",
+      "depende_de": [
+        "RQ-060"
+      ],
+      "fonte": "ADR-M01; CF-09",
+      "criterio_aceite": "—"
+    },
+    {
+      "id": "RQ-065",
+      "epico": "EP-07",
+      "tipo": "RULE",
+      "titulo": "Persistência sem Supabase",
+      "descricao": "Grafo versionado no repo na fase 1; Cloudflare D1 se o CMS precisar editar.",
+      "prioridade": "P2",
+      "status": "READY",
+      "depende_de": [],
+      "fonte": "CF-08; ADR-07",
+      "criterio_aceite": "Nenhuma dependência @supabase/*"
+    },
+    {
+      "id": "RQ-070",
+      "epico": "EP-08",
+      "tipo": "FR",
+      "titulo": "Explorar: grafo radial focus + context",
+      "descricao": "/mapas/explorar abre com 1 nó focal e no máximo 8 nós visíveis; tocar um nó seleciona, destaca arestas, esmaece o resto, recentra e expande os vizinhos.",
+      "prioridade": "P1",
+      "status": "READY",
+      "depende_de": [
+        "RQ-062",
+        "RQ-079"
+      ],
+      "fonte": "RC-MOBILE SCR-02; AC-004; INT-002",
+      "criterio_aceite": "Teste conta ≤ 8 nós na carga; toque recentra"
+    },
+    {
+      "id": "RQ-071",
+      "epico": "EP-08",
+      "tipo": "FR",
+      "titulo": "Bottom sheet de detalhe",
+      "descricao": "Snap recolhido/médio/expandido; abas Causas · Impactos · Soluções · Evidências; arrastar e botões; Esc fecha no desktop.",
+      "prioridade": "P1",
+      "status": "READY",
+      "depende_de": [
+        "RQ-070"
+      ],
+      "fonte": "RC-MOBILE SCR-03; INT-005",
+      "criterio_aceite": "Operável só por toque e só por teclado"
+    },
+    {
+      "id": "RQ-072",
+      "epico": "EP-08",
+      "tipo": "FR",
+      "titulo": "Rota de detalhe do fator",
+      "descricao": "/mapas/explorar/:fatorId compartilhável; voltar ao mapa preserva a seleção.",
+      "prioridade": "P1",
+      "status": "READY",
+      "depende_de": [
+        "RQ-070"
+      ],
+      "fonte": "RC-MOBILE ROUTE-FACTOR; AC-002; INT-003",
+      "criterio_aceite": "Abrir fator e voltar só por toque"
+    },
+    {
+      "id": "RQ-073",
+      "epico": "EP-08",
+      "tipo": "NFR",
+      "titulo": "Alternativa em lista",
+      "descricao": "Aba Lista com o mesmo conteúdo do grafo (nós, relações em texto), navegável por teclado e leitor de tela.",
+      "prioridade": "P0",
+      "status": "READY",
+      "depende_de": [
+        "RQ-070"
+      ],
+      "fonte": "AC-006; accessibility.graph",
+      "criterio_aceite": "Toda aresta do grafo aparece como frase na lista"
+    },
+    {
+      "id": "RQ-074",
+      "epico": "EP-08",
+      "tipo": "FR",
+      "titulo": "Filtros por tipo de nó",
+      "descricao": "Chips por tipo da cadeia canônica (não por estilo de vida/saúde).",
+      "prioridade": "P2",
+      "status": "READY",
+      "depende_de": [
+        "RQ-070"
+      ],
+      "fonte": "RC-MOBILE filters; CF-06",
+      "criterio_aceite": "Filtro reduz nós sem quebrar o foco"
+    },
+    {
+      "id": "RQ-075",
+      "epico": "EP-08",
+      "tipo": "NFR",
+      "titulo": "Nada depende de hover; pan/zoom são secundários",
+      "descricao": "Toda função essencial por toque e teclado; pan e zoom complementam.",
+      "prioridade": "P1",
+      "status": "READY",
+      "depende_de": [
+        "RQ-070"
+      ],
+      "fonte": "INT-001; INT-004",
+      "criterio_aceite": "Teste sem hover cobre todos os fluxos"
+    },
+    {
+      "id": "RQ-076",
+      "epico": "EP-08",
+      "tipo": "NFR",
+      "titulo": "Semântica visual além da cor",
+      "descricao": "Tipo de nó por forma + rótulo (● ◆ ■ ▲ ! ✦ ⬢ ✓ ○); tipo de aresta por traço (sólida/tracejada) + rótulo textual.",
+      "prioridade": "P1",
+      "status": "READY",
+      "depende_de": [
+        "RQ-011",
+        "RQ-012"
+      ],
+      "fonte": "Causal Knowledge Graph; accessibility.color",
+      "criterio_aceite": "Em escala de cinza os tipos continuam distinguíveis"
+    },
+    {
+      "id": "RQ-077",
+      "epico": "EP-08",
+      "tipo": "NFR",
+      "titulo": "Reflow em 320px",
+      "descricao": "Mapa e sheet funcionam em 320px sem rolagem horizontal da página.",
+      "prioridade": "P0",
+      "status": "READY",
+      "depende_de": [
+        "RQ-070"
+      ],
+      "fonte": "AC-001",
+      "criterio_aceite": "hig.spec reflow verde em /mapas/explorar"
+    },
+    {
+      "id": "RQ-078",
+      "epico": "EP-08",
+      "tipo": "FR",
+      "titulo": "Modo 'Por quê?'",
+      "descricao": "A partir de um nó, mostra a cadeia de causas acima e as compensações abaixo.",
+      "prioridade": "P2",
+      "status": "READY",
+      "depende_de": [
+        "RQ-070"
+      ],
+      "fonte": "Causal Knowledge Graph",
+      "criterio_aceite": "Cadeia exibida também em texto"
+    },
+    {
+      "id": "RQ-079",
+      "epico": "EP-08",
+      "tipo": "NFR",
+      "titulo": "Stack do mapa carregada só na rota",
+      "descricao": "React Flow + Dagre client-only e em lazy load em /mapas/explorar; Cytoscape adiado.",
+      "prioridade": "P1",
+      "status": "READY",
+      "depende_de": [],
+      "fonte": "CF-08",
+      "criterio_aceite": "Bundle das outras rotas sem crescimento; INP ≤ 200ms no mapa"
+    },
+    {
+      "id": "RQ-080",
+      "epico": "EP-08",
+      "tipo": "FR",
+      "titulo": "Modos Problemas, Soluções, Evidências",
+      "descricao": "Presets de filtro sobre o mesmo grafo.",
+      "prioridade": "P3",
+      "status": "READY",
+      "depende_de": [
+        "RQ-074"
+      ],
+      "fonte": "Causal Knowledge Graph (4 modos)",
+      "criterio_aceite": "—"
+    },
+    {
+      "id": "RQ-081",
+      "epico": "EP-08",
+      "tipo": "FR",
+      "titulo": "Simulação 'e se…' (estilo LOOPY)",
+      "descricao": "Fora desta onda; só com modelo e dados que sustentem os números.",
+      "prioridade": "P3",
+      "status": "BACKLOG",
+      "depende_de": [
+        "RQ-063"
+      ],
+      "fonte": "Causal Loop Diagram",
+      "criterio_aceite": "—"
+    },
+    {
+      "id": "RQ-090",
+      "epico": "EP-09",
+      "tipo": "FR",
+      "titulo": "Personalizar em 3 passos",
+      "descricao": "/mapas/personalizar: focos de trabalho, interesses e 'Mostrar evidências'; muda só a ordem e o destaque, nunca os fatos; guardado localmente, sem conta.",
+      "prioridade": "P2",
+      "status": "READY",
+      "depende_de": [
+        "RQ-070"
+      ],
+      "fonte": "RC-MOBILE SCR-04; CF-07; CF-07 (ASSUMPTION mantida)",
+      "criterio_aceite": "Limpar dados do navegador volta ao padrão; nenhum dado sai do dispositivo"
+    },
+    {
+      "id": "RQ-100",
+      "epico": "EP-10",
+      "tipo": "FR",
+      "titulo": "Ferramentas cognitivas: índice em /ferramentas",
+      "descricao": "/ferramentas lista as ferramentas cognitivas (scanner, checklists, avaliações, ferramentas HTML, workbooks…) reaproveitando o catálogo e os componentes de app/features/store; rótulos e textos falam em ferramentas, nunca em loja ou compra.",
+      "prioridade": "P2",
+      "status": "READY",
+      "depende_de": [
+        "RQ-103"
+      ],
+      "fonte": "DEC-U9; GAP-06 (fechada); ADR-08",
+      "criterio_aceite": "/ferramentas e /ferramentas/:tipo/:slug renderizam o catálogo; nenhum texto 'Loja' visível; tests/store.spec.ts migrado e verde"
+    },
+    {
+      "id": "RQ-101",
+      "epico": "EP-10",
+      "tipo": "FR",
+      "titulo": "Ferramenta piloto: interrupções do processo",
+      "descricao": "5–8 perguntas → resultado (exposição, interrupções, recuperação de contexto) → 3 ações + 1 artigo + 1 ferramenta + próximo passo.",
+      "prioridade": "P3",
+      "status": "BLOCKED",
+      "depende_de": [
+        "RQ-100"
+      ],
+      "fonte": "Índex de rotas §4; GAP-02",
+      "criterio_aceite": "—"
+    },
+    {
+      "id": "RQ-102",
+      "epico": "EP-10",
+      "tipo": "FR",
+      "titulo": "Página de Resultado",
+      "descricao": "/resultado/:id com explicação e próximos passos.",
+      "prioridade": "P3",
+      "status": "BLOCKED",
+      "depende_de": [
+        "RQ-101"
+      ],
+      "fonte": "GAP-07",
+      "criterio_aceite": "—"
+    },
+    {
+      "id": "RQ-103",
+      "epico": "EP-10",
+      "tipo": "FR",
+      "titulo": "Retirar a Loja: /loja vira /ferramentas",
+      "descricao": "A Loja deixa de existir (decisão do usuário). Rotas /loja, /loja/:tipo e /loja/:tipo/:slug passam a /ferramentas/… com redirect 301 em public/_redirects; nav, hub (ADR-06), sitemap e prerender atualizados; ADR-08 marcado como substituído por um ADR novo de Ferramentas cognitivas.",
+      "prioridade": "P1",
+      "status": "READY",
+      "depende_de": [
+        "RQ-050"
+      ],
+      "fonte": "DEC-U9; DEC-U8 (URLs mantidas, exceto a Loja); ADR-08",
+      "criterio_aceite": "GET /loja/ e /loja/:tipo/:slug/ respondem 301 para o caminho equivalente em /ferramentas; routes:check verde; nenhum link interno para /loja"
+    },
+    {
+      "id": "RQ-110",
+      "epico": "EP-11",
+      "tipo": "NFR",
+      "titulo": "Gate de Core Web Vitals",
+      "descricao": "p75 mobile e desktop: LCP ≤ 2,5s, INP ≤ 200ms, CLS ≤ 0,1. Medição de campo pelo Cloudflare Web Analytics (DEC-U11).",
+      "prioridade": "P1",
+      "status": "READY",
+      "depende_de": [],
+      "fonte": "Índex de rotas §12",
+      "criterio_aceite": "Lighthouse CI ou medição registrada no PR das rotas tocadas"
+    },
+    {
+      "id": "RQ-111",
+      "epico": "EP-11",
+      "tipo": "FR",
+      "titulo": "Eventos por estágio da jornada",
+      "descricao": "Cloudflare Web Analytics (beacon) para páginas e Core Web Vitals reais; eventos por estágio (BLOG/ARTICLE/TOOL/RESULT/BUSINESS) gravados no Workers Analytics Engine via binding, com problem_id, solution_id, capability_id, asset_id, qfw_id, campaign_id quando houver. Sem cookies nem dado pessoal.",
+      "prioridade": "P2",
+      "status": "READY",
+      "depende_de": [
+        "RQ-060"
+      ],
+      "fonte": "Índex de rotas §11; Teia N8; DEC-U11",
+      "criterio_aceite": "Binding analytics_engine no wrangler.jsonc; teste unitário do emissor de eventos; nenhum identificador pessoal no payload"
+    },
+    {
+      "id": "RQ-120",
+      "epico": "EP-12",
+      "tipo": "DATA",
+      "titulo": "correlation_refs no Quick Framework",
+      "descricao": "Adapter adiciona correlation_refs e solution_candidates sem mudar as 12 seções.",
+      "prioridade": "P3",
+      "status": "READY",
+      "depende_de": [
+        "RQ-060"
+      ],
+      "fonte": "Teia N2; DEC-U10",
+      "criterio_aceite": "—"
+    },
+    {
+      "id": "RQ-121",
+      "epico": "EP-12",
+      "tipo": "DATA",
+      "titulo": "Descoberta em Ferramentas por problema + compensação",
+      "descricao": "Ferramentas ganham correlation_refs e filtro por problem + operational_function + compensation + fit (adapter da Teia antes chamado Solution Store).",
+      "prioridade": "P3",
+      "status": "READY",
+      "depende_de": [
+        "RQ-060",
+        "RQ-100"
+      ],
+      "fonte": "Teia N3/N7; DEC-U10",
+      "criterio_aceite": "—"
+    },
+    {
+      "id": "RQ-122",
+      "epico": "EP-12",
+      "tipo": "DATA",
+      "titulo": "Registries canônicos",
+      "descricao": "problems, operational_functions, cognitive_capacities, factors, compensations, controls, capabilities, app_features.",
+      "prioridade": "P3",
+      "status": "READY",
+      "depende_de": [
+        "RQ-060"
+      ],
+      "fonte": "Teia N1; DEC-U10",
+      "criterio_aceite": "—"
+    }
+  ]
+}

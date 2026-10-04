@@ -1,0 +1,108 @@
+ID: RC-LP-001
+VERSION: 1.0.0
+STATUS: CANÔNICO
+TITLE: Riscos Cognitivos: entenda o problema, redesenhe o trabalho e transforme análise em solução
+
+RISCOS COGNITIVOS: ENTENDA O PROBLEMA, REDESENHE O TRABALHO E TRANSFORME ANÁLISE EM SOLUÇÃO
+
+Riscos cognitivos ajudam a observar como tarefas, processos, ambientes e tecnologias podem aumentar a demanda sobre atenção, memória, planejamento, decisão e outras capacidades necessárias para executar um trabalho.
+
+Neste projeto, o objetivo não é transformar características individuais em risco.
+
+A proposta é entender a interação entre Pessoa × Tarefa × Ambiente × Processo × Projeto × Tecnologia e identificar onde o próprio sistema de trabalho pode criar demanda cognitiva evitável.
+
+A arquitetura editorial segue três pilares:
+
+Riscos Cognitivos → Processos Neuroadaptativos → Ferramentas e Soluções
+
+Em termos simples:
+
+Problema → Método → Aplicação
+
+O QUE SÃO RISCOS COGNITIVOS?
+
+Neste projeto, usamos "risco cognitivo" como um conceito operacional.
+
+Ele serve para investigar situações em que determinadas demandas cognitivas, dentro de um objetivo e contexto, podem criar exposição e contribuir para eventos que prejudicam a execução.
+
+A cadeia de análise é:
+
+Objetivo → Contexto → Demanda Cognitiva → Vulnerabilidade → Exposição → Risco Cognitivo → Evento → Impacto
+
+Essa cadeia é um framework metodológico deste projeto.
+
+OS 3 PILARES DO RISCOS COGNITIVOS
+
+1. RISCOS COGNITIVOS: ENTENDER O PROBLEMA
+
+O primeiro pilar cria o vocabulário.
+
+Aqui investigamos fatores de risco cognitivo, demandas cognitivas, vulnerabilidades, exposição, eventos, impactos, sobrecarga, interrupções, perda de contexto, memória, atenção e tomada de decisão.
+
+Pergunta central:
+
+O que está tornando a execução mais difícil e onde essa dificuldade está surgindo?
+
+2. PROCESSOS NEUROADAPTATIVOS: TRANSFORMAR CONHECIMENTO EM MÉTODO
+
+Reconhecer um problema não basta.
+
+Precisamos entender como o trabalho foi projetado.
+
+É aqui que entram gestão de projetos, gestão de processos, BPM, BPMN, gestão de riscos, análise e auditoria de processos, desenho e redesenho, controles, runbooks e melhoria contínua.
+
+Neste projeto, chamamos de processo neuroadaptativo um processo redesenhado para reduzir demanda cognitiva evitável e tornar informação, estado, dependências e próximas ações mais explícitos.
+
+Esse é um conceito metodológico próprio, não uma norma técnica estabelecida.
+
+3. FERRAMENTAS E SOLUÇÕES: COLOCAR O MÉTODO EM PRÁTICA
+
+Depois de identificar o problema e redesenhar o processo, podemos escolher uma solução.
+
+Ela pode ser checklist, procedimento, runbook, workflow, automação, agente, skill, interface, software, Executar ou MapOS.
+
+Pergunta central:
+
+O que o sistema pode assumir para que a pessoa não precise administrar mentalmente tudo o que o trabalho exige?
+
+DO PROJETO AO APRENDIZADO
+
+PROJETO
+O que queremos mudar.
+
+PROCESSO
+Como o trabalho acontece.
+
+RISCO
+O que pode impedir o objetivo.
+
+ANÁLISE
+Por que e como isso pode acontecer.
+
+RISCO COGNITIVO
+Onde a demanda cognitiva cria exposição.
+
+COMPENSAÇÃO
+O que pode ser reduzido, externalizado ou automatizado.
+
+SOLUÇÃO
+Como transformar a compensação em algo utilizável.
+
+EXECUÇÃO
+Aplicar a mudança.
+
+MEDIÇÃO
+Saber se funcionou.
+
+APRENDIZADO
+Usar o resultado para melhorar o próximo ciclo.
+
+POR ONDE COMEÇAR?
+
+Se você ainda precisa entender o fenômeno, comece por Riscos Cognitivos.
+
+Se já identificou o problema e precisa alterar a forma de trabalhar, avance para Processos Neuroadaptativos.
+
+Se já sabe o que precisa ser compensado, explore Ferramentas e Soluções.
+
+CTA: Comece por "Riscos cognitivos: o que são, como surgem e por que importam".
