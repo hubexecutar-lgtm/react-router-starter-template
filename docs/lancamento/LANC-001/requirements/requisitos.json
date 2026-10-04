@@ -128,10 +128,11 @@
       "titulo": "ADR-13 do blog: Brand Local v7 como identidade única",
       "descricao": "Registrar em apps/blog/CLAUDE.md que a paleta e a tipografia de interface são as do v7 (= ADR-11), que o amarelo/preto do v6 foi descartado e que RC-BRAND-STYLING-001 é só a camada de ilustração e vetor.",
       "prioridade": "P0",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [],
       "fonte": "DEC-U1; DEC-U2; DEC-U3; CF-01; CF-03",
-      "criterio_aceite": "ADR-13 com status Aceita, citado por PR-B a PR-H"
+      "criterio_aceite": "ADR-13 com status Aceita, citado por PR-B a PR-H",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/22"
     },
     {
       "id": "RQ-011",
@@ -140,12 +141,13 @@
       "titulo": "Camada de tokens de ilustração e vetor --illu-*",
       "descricao": "Em global.css: --illu-ink #18346F, --illu-blue #3155E7, --illu-coral #F28F83, --illu-blue-soft #A9BFF4, --illu-canvas #F4F6F1. Uso restrito a SVG, ilustrações e fundos decorativos.",
       "prioridade": "P0",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [
         "RQ-010"
       ],
       "fonte": "DEC-U3; CF-01; RC-BRAND-STYLING-001",
-      "criterio_aceite": "tests/surfaces.spec.ts impede esses hex fora de global.css; nenhum seletor de texto usa --illu-coral ou --illu-blue-soft"
+      "criterio_aceite": "tests/surfaces.spec.ts impede esses hex fora de global.css; nenhum seletor de texto usa --illu-coral ou --illu-blue-soft",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/22"
     },
     {
       "id": "RQ-012",
@@ -154,12 +156,13 @@
       "titulo": "Contraste de objetos gráficos ≥ 3:1",
       "descricao": "Marca gráfica com significado (nó, aresta, série, ícone de estado) ≥ 3:1 contra o fundo. Coral (2,33:1) e azul claro (1,83:1) só como preenchimento decorativo ou com contorno ≥ 3:1; nunca como texto nem como único indicador.",
       "prioridade": "P0",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [
         "RQ-011"
       ],
       "fonte": "CF-02; FT-07; WCAG 2.2 1.4.11",
-      "criterio_aceite": "Teste de contraste dos tokens de grafo no tokens.spec.ts; axe sem violação de contraste"
+      "criterio_aceite": "Teste de contraste dos tokens de grafo no tokens.spec.ts; axe sem violação de contraste",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/22"
     },
     {
       "id": "RQ-013",
@@ -168,12 +171,13 @@
       "titulo": "Gráficos continuam no ADR-04",
       "descricao": "Séries de gráfico usam --chart-*; o mapa causal usa --primary para ênfase causal e forma + rótulo para tipo de nó.",
       "prioridade": "P1",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [
         "RQ-010"
       ],
       "fonte": "CF-01; ADR-04",
-      "criterio_aceite": "Nenhum hex novo em componentes de gráfico"
+      "criterio_aceite": "Nenhum hex novo em componentes de gráfico",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/22"
     },
     {
       "id": "RQ-014",
@@ -182,12 +186,13 @@
       "titulo": "Tokens de motion do v7",
       "descricao": "--ease cubic-bezier(.22,1,.36,1); durações nomeadas; keyframes heroReveal (opacity 0→1, translateY 18px→0). Tudo vira 'none' sob prefers-reduced-motion.",
       "prioridade": "P0",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [
         "RQ-010"
       ],
       "fonte": "DEC-U1; FT-02",
-      "criterio_aceite": "Com emulação reduced-motion, nenhuma animação nem transição maior que 0,01s; tokens.spec.ts trava --ease"
+      "criterio_aceite": "Com emulação reduced-motion, nenhuma animação nem transição maior que 0,01s; tokens.spec.ts trava --ease",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/22"
     },
     {
       "id": "RQ-015",
@@ -196,12 +201,13 @@
       "titulo": "Tokens de componentes novos",
       "descricao": "--radius-sheet 20px (topo do bottom sheet), --radius-node pílula, --shadow-overlay para drawer e sheet. Cards continuam célula 2px (ADR-12).",
       "prioridade": "P1",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [
         "RQ-010"
       ],
       "fonte": "CF-04; FT-03",
-      "criterio_aceite": "surfaces.spec.ts continua exigindo 2px nos cards"
+      "criterio_aceite": "surfaces.spec.ts continua exigindo 2px nos cards",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/22"
     },
     {
       "id": "RQ-020",

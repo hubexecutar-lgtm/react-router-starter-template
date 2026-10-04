@@ -60,6 +60,40 @@
   --chart-3: var(--color-critical-default);
   --chart-4: var(--brand-500);
   --chart-5: var(--muted-foreground);
+  /* Illustration & vector layer (ADR-13 / RC-BRAND-STYLING-001, LANC-001 RQ-011): SVG, illustrations,
+     decorative backgrounds and halftone only. Never interface text, surfaces or actions (those stay ADR-11).
+     --illu-coral (2.33:1) and --illu-blue-soft (1.83:1) are never text nor the only carrier of meaning (RQ-012). */
+  --illu-ink: #18346f; /* main stroke, text embedded in SVG — 11.93:1 */
+  --illu-blue: #3155e7; /* outline, path, scene focus — 5.86:1; never replaces --primary in UI */
+  --illu-coral: #f28f83; /* sparse emphasis (event, focus) */
+  --illu-blue-soft: #a9bff4; /* planes, depth */
+  --illu-canvas: #f4f6f1; /* illustration background; never under long text */
+
+  /* Causal graph (LANC-001 RQ-012/RQ-076): aliases only, no new hex. Meaningful marks >= 3:1. */
+  --graph-node-bg: var(--surface-model);
+  --graph-node-border: var(--border-default);
+  --graph-node-border-selected: var(--primary);
+  --graph-node-text: var(--foreground);
+  --graph-edge: var(--muted-foreground);
+  --graph-edge-active: var(--primary);
+  --graph-dim-opacity: 0.35;
+  --graph-accent-event: var(--illu-coral); /* decorative: always with the --graph-accent-event-outline */
+  --graph-accent-event-outline: var(--illu-ink);
+
+  /* Motion (v7, LANC-001 RQ-014). Zeroed under prefers-reduced-motion (end of file). */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 150ms;
+  --dur-base: 250ms;
+  --dur-slow: 450ms;
+
+  /* Component geometry (LANC-001 RQ-015). Cards stay table cells (ADR-12). */
+  --radius-card: var(--table-radius); /* 2px */
+  --radius-control: var(--radius); /* 8px */
+  --radius-pill: 40px; /* chips */
+  --radius-node: var(--radius-pill); /* graph node */
+  --radius-sheet: 20px; /* bottom sheet, top corners only */
+  --shadow-overlay: var(--elevation-overlay); /* drawer, sheet */
+
   /* Extra-gray text (captions, axis ticks, timestamps). AA only on card/background/popover;
      on muted/secondary surfaces use --muted-foreground. */
   --muted-foreground-subtle: var(--muted-foreground);
@@ -262,6 +296,8 @@
 }
 
 .dark {
+  /* PROVISIONAL (ADR-13): --illu-ink is 1.4:1 on the dark canvas; the event outline uses the text colour. */
+  --graph-accent-event-outline: var(--foreground);
   /* PROVISIONAL dark theme: the mockups (ADR-11) define only the light theme. These values
      derive from DESIGN-HANDOFF-001 v2 (hex -> oklch) until a dark spec exists. */
   --background: oklch(0.227 0.004 286.09); /* color-bg-canvas #1c1c1e */
@@ -990,4 +1026,41 @@ body {
 /* Anchors land below the sticky site header. */
 html {
   scroll-padding-top: 5.5rem;
+}
+
+/* Motion (v7, ADR-13 / LANC-001 RQ-014): hero entrance. */
+@keyframes heroReveal {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.rc-hero-reveal {
+  animation: heroReveal var(--dur-slow) var(--ease) both;
+}
+
+/* Reduced motion (ADR-13 / LANC-001 RQ-014): no animation nor transition longer than 0.01s anywhere. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 0ms;
+    --dur-base: 0ms;
+    --dur-slow: 0ms;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+  .rc-hero-reveal {
+    animation: none !important;
+  }
 }

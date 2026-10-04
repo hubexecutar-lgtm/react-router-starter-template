@@ -6,8 +6,8 @@
 
 | Prioridade | READY | NEEDS_CONFIRMATION | BLOCKED | BACKLOG | DONE |
 |---|---|---|---|---|---|
-| P0 | 15 | 0 | 0 | 0 | 1 |
-| P1 | 26 | 0 | 0 | 0 | 0 |
+| P0 | 11 | 0 | 0 | 0 | 5 |
+| P1 | 24 | 0 | 0 | 0 | 2 |
 | P2 | 9 | 0 | 1 | 0 | 1 |
 | P3 | 4 | 0 | 2 | 1 | 0 |
 
@@ -25,12 +25,12 @@ Total: 60 requisitos em 12 épicos.
 
 | ID | Tipo | Prio | Status | Requisito | Critério de aceite | Depende | Fonte |
 |---|---|---|---|---|---|---|---|
-| RQ-010 | RULE | P0 | READY | **ADR-13 do blog: Brand Local v7 como identidade única.** Registrar em apps/blog/CLAUDE.md que a paleta e a tipografia de interface são as do v7 (= ADR-11), que o amarelo/preto do v6 foi descartado e que RC-BRAND-STYLING-001 é só a camada de ilustração e vetor. | ADR-13 com status Aceita, citado por PR-B a PR-H | — | DEC-U1; DEC-U2; DEC-U3; CF-01; CF-03 |
-| RQ-011 | FR | P0 | READY | **Camada de tokens de ilustração e vetor --illu-*.** Em global.css: --illu-ink #18346F, --illu-blue #3155E7, --illu-coral #F28F83, --illu-blue-soft #A9BFF4, --illu-canvas #F4F6F1. Uso restrito a SVG, ilustrações e fundos decorativos. | tests/surfaces.spec.ts impede esses hex fora de global.css; nenhum seletor de texto usa --illu-coral ou --illu-blue-soft | RQ-010 | DEC-U3; CF-01; RC-BRAND-STYLING-001 |
-| RQ-012 | RULE | P0 | READY | **Contraste de objetos gráficos ≥ 3:1.** Marca gráfica com significado (nó, aresta, série, ícone de estado) ≥ 3:1 contra o fundo. Coral (2,33:1) e azul claro (1,83:1) só como preenchimento decorativo ou com contorno ≥ 3:1; nunca como texto nem como único indicador. | Teste de contraste dos tokens de grafo no tokens.spec.ts; axe sem violação de contraste | RQ-011 | CF-02; FT-07; WCAG 2.2 1.4.11 |
-| RQ-013 | RULE | P1 | READY | **Gráficos continuam no ADR-04.** Séries de gráfico usam --chart-*; o mapa causal usa --primary para ênfase causal e forma + rótulo para tipo de nó. | Nenhum hex novo em componentes de gráfico | RQ-010 | CF-01; ADR-04 |
-| RQ-014 | FR | P0 | READY | **Tokens de motion do v7.** --ease cubic-bezier(.22,1,.36,1); durações nomeadas; keyframes heroReveal (opacity 0→1, translateY 18px→0). Tudo vira 'none' sob prefers-reduced-motion. | Com emulação reduced-motion, nenhuma animação nem transição maior que 0,01s; tokens.spec.ts trava --ease | RQ-010 | DEC-U1; FT-02 |
-| RQ-015 | FR | P1 | READY | **Tokens de componentes novos.** --radius-sheet 20px (topo do bottom sheet), --radius-node pílula, --shadow-overlay para drawer e sheet. Cards continuam célula 2px (ADR-12). | surfaces.spec.ts continua exigindo 2px nos cards | RQ-010 | CF-04; FT-03 |
+| RQ-010 | RULE | P0 | DONE | **ADR-13 do blog: Brand Local v7 como identidade única.** Registrar em apps/blog/CLAUDE.md que a paleta e a tipografia de interface são as do v7 (= ADR-11), que o amarelo/preto do v6 foi descartado e que RC-BRAND-STYLING-001 é só a camada de ilustração e vetor. | ADR-13 com status Aceita, citado por PR-B a PR-H | — | DEC-U1; DEC-U2; DEC-U3; CF-01; CF-03 |
+| RQ-011 | FR | P0 | DONE | **Camada de tokens de ilustração e vetor --illu-*.** Em global.css: --illu-ink #18346F, --illu-blue #3155E7, --illu-coral #F28F83, --illu-blue-soft #A9BFF4, --illu-canvas #F4F6F1. Uso restrito a SVG, ilustrações e fundos decorativos. | tests/surfaces.spec.ts impede esses hex fora de global.css; nenhum seletor de texto usa --illu-coral ou --illu-blue-soft | RQ-010 | DEC-U3; CF-01; RC-BRAND-STYLING-001 |
+| RQ-012 | RULE | P0 | DONE | **Contraste de objetos gráficos ≥ 3:1.** Marca gráfica com significado (nó, aresta, série, ícone de estado) ≥ 3:1 contra o fundo. Coral (2,33:1) e azul claro (1,83:1) só como preenchimento decorativo ou com contorno ≥ 3:1; nunca como texto nem como único indicador. | Teste de contraste dos tokens de grafo no tokens.spec.ts; axe sem violação de contraste | RQ-011 | CF-02; FT-07; WCAG 2.2 1.4.11 |
+| RQ-013 | RULE | P1 | DONE | **Gráficos continuam no ADR-04.** Séries de gráfico usam --chart-*; o mapa causal usa --primary para ênfase causal e forma + rótulo para tipo de nó. | Nenhum hex novo em componentes de gráfico | RQ-010 | CF-01; ADR-04 |
+| RQ-014 | FR | P0 | DONE | **Tokens de motion do v7.** --ease cubic-bezier(.22,1,.36,1); durações nomeadas; keyframes heroReveal (opacity 0→1, translateY 18px→0). Tudo vira 'none' sob prefers-reduced-motion. | Com emulação reduced-motion, nenhuma animação nem transição maior que 0,01s; tokens.spec.ts trava --ease | RQ-010 | DEC-U1; FT-02 |
+| RQ-015 | FR | P1 | DONE | **Tokens de componentes novos.** --radius-sheet 20px (topo do bottom sheet), --radius-node pílula, --shadow-overlay para drawer e sheet. Cards continuam célula 2px (ADR-12). | surfaces.spec.ts continua exigindo 2px nos cards | RQ-010 | CF-04; FT-03 |
 
 ## EP-03 — Shell e navegação v6/v7 (PR-C)
 

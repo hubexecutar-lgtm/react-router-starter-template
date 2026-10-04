@@ -314,3 +314,36 @@ to `apps/blog/`.
     `tests/surfaces.spec.ts` trava a célula (sem contorno, raio 2px) nos cards.
   - Imagem nova no site: `tem_texto: false` no manifest, webp em `public/images/`, `alt` e uso registrados.
 
+
+### ADR-13: Brand Local v7 como identidade única; RC-BRAND-STYLING-001 só como camada de ilustração (LANC-001)
+
+- **Status:** Aceita — implementada no PR-B do LANC-001 (RQ-010…015). Decisões em
+  `docs/lancamento/LANC-001/requirements/01-DECISOES-E-AMBIGUIDADES.md` (DEC-U2, DEC-U3, CF-01…04); tokens em
+  `05-TOKENS-SPEC.md`. Citado pelos PR-B a PR-H.
+- **Contexto:** O pacote de lançamento trouxe três referências visuais concorrentes: o Editorial Hybrid v6
+  (amarelo/preto), o Brand Local v7 e o RC-BRAND-STYLING-001 (paleta de ilustração azul/coral). Sem uma regra,
+  cada PR escolheria uma.
+- **Decisão:**
+  - **Interface = Brand Local v7 = ADR-11**, em todas as rotas, artigos inclusive: `#2563EB` (ação), `#202124`
+    (texto), superfícies do ADR-09, Inter + IBM Plex Mono. O amarelo/preto do v6 foi descartado; do v6/v7 ficam
+    só a arquitetura, a interação e o motion.
+  - **RC-BRAND-STYLING-001 é só a camada de ilustração e vetor**, `--illu-ink/blue/coral/blue-soft/canvas` em
+    `global.css`: SVG, ilustrações, fundos decorativos, halftone. Os valores de texto dele (`#18346F`,
+    `#56647A`) não entram na interface (CF-01).
+  - **Coral e azul claro nunca como texto** nem como único indicador de significado. Marca gráfica com
+    significado (nó, aresta, série, ícone de estado) tem contraste ≥ 3:1 contra o fundo; coral e azul claro só
+    como preenchimento decorativo ou com contorno ≥ 3:1 (`--graph-accent-event-outline`).
+  - **Grafo causal** usa aliases `--graph-*` sobre a interface e a ilustração, sem hex novo; gráficos seguem o
+    ADR-04 (`--chart-*`).
+  - **Motion do v7:** `--ease` `cubic-bezier(.22,1,.36,1)`, `--dur-fast/base/slow` (150/250/450 ms, proposta),
+    `@keyframes heroReveal` (opacidade 0→1, `translateY(18px)`→0, classe `rc-hero-reveal`). Sob
+    `prefers-reduced-motion` toda animação e transição cai para ≤ 0,01 s e as durações nomeadas para 0.
+  - **Geometria de componentes novos:** `--radius-sheet` 20px (topo do bottom sheet), `--radius-pill`/
+    `--radius-node` 40px, `--radius-control` 8px, `--shadow-overlay` (= `--elevation-overlay`) para drawer e
+    sheet. Cards continuam célula de 2px (`--radius-card`, ADR-12).
+- **Consequências:**
+  - Hex só em `app/styles/global.css` (já valia pelo ADR-11; agora inclui os `--illu-*`).
+  - `tests/tokens.spec.ts` trava os valores `--illu-*`, `--ease`, durações e geometria, mede o contraste dos
+    `--graph-*` (≥ 3:1, nos dois temas) e verifica o reduced-motion; `tests/surfaces.spec.ts` impede hex
+    `--illu-*` fora de `global.css` e `color:` com `--illu-coral`/`--illu-blue-soft`.
+  - O showroom `/admin/design-system/` mostra a camada de ilustração, o grafo e o motion.
