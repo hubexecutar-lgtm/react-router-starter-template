@@ -9,6 +9,7 @@ import type { Route } from "./+types/home";
 import { ArticleCard } from "@/components/editorial/ArticleCard";
 import { HeroArt, IMAGES } from "@/components/editorial/HeroArt";
 import { TerritoryCard } from "@/components/editorial/TerritoryCard";
+import { Carousel } from "@/components/layout/Carousel";
 import { ChevronLink } from "@/components/layout/ChevronLink";
 import { CompareCards } from "@/components/layout/CompareCards";
 import { Section } from "@/components/layout/Section";
@@ -43,7 +44,7 @@ export default function Page({ loaderData }: Route.ComponentProps) {
 		<DefaultLayout>
 			{/* Abertura — título, lead curto, ações e arte abaixo, centralizados (AUD-WEB-001-02/03) */}
 			<section className="container py-[var(--section-pad-y)]" aria-labelledby="hero-title">
-				<div className="flex flex-col items-center gap-6 text-center">
+				<div className="rc-hero-reveal flex flex-col items-center gap-6 text-center">
 					<h1 id="hero-title" className="rc-display text-[length:var(--text-hero)] leading-[0.92] uppercase">
 						Risco Cognitivo
 					</h1>
@@ -129,19 +130,19 @@ export default function Page({ loaderData }: Route.ComponentProps) {
 				</div>
 			</Section>
 
-			{/* Territórios */}
+			{/* Explorar — carrossel dos territórios com scroll-snap, sem autoplay (v7, LANC-001 RQ-026) */}
 			<Section
 				id="territorios"
-				eyebrow="Temas"
+				eyebrow="Explorar"
 				title="Oito territórios, um só modelo"
 				link={{ href: "/temas/", label: "Ver mapa de temas" }}
 				align="center"
 			>
-				<div className="grid gap-[var(--table-gap)] sm:grid-cols-2 lg:grid-cols-4">
+				<Carousel id="explorar-territorios" label="Territórios do framework">
 					{TERRITORIES.map((t) => (
 						<TerritoryCard key={t.id} territory={t} count={countBy(t.slug)} />
 					))}
-				</div>
+				</Carousel>
 			</Section>
 
 			{/* Referências — tabela de largura inteira numa faixa (AUD-WEB-001-08) */}
