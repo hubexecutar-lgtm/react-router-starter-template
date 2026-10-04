@@ -415,8 +415,8 @@ to `apps/blog/`.
 - **Decisão — shell:** cabeçalho de 64 px do Stories (`--ref-header-h`) com menu e tema (a busca volta quando houver página); a trilha dos pilares
   fica **dentro** da barra (≥ 1280 px), porque uma faixa abaixo deslocaria a geometria medida do handoff. Abaixo de
   900 px: drawer modal `min(84vw,360px)` (foco preso, Esc, `inert`) e barra inferior; header e barra escondem juntos ao
-  descer (`components/site/shell.tsx`). O menu só lista destinos que existem (`nav.ts`): hoje Artigos e Ferramentas;
-  Mapa e Sobre entram quando as páginas voltarem (DEC-U6). O carrossel é o `MediaCarousel` do Stories (scroll-snap,
+  descer (`components/site/shell.tsx`). O menu só lista destinos que existem (`nav.ts`): Artigos · Mapa · Ferramentas · Sobre
+  desde o PR-H (DEC-U6); barra inferior Início · Mapa · Ferramentas. O carrossel é o `MediaCarousel` do Stories (scroll-snap,
   sem autoplay) e o `heroReveal` (ADR-15) entra no hero do artigo.
 - **Consequências:** `tests/store.spec.ts` (rotas, sem "Loja", 301) e `tests/shell.spec.ts` (RQ-020…026) no `npm test`;
   `hig.spec` cobre `/ferramentas/*`.
@@ -467,7 +467,7 @@ to `apps/blog/`.
     Pilar, problemas, nós do grafo, fontes, data e CTA ficam em `app/data/article-meta.ts`, fora do texto. JSON-LD
     `BlogPosting` com publisher e logo. `/fontes/` lista o RC-SRC-001 (`app/data/sources.ts`, gerado) e a nota de
     governança literal aparece em `/fontes/`, `/sobre/` e nas referências de cada artigo (RQ-043).
-  - **Jornada (RQ-050…054):** menu Artigos · Ferramentas · Sobre (o Mapa entra com o PR-H) igual no topo, no drawer
+  - **Jornada (RQ-050…054):** menu Artigos · Mapa · Ferramentas · Sobre (o Mapa entrou com o PR-H, ADR-19) igual no topo, no drawer
     e no rodapé; trilha com os 3 pilares; "Próximo passo" com exatamente 1 CTA primário (`data-cta="primary"`) no
     fim de todo artigo; páginas editoriais com eyebrow, h1, lead e CTA primário; chips de problema (`?problema=`)
     ligados aos nós do grafo na listagem.
@@ -478,3 +478,31 @@ to `apps/blog/`.
   - A listagem `/artigos/` segue a geometria do handoff (h1 "Artigos" sem eyebrow nem lead): é a exceção ao RQ-052.
   - Nas ilustrações que só existiam em uma orientação, a outra é recomposta com margem (sem corte); uma recomposição
     de arte (enquadramento) fica para o design.
+
+### ADR-19: Mapa causal em `/mapas/` como projeção da Teia (LANC-001 PR-H, RQ-070…080)
+
+- **Status:** Aceita — implementada. O RQ-081 (simulação "e se…") segue em BACKLOG.
+- **Contexto:** O reset (ADR-13) removeu o `/mapas` antigo. O LANC-001 pede um mapa causal mobile-first (SCR-02/03) sobre o
+  grafo canônico (ADR-M04, `app/data/graph/rc-graph.json`), e o menu precisava do Mapa (DEC-U6, RQ-020/050).
+- **Decisão:**
+  - Rotas pré-renderizadas: `/mapas/` (entrada, modos Problemas · Soluções · Evidências e legenda), `/mapas/explorar/` e
+    `/mapas/explorar/:fatorId/` (uma por fator do mapa público, `app/features/mapa/paths.ts`; evidências ficam em `/fontes/`).
+  - **O mapa é projeção, não fonte:** só lê `publicMap`/`neighborhood` (`app/lib/graph/project.ts`) e
+    `app/lib/graph/explore.ts` (relações por aba, cadeia "Por quê?", frases das arestas, modos). Relação `E_INFERRED` aparece
+    tracejada e com "(inferido)" em todo lugar.
+  - **Focus + context:** abre com 1 foco (`EVT-PERDA-CONTEXTO`, ou `?foco=`) e no máximo 8 nós. Tocar ou Enter num nó seleciona,
+    destaca as arestas, esmaece o resto, recentra e expande os vizinhos; a seleção vai para `?foco=` (compartilhável e
+    preservada ao voltar da página do fator). Filtros `?tipo=` e `?modo=` nunca tiram o foco.
+  - **Stack só na rota (RQ-079):** React Flow (`@xyflow/react`) e dagre entram por `React.lazy` depois da hidratação
+    (`CausalMap.client.tsx`); as outras rotas não carregam o chunk. Layout em pixels da tela (zoom 1): radial a partir de 600 px,
+    em camadas no celular (o que chega ao foco acima, o que sai abaixo); "Por quê?" em camadas pelo dagre. A atribuição do
+    React Flow fica oculta (`proOptions.hideAttribution`, licença MIT) e o crédito fica neste ADR.
+  - **Acessibilidade:** nó = `<button>` de 56 px com forma + rótulo (RQ-076); aresta = traço + seta + rótulo em texto. A aba Lista
+    e todas as relações em frase estão no HTML do servidor (funcionam sem JS); o recorte inicial também sai como links antes do
+    canvas. Bottom sheet com 3 alturas (alça arrastável, setas, botões de 44 px), Esc fecha e devolve o foco ao nó; a partir de
+    900 px vira painel ao lado do mapa.
+  - Tokens: só `--graph-*`, `--radius-node`, `--radius-sheet` e `--shadow-overlay` (ADR-15); sem hex novo.
+- **Consequências:**
+  - `tests/mapa.spec.ts` cobre RQ-070…080 (≤ 8 nós, toque, teclado, snaps, Lista = todas as arestas, filtros, escala de cinza,
+    320 px, "Por quê?", chunk só na rota, INP ≤ 200 ms, axe); `hig.spec` cobre `/mapas/`, `/mapas/explorar/` e um fator.
+  - Novo nó ou relação no grafo aparece no mapa sem mudar código; nó novo ganha página no próximo build.

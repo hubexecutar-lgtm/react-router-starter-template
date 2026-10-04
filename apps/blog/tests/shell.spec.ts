@@ -4,7 +4,7 @@ import { join } from "node:path";
 
 // LANC-001 PR-C (RQ-020…026) sobre o Stories (AUD-ORDEM-001): nav desktop + trilha, drawer e barra inferior no
 // mobile, chrome que esconde junto no scroll, heroReveal e carrossel com scroll-snap. O menu só tem destinos que
-// existem (nav.ts): Mapa e Sobre entram quando as páginas voltarem.
+// existem (nav.ts): Artigos · Mapa · Ferramentas · Sobre desde o PR-H.
 const DESKTOP = { width: 1280, height: 900 };
 const MOBILE = { width: 390, height: 844 };
 const LONG = "/artigos/risco-cognitivo/";
@@ -18,7 +18,7 @@ test.describe("desktop ≥ 900px (RQ-020)", () => {
   test("menu links and the pillar trail are visible; no menu button nor drawer", async ({ page }) => {
     await page.goto("/");
     const nav = page.getByRole("navigation", { name: "Principal", exact: true });
-    for (const label of ["Artigos", "Ferramentas", "Sobre"]) await expect(nav.getByRole("link", { name: label, exact: true })).toBeVisible();
+    for (const label of ["Artigos", "Mapa", "Ferramentas", "Sobre"]) await expect(nav.getByRole("link", { name: label, exact: true })).toBeVisible();
     const trail = page.getByRole("navigation", { name: "Pilares", exact: true });
     for (const label of ["Riscos Cognitivos", "Processos Neuroadaptativos", "Ferramentas e Soluções"]) {
       await expect(trail.getByRole("link", { name: label })).toBeVisible();
@@ -40,7 +40,7 @@ test.describe("mobile < 900px (RQ-021, RQ-023, RQ-025)", () => {
   test("bottom bar has the 3 destinations with ≥ 44px targets", async ({ page }) => {
     await page.goto("/");
     const bar = page.getByRole("navigation", { name: "Navegação inferior" });
-    await expect(bar.getByRole("link")).toHaveText(["Início", "Ferramentas"]);
+    await expect(bar.getByRole("link")).toHaveText(["Início", "Mapa", "Ferramentas"]);
     await expect(bar.getByRole("link", { name: "Início" })).toHaveAttribute("aria-current", "page");
     for (const r of await box(page, "[data-bottom-bar] a")) expect(Math.min(r.width, r.height)).toBeGreaterThanOrEqual(44);
     await expect(page.getByRole("navigation", { name: "Principal", exact: true })).toBeHidden();
@@ -55,7 +55,7 @@ test.describe("mobile < 900px (RQ-021, RQ-023, RQ-025)", () => {
     await expect(page.locator("[data-menu-toggle]")).toHaveAttribute("aria-expanded", "true");
     const [panel] = await box(page, "#site-menu");
     expect(Math.round(panel.width)).toBe(Math.round(Math.min(0.84 * MOBILE.width, 360)));
-    for (const label of ["Início", "Artigos", "Ferramentas", "Sobre", "Fontes", "Prisma de execução"]) {
+    for (const label of ["Início", "Artigos", "Mapa", "Ferramentas", "Sobre", "Fontes", "Prisma de execução"]) {
       await expect(dialog.getByRole("link", { name: label, exact: true })).toBeVisible();
     }
     for (const r of await box(page, "#site-menu a, #site-menu button")) expect(Math.min(r.width, r.height)).toBeGreaterThanOrEqual(44);

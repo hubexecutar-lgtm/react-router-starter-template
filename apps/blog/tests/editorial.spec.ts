@@ -12,7 +12,7 @@ const ARTICLES: Record<string, string> = {
   "tres-pilares-riscos-cognitivos": "01_CANONICO/05_RC_ARTIGO_MASTER_3_PILARES_1500.txt",
 };
 const PUBLISHED = readdirSync(join(ROOT, "content/artigos")).map((f) => f.replace(/\.mdx$/, ""));
-const EDITORIAL = ["/", "/fontes/", "/sobre/", ...PUBLISHED.map((s) => `/artigos/${s}/`)];
+const EDITORIAL = ["/", "/fontes/", "/sobre/", "/mapas/", ...PUBLISHED.map((s) => `/artigos/${s}/`)];
 
 // Aspas tipográficas (remark-smartypants, tipografia do site) não contam como reescrita.
 const norm = (s: string) => s.replace(/[“”]/g, '"').replace(/[‘’]/g, "'").replace(/\s+/g, " ").trim().toLocaleLowerCase("pt-BR");
@@ -181,11 +181,11 @@ test.describe("E · conteúdo canônico (RQ-040…046)", () => {
 });
 
 test.describe("F · jornada (RQ-050…054)", () => {
-  test("menu Artigos · Ferramentas · Sobre igual no topo, no drawer e no rodapé (RQ-050)", async ({ page }) => {
+  test("menu Artigos · Mapa · Ferramentas · Sobre igual no topo, no drawer e no rodapé (RQ-050)", async ({ page }) => {
     await page.setViewportSize({ width: 1363, height: 900 });
     await page.goto("/");
     const top = await page.locator('header nav[aria-label="Principal"] a').allTextContents();
-    expect(top).toEqual(["Artigos", "Ferramentas", "Sobre"]);
+    expect(top).toEqual(["Artigos", "Mapa", "Ferramentas", "Sobre"]);
     const footer = await page.locator("footer a").allTextContents();
     for (const label of top) expect(footer, label).toContain(label);
     await page.setViewportSize({ width: 390, height: 844 });

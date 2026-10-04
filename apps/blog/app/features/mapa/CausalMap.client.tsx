@@ -1,0 +1,235 @@
+// Canvas do mapa causal (LANC-001 RQ-070/075/076/079). Carregado só no navegador e só em /mapas/explorar/, por
+// React.lazy no ExploreView: React Flow e dagre não entram no bundle das outras rotas.
+// Nó = <button> de 48px com forma + rótulo; aresta = traço (sólido/tracejado) + rótulo em texto. Tocar ou Enter
+// seleciona; tocar no fundo limpa. Pan e pinça existem, mas nada depende deles (nem de hover).
+import dagre from "@dagrejs/dagre";
+import {
+	BaseEdge,
+	EdgeLabelRenderer,
+	Handle,
+	MarkerType,
+	Position,
+	ReactFlow,
+	ReactFlowProvider,
+	getStraightPath,
+	useNodesInitialized,
+	useReactFlow,
+	type Edge,
+	type EdgeProps,
+	type Node,
+	type NodeProps,
+} from "@xyflow/react";
+import "@xyflow/react/dist/base.css";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+
+import { NODE_H, focusLayout, nodeWidth, type Layout } from "./layout";
+
+import { NODE_TYPES, type EdgeView, type MapNode } from "@/lib/graph";
+import { cn } from "@/lib/utils";
+
+export type MapMode = { kind: "focus" } | { kind: "why"; causes: EdgeView[]; compensations: EdgeView[] };
+
+type NodeData = { node: MapNode; w: number; focus: boolean; selected: boolean; dim: boolean; onSelect: (id: string) => void };
+type EdgeData = { view: EdgeView; active: boolean; dim: boolean; weight: number; targetW: number };
+
+function MapNodeView({ data }: NodeProps<Node<NodeData>>) {
+	const t = NODE_TYPES[data.node.visual];
+	return (
+		<>
+			<Handle type="target" position={Position.Top} isConnectable={false} className="rc-map-handle" />
+			<button
+				type="button"
+				data-map-node={data.node.id}
+				data-node-type={data.node.visual}
+				aria-pressed={data.selected}
+				aria-label={`${data.node.label}, ${t.label}`}
+				onClick={(e) => {
+					e.stopPropagation();
+					data.onSelect(data.node.id);
+				}}
+				style={{ width: data.w, height: NODE_H, opacity: data.dim ? "var(--graph-dim-opacity)" : undefined }}
+				className={cn(
+					"rc-map-node nodrag nopan focus-visible:ring-ring/50 flex items-center gap-2 rounded-[var(--radius-node)] border-2 bg-[var(--graph-node-bg)] px-3 py-1.5 text-left text-[13px] leading-tight font-medium text-[var(--graph-node-text)] outline-none focus-visible:ring-[3px]",
+					"transition-opacity duration-[var(--dur-fast)] ease-[var(--ease)]",
+					data.selected || data.focus ? "border-[var(--graph-node-border-selected)]" : "border-[var(--graph-node-border)]",
+					data.focus && "font-semibold",
+				)}
+			>
+				<span aria-hidden="true" className="shrink-0 text-base">
+					{t.glyph}
+				</span>
+				<span className="line-clamp-2 min-w-0 break-words">{data.node.label}</span>
+			</button>
+			<Handle type="source" position={Position.Bottom} isConnectable={false} className="rc-map-handle" />
+		</>
+	);
+}
+
+function MapEdgeView({ sourceX, sourceY, targetX, targetY, data, markerEnd }: EdgeProps<Edge<EdgeData>>) {
+	const d = data!;
+	// A seta para na borda do nó de destino (as alças ficam no centro): direção da relação sem depender de cor.
+	const dx = targetX - sourceX;
+	const dy = targetY - sourceY;
+	const t = Math.min(dx ? (d.targetW / 2 + 4) / Math.abs(dx) : Infinity, dy ? (NODE_H / 2 + 4) / Math.abs(dy) : Infinity, 1);
+	const [path, labelX, labelY] = getStraightPath({ sourceX, sourceY, targetX: targetX - dx * t, targetY: targetY - dy * t });
+	return (
+		<>
+			<BaseEdge
+				path={path}
+				markerEnd={markerEnd}
+				style={{
+					stroke: d.active ? "var(--graph-edge-active)" : "var(--graph-edge)",
+					strokeWidth: d.weight,
+					strokeDasharray: d.view.dashed ? "6 4" : undefined,
+					opacity: d.dim ? "var(--graph-dim-opacity)" : undefined,
+				}}
+			/>
+			<EdgeLabelRenderer>
+				<span
+					data-edge-label={d.view.id}
+					data-dashed={d.view.dashed || undefined}
+					style={{ transform: `translate(-50%, -50%) translate(${labelX}px, ${labelY}px)`, opacity: d.dim ? "var(--graph-dim-opacity)" : undefined }}
+					className="bg-background text-muted-foreground pointer-events-none absolute rounded-[var(--radius-control)] px-1.5 text-xs leading-5"
+				>
+					{d.view.label}
+					{d.view.inferred && " (inferido)"}
+				</span>
+			</EdgeLabelRenderer>
+		</>
+	);
+}
+
+const NODE_TYPES_RF = { factor: MapNodeView };
+const EDGE_TYPES_RF = { relation: MapEdgeView };
+
+/** "Por quê?" em camadas: causas acima do foco, compensações abaixo (as arestas delas são invertidas no layout). */
+function whyLayout(focusId: string, nodes: MapNode[], causes: EdgeView[], compensations: EdgeView[], width: number): Layout {
+	const w = nodeWidth(width);
+	const g = new dagre.graphlib.Graph();
+	g.setGraph({ rankdir: "TB", nodesep: 16, ranksep: 72, marginx: 16, marginy: 16 });
+	g.setDefaultEdgeLabel(() => ({}));
+	for (const n of nodes) g.setNode(n.id, { width: w, height: NODE_H });
+	for (const e of causes) g.setEdge(e.source.id, e.target.id);
+	for (const e of compensations) g.setEdge(e.target.id, e.source.id);
+	if (!nodes.length) g.setNode(focusId, { width: w, height: NODE_H });
+	dagre.layout(g);
+	const placed = g.nodes().map((id) => {
+		const p = g.node(id);
+		return { id, x: p.x - w / 2, y: p.y - NODE_H / 2, w };
+	});
+	const graph = g.graph();
+	return { nodes: placed, width: Math.max(width, graph.width ?? width), height: graph.height ?? NODE_H * 2 };
+}
+
+const reducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+type Props = {
+	focusId: string;
+	nodes: MapNode[];
+	edges: EdgeView[];
+	selectedId: string | null;
+	mode: MapMode;
+	onSelect: (id: string) => void;
+	onClear: () => void;
+	label: string;
+};
+
+function Canvas({ focusId, nodes, edges, selectedId, mode, onSelect, onClear, label }: Props) {
+	const wrap = useRef<HTMLDivElement>(null);
+	const [width, setWidth] = useState(0);
+	const flow = useReactFlow();
+
+	useLayoutEffect(() => {
+		const el = wrap.current!;
+		setWidth(el.clientWidth);
+		const ro = new ResizeObserver(() => setWidth(el.clientWidth));
+		ro.observe(el);
+		return () => ro.disconnect();
+	}, []);
+
+	const layout = useMemo(() => {
+		if (!width) return null;
+		return mode.kind === "why" ? whyLayout(focusId, nodes, mode.causes, mode.compensations, width) : focusLayout(focusId, nodes, edges, width);
+	}, [focusId, nodes, edges, mode, width]);
+
+	const active = selectedId ?? null;
+	const linked = (id: string) => mode.kind === "why" || !active || id === active || edges.some((e) => (e.source.id === active && e.target.id === id) || (e.target.id === active && e.source.id === id));
+
+	const rfNodes: Node<NodeData>[] = (layout?.nodes ?? []).map((p) => {
+		const node = nodes.find((n) => n.id === p.id)!;
+		return {
+			id: p.id,
+			type: "factor",
+			position: { x: p.x, y: p.y },
+			data: { node, w: p.w, focus: p.id === focusId, selected: p.id === active, dim: !linked(p.id), onSelect },
+			draggable: false,
+			selectable: false,
+			focusable: false,
+		};
+	});
+	const rfEdges: Edge<EdgeData>[] = edges.map((e) => {
+		const on = !!active && (e.source.id === active || e.target.id === active);
+		return {
+			id: e.id,
+			source: e.source.id,
+			target: e.target.id,
+			type: "relation",
+			markerEnd: { type: MarkerType.ArrowClosed, width: 16, height: 16, color: on ? "var(--graph-edge-active)" : "var(--graph-edge)" },
+			focusable: false,
+			selectable: false,
+			data: { view: e, active: on, dim: mode.kind === "focus" && !!active && !on, weight: e.label === "aumenta" ? 2.5 : e.label === "reduz" || e.label === "trata" ? 2 : 1.25, targetW: layout?.nodes.find((p) => p.id === e.target.id)?.w ?? 0 },
+		};
+	});
+
+	// Recentra a cada troca de foco, filtro ou modo (RQ-070), sem animação com reduced-motion.
+	const measured = useNodesInitialized();
+	useEffect(() => {
+		if (!layout || !measured) return;
+		const id = requestAnimationFrame(() => flow.fitView({ padding: 0.02, minZoom: 0.4, maxZoom: 1, duration: reducedMotion() ? 0 : 300 }));
+		return () => cancelAnimationFrame(id);
+	}, [layout, flow, measured]);
+
+	return (
+		<div
+			ref={wrap}
+			data-map-canvas
+			data-map-ready={layout ? "" : undefined}
+			className="rc-map relative w-full"
+			style={{ height: layout ? Math.min(layout.height, 720) : 360 }}
+		>
+			{layout && (
+				<ReactFlow
+					aria-label={label}
+					nodes={rfNodes}
+					edges={rfEdges}
+					nodeTypes={NODE_TYPES_RF}
+					edgeTypes={EDGE_TYPES_RF}
+					onPaneClick={onClear}
+					fitView
+					fitViewOptions={{ padding: 0.02, minZoom: 0.4, maxZoom: 1 }}
+					minZoom={0.4}
+					maxZoom={2}
+					nodesDraggable={false}
+					nodesConnectable={false}
+					elementsSelectable={false}
+					nodesFocusable={false}
+					edgesFocusable={false}
+					zoomOnScroll={false}
+					zoomOnDoubleClick={false}
+					preventScrolling={false}
+					panOnDrag
+					zoomOnPinch
+					proOptions={{ hideAttribution: true }}
+				/>
+			)}
+		</div>
+	);
+}
+
+export default function CausalMap(props: Props) {
+	return (
+		<ReactFlowProvider>
+			<Canvas {...props} />
+		</ReactFlowProvider>
+	);
+}
