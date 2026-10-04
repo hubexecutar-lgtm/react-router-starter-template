@@ -6,9 +6,9 @@ import { FOOTER_NAV } from "./nav";
 import { DotField } from "@/components/editorial/DotField";
 import { SITE_NAME, SITE_TAGLINE } from "@/consts";
 
-export function SiteFooter() {
+export function SiteFooter({ inert = false }: { inert?: boolean }) {
 	return (
-		<footer className="mt-24 lg:mt-32">
+		<footer className="mt-24 lg:mt-32" {...(inert ? { inert: true } : {})}>
 			{/* faixa de halftone orgânico acima do rodapé: área sem texto (ADR-12) */}
 			<div className="container">
 				<DotField cols={64} rows={5} seed={21} fade="none" className="block h-16 w-full sm:h-20" />

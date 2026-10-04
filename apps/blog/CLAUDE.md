@@ -173,7 +173,7 @@ to `apps/blog/`.
 
 ### ADR-08: Loja (`/loja`) com dados de exemplo e marcadores de área (ADR-STORE-ROUTES-UI-001)
 
-- **Status:** Aceita — implementada
+- **Status:** Substituída pelo ADR-14 (a Loja deixou de existir; o catálogo vive em `/ferramentas`)
 - **Contexto:** A Loja foi construída no repositório original (`executar-23/Risco-cognitivo-blog`,
   branch `claude/trusting-gates-go053v`, commit `c3a4219`) e trazida para cá depois da migração.
   Decisão completa em `docs/adr/ADR-STORE-ROUTES-UI-001.md`; mapas e wireframes em
@@ -348,7 +348,25 @@ to `apps/blog/`.
     `--illu-*` fora de `global.css` e `color:` com `--illu-coral`/`--illu-blue-soft`.
   - O showroom `/admin/design-system/` mostra a camada de ilustração, o grafo e o motion.
 
-### ADR-14: Rota `/prisma` — primeira solução da Loja, local-first e PWA (RC-PWA-PRISMA-SPECS v1.0.0)
+### ADR-14: Ferramentas cognitivas substituem a Loja (LANC-001, DEC-U9)
+
+- **Status:** Aceita — implementada no PR-J1 do LANC-001 (RQ-100, RQ-103). Substitui o ADR-08.
+- **Contexto:** No lançamento, o usuário decidiu que "a Loja não existe": a seção chama-se **Ferramentas
+  cognitivas** (DEC-U9, `docs/lancamento/LANC-001/requirements/01-DECISOES-E-AMBIGUIDADES.md`). O catálogo,
+  os componentes e os dados de exemplo do ADR-08 continuam úteis.
+- **Decisão:**
+  - Rotas `/ferramentas/` (índice), `/ferramentas/<tipo>/` e `/ferramentas/<tipo>/<slug>/`, pré-renderizadas a
+    partir de `app/features/store/data/paths.ts` (prerender, sitemap e gate HIG). O código continua em
+    `app/features/store/` (só URLs e rótulos mudaram).
+  - `/loja` e `/loja/*` respondem **301** para o caminho equivalente em `/ferramentas` (`public/_redirects`).
+  - Nenhum texto "Loja" nem de compra nas rotas de Ferramentas; o marcador de área antigo "Loja" chama-se
+    "Catálogo". Nav, hub (ADR-06, entrada `ferramentas`), `pages.ts` e `access.ts` apontam para `/ferramentas/`.
+  - Catálogo real (ferramentas piloto, Resultado) segue bloqueado (RQ-101, RQ-102) até o conteúdo existir.
+- **Consequências:**
+  - `tests/store.spec.ts` cobre as rotas novas, a ausência de "Loja" e os 301; `tests/content.spec.ts` impede
+    link interno para `/loja` e confere o destino dos redirecionamentos.
+
+### ADR-15: Rota `/prisma` — primeira solução das Ferramentas cognitivas, local-first e PWA (RC-PWA-PRISMA-SPECS v1.0.0)
 
 - **Status:** Aceita — implementada (V1). Pacote de origem, mapeamento FR → código/teste e desvios em
   `docs/handoff/RC-PWA-PRISMA/` (`00-STATUS.md`).
@@ -371,6 +389,6 @@ to `apps/blog/`.
   - `tests/prisma.spec.ts` cobre fluxo, obrigatórios, A DEFINIR, XSS, rede, storage, A4 (sem estouro e 1 página no
     PDF), tema escuro, manifest e abertura offline; `tests/hig.spec.ts` já cobre `/prisma/` (rota listada).
   - Mudar campo ou limite do Prisma é mudar `schema.ts`; a folha e o formulário seguem dele.
-  - As 18 áreas da Loja (6 de gestão e 12 funções executivas) estão importadas como intake
+  - As 18 áreas das Ferramentas cognitivas (6 de gestão e 12 funções executivas) estão importadas como intake
     (`docs/handoff/RC-PWA-PRISMA/intake/`, status PREPARED) e **ainda não têm rota**: ligar áreas ao grafo (ADR-M04)
     exige nós novos com citação e passa pelo OWNER.

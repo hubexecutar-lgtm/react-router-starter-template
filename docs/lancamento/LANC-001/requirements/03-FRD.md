@@ -6,9 +6,9 @@
 
 | Prioridade | READY | NEEDS_CONFIRMATION | BLOCKED | BACKLOG | DONE |
 |---|---|---|---|---|---|
-| P0 | 10 | 0 | 0 | 0 | 6 |
-| P1 | 21 | 0 | 0 | 0 | 5 |
-| P2 | 7 | 0 | 1 | 0 | 3 |
+| P0 | 6 | 0 | 0 | 0 | 10 |
+| P1 | 17 | 0 | 0 | 0 | 9 |
+| P2 | 6 | 0 | 1 | 0 | 4 |
 | P3 | 4 | 0 | 2 | 1 | 0 |
 
 Total: 60 requisitos em 12 épicos.
@@ -36,13 +36,13 @@ Total: 60 requisitos em 12 épicos.
 
 | ID | Tipo | Prio | Status | Requisito | Critério de aceite | Depende | Fonte |
 |---|---|---|---|---|---|---|---|
-| RQ-020 | FR | P0 | READY | **Nav global no desktop (≥ 900px).** Links visíveis (Artigos · Mapa · Ferramentas · Sobre) e trilha de categorias inline; sem botão de menu. | Em 1280px os links estão visíveis e o drawer não existe no DOM acessível | RQ-010, RQ-050 | DEC-U1; FT-04; CF-12; Q1; DEC-U6 |
-| RQ-021 | FR | P0 | READY | **Drawer e barra inferior no mobile (< 900px).** Botão de menu abre drawer (largura min(84vw,360px)); barra inferior com 3 itens (Início · Mapa · Ferramentas). | Em 390px: barra inferior com 3 destinos; drawer abre e fecha por toque | RQ-010, RQ-050 | DEC-U1; FT-04; CF-12; Q1; DEC-U6 |
-| RQ-022 | FR | P1 | READY | **Chrome que esconde junto no scroll.** Nav superior e barra inferior escondem juntas ao rolar para baixo e voltam ao rolar para cima; ficam visíveis com o drawer aberto e quando o foco do teclado está nelas. | Teste Playwright: rolar 600px esconde, rolar -100px mostra; Tab na nav mostra | RQ-020, RQ-021 | intake/README.md (v6 item 1); DEC-U1 |
-| RQ-023 | NFR | P0 | READY | **Drawer acessível.** aria-expanded no botão, foco preso, Esc fecha, foco volta ao botão, fundo inert. | hig.spec.ts sem P0/P1; teste de teclado do drawer | RQ-021 | ADR-M03; UX-GOV-HIG-001 |
-| RQ-024 | FR | P1 | READY | **Hero com heroReveal.** Hero das páginas aplica heroReveal (RQ-014) sem atrasar o LCP (texto visível no primeiro paint com reduced-motion). | LCP sem regressão em relação a main | RQ-014 | DEC-U1; FT-02 |
-| RQ-025 | NFR | P0 | READY | **Alvos de toque de 44px na nav e no mapa.** Itens da barra inferior, do drawer e nós do mapa com alvo ≥ 44×44px (o gate geral continua ≥ 24px). | Teste mede bounding box ≥ 44px | RQ-021 | RC-MOBILE-CAUSAL-MAP-UI-001 (touch.minimum_target) |
-| RQ-026 | FR | P1 | READY | **Carrossel com scroll-snap, sem autoplay.** Seção Explorar com scroll-snap (v7), operável por teclado e botões; sem rotação automática. | Sem setInterval/autoplay; setas e Tab percorrem os itens | RQ-010 | FT-01; Índex de rotas §10 |
+| RQ-020 | FR | P0 | DONE | **Nav global no desktop (≥ 900px).** Links visíveis (Artigos · Mapa · Ferramentas · Sobre) e trilha de categorias inline; sem botão de menu. | Em 1280px os links estão visíveis e o drawer não existe no DOM acessível | RQ-010, RQ-050 | DEC-U1; FT-04; CF-12; Q1; DEC-U6 |
+| RQ-021 | FR | P0 | DONE | **Drawer e barra inferior no mobile (< 900px).** Botão de menu abre drawer (largura min(84vw,360px)); barra inferior com 3 itens (Início · Mapa · Ferramentas). | Em 390px: barra inferior com 3 destinos; drawer abre e fecha por toque | RQ-010, RQ-050 | DEC-U1; FT-04; CF-12; Q1; DEC-U6 |
+| RQ-022 | FR | P1 | DONE | **Chrome que esconde junto no scroll.** Nav superior e barra inferior escondem juntas ao rolar para baixo e voltam ao rolar para cima; ficam visíveis com o drawer aberto e quando o foco do teclado está nelas. | Teste Playwright: rolar 600px esconde, rolar -100px mostra; Tab na nav mostra | RQ-020, RQ-021 | intake/README.md (v6 item 1); DEC-U1 |
+| RQ-023 | NFR | P0 | DONE | **Drawer acessível.** aria-expanded no botão, foco preso, Esc fecha, foco volta ao botão, fundo inert. | hig.spec.ts sem P0/P1; teste de teclado do drawer | RQ-021 | ADR-M03; UX-GOV-HIG-001 |
+| RQ-024 | FR | P1 | DONE | **Hero com heroReveal.** Hero das páginas aplica heroReveal (RQ-014) sem atrasar o LCP (texto visível no primeiro paint com reduced-motion). | LCP sem regressão em relação a main | RQ-014 | DEC-U1; FT-02 |
+| RQ-025 | NFR | P0 | DONE | **Alvos de toque de 44px na nav e no mapa.** Itens da barra inferior, do drawer e nós do mapa com alvo ≥ 44×44px (o gate geral continua ≥ 24px). | Teste mede bounding box ≥ 44px | RQ-021 | RC-MOBILE-CAUSAL-MAP-UI-001 (touch.minimum_target) |
+| RQ-026 | FR | P1 | DONE | **Carrossel com scroll-snap, sem autoplay.** Seção Explorar com scroll-snap (v7), operável por teclado e botões; sem rotação automática. | Sem setInterval/autoplay; setas e Tab percorrem os itens | RQ-010 | FT-01; Índex de rotas §10 |
 
 ## EP-04 — Imagens e bloco de imagem do artigo (PR-D)
 
@@ -113,10 +113,10 @@ Total: 60 requisitos em 12 épicos.
 
 | ID | Tipo | Prio | Status | Requisito | Critério de aceite | Depende | Fonte |
 |---|---|---|---|---|---|---|---|
-| RQ-100 | FR | P2 | READY | **Ferramentas cognitivas: índice em /ferramentas.** /ferramentas lista as ferramentas cognitivas (scanner, checklists, avaliações, ferramentas HTML, workbooks…) reaproveitando o catálogo e os componentes de app/features/store; rótulos e textos falam em ferramentas, nunca em loja ou compra. | /ferramentas e /ferramentas/:tipo/:slug renderizam o catálogo; nenhum texto 'Loja' visível; tests/store.spec.ts migrado e verde | RQ-103 | DEC-U9; GAP-06 (fechada); ADR-08 |
+| RQ-100 | FR | P2 | DONE | **Ferramentas cognitivas: índice em /ferramentas.** /ferramentas lista as ferramentas cognitivas (scanner, checklists, avaliações, ferramentas HTML, workbooks…) reaproveitando o catálogo e os componentes de app/features/store; rótulos e textos falam em ferramentas, nunca em loja ou compra. | /ferramentas e /ferramentas/:tipo/:slug renderizam o catálogo; nenhum texto 'Loja' visível; tests/store.spec.ts migrado e verde | RQ-103 | DEC-U9; GAP-06 (fechada); ADR-08 |
 | RQ-101 | FR | P3 | BLOCKED | **Ferramenta piloto: interrupções do processo.** 5–8 perguntas → resultado (exposição, interrupções, recuperação de contexto) → 3 ações + 1 artigo + 1 ferramenta + próximo passo. | — | RQ-100 | Índex de rotas §4; GAP-02 |
 | RQ-102 | FR | P3 | BLOCKED | **Página de Resultado.** /resultado/:id com explicação e próximos passos. | — | RQ-101 | GAP-07 |
-| RQ-103 | FR | P1 | READY | **Retirar a Loja: /loja vira /ferramentas.** A Loja deixa de existir (decisão do usuário). Rotas /loja, /loja/:tipo e /loja/:tipo/:slug passam a /ferramentas/… com redirect 301 em public/_redirects; nav, hub (ADR-06), sitemap e prerender atualizados; ADR-08 marcado como substituído por um ADR novo de Ferramentas cognitivas. | GET /loja/ e /loja/:tipo/:slug/ respondem 301 para o caminho equivalente em /ferramentas; routes:check verde; nenhum link interno para /loja | RQ-050 | DEC-U9; DEC-U8 (URLs mantidas, exceto a Loja); ADR-08 |
+| RQ-103 | FR | P1 | DONE | **Retirar a Loja: /loja vira /ferramentas.** A Loja deixa de existir (decisão do usuário). Rotas /loja, /loja/:tipo e /loja/:tipo/:slug passam a /ferramentas/… com redirect 301 em public/_redirects; nav, hub (ADR-06), sitemap e prerender atualizados; ADR-08 marcado como substituído por um ADR novo de Ferramentas cognitivas. | GET /loja/ e /loja/:tipo/:slug/ respondem 301 para o caminho equivalente em /ferramentas; routes:check verde; nenhum link interno para /loja | RQ-050 | DEC-U9; DEC-U8 (URLs mantidas, exceto a Loja); ADR-08 |
 
 ## EP-11 — Medição e performance (PR-K)
 

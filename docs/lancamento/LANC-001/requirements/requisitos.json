@@ -216,13 +216,14 @@
       "titulo": "Nav global no desktop (≥ 900px)",
       "descricao": "Links visíveis (Artigos · Mapa · Ferramentas · Sobre) e trilha de categorias inline; sem botão de menu.",
       "prioridade": "P0",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [
         "RQ-010",
         "RQ-050"
       ],
       "fonte": "DEC-U1; FT-04; CF-12; Q1; DEC-U6",
-      "criterio_aceite": "Em 1280px os links estão visíveis e o drawer não existe no DOM acessível"
+      "criterio_aceite": "Em 1280px os links estão visíveis e o drawer não existe no DOM acessível",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/26"
     },
     {
       "id": "RQ-021",
@@ -231,13 +232,14 @@
       "titulo": "Drawer e barra inferior no mobile (< 900px)",
       "descricao": "Botão de menu abre drawer (largura min(84vw,360px)); barra inferior com 3 itens (Início · Mapa · Ferramentas).",
       "prioridade": "P0",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [
         "RQ-010",
         "RQ-050"
       ],
       "fonte": "DEC-U1; FT-04; CF-12; Q1; DEC-U6",
-      "criterio_aceite": "Em 390px: barra inferior com 3 destinos; drawer abre e fecha por toque"
+      "criterio_aceite": "Em 390px: barra inferior com 3 destinos; drawer abre e fecha por toque",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/26"
     },
     {
       "id": "RQ-022",
@@ -246,13 +248,14 @@
       "titulo": "Chrome que esconde junto no scroll",
       "descricao": "Nav superior e barra inferior escondem juntas ao rolar para baixo e voltam ao rolar para cima; ficam visíveis com o drawer aberto e quando o foco do teclado está nelas.",
       "prioridade": "P1",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [
         "RQ-020",
         "RQ-021"
       ],
       "fonte": "intake/README.md (v6 item 1); DEC-U1",
-      "criterio_aceite": "Teste Playwright: rolar 600px esconde, rolar -100px mostra; Tab na nav mostra"
+      "criterio_aceite": "Teste Playwright: rolar 600px esconde, rolar -100px mostra; Tab na nav mostra",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/26"
     },
     {
       "id": "RQ-023",
@@ -261,12 +264,13 @@
       "titulo": "Drawer acessível",
       "descricao": "aria-expanded no botão, foco preso, Esc fecha, foco volta ao botão, fundo inert.",
       "prioridade": "P0",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [
         "RQ-021"
       ],
       "fonte": "ADR-M03; UX-GOV-HIG-001",
-      "criterio_aceite": "hig.spec.ts sem P0/P1; teste de teclado do drawer"
+      "criterio_aceite": "hig.spec.ts sem P0/P1; teste de teclado do drawer",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/26"
     },
     {
       "id": "RQ-024",
@@ -275,12 +279,13 @@
       "titulo": "Hero com heroReveal",
       "descricao": "Hero das páginas aplica heroReveal (RQ-014) sem atrasar o LCP (texto visível no primeiro paint com reduced-motion).",
       "prioridade": "P1",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [
         "RQ-014"
       ],
       "fonte": "DEC-U1; FT-02",
-      "criterio_aceite": "LCP sem regressão em relação a main"
+      "criterio_aceite": "LCP sem regressão em relação a main",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/26"
     },
     {
       "id": "RQ-025",
@@ -289,12 +294,13 @@
       "titulo": "Alvos de toque de 44px na nav e no mapa",
       "descricao": "Itens da barra inferior, do drawer e nós do mapa com alvo ≥ 44×44px (o gate geral continua ≥ 24px).",
       "prioridade": "P0",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [
         "RQ-021"
       ],
       "fonte": "RC-MOBILE-CAUSAL-MAP-UI-001 (touch.minimum_target)",
-      "criterio_aceite": "Teste mede bounding box ≥ 44px"
+      "criterio_aceite": "Teste mede bounding box ≥ 44px",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/26"
     },
     {
       "id": "RQ-026",
@@ -303,12 +309,13 @@
       "titulo": "Carrossel com scroll-snap, sem autoplay",
       "descricao": "Seção Explorar com scroll-snap (v7), operável por teclado e botões; sem rotação automática.",
       "prioridade": "P1",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [
         "RQ-010"
       ],
       "fonte": "FT-01; Índex de rotas §10",
-      "criterio_aceite": "Sem setInterval/autoplay; setas e Tab percorrem os itens"
+      "criterio_aceite": "Sem setInterval/autoplay; setas e Tab percorrem os itens",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/26"
     },
     {
       "id": "RQ-030",
@@ -792,12 +799,13 @@
       "titulo": "Ferramentas cognitivas: índice em /ferramentas",
       "descricao": "/ferramentas lista as ferramentas cognitivas (scanner, checklists, avaliações, ferramentas HTML, workbooks…) reaproveitando o catálogo e os componentes de app/features/store; rótulos e textos falam em ferramentas, nunca em loja ou compra.",
       "prioridade": "P2",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [
         "RQ-103"
       ],
       "fonte": "DEC-U9; GAP-06 (fechada); ADR-08",
-      "criterio_aceite": "/ferramentas e /ferramentas/:tipo/:slug renderizam o catálogo; nenhum texto 'Loja' visível; tests/store.spec.ts migrado e verde"
+      "criterio_aceite": "/ferramentas e /ferramentas/:tipo/:slug renderizam o catálogo; nenhum texto 'Loja' visível; tests/store.spec.ts migrado e verde",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/25"
     },
     {
       "id": "RQ-101",
@@ -834,12 +842,13 @@
       "titulo": "Retirar a Loja: /loja vira /ferramentas",
       "descricao": "A Loja deixa de existir (decisão do usuário). Rotas /loja, /loja/:tipo e /loja/:tipo/:slug passam a /ferramentas/… com redirect 301 em public/_redirects; nav, hub (ADR-06), sitemap e prerender atualizados; ADR-08 marcado como substituído por um ADR novo de Ferramentas cognitivas.",
       "prioridade": "P1",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [
         "RQ-050"
       ],
       "fonte": "DEC-U9; DEC-U8 (URLs mantidas, exceto a Loja); ADR-08",
-      "criterio_aceite": "GET /loja/ e /loja/:tipo/:slug/ respondem 301 para o caminho equivalente em /ferramentas; routes:check verde; nenhum link interno para /loja"
+      "criterio_aceite": "GET /loja/ e /loja/:tipo/:slug/ respondem 301 para o caminho equivalente em /ferramentas; routes:check verde; nenhum link interno para /loja",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/25"
     },
     {
       "id": "RQ-110",

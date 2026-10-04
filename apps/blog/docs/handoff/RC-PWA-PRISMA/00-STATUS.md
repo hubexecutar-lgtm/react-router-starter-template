@@ -1,7 +1,7 @@
 # RC-PWA-PRISMA — status da implementação (V1)
 
 Pacote de origem: `RC-PWA-PRISMA-SPECS v1.0.0` (ADR-001, PRD-001, FRD-001, README) e `RC-A4-PACK-001`
-(`base-a4-pack/`), enviados pelo OWNER em 2026-10-04. Decisão do repositório: ADR-14 em `apps/blog/CLAUDE.md`.
+(`base-a4-pack/`), enviados pelo OWNER em 2026-10-04. Decisão do repositório: ADR-15 em `apps/blog/CLAUDE.md`.
 
 | Pasta | Conteúdo |
 |---|---|
@@ -41,7 +41,7 @@ Pacote de origem: `RC-PWA-PRISMA-SPECS v1.0.0` (ADR-001, PRD-001, FRD-001, READM
 4. **Cabeçalho do site dentro do app instalado.** O PWA abre em `/prisma/`; os links do cabeçalho levam a páginas
    fora do escopo e abrem no navegador.
 5. **Estado PRINT** do FRD §7: a impressão é feita direto do PREVIEW por CSS (`@media print`), sem um estado extra.
-6. **Áreas da Loja** (18): importadas, sem rota. Ver ADR-14.
+6. **Áreas das Ferramentas cognitivas** (18): importadas, sem rota. Ver ADR-15.
 
 ## Fora do escopo da V1 (como no PRD)
 

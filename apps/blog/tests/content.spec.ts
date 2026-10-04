@@ -129,13 +129,20 @@ test.describe("build publicado", () => {
     expect([...new Set(broken)]).toEqual([]);
   });
 
+  test("nenhum link interno para /loja (ADR-14, RQ-103)", () => {
+    const offenders = html.filter((f) => /href="\/loja[/"?#]/.test(readFileSync(f, "utf8"))).map((f) => relative(DIST, f));
+    expect(offenders).toEqual([]);
+  });
+
   test("redirecionamentos dos posts de demonstração levam a artigos existentes", () => {
     const lines = readFileSync(join(ROOT, "public/_redirects"), "utf8").split("\n").filter((l) => l.startsWith("/"));
     expect(lines.length).toBeGreaterThan(0);
     for (const l of lines) {
       const [, to, code] = l.split(/\s+/);
       expect(code).toBe("301");
-      expect(existsSync(join(DIST, to, "index.html")), to).toBe(true);
+      // /loja/* → /ferramentas/:splat (ADR-14): the splat target must exist as a section.
+      const base = to.replace(/:splat$/, "");
+      expect(existsSync(join(DIST, base, "index.html")), to).toBe(true);
     }
   });
 });

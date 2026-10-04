@@ -23,6 +23,6 @@ export const ACCESS_OPTIONS: CompareOption[] = [
 			"E-books, PDFs e workbooks derivados dos artigos",
 			"Ferramentas HTML e assets de apoio",
 		],
-		cta: { href: "/loja/", label: "Ver a loja" },
+		cta: { href: "/ferramentas/", label: "Ver as ferramentas" },
 	},
 ];

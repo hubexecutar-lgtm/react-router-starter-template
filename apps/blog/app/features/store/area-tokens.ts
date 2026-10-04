@@ -4,7 +4,7 @@ import {
   Landmark,
   Newspaper,
   Sparkles,
-  Store,
+  LayoutGrid,
   Wrench,
   type LucideIcon,
 } from "lucide-react";
@@ -87,8 +87,8 @@ export const AREAS: Record<AreaId, AreaDef> = {
   },
   store: {
     id: "store",
-    label: "Loja",
-    icon: Store,
+    label: "Catálogo",
+    icon: LayoutGrid,
     text: "text-area-store",
     subtle: "bg-area-store-subtle",
     bar: "bg-area-store",

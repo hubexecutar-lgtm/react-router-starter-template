@@ -60,7 +60,7 @@ export const ROUTES: HubEntry[] = [
   { id: "contact", title: "Contato", group: "Site", kind: "route", path: "/contact/", exposure: "public", addedAt: "2026-09-30", source: SRC },
   { id: "faq", title: "Perguntas frequentes", group: "Site", kind: "route", path: "/faq/", exposure: "public", addedAt: "2026-09-30", source: SRC },
   { id: "pricing", title: "Acesso e formatos", description: "URL preservada do template; conteúdo aberto e canais do banco editorial.", group: "Site", kind: "route", path: "/pricing/", exposure: "public", addedAt: "2026-09-30", source: SRC },
-  { id: "loja", title: "Loja", group: "Site", kind: "route", path: "/loja/", description: "Catálogo de skills, agentes, prompts, e-books, PDFs, ferramentas HTML, workbooks e assets (ADR-08). Categorias em /loja/:tipo/ e itens em /loja/:tipo/:slug/.", exposure: "public", addedAt: "2026-10-01", source: SRC },
+  { id: "ferramentas", title: "Ferramentas cognitivas", group: "Site", kind: "route", path: "/ferramentas/", description: "Ferramentas cognitivas: skills, agentes, prompts, e-books, PDFs, ferramentas HTML, workbooks e assets (ADR-14, substitui a Loja). Categorias em /ferramentas/:tipo/ e itens em /ferramentas/:tipo/:slug/; /loja/* responde 301.", exposure: "public", addedAt: "2026-10-04", source: SRC },
   { id: "privacy", title: "Privacidade", group: "Site", kind: "route", path: "/privacy/", exposure: "public", addedAt: "2026-09-30", source: SRC },
 
   // ---------------------------------------------------------------- Blog
@@ -73,7 +73,7 @@ export const ROUTES: HubEntry[] = [
   { id: "buscar", title: "Busca e navegação", group: "Blog", kind: "route", path: "/buscar/", description: "Busca client-side em artigos, temas e evidências (?q=).", exposure: "public", addedAt: "2026-10-01", source: "HANDOFF-RC-GLOBAL-DESIGN-CONTENT-001" },
 
   // ---------------------------------------------------------------- Ferramentas públicas
-  { id: "prisma", title: "Prisma de execução", description: "Primeira solução da Loja (externalização cognitiva): formulário, folha A4 e PDF, local-first e instalável (PWA). Manifest e service worker em /prisma/.", group: "Ferramentas públicas", kind: "route", path: "/prisma/", exposure: "public", addedAt: "2026-10-04", source: "RC-PWA-PRISMA-SPECS v1.0.0 (ADR-14)" },
+  { id: "prisma", title: "Prisma de execução", description: "Primeira solução das Ferramentas cognitivas (externalização cognitiva): formulário, folha A4 e PDF, local-first e instalável (PWA). Manifest e service worker em /prisma/.", group: "Ferramentas públicas", kind: "route", path: "/prisma/", exposure: "public", addedAt: "2026-10-04", source: "RC-PWA-PRISMA-SPECS v1.0.0 (ADR-15)" },
   { id: "hub-editorial", title: "Hub Editorial", group: "Ferramentas públicas", kind: "route", path: "/hub-editorial/", description: "Painel de gestão do pipeline editorial.", exposure: "public", addedAt: "2026-09-30", source: SRC },
   { id: "skills", title: "Catálogo de Skills EXECUTAR", group: "Ferramentas públicas", kind: "route", path: "/skills/", description: "Catálogo navegável com busca e filtros.", exposure: "public", addedAt: "2026-09-30", source: SRC },
   { id: "catalogo-offline", title: "Catálogo EXECUTAR (offline)", group: "Ferramentas públicas", kind: "route", path: "/catalogo-offline/", description: "Versão offline do catálogo, com detalhamento 3P.", exposure: "public", addedAt: "2026-09-30", source: SRC },

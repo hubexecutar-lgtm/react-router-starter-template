@@ -174,7 +174,7 @@ test.describe("flat cards, real overlays", () => {
     [SHOWROOM, "[data-testid=kpi]"],
     ["/admin/", "a.rc-cell"],
     ["/admin/rotas/", ".route-card"],
-    ["/loja/", "[data-slot=card]"],
+    ["/ferramentas/", "[data-slot=card]"],
   ] as const) {
     // ADR-12: a card is a table cell — Subtle fill, no outline, 2px radius, no shadow.
     test(`${route} ${sel}: table-cell surface, no outline, no shadow`, async ({ page }) => {
@@ -348,7 +348,7 @@ test.describe("visual regression (minimum routes)", () => {
     ["admin", "/admin/"],
     ["blog", "/blog/"],
     ["article", "/blog/do-risco-cognitivo-a-execucao-assistida/"],
-    ["loja", "/loja/"],
+    ["ferramentas", "/ferramentas/"],
     ["home", "/"],
     ["temas", "/temas/"],
     ["evidencias", "/evidencias/"],

@@ -16,7 +16,7 @@ export const PAGES = [
 	"/faq/",
 	"/guias/",
 	"/login/",
-	"/loja/",
+	"/ferramentas/",
 	"/mapas/",
 	"/pricing/",
 	"/prisma/",
