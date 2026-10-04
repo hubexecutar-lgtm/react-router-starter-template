@@ -53,6 +53,9 @@ docs/      decisões e evidências do monorepo (docs/migrations/*)
   valer para todos os apps. Várias branches de trabalho podem estar abertas ao mesmo tempo, e
   cada uma deve entrar em `main` sozinha assim que estiver verde, sem esperar as outras.
 - **Decisão:**
+  - **Pré-voo de base (AUD-ORDEM-001):** antes de criar a branch, liste os PRs abertos. Se algum muda a base
+    (reset de rotas, design system, shell, tokens), pare e pergunte ao usuário qual é a base; não trabalhe em cima
+    de `main` ignorando-o. Registre a resposta no PR.
   - Toda branch de trabalho nasce de `main` atualizada (nunca de outra branch de feature) e
     tem um único objetivo.
   - Ao concluir a mudança, abrir o Pull Request **pronto para revisão, nunca em draft**, salvo

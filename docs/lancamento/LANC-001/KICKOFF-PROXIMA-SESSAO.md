@@ -38,6 +38,8 @@ TAREFA DESTA SESSÃO: onda 0, um PR por vez (WIP = 1)
 3. Se sobrar contexto: PR-G (RQ-060…065), grafo canônico (não depende de PR-A/B).
 
 PARA CADA PR
+0. Pré-voo de base (AUD-ORDEM-001): liste os PRs abertos; se algum muda a base (reset, design system, shell,
+   tokens), pare e pergunte antes de criar a branch. A base atual é o PR #19 (Stories) integrado à main (DEC-U14).
 a. git fetch origin main && git checkout -b feat/lanc-001-<pr>-<slug> origin/main
 b. /plan com change list = os RQ do PR e verificação = o critério de aceite de cada RQ (requisitos.json).
 c. /execute.

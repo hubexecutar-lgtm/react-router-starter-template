@@ -173,7 +173,7 @@ to `apps/blog/`.
 
 ### ADR-08: Loja (`/loja`) com dados de exemplo e marcadores de área (ADR-STORE-ROUTES-UI-001)
 
-- **Status:** Substituída pelo ADR-14 (a Loja deixou de existir; o catálogo vive em `/ferramentas`)
+- **Status:** Substituída — a Loja saiu no reset (ADR-13) e volta como Ferramentas cognitivas (ADR-16)
 - **Contexto:** A Loja foi construída no repositório original (`executar-23/Risco-cognitivo-blog`,
   branch `claude/trusting-gates-go053v`, commit `c3a4219`) e trazida para cá depois da migração.
   Decisão completa em `docs/adr/ADR-STORE-ROUTES-UI-001.md`; mapas e wireframes em
@@ -315,60 +315,105 @@ to `apps/blog/`.
   - Imagem nova no site: `tem_texto: false` no manifest, webp em `public/images/`, `alt` e uso registrados.
 
 
-### ADR-13: Brand Local v7 como identidade única; RC-BRAND-STYLING-001 só como camada de ilustração (LANC-001)
+### ADR-13: Site do zero — rotas, artigos e páginas públicas removidos (RC-RESET-001)
 
-- **Status:** Aceita — implementada no PR-B do LANC-001 (RQ-010…015). Decisões em
-  `docs/lancamento/LANC-001/requirements/01-DECISOES-E-AMBIGUIDADES.md` (DEC-U2, DEC-U3, CF-01…04); tokens em
-  `05-TOKENS-SPEC.md`. Citado pelos PR-B a PR-H.
-- **Contexto:** O pacote de lançamento trouxe três referências visuais concorrentes: o Editorial Hybrid v6
-  (amarelo/preto), o Brand Local v7 e o RC-BRAND-STYLING-001 (paleta de ilustração azul/coral). Sem uma regra,
-  cada PR escolheria uma.
+- **Status:** Aceita — implementada. Substitui, no que diz respeito às rotas e ao conteúdo públicos, os ADR-07
+  (rotas), ADR-08 (Loja) e ADR-10 (conteúdo editorial a partir do banco). Os ADR-02 a 05, 09, 11 e 12 seguem
+  valendo para tokens, superfícies e componentes.
+- **Contexto:** O usuário decidiu remontar o site do zero: front-end novo, com artigos e imagens novos
+  consumindo os tokens novos. O estado anterior fica recuperável no histórico do git (último commit com o site
+  completo: `24108cd`, merge do PR #18).
 - **Decisão:**
-  - **Interface = Brand Local v7 = ADR-11**, em todas as rotas, artigos inclusive: `#2563EB` (ação), `#202124`
-    (texto), superfícies do ADR-09, Inter + IBM Plex Mono. O amarelo/preto do v6 foi descartado; do v6/v7 ficam
-    só a arquitetura, a interação e o motion.
-  - **RC-BRAND-STYLING-001 é só a camada de ilustração e vetor**, `--illu-ink/blue/coral/blue-soft/canvas` em
-    `global.css`: SVG, ilustrações, fundos decorativos, halftone. Os valores de texto dele (`#18346F`,
-    `#56647A`) não entram na interface (CF-01).
-  - **Coral e azul claro nunca como texto** nem como único indicador de significado. Marca gráfica com
-    significado (nó, aresta, série, ícone de estado) tem contraste ≥ 3:1 contra o fundo; coral e azul claro só
-    como preenchimento decorativo ou com contorno ≥ 3:1 (`--graph-accent-event-outline`).
-  - **Grafo causal** usa aliases `--graph-*` sobre a interface e a ilustração, sem hex novo; gráficos seguem o
-    ADR-04 (`--chart-*`).
-  - **Motion do v7:** `--ease` `cubic-bezier(.22,1,.36,1)`, `--dur-fast/base/slow` (150/250/450 ms, proposta),
-    `@keyframes heroReveal` (opacidade 0→1, `translateY(18px)`→0, classe `rc-hero-reveal`). Sob
-    `prefers-reduced-motion` toda animação e transição cai para ≤ 0,01 s e as durações nomeadas para 0.
-  - **Geometria de componentes novos:** `--radius-sheet` 20px (topo do bottom sheet), `--radius-pill`/
-    `--radius-node` 40px, `--radius-control` 8px, `--shadow-overlay` (= `--elevation-overlay`) para drawer e
-    sheet. Cards continuam célula de 2px (`--radius-card`, ADR-12).
+  - Removidos: todas as rotas públicas (`/about`, `/contact`, `/faq`, `/pricing`, `/privacy`, `/login`, `/signup`,
+    `/blog`, `/temas`, `/mapas`, `/guias`, `/evidencias`, `/buscar`, `/loja`), `rss.xml` e os sitemaps; os artigos
+    (`content/blog`) e a página de privacidade; a Loja (`app/features/store`); o banco editorial
+    (`app/data/editorial`) e as libs que o liam; os componentes de conteúdo (cards de artigo, território,
+    evidência, filtros, newsletter); as ferramentas estáticas (`/hub-editorial`, `/skills`, `/catalogo-offline`);
+    os scripts do pipeline editorial; os testes de conteúdo, loja e paridade.
+  - Ficam: o Worker, o shell (`DefaultLayout`, `SiteHeader`, `SiteFooter`, tema), os componentes de UI e
+    `plain`, os tokens do `global.css`, o `/admin` (painel, design system, hub de rotas, handoff, relatório) e o
+    404. O site público tem só a home provisória (`/`).
+  - As três ilustrações de `public/images/` ficam porque o showroom `/admin/design-system` as usa como espécime.
+  - A navegação (`site/nav.ts`) começa vazia e o cabeçalho esconde o menu; cada página nova entra em `routes.ts`,
+    `data/pages.ts`, `data/routes.ts` (ADR-06) e `nav.ts`.
+  - URLs antigas não têm redirecionamento: caem no 404.
 - **Consequências:**
-  - Hex só em `app/styles/global.css` (já valia pelo ADR-11; agora inclui os `--illu-*`).
-  - `tests/tokens.spec.ts` trava os valores `--illu-*`, `--ease`, durações e geometria, mede o contraste dos
-    `--graph-*` (≥ 3:1, nos dois temas) e verifica o reduced-motion; `tests/surfaces.spec.ts` impede hex
-    `--illu-*` fora de `global.css` e `color:` com `--illu-coral`/`--illu-blue-soft`.
+  - O gate HIG cobre 7 rotas; `routes:check` e `surfaces.spec` seguem a nova lista.
+  - O agente `blog-publisher` e a ferramenta `tools/executar-block-quick-frameworks` gravam em
+    `app/data/editorial/quick-frameworks`, que não existe mais: esse fluxo fica parado até o novo modelo de
+    conteúdo (ADR seguinte).
+  - Sem página de privacidade, a pendência AUD-HIG-08 passa a bloquear a divulgação do site (ver
+    `docs/audit/HIG-WEB-AUDIT.md`).
+  - Os documentos históricos em `docs/` (ADR, handoffs, auditorias antigas) citam rotas que não existem mais e
+    ficam como registro.
+
+### ADR-14: Front-end novo sobre os tokens do handoff OPENAI-STORIES-DESIGN-001 (RC-FRONT-001)
+
+- **Status:** Aceita — implementada (só front-end). Sucede o ADR-13 no que toca à Home: deixa de ser provisória.
+- **Contexto:** Depois do reset (ADR-13), o usuário enviou um artigo (`risco-cognitivo.mdx`), duas ilustrações e o
+  handoff `OPENAI_STORIES_CAPTURE_HANDOFF_v1.0.0` (capturas e medidas da home "Stories" e de um artigo da OpenAI),
+  pedindo que artigos e imagens consumam **os novos tokens** e que os valores do handoff sejam usados **literais**.
+- **Decisão:**
+  - **Tokens:** bloco `OPENAI-STORIES-DESIGN-001` no `global.css`, com os nomes do handoff (`--ref-gutter`,
+    `--ref-h1-*`, `--ref-h2-*`, `--ref-body-*`, `--ref-quote-*`, `--ref-caption-*`, `--ref-reading-width`,
+    `--ref-wide-width`) mais as medidas do handoff que não vinham como token (cabeçalho 64, card 306,75, destaque
+    968,25 × 544,64, hero 694, espaços de 24, 64 e 120 px). Utilitários `stories-container/h1/h2/body/quote/caption/meta`.
+    Os tokens do PR #18 (`--content-max`, `--gutter`, `--section-pad-y`…) seguem valendo só para o `/admin`.
+  - **Divergências assumidas:** Inter no lugar de "OpenAI Sans" (a fonte não veio no handoff); hero **claro**, porque
+    a arte é ilustração sobre branco e não foto escurecida; abaixo de 1024 px a escala é **proposta nossa**, já que a
+    referência responde 403 ao container e não tem medida mobile.
+  - **Conteúdo:** artigos em `content/artigos/*.mdx`, validados por `app/lib/articles.ts` (zod; só
+    `status: "ready"` é publicado) e prerenderizados em `/artigos/:slug/` (`react-router.config.ts` lê os slugs por
+    `app/lib/articles-fs.ts`). Os MDX ficam como o autor enviou; a ilustração de cada artigo é registrada por slug em
+    `app/data/article-media.ts`, e o `# título` do MDX é suprimido porque o h1 está no hero. Imagem nova: webp em duas
+    larguras (836 e 1672) em `public/images/`, com `alt`, `width` e `height`.
+  - **Home:** `StoriesHome` (título, categorias, ordenação, destaque + pilha, grade de 4 colunas, "Carregar mais"),
+    com estado na URL (`?categoria=`, `?ordem=`). Componentes em `app/components/stories/`.
+  - **Fixtures:** `/admin/stories-fixtures/` (noindex, dados sintéticos) valida o que o conteúdo real ainda não usa
+    (grade cheia, paginação, citação, carrossel, par assimétrico, figura, CTA).
+  - **Parser plain text:** blocos "TÍTULO EM CAIXA ALTA + texto" viram lista de definições (palavras, sem mono),
+    para que os painéis do artigo novo cumpram a regra de estrutura do ADR-12.
+- **Consequências:**
+  - `tests/stories.spec.ts` trava os tokens literais nos elementos reais e roda no `npm test`.
+  - Medidas do handoff (só números, sem captura nem texto da referência): `docs/design-system/OPENAI-STORIES-MEASURES.md`.
+    Auditoria: `docs/audit/aud-web-002/`.
+  - Fora desta etapa: CMS, API, banco, preview, busca, filtro por tópicos, alternância grade/lista, vídeo e exemplos
+    de conversa, rodapé de cinco colunas e a política de privacidade (AUD-HIG-08).
+
+### ADR-15: Camada de ilustração, grafo e motion sobre o Stories (LANC-001, AUD-ORDEM-001)
+
+- **Status:** Aceita — tokens implementados (LANC-001 PR-B, PR #22, integrados ao PR #19 pela AUD-ORDEM-001).
+  Na `main` este conteúdo nasceu como "ADR-13 Brand Local v7"; o número e a identidade mudaram na integração.
+- **Contexto:** A identidade do site é a do front-end Stories (ADR-14, tokens `--ref-*`), com as cores do ADR-11.
+  O pacote de lançamento LANC-001 traz ainda a paleta de ilustração RC-BRAND-STYLING-001 e o motion do v7, que o
+  Stories não define. Decisão do usuário (DEC-U14, 2026-10-04): a base é o PR #19.
+- **Decisão:**
+  - **Interface = Stories (ADR-14) + cores do ADR-11.** Tipografia, grade, medidas e anatomia de Home e artigo vêm
+    dos `--ref-*`; o v6/v7 não define mais layout nem tipografia.
+  - **Camada de ilustração e vetor** `--illu-ink/blue/coral/blue-soft/canvas` (RC-BRAND-STYLING-001): só SVG,
+    ilustrações, fundos decorativos e halftone. Coral e azul claro nunca como texto nem como único indicador; marca
+    gráfica com significado ≥ 3:1 (contorno `--graph-accent-event-outline`).
+  - **Grafo causal** com aliases `--graph-*` (sem hex novo); gráficos seguem o ADR-04.
+  - **Motion do v7:** `--ease`, `--dur-fast/base/slow`, `@keyframes heroReveal` (`rc-hero-reveal`); sob
+    `prefers-reduced-motion` nada passa de 0,01 s.
+  - **Geometria:** `--radius-sheet` 20px, `--radius-pill`/`--radius-node` 40px, `--radius-control` 8px,
+    `--radius-card` 2px, `--shadow-overlay`.
+- **Consequências:**
+  - Hex só em `app/styles/global.css` (inclui `--illu-*`); `tests/tokens.spec.ts` e `tests/surfaces.spec.ts` travam
+    valores, contraste dos `--graph-*` nos dois temas, reduced-motion e coral/azul claro fora de texto.
   - O showroom `/admin/design-system/` mostra a camada de ilustração, o grafo e o motion.
 
-### ADR-14: Ferramentas cognitivas substituem a Loja (LANC-001, DEC-U9)
+### ADR-16: Ferramentas cognitivas (LANC-001, DEC-U9) — pendente de reimplementação sobre o Stories
 
-- **Status:** Aceita — implementada no PR-J1 do LANC-001 (RQ-100, RQ-103). Substitui o ADR-08.
-- **Contexto:** No lançamento, o usuário decidiu que "a Loja não existe": a seção chama-se **Ferramentas
-  cognitivas** (DEC-U9, `docs/lancamento/LANC-001/requirements/01-DECISOES-E-AMBIGUIDADES.md`). O catálogo,
-  os componentes e os dados de exemplo do ADR-08 continuam úteis.
-- **Decisão:**
-  - Rotas `/ferramentas/` (índice), `/ferramentas/<tipo>/` e `/ferramentas/<tipo>/<slug>/`, pré-renderizadas a
-    partir de `app/features/store/data/paths.ts` (prerender, sitemap e gate HIG). O código continua em
-    `app/features/store/` (só URLs e rótulos mudaram).
-  - `/loja` e `/loja/*` respondem **301** para o caminho equivalente em `/ferramentas` (`public/_redirects`).
-  - Nenhum texto "Loja" nem de compra nas rotas de Ferramentas; o marcador de área antigo "Loja" chama-se
-    "Catálogo". Nav, hub (ADR-06, entrada `ferramentas`), `pages.ts` e `access.ts` apontam para `/ferramentas/`.
-  - Catálogo real (ferramentas piloto, Resultado) segue bloqueado (RQ-101, RQ-102) até o conteúdo existir.
-- **Consequências:**
-  - `tests/store.spec.ts` cobre as rotas novas, a ausência de "Loja" e os 301; `tests/content.spec.ts` impede
-    link interno para `/loja` e confere o destino dos redirecionamentos.
+- **Status:** Aceita — **a reimplementar** (AUD-ORDEM-001, Fase 2). Implementada antes sobre o site antigo no PR #25
+  (`/ferramentas/*` + 301 de `/loja/*`); removida na integração ao PR #19 porque o reset (ADR-13) apaga a Loja.
+- **Decisão:** a seção chama-se Ferramentas cognitivas e vive em `/ferramentas/`, `/ferramentas/<tipo>/` e
+  `/ferramentas/<tipo>/<slug>/`, no layout Stories; `/loja/*` responde 301; nenhum texto "Loja" nem de compra.
+  O código anterior está no histórico (`b9c80c0`, merge do PR #25).
 
-### ADR-15: Rota `/prisma` — primeira solução das Ferramentas cognitivas, local-first e PWA (RC-PWA-PRISMA-SPECS v1.0.0)
+### ADR-17: Rota `/prisma` — primeira solução das Ferramentas cognitivas, local-first e PWA (RC-PWA-PRISMA-SPECS v1.0.0)
 
-- **Status:** Aceita — implementada (V1). Pacote de origem, mapeamento FR → código/teste e desvios em
+- **Status:** Aceita — implementada (V1), PR #27; numerado ADR-15 na `main` e renumerado na integração ao PR #19 (AUD-ORDEM-001). Pacote de origem, mapeamento FR → código/teste e desvios em
   `docs/handoff/RC-PWA-PRISMA/` (`00-STATUS.md`).
 - **Contexto:** O pack A4 (RC-A4-PACK-001) era template editável à mão. O ADR/PRD/FRD do Prisma pedem uma rota
   guiada: introdução em 3 passos → formulário → folha A4 → PDF, sem conta, sem backend, instalável.

@@ -60,7 +60,7 @@
   --chart-3: var(--color-critical-default);
   --chart-4: var(--brand-500);
   --chart-5: var(--muted-foreground);
-  /* Illustration & vector layer (ADR-13 / RC-BRAND-STYLING-001, LANC-001 RQ-011): SVG, illustrations,
+  /* Illustration & vector layer (ADR-15 / RC-BRAND-STYLING-001, LANC-001 RQ-011): SVG, illustrations,
      decorative backgrounds and halftone only. Never interface text, surfaces or actions (those stay ADR-11).
      --illu-coral (2.33:1) and --illu-blue-soft (1.83:1) are never text nor the only carrier of meaning (RQ-012). */
   --illu-ink: #18346f; /* main stroke, text embedded in SVG — 11.93:1 */
@@ -296,7 +296,7 @@
 }
 
 .dark {
-  /* PROVISIONAL (ADR-13): --illu-ink is 1.4:1 on the dark canvas; the event outline uses the text colour. */
+  /* PROVISIONAL (ADR-15): --illu-ink is 1.4:1 on the dark canvas; the event outline uses the text colour. */
   --graph-accent-event-outline: var(--foreground);
   /* PROVISIONAL dark theme: the mockups (ADR-11) define only the light theme. These values
      derive from DESIGN-HANDOFF-001 v2 (hex -> oklch) until a dark spec exists. */
@@ -817,7 +817,6 @@ body {
   --section-pad-y: 3.1875rem; /* 51 */
   --space-section: calc(2 * var(--section-pad-y));
   --header-h: 3rem; /* 48: sticky bar */
-  --bottombar-h: 4rem; /* 64: mobile bottom bar (LANC-001 RQ-021) */
   --text-hero: clamp(3rem, 2rem + 4vw, 4.5rem); /* 48 → 72: wordmark display, uppercase */
   --text-hero-lead: 1.1875rem; /* 19 */
 
@@ -1024,38 +1023,133 @@ body {
   max-width: var(--measure);
 }
 
-/* Anchors land below the sticky site header (+ the pillar trail from 900px, LANC-001 RQ-020). */
+/* Anchors land below the sticky site header. */
 html {
   scroll-padding-top: 5.5rem;
 }
-@media (width >= 900px) {
-  html {
-    scroll-padding-top: 7rem;
+
+/* ===== OPENAI-STORIES-DESIGN-001 (RC-FRONT-001) =====================================================
+   Tokens do handoff, valores LITERAIS observados em viewport 1363×936, DPR 1 (design/tokens.desktop.css).
+   Não são o CSS-fonte original e só há medida desktop: 390/768 são medidos à parte (docs/audit/aud-web-002).
+   Divergência registrada: a fonte da referência (OpenAI Sans) não existe aqui; os mesmos tamanhos, pesos,
+   entrelinhas e tracking usam a Inter já carregada (ADR-11), então a quebra de linha pode diferir.
+   Os tokens do PR #18 (--content-max, --section-pad-y…) seguem valendo para o /admin (ADR-14). */
+:root {
+  --ref-font: var(--font-inter);
+  --ref-bg: var(--background);
+  --ref-text: var(--foreground);
+  --ref-gutter: 32px;
+  --ref-grid-gap: 24px;
+  --ref-h1-size: 61.6864px;
+  --ref-h1-line: 62.0103px;
+  --ref-h1-tracking: -1.85059px;
+  --ref-h2-size: 46.8432px;
+  --ref-h2-line: 54.2918px;
+  --ref-h2-tracking: -1.38216px;
+  --ref-body-size: 17px;
+  --ref-body-line: 27.999px;
+  --ref-body-tracking: -0.17px;
+  --ref-quote-size: 29.5662px;
+  --ref-quote-line: 39.0274px;
+  --ref-quote-tracking: -0.739155px;
+  --ref-caption-size: 14px;
+  --ref-caption-line: 22.96px;
+  --ref-meta-size: 14px; /* data do card: 14/19.6, peso 500 */
+  --ref-meta-line: 19.6px;
+  --ref-reading-width: 637.5px;
+  --ref-wide-width: 1078.5px;
+  /* medidas do handoff que não vinham como token (Home e artigo, desktop) */
+  --ref-header-h: 64px;
+  --ref-feature-w: 968.25px; /* 3 colunas de card + 2 gaps */
+  --ref-feature-h: 544.64px; /* 16:9 */
+  --ref-card-w: 306.75px; /* imagem quadrada */
+  --ref-hero-h: 694px;
+  --ref-hero-title-w: 802px;
+  --ref-hero-lead-w: 596px;
+  --ref-section-gap: 120px; /* entre blocos do artigo (legenda → h2, texto → mídia) */
+  --ref-block-gap: 24px; /* entre parágrafos e entre h2 e o 1º parágrafo */
+  --ref-card-gap-y: 64px; /* entre cards empilhados e entre linhas da grade */
+  --ref-pill-radius: 40px; /* CTA em cápsula */
+  --ref-control-radius: 4px; /* botões Filtro/Classificar */
+}
+
+/* Espaços verticais abaixo de 1024 px: proposta (ver acima). */
+@media (width < 64rem) {
+  :root {
+    --ref-section-gap: 4.5rem;
+    --ref-card-gap-y: 2.5rem;
   }
 }
 
-/* Mobile drawer (LANC-001 RQ-021): slides in from the right; zeroed under reduced motion. */
-@keyframes drawerIn {
-  from {
-    transform: translateX(100%);
-  }
-  to {
-    transform: none;
+@utility stories-container {
+  margin-inline: auto;
+  padding-inline: var(--ref-gutter);
+  width: 100%;
+}
+/* Abaixo de 1024 px a escala é PROPOSTA minha, não medida: a referência responde 403 ao container (BLOCKED) e o
+   handoff trata o responsivo como hipótese. Entrelinha e tracking ficam proporcionais ao corpo (razões derivadas
+   dos tokens). De 1024 px em diante valem os tokens literais. */
+@utility stories-h1 {
+  font-family: var(--ref-font);
+  font-size: clamp(2.25rem, 1.2rem + 4.2vw, var(--ref-h1-size));
+  line-height: 1.0053;
+  letter-spacing: -0.03em;
+  font-weight: 500;
+  text-wrap: balance;
+  @media (width >= 64rem) {
+    font-size: var(--ref-h1-size);
+    line-height: var(--ref-h1-line);
+    letter-spacing: var(--ref-h1-tracking);
   }
 }
-@keyframes backdropIn {
-  from {
-    opacity: 0;
+@utility stories-h2 {
+  font-family: var(--ref-font);
+  font-size: clamp(1.75rem, 1rem + 3.2vw, var(--ref-h2-size));
+  line-height: 1.159;
+  letter-spacing: -0.0295em;
+  font-weight: 500;
+  text-wrap: balance;
+  @media (width >= 64rem) {
+    font-size: var(--ref-h2-size);
+    line-height: var(--ref-h2-line);
+    letter-spacing: var(--ref-h2-tracking);
   }
 }
-.rc-drawer {
-  animation: drawerIn var(--dur-base) var(--ease) both;
+@utility stories-body {
+  font-family: var(--ref-font);
+  font-size: var(--ref-body-size);
+  line-height: var(--ref-body-line);
+  letter-spacing: var(--ref-body-tracking);
+  font-weight: 400;
 }
-.rc-drawer-backdrop {
-  animation: backdropIn var(--dur-base) var(--ease) both;
+@utility stories-quote {
+  font-family: var(--ref-font);
+  font-size: clamp(1.375rem, 1rem + 1.8vw, var(--ref-quote-size));
+  line-height: 1.32;
+  letter-spacing: -0.025em;
+  font-weight: 500;
+  text-wrap: balance;
+  @media (width >= 64rem) {
+    font-size: var(--ref-quote-size);
+    line-height: var(--ref-quote-line);
+    letter-spacing: var(--ref-quote-tracking);
+  }
+}
+@utility stories-caption {
+  font-family: var(--ref-font);
+  font-size: var(--ref-caption-size);
+  line-height: var(--ref-caption-line);
+  font-weight: 400;
+}
+@utility stories-meta {
+  font-family: var(--ref-font);
+  font-size: var(--ref-meta-size);
+  line-height: var(--ref-meta-line);
+  font-weight: 500;
+  color: var(--muted-foreground);
 }
 
-/* Motion (v7, ADR-13 / LANC-001 RQ-014): hero entrance. */
+/* Motion (v7, ADR-15 / LANC-001 RQ-014): hero entrance. */
 @keyframes heroReveal {
   from {
     opacity: 0;
@@ -1070,7 +1164,7 @@ html {
   animation: heroReveal var(--dur-slow) var(--ease) both;
 }
 
-/* Reduced motion (ADR-13 / LANC-001 RQ-014): no animation nor transition longer than 0.01s anywhere. */
+/* Reduced motion (ADR-15 / LANC-001 RQ-014): no animation nor transition longer than 0.01s anywhere. */
 @media (prefers-reduced-motion: reduce) {
   :root {
     --dur-fast: 0ms;
@@ -1092,7 +1186,7 @@ html {
   }
 }
 
-/* Prisma A4 (RC-PWA-PRISMA-FRD-001 §6 e §8, ADR-14): a folha é papel, sempre clara — no preview, no tema
+/* Prisma A4 (RC-PWA-PRISMA-FRD-001 §6 e §8, ADR-17): a folha é papel, sempre clara — no preview, no tema
    escuro e na impressão. Os --ps-* são o único lugar com cor da folha (hex só neste arquivo). 210 × 297 mm,
    margem de 10 mm; o preview mostra a mesma folha reduzida por transform, a impressão a mostra em tamanho real. */
 .prisma-sheet {

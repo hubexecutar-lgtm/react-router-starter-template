@@ -1,34 +1,16 @@
 import { type RouteConfig, index, route } from "@react-router/dev/routes";
 
-// Every page of the blog (ADR-06: new routes are also registered in app/data/routes.ts).
+// Site do zero (ADR-13/14): home, artigos, painel interno (/admin) e 404.
+// ADR-06: nova rota também entra em app/data/routes.ts.
 export default [
 	index("routes/home.tsx"),
-	route("about", "routes/about.tsx"),
-	route("contact", "routes/contact.tsx"),
-	route("faq", "routes/faq.tsx"),
-	route("pricing", "routes/pricing.tsx"),
-	route("privacy", "routes/privacy.tsx"),
-	route("login", "routes/login.tsx"),
-	route("signup", "routes/signup.tsx"),
-	route("blog", "routes/blog._index.tsx"),
-	route("blog/:slug", "routes/blog.$slug.tsx"),
-	route("temas", "routes/temas._index.tsx"),
-	route("temas/:slug", "routes/temas.$slug.tsx"),
-	route("mapas", "routes/mapas.tsx"),
-	route("guias", "routes/guias.tsx"),
-	route("evidencias", "routes/evidencias.tsx"),
-	route("buscar", "routes/buscar.tsx"),
+	route("artigos/:slug", "routes/artigos.$slug.tsx"),
 	route("prisma", "routes/prisma.tsx"),
-	route("ferramentas", "routes/ferramentas._index.tsx"),
-	route("ferramentas/:type", "routes/ferramentas.$type._index.tsx"),
-	route("ferramentas/:type/:slug", "routes/ferramentas.$type.$slug.tsx"),
 	route("admin", "routes/admin._index.tsx"),
 	route("admin/design-system", "routes/admin.design-system.tsx"),
 	route("admin/handoff", "routes/admin.handoff.tsx"),
 	route("admin/relatorio-exemplo", "routes/admin.relatorio-exemplo.tsx"),
 	route("admin/rotas", "routes/admin.rotas.tsx"),
-	route("rss.xml", "routes/rss[.]xml.ts"),
-	route("sitemap-index.xml", "routes/sitemap-index[.]xml.ts"),
-	route("sitemap-0.xml", "routes/sitemap-0[.]xml.ts"),
+	route("admin/stories-fixtures", "routes/admin.stories-fixtures.tsx"),
 	route("*", "routes/$.tsx"),
 ] satisfies RouteConfig;

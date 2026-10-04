@@ -9,8 +9,8 @@
 
 | ID | Decisão | Efeito |
 |---|---|---|
-| DEC-U1 | Arquitetura, interatividade e disposição das páginas seguem **v6 e v7**; o **motion do v7** é mantido | Fecha D1 (estrutural). Nav desktop visível, drawer + barra inferior no mobile, chrome que esconde no scroll, hero com `heroReveal` |
-| DEC-U2 | **Brand Local (v7)** em tudo, incluindo artigos e blog | Paleta e tipografia de interface continuam as do ADR-11 (`#2563EB`, `#202124`, Inter + IBM Plex Mono). O amarelo/preto do v6 sai; D2 deixa de existir |
+| DEC-U1 | (restrita pela DEC-U14 a motion) Arquitetura, interatividade e disposição das páginas seguem **v6 e v7**; o **motion do v7** é mantido | Fecha D1 (estrutural). Nav desktop visível, drawer + barra inferior no mobile, chrome que esconde no scroll, hero com `heroReveal` |
+| DEC-U2 | (restrita pela DEC-U14 a cores) **Brand Local (v7)** em tudo, incluindo artigos e blog | Paleta e tipografia de interface continuam as do ADR-11 (`#2563EB`, `#202124`, Inter + IBM Plex Mono). O amarelo/preto do v6 sai; D2 deixa de existir |
 | DEC-U3 | O pacote DOCS-002 traz os tokens de **gráficos, vetores e imagens** (RC-BRAND-STYLING-001) | Vira a camada de ilustração; não substitui a paleta de interface (ver CF-01) |
 | DEC-U4 | Os insumos viram PRD, FRD, specs e UIX | Este diretório |
 | DEC-U5 | Papel do agente: priorizar, reduzir ambiguidade e converter em requisitos importáveis | `00-PLANO-DE-IMPORTANCIA.md` + `requisitos.{json,csv}` |
@@ -23,12 +23,13 @@ As respostas vieram numeradas R1–R9 sem R5; R6–R9 respondem Q5–Q8.
 |---|---|---|---|
 | DEC-U6 | Q1 menu | "Sim" | Topo Artigos · Mapa · Ferramentas · Sobre; barra inferior Início · Mapa · Ferramentas. CF-12 fechado |
 | DEC-U7 | Q2 imagem | "Todo artigo deve ter uma imagem" | Bloco 100vh em todo artigo, com a ilustração do pilar como reserva; emenda ao ADR-12. CF-11 fechado |
-| DEC-U8 | Q3 URLs | "Mantém" | `/blog`, `/mapas`, `/about` mantidas, só os rótulos mudam. CF-13 fechado |
+| DEC-U8 | (substituída pela DEC-U14) Q3 URLs | "Mantém" | `/blog`, `/mapas`, `/about` mantidas, só os rótulos mudam. CF-13 fechado |
 | DEC-U9 | Q4 Ferramentas × Loja | "Ferramentas cognitivas. Loja não existe." | A seção chama-se **Ferramentas cognitivas** e substitui a Loja: `/loja/*` → `/ferramentas/*` com 301, catálogo reaproveitado, ADR-08 substituído (RQ-103). GAP-06 fechada |
 | DEC-U10 | Q5 Teia | "Teia aprovada, responsável Leonardo" | ADR-TEIA-UNICA-001 **Aceita**, OWNER **Leonardo**; registrado como ADR-M04 no `CLAUDE.md` da raiz. GAP-01 fechada para a Teia |
 | DEC-U11 | Q6 analytics | "Usar a disponível no stack" | Cloudflare Web Analytics (páginas e Core Web Vitals de campo) + Workers Analytics Engine (eventos próprios). GAP-03 fechada |
 | DEC-U12 | Q7 conteúdo | "Sim" | RC-LP-001 vira a home; os 4 artigos canônicos entram como artigos novos, sem apagar os existentes. CF-14 confirmado |
 | DEC-U13 | Q8 cadeia | "Sim" | Cadeia canônica do CF-05 confirmada |
+| DEC-U14 | Base do site (2026-10-04, AUD-ORDEM-001) | "O design system certo é o do PR #19 … todo o seu trabalho deve ser implementado a partir do PR 19 inteiro" | A base é o PR #19 (`chore/site-do-zero`): reset do site (ADR-13) + front-end Stories (ADR-14, `--ref-*`). Layout, tipografia e anatomia de Home e artigo = Stories; cores = ADR-11; ilustração, grafo e motion = ADR-15. **Restringe** DEC-U1/DEC-U2 a cores, ilustração e motion; **substitui** DEC-U8: artigos em `/artigos/:slug/`, rotas antigas removidas sem 301. RQ-010, 020…026, 100 e 103 reabertos |
 
 ## 2. Fatos verificados
 

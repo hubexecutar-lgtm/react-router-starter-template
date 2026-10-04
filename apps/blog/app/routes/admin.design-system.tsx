@@ -14,7 +14,6 @@ import { seo } from '@/lib/seo';
 import { tokenValue } from '@/lib/tokens.server';
 import { cn } from '@/lib/utils';
 
-const ARTICLE = '/blog/do-risco-cognitivo-a-execucao-assistida/';
 const sections = [
   { id: 'gramatica', label: 'Gramática visual' },
   { id: 'moodboard', label: 'Mood board' },
@@ -57,7 +56,7 @@ const chartPalette = [
   ['chart-4', 'brand.500 (primitivo)', 'série única clara (radar, áreas)'],
   ['chart-5', 'muted-foreground', 'meta e referência (traço tracejado)'],
 ];
-// ---- Illustration layer, causal graph and motion (ADR-13 / LANC-001 RQ-011…015)
+// ---- Illustration layer, causal graph and motion (ADR-15 / LANC-001 RQ-011…015)
 const illuLayer = [
   ['illu-ink', 'traço principal, texto embutido em SVG'],
   ['illu-blue', 'contorno, via, foco da cena'],
@@ -209,11 +208,11 @@ As quebras de linha e os espaços do autor continuam preservados:
     - item recuado
     - outro item recuado`;
 const storyboard = [
-  { n: '01', title: 'Blog — início', route: '/blog/', image: '/images/binoculo.webp', uses: 'Hero, Button, cards de território, filtros' },
-  { n: '02', title: 'Territórios', route: '/blog/#territorios-title', image: '/images/equipe-tablet.webp', uses: 'Filtro (Button outline sm), cards' },
-  { n: '03', title: 'Artigo', route: ARTICLE, image: '/images/binoculo.webp', uses: 'Prose, capitular, Callout (decision, question, quote, example, note)' },
+  { n: '01', title: 'Blog — início', route: '/blog/', removed: true, image: '/images/binoculo.webp', uses: 'Hero, Button, cards de território, filtros' },
+  { n: '02', title: 'Territórios', route: '/blog/#territorios-title', removed: true, image: '/images/equipe-tablet.webp', uses: 'Filtro (Button outline sm), cards' },
+  { n: '03', title: 'Artigo', route: '/blog/<slug>/', removed: true, image: '/images/binoculo.webp', uses: 'Prose, capitular, Callout (decision, question, quote, example, note)' },
   { n: '04', title: 'Painel', route: '/admin', image: '/images/mao-chaves.webp', uses: 'Cards de acesso, Design System' },
-  { n: '05', title: 'Hub e catálogos', route: '/hub-editorial/', image: '/images/equipe-tablet.webp', uses: 'Ferramentas autônomas (Hub, Skills, Catálogo offline)' },
+  { n: '05', title: 'Hub e catálogos', route: '/hub-editorial/', removed: true, image: '/images/equipe-tablet.webp', uses: 'Ferramentas autônomas (Hub, Skills, Catálogo offline)' },
 ];
 const spacing = [4, 8, 12, 16, 20, 24, 32, 48, 64];
 const radii = [
@@ -405,7 +404,11 @@ export default function DesignSystem({ loaderData }: Route.ComponentProps) {
                   <p className="text-primary text-sm font-medium">{f.n}</p>
                   <h3 className="mt-1 text-lg font-medium">{f.title}</h3>
                   <p className="text-muted-foreground mt-1 text-sm">{f.uses}</p>
-                  <a href={f.route} className={cn(buttonVariants({ variant: 'outline', size: 'sm' }), 'mt-4')}>Abrir</a>
+                  {f.removed ? (
+                    <p className="text-muted-foreground mt-4 text-sm">Rota removida no site do zero (ADR-13).</p>
+                  ) : (
+                    <a href={f.route} className={cn(buttonVariants({ variant: 'outline', size: 'sm' }), 'mt-4')}>Abrir</a>
+                  )}
                   <p className="text-muted-foreground mt-2 font-mono text-xs break-all">{f.route}</p>
                 </div>
               </li>
@@ -521,7 +524,7 @@ export default function DesignSystem({ loaderData }: Route.ComponentProps) {
 
           <h3 className="mt-10 text-xl font-medium">Camada de ilustração e vetor</h3>
           <p className="text-muted-foreground mt-2 max-w-2xl text-base font-medium">
-            RC-BRAND-STYLING-001 vale só para SVG, ilustrações e fundos decorativos (ADR-13). Azul orienta e conecta;
+            RC-BRAND-STYLING-001 vale só para SVG, ilustrações e fundos decorativos (ADR-15). Azul orienta e conecta;
             coral marca evento com moderação; azul claro dá profundidade. Coral e azul claro nunca são texto.
           </p>
           <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5" data-testid="illu-layer">
@@ -605,7 +608,7 @@ export default function DesignSystem({ loaderData }: Route.ComponentProps) {
               <span>--callout-motion-fast: 120ms</span>
               <span>--callout-motion-default: 180ms</span>
               <span>--callout-easing: cubic-bezier(0.2, 0, 0, 1)</span>
-              <span>--ease: cubic-bezier(.22, 1, .36, 1) (v7, ADR-13)</span>
+              <span>--ease: cubic-bezier(.22, 1, .36, 1) (v7, ADR-15)</span>
               <span>prefers-reduced-motion: transições removidas</span>
             </div>
           </div>
@@ -672,7 +675,7 @@ export default function DesignSystem({ loaderData }: Route.ComponentProps) {
 
           <h3 className="mt-10 text-xl font-medium">Estados</h3>
           <div className="mt-4 grid gap-3 md:grid-cols-2" data-testid="callout-states">
-            <Callout variant="next-step" subject="Próximo passo" message="Publicar o artigo" description="Com ações (máximo 2)." action={{ label: 'Publicar', href: '/blog' }} secondaryAction={{ label: 'Rever', href: ARTICLE }} />
+            <Callout variant="next-step" subject="Próximo passo" message="Publicar o artigo" description="Com ações (máximo 2)." action={{ label: 'Publicar', href: '#callouts' }} secondaryAction={{ label: 'Rever', href: '#callouts' }} />
             <Callout variant="pending" subject="Pendente" message="aguardando revisão" description="Ações desabilitadas." action={{ label: 'Publicar' }} disabled />
             <Callout variant="data" subject="Dados" message="carregando" loading />
             <Callout variant="attention" subject="Atenção" message="pode ser fechado" description="dismissible: remove o callout do fluxo." dismissible />

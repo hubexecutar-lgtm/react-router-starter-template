@@ -24,7 +24,6 @@ export const links: Route.LinksFunction = () => [
 	// Favicon
 	...SITE_METADATA.icons.icon.map((icon) => ({ rel: "icon", type: icon.type, sizes: icon.sizes, href: icon.url })),
 	...SITE_METADATA.icons.apple.map((icon) => ({ rel: "apple-touch-icon", sizes: icon.sizes, href: icon.url })),
-	{ rel: "sitemap", href: "/sitemap-index.xml" },
 ];
 
 // Organization com o logo publicado (LANC-001, RQ-002), em todas as rotas.

@@ -1,54 +1,46 @@
-// Rodapé global: faixa de halftone, régua fina, wordmark, colunas de navegação e linha mono (mood boards 05 e 07).
-// AUD-WEB-001-13: o diretório fica numa faixa Subtle de ponta a ponta, como o rodapé da referência;
-// o halftone continua acima, sobre o Canvas.
+// Rodapé global. RC-FRONT-001: fundo branco e gutter de 32 px do handoff (OPENAI-STORIES-DESIGN-001).
+// As cinco colunas de navegação do handoff dependem de páginas que ainda não existem: os grupos vêm de
+// FOOTER_NAV (nav.ts, hoje vazio) e o rodapé cresce junto com o site.
 import { FOOTER_NAV } from "./nav";
 
-import { DotField } from "@/components/editorial/DotField";
 import { SITE_NAME, SITE_TAGLINE } from "@/consts";
 
-export function SiteFooter({ inert = false }: { inert?: boolean }) {
+export function SiteFooter() {
 	return (
-		<footer className="mt-24 lg:mt-32" {...(inert ? { inert: true } : {})}>
-			{/* faixa de halftone orgânico acima do rodapé: área sem texto (ADR-12) */}
-			<div className="container">
-				<DotField cols={64} rows={5} seed={21} fade="none" className="block h-16 w-full sm:h-20" />
-			</div>
-			<div className="rc-surface bg-[var(--surface-subtle)]">
-				<div className="container grid gap-12 py-14 md:grid-cols-[1.4fr_repeat(3,1fr)] lg:py-16">
-					<div className="max-w-sm">
-						<a href="/" className="rc-display text-2xl uppercase tracking-[-0.02em]">
-							{SITE_NAME}
-						</a>
-						<p className="rc-lead mt-3">{SITE_TAGLINE}</p>
-						<p className="text-muted-foreground mt-4 text-sm leading-relaxed">
-							Fatores, exposição, eventos, controles e indicadores do trabalho cognitivo — com fontes à vista e
-							distinção clara entre evidência e framework próprio.
-						</p>
-					</div>
-					{FOOTER_NAV.map((group) => (
-						<nav key={group.title} aria-label={group.title}>
-							<p className="rc-eyebrow">{group.title}</p>
-							<ul className="mt-4 space-y-2.5">
-								{group.items.map((item) => (
-									<li key={item.href}>
-										<a href={item.href} className="text-foreground hover:text-primary inline-flex min-h-6 items-center text-[length:var(--text-small)] transition-colors">
-											{item.label}
-										</a>
-									</li>
-								))}
-							</ul>
-						</nav>
-					))}
+		<footer className="mt-[var(--ref-section-gap)] border-t border-[var(--border-default)]">
+			<div className="stories-container grid gap-12 py-16 md:grid-cols-[1.4fr_repeat(3,1fr)]">
+				<div className="max-w-sm">
+					<a href="/" className="rc-display text-2xl uppercase tracking-[-0.02em]">
+						{SITE_NAME}
+					</a>
+					<p className="stories-body text-muted-foreground mt-3">{SITE_TAGLINE}</p>
 				</div>
-				<div className="border-t border-[var(--border-strong)]">
-					<div className="container flex flex-col gap-2 py-6 sm:flex-row sm:items-center sm:justify-between">
-						<p className="rc-meta">{SITE_NAME} / Pensamento melhor, decisões mais claras.</p>
-						<p className="rc-meta">
-							<a href="/admin/" className="hover:text-foreground transition-colors">
-								Painel interno
-							</a>
-						</p>
-					</div>
+				{FOOTER_NAV.map((group) => (
+					<nav key={group.title} aria-label={group.title}>
+						<p className="rc-eyebrow">{group.title}</p>
+						<ul className="mt-4 space-y-2.5">
+							{group.items.map((item) => (
+								<li key={item.href}>
+									<a
+										href={item.href}
+										className="text-foreground hover:text-primary inline-flex min-h-6 items-center text-[length:var(--text-small)] transition-colors"
+									>
+										{item.label}
+									</a>
+								</li>
+							))}
+						</ul>
+					</nav>
+				))}
+			</div>
+			<div className="border-t border-[var(--border-default)]">
+				<div className="stories-container flex flex-col gap-2 py-6 sm:flex-row sm:items-center sm:justify-between">
+					<p className="rc-meta">{SITE_NAME}</p>
+					<p className="rc-meta">
+						<a href="/admin/" className="hover:text-foreground transition-colors">
+							Painel interno
+						</a>
+					</p>
 				</div>
 			</div>
 		</footer>

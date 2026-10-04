@@ -33,12 +33,12 @@ test("palette tokens carry the mockup values", async ({ page }) => {
 });
 
 test("typography: Inter 700 for display, IBM Plex Mono for technical text", async ({ page }) => {
-  await page.goto("/blog/o-que-e-risco-cognitivo/");
+  await page.goto("/admin/rotas/");
   await page.evaluate(() => document.fonts.ready);
   const h1 = await page.locator("h1").evaluate((e) => ({ family: getComputedStyle(e).fontFamily, weight: getComputedStyle(e).fontWeight }));
   expect(h1.family.split(",")[0].replace(/"/g, "").trim()).toBe("Inter");
   expect(h1.weight).toBe("700");
-  const mono = await page.locator(".rc-eyebrow").first().evaluate((e) => getComputedStyle(e).fontFamily);
+  const mono = await page.locator(".rc-eyebrow, .rc-meta").first().evaluate((e) => getComputedStyle(e).fontFamily);
   expect(mono.split(",")[0].replace(/"/g, "").trim()).toBe("IBM Plex Mono");
   const body = await page.evaluate(() => getComputedStyle(document.body).fontFamily);
   expect(body.split(",")[0].replace(/"/g, "").trim()).toBe("Inter");
@@ -46,12 +46,13 @@ test("typography: Inter 700 for display, IBM Plex Mono for technical text", asyn
 
 test("secondary text switches to the AA gray inside gray surfaces", async ({ page }) => {
   await page.goto("/");
-  const onCanvas = await page.locator("main .rc-lead").first().evaluate((e) => getComputedStyle(e).color);
+  const onCanvas = await page.locator("main .stories-meta").first().evaluate((e) => getComputedStyle(e).color);
   expect(onCanvas).toBe("rgb(107, 114, 128)");
   // editorial surface (SURFACE) and shadcn card
-  const inSurface = await page.locator("main .rc-surface .rc-eyebrow").first().evaluate((e) => getComputedStyle(e).color);
+  await page.goto("/admin/rotas/");
+  const inSurface = await page.locator("main .rc-surface .rc-eyebrow, main .rc-cell .text-muted-foreground").first().evaluate((e) => getComputedStyle(e).color);
   expect(inSurface).toBe("rgb(95, 102, 112)");
-  for (const route of ["/ferramentas/", "/temas/", "/evidencias/"]) {
+  for (const route of ["/admin/", SHOWROOM]) {
     await page.goto(route);
     const pairs = await page
       .locator("main :is(.rc-surface, [data-slot=card]) :is(.text-muted-foreground, .rc-eyebrow, .rc-meta)")
@@ -93,7 +94,7 @@ test("visual grammar mirrors mood board 10", async ({ page }) => {
   expect(await grammar.getByTestId("grammar-model").evaluate((e) => getComputedStyle(e).backgroundColor)).toBe("rgb(239, 246, 255)");
 });
 
-// ---- ADR-13 / LANC-001 PR-B (RQ-011…015): illustration layer, graph aliases, motion, geometry.
+// ---- ADR-15 / LANC-001 PR-B (RQ-011…015): illustration layer, graph aliases, motion, geometry.
 const rootVar = (page: Page, name: string) =>
   page.evaluate((n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim(), name);
 const probe = (page: Page, prop: string, value: string) =>
@@ -158,7 +159,7 @@ for (const theme of ["light", "dark"] as const) {
 
 test("reduced motion: no animation nor transition longer than 0.01s (RQ-014)", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
-  for (const route of ["/", SHOWROOM, "/blog/", "/blog/o-que-e-risco-cognitivo/", "/ferramentas/"]) {
+  for (const route of ["/", SHOWROOM, "/artigos/risco-cognitivo/", "/admin/"]) {
     await page.goto(route);
     const slow = await page.evaluate(() => {
       const secs = (v: string) => v.split(",").map((x) => (x.trim().endsWith("ms") ? parseFloat(x) / 1000 : parseFloat(x)));

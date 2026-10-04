@@ -1,6 +1,6 @@
 // Descobre as rotas reais do repositório (usado por tests/routes.spec.ts).
-// Lê a configuração de rotas do React Router (app/routes.ts), public/*/index.html e
-// content/blog. Só depende de node:fs e da config — não importa componentes.
+// Lê a configuração de rotas do React Router (app/routes.ts) e public/*/index.html;
+// só depende de node:fs e da config — não importa componentes.
 import { existsSync, readdirSync, statSync } from "node:fs";
 import { join, relative, sep } from "node:path";
 
@@ -41,14 +41,6 @@ export function scanPublicTools(root: string): string[] {
     .filter((f) => f.endsWith(`${sep}index.html`))
     .map((f) => `/${relative(dir, f).split(sep).slice(0, -1).join("/")}/`)
     .filter((p) => p !== "//");
-}
-
-/** Slugs de content/blog (viram /blog/<slug>/). */
-export function scanBlogSlugs(root: string): string[] {
-  const dir = join(root, "content/blog");
-  return walk(dir)
-    .filter((f) => /\.(md|mdx)$/.test(f))
-    .map((f) => relative(dir, f).replace(/\.(md|mdx)$/, "").split(sep).join("/"));
 }
 
 /** Rotas que o site gera automaticamente e que não têm entrada própria em app/routes.ts. */
