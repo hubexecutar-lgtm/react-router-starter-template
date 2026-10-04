@@ -225,14 +225,14 @@
       "titulo": "Nav global no desktop (≥ 900px)",
       "descricao": "Links visíveis (Artigos · Mapa · Ferramentas · Sobre) e trilha de categorias inline; sem botão de menu.",
       "prioridade": "P0",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [
         "RQ-010",
         "RQ-050"
       ],
       "fonte": "DEC-U1; FT-04; CF-12; Q1; DEC-U6",
       "criterio_aceite": "Em 1280px os links estão visíveis e o drawer não existe no DOM acessível",
-      "entregue_em": "",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/30",
       "historico": [
         {
           "status": "DONE",
@@ -242,7 +242,7 @@
           "motivo": "entregue sobre o site antigo; a base passou a ser o PR #19 (Stories)"
         }
       ],
-      "nota": "Trilha com os 3 pilares publicada (G1). Falta o Mapa no topo: fecha com o PR-H."
+      "nota": "Mapa no topo, no drawer, no rodapé e na barra inferior (PR-H, ADR-19)."
     },
     {
       "id": "RQ-021",
@@ -558,11 +558,12 @@
       "titulo": "Menu principal Artigos · Mapa · Ferramentas · Sobre",
       "descricao": "Rótulos novos sobre URLs mantidas: Artigos → /blog, Mapa → /mapas, Sobre → /about; Ferramentas → /ferramentas (Ferramentas cognitivas, substitui a Loja, RQ-103).",
       "prioridade": "P0",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [],
       "fonte": "CF-12; CF-13; Q1; Q3; DEC-U6; DEC-U8",
       "criterio_aceite": "Menu igual no desktop, no drawer e no rodapé-diretório",
-      "nota": "Menu Artigos · Ferramentas · Sobre igual no topo, drawer e rodapé (G1). Falta o Mapa: fecha com o PR-H."
+      "nota": "Mapa no topo, no drawer, no rodapé e na barra inferior (PR-H, ADR-19).",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/30"
     },
     {
       "id": "RQ-051",
@@ -710,13 +711,14 @@
       "titulo": "Explorar: grafo radial focus + context",
       "descricao": "/mapas/explorar abre com 1 nó focal e no máximo 8 nós visíveis; tocar um nó seleciona, destaca arestas, esmaece o resto, recentra e expande os vizinhos.",
       "prioridade": "P1",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [
         "RQ-062",
         "RQ-079"
       ],
       "fonte": "RC-MOBILE SCR-02; AC-004; INT-002",
-      "criterio_aceite": "Teste conta ≤ 8 nós na carga; toque recentra"
+      "criterio_aceite": "Teste conta ≤ 8 nós na carga; toque recentra",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/30"
     },
     {
       "id": "RQ-071",
@@ -725,12 +727,13 @@
       "titulo": "Bottom sheet de detalhe",
       "descricao": "Snap recolhido/médio/expandido; abas Causas · Impactos · Soluções · Evidências; arrastar e botões; Esc fecha no desktop.",
       "prioridade": "P1",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [
         "RQ-070"
       ],
       "fonte": "RC-MOBILE SCR-03; INT-005",
-      "criterio_aceite": "Operável só por toque e só por teclado"
+      "criterio_aceite": "Operável só por toque e só por teclado",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/30"
     },
     {
       "id": "RQ-072",
@@ -739,12 +742,13 @@
       "titulo": "Rota de detalhe do fator",
       "descricao": "/mapas/explorar/:fatorId compartilhável; voltar ao mapa preserva a seleção.",
       "prioridade": "P1",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [
         "RQ-070"
       ],
       "fonte": "RC-MOBILE ROUTE-FACTOR; AC-002; INT-003",
-      "criterio_aceite": "Abrir fator e voltar só por toque"
+      "criterio_aceite": "Abrir fator e voltar só por toque",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/30"
     },
     {
       "id": "RQ-073",
@@ -753,12 +757,13 @@
       "titulo": "Alternativa em lista",
       "descricao": "Aba Lista com o mesmo conteúdo do grafo (nós, relações em texto), navegável por teclado e leitor de tela.",
       "prioridade": "P0",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [
         "RQ-070"
       ],
       "fonte": "AC-006; accessibility.graph",
-      "criterio_aceite": "Toda aresta do grafo aparece como frase na lista"
+      "criterio_aceite": "Toda aresta do grafo aparece como frase na lista",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/30"
     },
     {
       "id": "RQ-074",
@@ -767,12 +772,13 @@
       "titulo": "Filtros por tipo de nó",
       "descricao": "Chips por tipo da cadeia canônica (não por estilo de vida/saúde).",
       "prioridade": "P2",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [
         "RQ-070"
       ],
       "fonte": "RC-MOBILE filters; CF-06",
-      "criterio_aceite": "Filtro reduz nós sem quebrar o foco"
+      "criterio_aceite": "Filtro reduz nós sem quebrar o foco",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/30"
     },
     {
       "id": "RQ-075",
@@ -781,12 +787,13 @@
       "titulo": "Nada depende de hover; pan/zoom são secundários",
       "descricao": "Toda função essencial por toque e teclado; pan e zoom complementam.",
       "prioridade": "P1",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [
         "RQ-070"
       ],
       "fonte": "INT-001; INT-004",
-      "criterio_aceite": "Teste sem hover cobre todos os fluxos"
+      "criterio_aceite": "Teste sem hover cobre todos os fluxos",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/30"
     },
     {
       "id": "RQ-076",
@@ -795,13 +802,14 @@
       "titulo": "Semântica visual além da cor",
       "descricao": "Tipo de nó por forma + rótulo (● ◆ ■ ▲ ! ✦ ⬢ ✓ ○); tipo de aresta por traço (sólida/tracejada) + rótulo textual.",
       "prioridade": "P1",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [
         "RQ-011",
         "RQ-012"
       ],
       "fonte": "Causal Knowledge Graph; accessibility.color",
-      "criterio_aceite": "Em escala de cinza os tipos continuam distinguíveis"
+      "criterio_aceite": "Em escala de cinza os tipos continuam distinguíveis",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/30"
     },
     {
       "id": "RQ-077",
@@ -810,12 +818,13 @@
       "titulo": "Reflow em 320px",
       "descricao": "Mapa e sheet funcionam em 320px sem rolagem horizontal da página.",
       "prioridade": "P0",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [
         "RQ-070"
       ],
       "fonte": "AC-001",
-      "criterio_aceite": "hig.spec reflow verde em /mapas/explorar"
+      "criterio_aceite": "hig.spec reflow verde em /mapas/explorar",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/30"
     },
     {
       "id": "RQ-078",
@@ -824,12 +833,13 @@
       "titulo": "Modo 'Por quê?'",
       "descricao": "A partir de um nó, mostra a cadeia de causas acima e as compensações abaixo.",
       "prioridade": "P2",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [
         "RQ-070"
       ],
       "fonte": "Causal Knowledge Graph",
-      "criterio_aceite": "Cadeia exibida também em texto"
+      "criterio_aceite": "Cadeia exibida também em texto",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/30"
     },
     {
       "id": "RQ-079",
@@ -838,10 +848,11 @@
       "titulo": "Stack do mapa carregada só na rota",
       "descricao": "React Flow + Dagre client-only e em lazy load em /mapas/explorar; Cytoscape adiado.",
       "prioridade": "P1",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [],
       "fonte": "CF-08",
-      "criterio_aceite": "Bundle das outras rotas sem crescimento; INP ≤ 200ms no mapa"
+      "criterio_aceite": "Bundle das outras rotas sem crescimento; INP ≤ 200ms no mapa",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/30"
     },
     {
       "id": "RQ-080",
@@ -850,12 +861,13 @@
       "titulo": "Modos Problemas, Soluções, Evidências",
       "descricao": "Presets de filtro sobre o mesmo grafo.",
       "prioridade": "P3",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [
         "RQ-074"
       ],
       "fonte": "Causal Knowledge Graph (4 modos)",
-      "criterio_aceite": "—"
+      "criterio_aceite": "—",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/30"
     },
     {
       "id": "RQ-081",

@@ -86,3 +86,6 @@ Já tinham saído no #19, e a `main` só os editava:
   - o shell volta no cabeçalho de 64 px; a trilha entra inline para não quebrar a geometria do handoff;
   - **reabertos e entregues de novo:** RQ-010, 021…026, 100 e 103;
   - **RQ-020 continua aberto** até existirem os destinos dos pilares e do Mapa.
+- **G1 = PR-D + PR-E + PR-F** (PR #29): imagens, conteúdo canônico, home RC-LP-001 e jornada sobre o Stories.
+- **PR-H mapa causal:** `/mapas/` e `/mapas/explorar/` recriados sobre o Stories como projeção do grafo da Teia (ADR-19);
+  Mapa no topo, no drawer, no rodapé e na barra inferior. **Fecha o RQ-020 e o RQ-050.**

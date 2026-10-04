@@ -19,6 +19,7 @@
 		"routes:check": "playwright test tests/routes.spec.ts"
 	},
 	"dependencies": {
+		"@dagrejs/dagre": "^3.1.1",
 		"@hookform/resolvers": "^5.2.2",
 		"@nobie-org/tailwindcss-animate": "^1.0.9",
 		"@radix-ui/react-accordion": "^1.2.12",
@@ -48,6 +49,7 @@
 		"@radix-ui/react-toggle-group": "^1.1.11",
 		"@radix-ui/react-tooltip": "^1.2.8",
 		"@tailwindcss/typography": "^0.5.19",
+		"@xyflow/react": "^12.12.0",
 		"class-variance-authority": "^0.7.1",
 		"clsx": "^2.1.1",
 		"cmdk": "^1.1.1",

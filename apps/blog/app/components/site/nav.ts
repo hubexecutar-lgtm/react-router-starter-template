@@ -1,15 +1,15 @@
 // Navegação global. Fonte única para cabeçalho, drawer, barra inferior e rodapé.
 // Site do zero (ADR-13) + shell do LANC-001 sobre o Stories (AUD-ORDEM-001): só entram destinos que existem.
-// Cada página nova entra aqui junto com a rota (ADR-06). Quando o mapa voltar (PR-H), "Mapa" entra no topo
-// e na barra inferior (DEC-U6).
+// Cada página nova entra aqui junto com a rota (ADR-06).
 export interface NavItem {
   label: string;
   href: string;
 }
 
-/** Topo (≥ 900px). DEC-U6: Artigos · Mapa · Ferramentas · Sobre — o Mapa entra com o PR-H. */
+/** Topo (≥ 900px). DEC-U6: Artigos · Mapa · Ferramentas · Sobre. */
 export const PRIMARY_NAV: NavItem[] = [
   { label: "Artigos", href: "/artigos/" },
+  { label: "Mapa", href: "/mapas/" },
   { label: "Ferramentas", href: "/ferramentas/" },
   { label: "Sobre", href: "/sobre/" },
 ];
@@ -22,9 +22,10 @@ export const DRAWER_NAV: NavItem[] = [
   { label: "Prisma de execução", href: "/prisma/" },
 ];
 
-/** Barra inferior (< 900px). DEC-U6: Início · Mapa · Ferramentas — o Mapa entra com o PR-H. */
+/** Barra inferior (< 900px). DEC-U6: Início · Mapa · Ferramentas. */
 export const BOTTOM_NAV: NavItem[] = [
   { label: "Início", href: "/" },
+  { label: "Mapa", href: "/mapas/" },
   { label: "Ferramentas", href: "/ferramentas/" },
 ];
 

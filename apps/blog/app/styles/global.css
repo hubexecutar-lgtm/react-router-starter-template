@@ -1421,3 +1421,26 @@ html {
 .rc-drawer-backdrop {
   animation: backdropIn var(--dur-base) var(--ease) both;
 }
+
+/* Mapa causal (LANC-001 PR-H, ADR-19): as alças do React Flow ficam invisíveis e no centro do nó, para que a aresta
+   ligue centro a centro; o canvas usa o fundo da célula. */
+.rc-map .react-flow__handle.rc-map-handle {
+  top: 50%;
+  left: 50%;
+  width: 1px;
+  height: 1px;
+  min-width: 0;
+  min-height: 0;
+  border: 0;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+.rc-map .react-flow__pane {
+  cursor: default;
+}
+/* Nós sem arrasto nem seleção do React Flow ficam com pointer-events: none; o botão do nó continua tocável. */
+.rc-map .rc-map-node {
+  pointer-events: all;
+  cursor: pointer;
+}
