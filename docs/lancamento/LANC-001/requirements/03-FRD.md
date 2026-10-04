@@ -6,9 +6,9 @@
 
 | Prioridade | READY | NEEDS_CONFIRMATION | BLOCKED | BACKLOG | DONE |
 |---|---|---|---|---|---|
-| P0 | 16 | 0 | 0 | 0 | 0 |
+| P0 | 15 | 0 | 0 | 0 | 1 |
 | P1 | 26 | 0 | 0 | 0 | 0 |
-| P2 | 10 | 0 | 1 | 0 | 0 |
+| P2 | 9 | 0 | 1 | 0 | 1 |
 | P3 | 4 | 0 | 2 | 1 | 0 |
 
 Total: 60 requisitos em 12 épicos.
@@ -17,8 +17,8 @@ Total: 60 requisitos em 12 épicos.
 
 | ID | Tipo | Prio | Status | Requisito | Critério de aceite | Depende | Fonte |
 |---|---|---|---|---|---|---|---|
-| RQ-001 | FR | P0 | READY | **Favicon e ícones do pacote BRAND-ASSET-LOGO-001.** Substituir apps/blog/public/favicon/* por favicon.ico (16/32/48/64), PNG 16/32/96, apple-touch-icon 180, PWA 192/512 e maskable 512; links em root.tsx conforme o README do pacote; site.webmanifest com nome Risco Cognitivo. | Os 5 <link> do README presentes no HTML de todas as rotas; manifest válido; arquivos com o sha256 do MANIFEST; npm test verde | — | intake/LOGO_FAVICON_PACKAGE_v1.0.0; CF-10 |
-| RQ-002 | FR | P2 | READY | **Logo como identidade em JSON-LD e social.** Usar logo-transparent e social/logo-square-1200x1200 como Organization.logo no JSON-LD e como avatar; OG das páginas continua usando a imagem de hero. | Organization.logo aponta para arquivo publicado; validador de dados estruturados sem erro | RQ-001, RQ-045 | intake/LOGO_FAVICON_PACKAGE_v1.0.0 |
+| RQ-001 | FR | P0 | DONE | **Favicon e ícones do pacote BRAND-ASSET-LOGO-001.** Substituir apps/blog/public/favicon/* por favicon.ico (16/32/48/64), PNG 16/32/96, apple-touch-icon 180, PWA 192/512 e maskable 512; links em root.tsx conforme o README do pacote; site.webmanifest com nome Risco Cognitivo. | Os 5 <link> do README presentes no HTML de todas as rotas; manifest válido; arquivos com o sha256 do MANIFEST; npm test verde | — | intake/LOGO_FAVICON_PACKAGE_v1.0.0; CF-10 |
+| RQ-002 | FR | P2 | DONE | **Logo como identidade em JSON-LD e social.** Usar logo-transparent e social/logo-square-1200x1200 como Organization.logo no JSON-LD e como avatar; OG das páginas continua usando a imagem de hero. | Organization.logo aponta para arquivo publicado; validador de dados estruturados sem erro | RQ-001, RQ-045 | intake/LOGO_FAVICON_PACKAGE_v1.0.0 |
 | RQ-003 | RULE | P2 | BLOCKED | **Regras de uso do logo.** Definir tamanho mínimo, área de respiro e fundos permitidos antes de usar o logo em cabeçalho. | Regras registradas no ADR de marca | — | GAP-04; CF-10; OWNER Leonardo decide (DEC-U10) |
 
 ## EP-02 — Tokens: interface, ilustração, gráficos e motion (PR-B)

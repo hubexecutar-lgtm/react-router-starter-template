@@ -87,10 +87,11 @@
       "titulo": "Favicon e ícones do pacote BRAND-ASSET-LOGO-001",
       "descricao": "Substituir apps/blog/public/favicon/* por favicon.ico (16/32/48/64), PNG 16/32/96, apple-touch-icon 180, PWA 192/512 e maskable 512; links em root.tsx conforme o README do pacote; site.webmanifest com nome Risco Cognitivo.",
       "prioridade": "P0",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [],
       "fonte": "intake/LOGO_FAVICON_PACKAGE_v1.0.0; CF-10",
-      "criterio_aceite": "Os 5 <link> do README presentes no HTML de todas as rotas; manifest válido; arquivos com o sha256 do MANIFEST; npm test verde"
+      "criterio_aceite": "Os 5 <link> do README presentes no HTML de todas as rotas; manifest válido; arquivos com o sha256 do MANIFEST; npm test verde",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/21"
     },
     {
       "id": "RQ-002",
@@ -99,13 +100,14 @@
       "titulo": "Logo como identidade em JSON-LD e social",
       "descricao": "Usar logo-transparent e social/logo-square-1200x1200 como Organization.logo no JSON-LD e como avatar; OG das páginas continua usando a imagem de hero.",
       "prioridade": "P2",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [
         "RQ-001",
         "RQ-045"
       ],
       "fonte": "intake/LOGO_FAVICON_PACKAGE_v1.0.0",
-      "criterio_aceite": "Organization.logo aponta para arquivo publicado; validador de dados estruturados sem erro"
+      "criterio_aceite": "Organization.logo aponta para arquivo publicado; validador de dados estruturados sem erro",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/21"
     },
     {
       "id": "RQ-003",
