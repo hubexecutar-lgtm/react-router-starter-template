@@ -19,6 +19,7 @@ export const PAGES = [
 	"/ferramentas/",
 	"/mapas/",
 	"/pricing/",
+	"/prisma/",
 	"/privacy/",
 	"/signup/",
 	"/temas/",

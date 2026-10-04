@@ -1,0 +1,33 @@
+id: RC-A4-PACK-001
+version: 1.0.0
+area: Design System / Documentos A4
+workflow: Source HTML -> Brand Tokens -> Unified Pack -> Static Verification
+owner: A DEFINIR
+status: VERIFIED_STATIC
+automation_level: A4
+brand: Risco Cognitivo
+language: pt-BR
+outputs:
+  - risco-cognitivo-a4-pack-unificado.html
+  - status-report-a4-rc.html
+  - plano-semana-a4-rc.html
+  - risco-cognitivo-tokens.css
+sources:
+  - status-report-a4-template.html
+  - plano-semana-a4 2(1).html
+rules:
+  external_dependencies: false
+  preserve_status_placeholders: true
+  preserve_plan_content: true
+  print_format: A4
+  card_shadow: none
+  action_color: '#2563EB'
+  canvas: '#FFFFFF'
+  text_primary: '#202124'
+  surface_subtle: '#F5F5F4'
+  surface_model: '#EFF6FF'
+notes:
+  - Verde-limão removido e substituído pela família azul aprovada.
+  - JetBrains Mono removida; papel mono usa IBM Plex Mono com fallback local.
+  - Estados concluído/destaque usam azul + surface-model; pendente usa neutros.
+  - Nenhuma fonte ou recurso externo é carregado.

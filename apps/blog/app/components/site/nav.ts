@@ -58,6 +58,7 @@ export const FOOTER_NAV: { title: string; items: NavItem[] }[] = [
   {
     title: "Ferramentas",
     items: [
+      { label: "Prisma", href: "/prisma/" },
       { label: "Hub Editorial", href: "/hub-editorial/" },
       { label: "Catálogo de skills", href: "/skills/" },
       { label: "Feed RSS", href: "/rss.xml" },

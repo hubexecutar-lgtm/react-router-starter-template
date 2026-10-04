@@ -1,0 +1,18 @@
+{
+  "id": "/prisma/",
+  "name": "Prisma de execução — Risco Cognitivo",
+  "short_name": "Prisma",
+  "description": "Organize contexto, demanda, atrito, compensação e próxima ação numa folha A4. Funciona offline e não envia seus dados.",
+  "lang": "pt-BR",
+  "dir": "ltr",
+  "start_url": "/prisma/",
+  "scope": "/prisma/",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#2563EB",
+  "icons": [
+    { "src": "/favicon/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/favicon/android-chrome-512x512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/favicon/maskable-icon-512x512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

@@ -365,3 +365,30 @@ to `apps/blog/`.
 - **Consequências:**
   - `tests/store.spec.ts` cobre as rotas novas, a ausência de "Loja" e os 301; `tests/content.spec.ts` impede
     link interno para `/loja` e confere o destino dos redirecionamentos.
+
+### ADR-15: Rota `/prisma` — primeira solução das Ferramentas cognitivas, local-first e PWA (RC-PWA-PRISMA-SPECS v1.0.0)
+
+- **Status:** Aceita — implementada (V1). Pacote de origem, mapeamento FR → código/teste e desvios em
+  `docs/handoff/RC-PWA-PRISMA/` (`00-STATUS.md`).
+- **Contexto:** O pack A4 (RC-A4-PACK-001) era template editável à mão. O ADR/PRD/FRD do Prisma pedem uma rota
+  guiada: introdução em 3 passos → formulário → folha A4 → PDF, sem conta, sem backend, instalável.
+- **Decisão:**
+  - Rota `/prisma/` pré-renderizada (`app/routes/prisma.tsx`, registrada em `app/data/pages.ts` e no hub, ADR-06),
+    código em `app/features/prisma/`: `schema.ts` (campos, limites, validação, storage), `PrismaApp.tsx` (INTRO →
+    FORM → PREVIEW pelo hash `#formulario`/`#prisma`), `PrismaIntro.tsx` (HTML pré-renderizado), `PrismaSheet.tsx`.
+  - **Privacidade:** o conteúdo fica em memória; `localStorage` (`rc.prisma.v1`) só com o opt-in "Salvar neste
+    dispositivo"; "Limpar dados" apaga estado e chave. Nenhuma requisição leva o formulário (`tests/prisma.spec.ts`).
+  - **Folha A4:** 210 × 297 mm, margem 10 mm, sempre clara (`--ps-*` em `global.css`, mesmos valores do pack e do
+    ADR-11), mesma no preview (reduzida por `transform`) e na impressão (`@page prisma`, `window.print()`). O texto
+    do usuário entra como texto React; os limites por campo garantem que a folha não estoure.
+  - **PWA:** `public/prisma/manifest.webmanifest` (scope e start_url `/prisma/`) e `public/prisma/sw.js`. A rota
+    declara `handle.manifest` e o `root.tsx` renderiza o manifest da rota; as demais continuam com o do site.
+    O service worker guarda a casca (HTML, JS/CSS com hash entregues pela página, ícones) e só trata GET de mesma origem.
+  - Ícones: reaproveita os da marca (192, 512 e maskable em `/favicon/`).
+- **Consequências:**
+  - `tests/prisma.spec.ts` cobre fluxo, obrigatórios, A DEFINIR, XSS, rede, storage, A4 (sem estouro e 1 página no
+    PDF), tema escuro, manifest e abertura offline; `tests/hig.spec.ts` já cobre `/prisma/` (rota listada).
+  - Mudar campo ou limite do Prisma é mudar `schema.ts`; a folha e o formulário seguem dele.
+  - As 18 áreas das Ferramentas cognitivas (6 de gestão e 12 funções executivas) estão importadas como intake
+    (`docs/handoff/RC-PWA-PRISMA/intake/`, status PREPARED) e **ainda não têm rota**: ligar áreas ao grafo (ADR-M04)
+    exige nós novos com citação e passa pelo OWNER.

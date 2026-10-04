@@ -1,0 +1,40 @@
+<html>
+<head>
+<meta charset="UTF-8">
+</head>
+<body>
+
+<p class="p1">São os artefatos do pack gerado, mas tecnicamente o conjunto atual ainda não é um PWA instalável completo.</p>
+<p class="p2">O que você tem hoje:</p>
+<ul><li><code>risco-cognitivo-a4-pack-unificado.html</code><span class="s2"> — aplicação web local principal com Status Report + Plano Semanal e exportação A4.<span class="Apple-converted-space"> </span></span></li><li><code>status-report-a4-rc.html</code><span class="s2"> — artefato individual de Status Report.<span class="Apple-converted-space"> </span></span></li><li><code>plano-semana-a4-rc.html</code><span class="s2"> — artefato individual do plano semanal.<span class="Apple-converted-space"> </span></span></li><li><code>risco-cognitivo-tokens.css</code><span class="s2"> — design tokens compartilhados.<span class="Apple-converted-space"> </span></span></li><li><code>manifest.yaml</code><span class="s2"> — manifesto de governança do pack, não o Web App Manifest de PWA. Ele registra ID, versão, outputs, tokens e regras de impressão.<span class="Apple-converted-space"> </span></span></li><li><code>verification.json</code><span class="s2"> — gate de verificação estática, incluindo A4, duas folhas, ausência de dependências externas e tokens.<span class="Apple-converted-space"> </span></span></li><li><code>README.txt</code><span class="s2"> — documentação do pacote e decisões de unificação.<span class="Apple-converted-space"> </span></span></li></ul>
+<p class="p3">README.txt</p>
+<p class="p1">Para virar um PWA real e compartilhável com seus seguidores, faltam principalmente:</p>
+<p class="p1"><code>index.html</code><span class="s1"><br>
+→ tela inicial + “como usar em 3 passos”</span></p>
+<p class="p1"><code>form.html</code><span class="s1"> ou formulário embutido<br>
+→ usuário preenche os próprios dados</span></p>
+<p class="p1"><code>prisma.html</code><span class="s1"><br>
+→ renderização dinâmica usando o template A4</span></p>
+<p class="p4"><code>manifest.webmanifest</code><span class="s1"><br>
+→ nome, ícones, </span><code>start_url</code><span class="s1">, </span><code>display: standalone</code><span class="s1">, cores</span></p>
+<p class="p1"><code>service-worker.js</code><span class="s1"><br>
+→ cache e funcionamento offline</span></p>
+<p class="p1"><code>icons/</code><span class="s1"><br>
+→ 192×192, 512×512 e maskable</span></p>
+<p class="p1"><code>app.js</code><span class="s1"><br>
+→ formulário → estado local → preenchimento do template → preview</span></p>
+<p class="p4"><code>print.css</code><span class="s1"><br>
+→ </span><code>@page A4</code><span class="s1"> + exportação do PDF</span></p>
+<p class="p1">O fluxo final ficaria:</p>
+<p class="p4"><code>Abrir PWA</code><span class="s1"><br>
+→ </span><code>1. Entenda em 3 passos</code><span class="s1"><br>
+→ </span><code>2. Preencha o formulário</code><span class="s1"><br>
+→ </span><code>3. Veja seu Prisma</code><span class="s1"><br>
+→ </span><code>Exportar PDF</code><span class="s1"><br>
+→ </span><code>Salvar / compartilhar</code></p>
+<p class="p1">A vantagem é que podemos reaproveitar diretamente o sistema visual e os componentes A4 atuais. O pack já foi construído sem dependências externas e com impressão A4, o que facilita bastante transformá-lo em uma PWA offline-first.<span class="Apple-converted-space"> </span></p>
+<p class="p3">manifest.yaml</p>
+<p class="p5">O </span><code>manifest.yaml</code><span class="s1"> atual deve continuar como governança interna. Para PWA, criaríamos outro arquivo separado: </span><code>manifest.webmanifest</code><span class="s1">.</p>
+
+</body>
+</html>
