@@ -1,0 +1,36 @@
+adapter_id: ADAPTER-SOLUTION-STORE-001
+source_schema: SUPER_SCHEMA_SOLUTION
+status: PROPOSED
+rule: Preservar solution.yaml integral e adicionar correlation_refs.
+field_map:
+  identity.solution_id: SOLUTION.id
+  identity.solution_name: SOLUTION.label
+  public_layer.problem_statement: PROBLEM
+  public_layer.target_user: CONTEXT.audience
+  public_layer.three_p_n_three.problema_que_resolve: PROBLEM
+  public_layer.three_p_n_three.processo_aplicado: METHOD
+  public_layer.three_p_n_three.progresso_pretendido: OBJECTIVE/METRIC.target
+  public_layer.three_p_n_three.next: METHOD.next_actions
+  capability_contract: CAPABILITY + METHOD
+  usage_fit.best_use_cases: CONTEXT + PROBLEM + OBJECTIVE
+  usage_fit.risk_of_use: OPERATIONAL_IMPACT + limitations
+  evidence_based_scoring: METRIC + EVIDENCE; missing permanece null
+  evidence_matrix_18: OPERATIONAL_FUNCTION→COGNITIVE_CAPACITY→VULNERABILITY→IMPACT→COMPENSATION
+  store_submission.media: ASSET
+  testing: EVIDENCE(A_OBSERVED) somente quando executado
+  traceability.evidence_sources: EVIDENCE refs
+new_output_block:
+  correlation_refs:
+    problem_refs: []
+    operational_function_refs: []
+    cognitive_capacity_refs: []
+    factor_refs: []
+    compensation_refs: []
+    control_refs: []
+    method_refs: []
+    capability_refs: []
+    quick_framework_refs: []
+    knowledge_pack_refs: []
+    app_feature_refs: []
+    asset_refs: []
+    event_contract_refs: []

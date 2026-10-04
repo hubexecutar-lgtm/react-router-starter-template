@@ -1,0 +1,144 @@
+schema_version: 0.1.0
+example_id: THREAD-TASK-SWITCHING-WIP-001
+note: Relações cruzadas derivadas permanecem E_INFERRED/PROPOSED.
+nodes:
+- id: OPF-GP-06
+  type: OPERATIONAL_FUNCTION
+  label: Execução
+  status: DEFINED
+  source_refs:
+  - DATA-ADHD-PM-001
+- id: COG-ATTENTION-SUSTAINED
+  type: COGNITIVE_CAPACITY
+  label: Atenção sustentada
+  status: DEFINED
+  source_refs:
+  - DATA-ADHD-PM-001
+- id: FRC-05
+  type: RISK_FACTOR
+  label: Task switching
+  status: DEFINED
+  source_refs:
+  - RC-KNW-001
+- id: IMP-CONTEXT-FRAGMENTATION
+  type: OPERATIONAL_IMPACT
+  label: Fragmentação/perda de contexto
+  status: PROPOSED
+  source_refs:
+  - RC-KNW-001
+  - DATA-ADHD-PM-001
+- id: CMP-WIP-LOW
+  type: COMPENSATION
+  label: WIP baixo / uma ação dominante
+  status: DEFINED
+  source_refs:
+  - DATA-ADHD-PM-001
+  - PRD-EXEC-DISPATCH-004
+- id: MTH-EXEC-DISPATCH-004
+  type: METHOD
+  label: Dispatcher adaptativo
+  status: DEFINED
+  source_refs:
+  - PRD-EXEC-DISPATCH-004
+- id: SOL-COPILOTO-EXECUTAR-001
+  type: SOLUTION
+  label: Copiloto EXECUTAR
+  status: DEFINED
+  source_refs:
+  - copiloto-executar/solution.yaml
+- id: QFW-TASK-SWITCHING-001
+  type: QUICK_FRAMEWORK
+  label: Quick Framework — Task switching
+  status: DRAFT
+  source_refs:
+  - executar-block-quick-frameworks
+edges:
+- id: REL-001
+  type: REQUIRES_CAPACITY
+  source: OPF-GP-06
+  target: COG-ATTENTION-SUSTAINED
+  status: VALIDATED
+  epistemic:
+    provenance_class: D_INTERNAL
+    claim_role: SYNTHESIS
+    native_class: B/C forte
+  evidence_refs:
+  - DATA-ADHD-PM-001
+  limitations: []
+- id: REL-002
+  type: INCREASES_DEMAND_ON
+  source: FRC-05
+  target: COG-ATTENTION-SUSTAINED
+  status: PROPOSED
+  epistemic:
+    provenance_class: E_INFERRED
+    claim_role: SYNTHESIS
+    native_class: E1/E2 support in RC-KNW
+  evidence_refs:
+  - RC-KNW-001
+  limitations:
+  - Cross-document bridge ainda não nativa.
+- id: REL-003
+  type: ADDRESSES
+  source: CMP-WIP-LOW
+  target: IMP-CONTEXT-FRAGMENTATION
+  status: PROPOSED
+  epistemic:
+    provenance_class: E_INFERRED
+    claim_role: PRODUCT_DECISION
+    native_class: null
+  evidence_refs:
+  - DATA-ADHD-PM-001
+  - PRD-EXEC-DISPATCH-004
+  limitations:
+  - Hipótese de produto, não resultado clínico.
+- id: REL-004
+  type: IMPLEMENTS
+  source: MTH-EXEC-DISPATCH-004
+  target: CMP-WIP-LOW
+  status: VALIDATED
+  epistemic:
+    provenance_class: D_INTERNAL
+    claim_role: PRODUCT_DECISION
+    native_class: E
+  evidence_refs:
+  - PRD-EXEC-DISPATCH-004
+  limitations: []
+- id: REL-005
+  type: IMPLEMENTS
+  source: SOL-COPILOTO-EXECUTAR-001
+  target: CMP-WIP-LOW
+  status: VALIDATED
+  epistemic:
+    provenance_class: A_OBSERVED
+    claim_role: PRODUCT_DECISION
+    native_class: null
+  evidence_refs:
+  - copiloto-executar/solution.yaml
+  limitations:
+  - Sem medição de redução de carga cognitiva.
+- id: REL-006
+  type: EXPLAINS
+  source: QFW-TASK-SWITCHING-001
+  target: FRC-05
+  status: PROPOSED
+  epistemic:
+    provenance_class: D_INTERNAL
+    claim_role: SYNTHESIS
+    native_class: null
+  evidence_refs:
+  - executar-block-quick-frameworks
+  limitations: []
+- id: REL-007
+  type: RECOMMENDS
+  source: QFW-TASK-SWITCHING-001
+  target: SOL-COPILOTO-EXECUTAR-001
+  status: PROPOSED
+  epistemic:
+    provenance_class: E_INFERRED
+    claim_role: RECOMMENDATION
+    native_class: null
+  evidence_refs:
+  - copiloto-executar/solution.yaml
+  limitations:
+  - Exige fit_conditions antes de publicação.
