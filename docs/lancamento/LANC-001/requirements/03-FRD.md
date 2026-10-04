@@ -6,9 +6,9 @@
 
 | Prioridade | READY | NEEDS_CONFIRMATION | BLOCKED | BACKLOG | DONE |
 |---|---|---|---|---|---|
-| P0 | 11 | 0 | 0 | 0 | 5 |
-| P1 | 24 | 0 | 0 | 0 | 2 |
-| P2 | 9 | 0 | 1 | 0 | 1 |
+| P0 | 10 | 0 | 0 | 0 | 6 |
+| P1 | 21 | 0 | 0 | 0 | 5 |
+| P2 | 7 | 0 | 1 | 0 | 3 |
 | P3 | 4 | 0 | 2 | 1 | 0 |
 
 Total: 60 requisitos em 12 épicos.
@@ -79,12 +79,12 @@ Total: 60 requisitos em 12 épicos.
 
 | ID | Tipo | Prio | Status | Requisito | Critério de aceite | Depende | Fonte |
 |---|---|---|---|---|---|---|---|
-| RQ-060 | DATA | P1 | READY | **Schema canônico único do grafo.** Armazenamento no formato CORRELATION_RECORD da Teia Única (nós e arestas tipados, proveniência, papel epistêmico, status); o mapa é projeção para 9 tipos visuais (06-DATA-SPEC). | npm test valida o grafo contra CORRELATION_RECORD.schema.json e as 7 regras do 06-DATA-SPEC §5 | — | CF-05; CF-09; Teia CORRELATION_RECORD; RC-MOBILE causal_data_model; CF-17 |
-| RQ-061 | RULE | P1 | READY | **Cadeia causal canônica.** Objetivo → Contexto → Demanda → Vulnerabilidade → Exposição → Risco → Evento → Impacto → Compensação → Controle/Solução → Resultado → Medição → Aprendizado. | Enum de tipos do schema = esta cadeia + evidence | — | CF-05; Q8; DEC-U13 |
-| RQ-062 | DATA | P1 | READY | **Grafo inicial a partir dos artigos canônicos.** Nós do vocabulário P1/P3 (interrupção, troca de tarefa, sobrecarga, ambiguidade, pressão temporal, perda de contexto, retrabalho, erro; compensações externalização, redução, explicitação, automação). Relação não explícita no texto = E_INFERRED + PROPOSED. | Todo nó cita o artigo de origem; nenhuma relação inferida aparece como evidência | RQ-060 | CF-06; Teia (regra de fonte de verdade); CF-16 |
-| RQ-063 | RULE | P0 | READY | **Nenhum número sem evidência.** Valor quantitativo publicado exige evidence_id e fonte verificável; valores de mockup ('+42%', barras) não entram. | Teste falha se nó ou aresta tiver métrica sem evidence_ids | — | AC-005; CF-06 |
-| RQ-064 | RULE | P2 | READY | **Onde vive o código do grafo.** Em apps/blog até o workflow consumir o mesmo grafo; então packages/rc-graph (ADR-M01). | — | RQ-060 | ADR-M01; CF-09 |
-| RQ-065 | RULE | P2 | READY | **Persistência sem Supabase.** Grafo versionado no repo na fase 1; Cloudflare D1 se o CMS precisar editar. | Nenhuma dependência @supabase/* | — | CF-08; ADR-07 |
+| RQ-060 | DATA | P1 | DONE | **Schema canônico único do grafo.** Armazenamento no formato CORRELATION_RECORD da Teia Única (nós e arestas tipados, proveniência, papel epistêmico, status); o mapa é projeção para 9 tipos visuais (06-DATA-SPEC). | npm test valida o grafo contra CORRELATION_RECORD.schema.json e as 7 regras do 06-DATA-SPEC §5 | — | CF-05; CF-09; Teia CORRELATION_RECORD; RC-MOBILE causal_data_model; CF-17 |
+| RQ-061 | RULE | P1 | DONE | **Cadeia causal canônica.** Objetivo → Contexto → Demanda → Vulnerabilidade → Exposição → Risco → Evento → Impacto → Compensação → Controle/Solução → Resultado → Medição → Aprendizado. | Enum de tipos do schema = esta cadeia + evidence | — | CF-05; Q8; DEC-U13 |
+| RQ-062 | DATA | P1 | DONE | **Grafo inicial a partir dos artigos canônicos.** Nós do vocabulário P1/P3 (interrupção, troca de tarefa, sobrecarga, ambiguidade, pressão temporal, perda de contexto, retrabalho, erro; compensações externalização, redução, explicitação, automação). Relação não explícita no texto = E_INFERRED + PROPOSED. | Todo nó cita o artigo de origem; nenhuma relação inferida aparece como evidência | RQ-060 | CF-06; Teia (regra de fonte de verdade); CF-16 |
+| RQ-063 | RULE | P0 | DONE | **Nenhum número sem evidência.** Valor quantitativo publicado exige evidence_id e fonte verificável; valores de mockup ('+42%', barras) não entram. | Teste falha se nó ou aresta tiver métrica sem evidence_ids | — | AC-005; CF-06 |
+| RQ-064 | RULE | P2 | DONE | **Onde vive o código do grafo.** Em apps/blog até o workflow consumir o mesmo grafo; então packages/rc-graph (ADR-M01). | — | RQ-060 | ADR-M01; CF-09 |
+| RQ-065 | RULE | P2 | DONE | **Persistência sem Supabase.** Grafo versionado no repo na fase 1; Cloudflare D1 se o CMS precisar editar. | Nenhuma dependência @supabase/* | — | CF-08; ADR-07 |
 
 ## EP-08 — Mapa causal mobile-first — Explorar e Detalhe (PR-H)
 
