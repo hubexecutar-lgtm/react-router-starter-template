@@ -1,0 +1,1408 @@
+{
+  "schema_version": "0.1.0",
+  "example_id": "RC-GRAPH-001",
+  "note": "Grafo canônico do Risco Cognitivo (LANC-001 PR-G, ADR-M04). Fonte: RC-ART-P1-001, RC-ART-P3-001, RC-LP-001, RC-ART-MASTER-001 e RC-SRC-001 (docs/lancamento/LANC-001/intake/DOCS-002). Relações não explícitas no texto são E_INFERRED + PROPOSED; eventos operacionais usam OPERATIONAL_IMPACT + tag stage:event (CF-16).",
+  "nodes": [
+    {
+      "id": "FRC-EXCESSO-INFORMACAO",
+      "type": "RISK_FACTOR",
+      "label": "Excesso de informação",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-ART-P1-001"
+      ],
+      "source_quote": "excesso de informação"
+    },
+    {
+      "id": "FRC-INFORMACAO-MAL-ORGANIZADA",
+      "type": "RISK_FACTOR",
+      "label": "Informação mal organizada",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-ART-P1-001"
+      ],
+      "source_quote": "informação mal organizada"
+    },
+    {
+      "id": "FRC-TAREFA-AMBIGUA",
+      "type": "RISK_FACTOR",
+      "label": "Tarefa ambígua",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-ART-P1-001"
+      ],
+      "source_quote": "tarefa ambígua"
+    },
+    {
+      "id": "FRC-FALTA-DECOMPOSICAO",
+      "type": "RISK_FACTOR",
+      "label": "Falta de decomposição",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-ART-P1-001"
+      ],
+      "source_quote": "falta de decomposição"
+    },
+    {
+      "id": "FRC-DEPENDENCIAS-OCULTAS",
+      "type": "RISK_FACTOR",
+      "label": "Dependências ocultas",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-ART-P1-001"
+      ],
+      "source_quote": "dependências ocultas"
+    },
+    {
+      "id": "FRC-INTERRUPCOES",
+      "type": "RISK_FACTOR",
+      "label": "Interrupções",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-ART-P1-001"
+      ],
+      "source_quote": "interrupções"
+    },
+    {
+      "id": "FRC-DEPENDENCIA-MEMORIA",
+      "type": "RISK_FACTOR",
+      "label": "Dependência de memória",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-ART-P1-001"
+      ],
+      "source_quote": "dependência de memória"
+    },
+    {
+      "id": "FRC-AMBIENTE-FRAGMENTADO",
+      "type": "RISK_FACTOR",
+      "label": "Ambiente digital fragmentado",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-ART-P1-001"
+      ],
+      "source_quote": "ambiente digital fragmentado"
+    },
+    {
+      "id": "FRC-SOBRECARGA",
+      "type": "RISK_FACTOR",
+      "label": "Sobrecarga",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-LP-001",
+        "RC-ART-MASTER-001"
+      ],
+      "source_quote": "sobrecarga"
+    },
+    {
+      "id": "FRC-MUITAS-OPCOES",
+      "type": "RISK_FACTOR",
+      "label": "Muitas opções",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-ART-P3-001"
+      ],
+      "source_quote": "Problema: muitas opções."
+    },
+    {
+      "id": "FRC-ACAO-REPETITIVA",
+      "type": "RISK_FACTOR",
+      "label": "Ação repetitiva",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-ART-P3-001"
+      ],
+      "source_quote": "Problema: ação repetitiva."
+    },
+    {
+      "id": "COG-ATENCAO",
+      "type": "COGNITIVE_CAPACITY",
+      "label": "Atenção",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-ART-P1-001"
+      ],
+      "source_quote": "atenção"
+    },
+    {
+      "id": "COG-MEMORIA",
+      "type": "COGNITIVE_CAPACITY",
+      "label": "Memória",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-ART-P1-001"
+      ],
+      "source_quote": "memória"
+    },
+    {
+      "id": "COG-PLANEJAMENTO",
+      "type": "COGNITIVE_CAPACITY",
+      "label": "Planejamento",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-ART-P1-001"
+      ],
+      "source_quote": "planejamento"
+    },
+    {
+      "id": "COG-PRIORIZACAO",
+      "type": "COGNITIVE_CAPACITY",
+      "label": "Priorização",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-ART-P1-001"
+      ],
+      "source_quote": "priorização"
+    },
+    {
+      "id": "COG-DECISAO",
+      "type": "COGNITIVE_CAPACITY",
+      "label": "Tomada de decisão",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-ART-P1-001"
+      ],
+      "source_quote": "tomada de decisão"
+    },
+    {
+      "id": "COG-MONITORAMENTO",
+      "type": "COGNITIVE_CAPACITY",
+      "label": "Monitoramento",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-ART-P1-001"
+      ],
+      "source_quote": "monitoramento"
+    },
+    {
+      "id": "COG-ALTERNANCIA-CONTEXTO",
+      "type": "COGNITIVE_CAPACITY",
+      "label": "Alternância de contexto",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-ART-P1-001"
+      ],
+      "source_quote": "alternância de contexto"
+    },
+    {
+      "id": "COG-INTERPRETACAO",
+      "type": "COGNITIVE_CAPACITY",
+      "label": "Interpretação",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-ART-P1-001"
+      ],
+      "source_quote": "interpretação"
+    },
+    {
+      "id": "COG-INICIACAO",
+      "type": "COGNITIVE_CAPACITY",
+      "label": "Iniciação",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-ART-P1-001"
+      ],
+      "source_quote": "iniciação"
+    },
+    {
+      "id": "EVT-PERDA-CONTEXTO",
+      "type": "OPERATIONAL_IMPACT",
+      "label": "Perda de contexto",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-ART-P1-001",
+        "RC-ART-P3-001"
+      ],
+      "source_quote": "Problema: perder contexto.",
+      "tags": [
+        "stage:event"
+      ]
+    },
+    {
+      "id": "EVT-ETAPA-ESQUECIDA",
+      "type": "OPERATIONAL_IMPACT",
+      "label": "Etapa esquecida",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-ART-P1-001",
+        "RC-ART-P3-001"
+      ],
+      "source_quote": "Problema: esquecer uma etapa.",
+      "tags": [
+        "stage:event"
+      ]
+    },
+    {
+      "id": "EVT-NAO-SABER-COMECAR",
+      "type": "OPERATIONAL_IMPACT",
+      "label": "Não saber começar",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-ART-P3-001"
+      ],
+      "source_quote": "Problema: não saber começar.",
+      "tags": [
+        "stage:event"
+      ]
+    },
+    {
+      "id": "EVT-ERRO",
+      "type": "OPERATIONAL_IMPACT",
+      "label": "Erro",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-ART-P1-001"
+      ],
+      "source_quote": "atraso, erro, retrabalho, omissão, abandono ou baixa qualidade",
+      "tags": [
+        "stage:event"
+      ]
+    },
+    {
+      "id": "EVT-OMISSAO",
+      "type": "OPERATIONAL_IMPACT",
+      "label": "Omissão",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-ART-P1-001"
+      ],
+      "source_quote": "atraso, erro, retrabalho, omissão, abandono ou baixa qualidade",
+      "tags": [
+        "stage:event"
+      ]
+    },
+    {
+      "id": "IMP-ATRASO",
+      "type": "OPERATIONAL_IMPACT",
+      "label": "Atraso",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-ART-P1-001"
+      ],
+      "source_quote": "atraso, erro, retrabalho, omissão, abandono ou baixa qualidade",
+      "tags": [
+        "stage:impact"
+      ]
+    },
+    {
+      "id": "IMP-RETRABALHO",
+      "type": "OPERATIONAL_IMPACT",
+      "label": "Retrabalho",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-ART-P1-001"
+      ],
+      "source_quote": "atraso, erro, retrabalho, omissão, abandono ou baixa qualidade",
+      "tags": [
+        "stage:impact"
+      ]
+    },
+    {
+      "id": "IMP-ABANDONO",
+      "type": "OPERATIONAL_IMPACT",
+      "label": "Abandono",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-ART-P1-001"
+      ],
+      "source_quote": "atraso, erro, retrabalho, omissão, abandono ou baixa qualidade",
+      "tags": [
+        "stage:impact"
+      ]
+    },
+    {
+      "id": "IMP-BAIXA-QUALIDADE",
+      "type": "OPERATIONAL_IMPACT",
+      "label": "Baixa qualidade",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-ART-P1-001"
+      ],
+      "source_quote": "atraso, erro, retrabalho, omissão, abandono ou baixa qualidade",
+      "tags": [
+        "stage:impact"
+      ]
+    },
+    {
+      "id": "CMP-EXTERNALIZACAO",
+      "type": "COMPENSATION",
+      "label": "Externalização",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-ART-P3-001"
+      ],
+      "source_quote": "Move informação da memória para o ambiente."
+    },
+    {
+      "id": "CMP-REDUCAO",
+      "type": "COMPENSATION",
+      "label": "Redução",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-ART-P3-001"
+      ],
+      "source_quote": "Retira elementos que não precisam competir pela atenção."
+    },
+    {
+      "id": "CMP-EXPLICITACAO",
+      "type": "COMPENSATION",
+      "label": "Explicitação",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-ART-P3-001"
+      ],
+      "source_quote": "Transforma informação implícita em informação visível."
+    },
+    {
+      "id": "CMP-AUTOMACAO",
+      "type": "COMPENSATION",
+      "label": "Automação",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-ART-P3-001"
+      ],
+      "source_quote": "Executa uma ação previsível sem exigir repetição manual."
+    },
+    {
+      "id": "CMP-PRESERVAR-ESTADO",
+      "type": "COMPENSATION",
+      "label": "Preservar estado",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-ART-P3-001"
+      ],
+      "source_quote": "Compensação: preservar estado."
+    },
+    {
+      "id": "CTL-CHECKPOINT",
+      "type": "CONTROL",
+      "label": "Checkpoint",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-ART-P3-001"
+      ],
+      "source_quote": "Solução possível: checkpoint."
+    },
+    {
+      "id": "CTL-CHECKLIST",
+      "type": "CONTROL",
+      "label": "Checklist",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-ART-P3-001",
+        "RC-LP-001"
+      ],
+      "source_quote": "checklist, procedimento, runbook, workflow"
+    },
+    {
+      "id": "MTH-RUNBOOK",
+      "type": "METHOD",
+      "label": "Runbook",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-ART-P3-001"
+      ],
+      "source_quote": "Runbook é uma forma de tornar uma operação explícita e repetível."
+    },
+    {
+      "id": "MTH-WIP-LIMITADO",
+      "type": "METHOD",
+      "label": "Trabalho em andamento limitado",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-ART-P3-001"
+      ],
+      "source_quote": "limitar trabalho em andamento"
+    },
+    {
+      "id": "SOL-LEMBRETE-CONTEXTUAL",
+      "type": "SOLUTION",
+      "label": "Lembrete contextual",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-ART-P3-001"
+      ],
+      "source_quote": "Solução possível: lembrete contextual."
+    },
+    {
+      "id": "SOL-INTERFACE-GUIADA",
+      "type": "SOLUTION",
+      "label": "Interface guiada",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-ART-P3-001"
+      ],
+      "source_quote": "Solução possível: interface guiada."
+    },
+    {
+      "id": "SOL-RECOMENDACAO-PRIORIZADA",
+      "type": "SOLUTION",
+      "label": "Recomendação priorizada",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-ART-P3-001"
+      ],
+      "source_quote": "Solução possível: recomendação priorizada."
+    },
+    {
+      "id": "SOL-MAPA-DEPENDENCIAS",
+      "type": "SOLUTION",
+      "label": "Mapa de dependências",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-ART-P3-001"
+      ],
+      "source_quote": "Solução possível: mapa de dependências."
+    },
+    {
+      "id": "SOL-WORKFLOW-AGENTE",
+      "type": "SOLUTION",
+      "label": "Workflow ou agente",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-ART-P3-001"
+      ],
+      "source_quote": "Solução possível: workflow ou agente."
+    },
+    {
+      "id": "EVD-AEVO-GP",
+      "type": "EVIDENCE",
+      "label": "AEVO — Gestão de Projetos",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-SRC-001"
+      ],
+      "source_quote": "AEVO — Gestão de Projetos",
+      "url": "https://blog.aevo.com.br/gestao-de-projetos/"
+    },
+    {
+      "id": "EVD-CLYM-COGNITIVE",
+      "type": "EVIDENCE",
+      "label": "Clym — Web Accessibility for Cognitive Disabilities",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-SRC-001"
+      ],
+      "source_quote": "Clym — Web Accessibility for Cognitive Disabilities",
+      "url": "https://www.clym.io/blog/web-accessibility-for-cognitive-disabilities"
+    },
+    {
+      "id": "EVD-PMI-PM",
+      "type": "EVIDENCE",
+      "label": "Project Management Institute — What is Project Management?",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-SRC-001"
+      ],
+      "source_quote": "Project Management Institute — What is Project Management?",
+      "url": "https://www.pmi.org/about/what-is-project-management"
+    },
+    {
+      "id": "EVD-ISO-31000",
+      "type": "EVIDENCE",
+      "label": "ISO 31000:2018 — Risk management — Guidelines",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-SRC-001"
+      ],
+      "source_quote": "ISO 31000:2018 — Risk management — Guidelines",
+      "url": "https://www.iso.org/standard/65694.html"
+    },
+    {
+      "id": "EVD-ISO-10075-2",
+      "type": "EVIDENCE",
+      "label": "ISO 10075-2:2024",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-SRC-001"
+      ],
+      "source_quote": "ISO 10075-2:2024",
+      "url": "https://www.iso.org/standard/76686.html"
+    },
+    {
+      "id": "EVD-IBM-BPM",
+      "type": "EVIDENCE",
+      "label": "IBM — Business Process Management",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-SRC-001"
+      ],
+      "source_quote": "IBM — Business Process Management",
+      "url": "https://www.ibm.com/think/topics/business-process-management"
+    },
+    {
+      "id": "EVD-OMG-BPMN",
+      "type": "EVIDENCE",
+      "label": "Object Management Group — BPMN",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-SRC-001"
+      ],
+      "source_quote": "Object Management Group — BPMN",
+      "url": "https://www.omg.org/bpmn/"
+    },
+    {
+      "id": "EVD-W3C-COGA",
+      "type": "EVIDENCE",
+      "label": "W3C — Cognitive Accessibility Guidance",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-SRC-001"
+      ],
+      "source_quote": "W3C — Cognitive Accessibility Guidance",
+      "url": "https://www.w3.org/WAI/WCAG2/supplemental/"
+    },
+    {
+      "id": "EVD-AWS-RUNBOOKS",
+      "type": "EVIDENCE",
+      "label": "AWS Systems Manager Automation",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-SRC-001"
+      ],
+      "source_quote": "AWS Systems Manager Automation",
+      "url": "https://docs.aws.amazon.com/systems-manager/latest/userguide/automation-documents.html"
+    },
+    {
+      "id": "EVD-ALTMANN-TRAFTON",
+      "type": "EVIDENCE",
+      "label": "Altmann & Trafton — Task interruption / resumption research",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-SRC-001"
+      ],
+      "source_quote": "Altmann & Trafton — Task interruption / resumption research",
+      "url": "https://escholarship.org/uc/item/18b4r661"
+    },
+    {
+      "id": "EVD-GILBERT-OFFLOADING",
+      "type": "EVIDENCE",
+      "label": "Gilbert — Strategic use of reminders / cognitive offloading",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-SRC-001"
+      ],
+      "source_quote": "Gilbert — Strategic use of reminders / cognitive offloading",
+      "url": "https://journals.sagepub.com/doi/10.1080/17470218.2014.972963"
+    }
+  ],
+  "edges": [
+    {
+      "id": "REL-001",
+      "type": "ADDRESSES",
+      "source": "CMP-EXTERNALIZACAO",
+      "target": "EVT-ETAPA-ESQUECIDA",
+      "status": "VALIDATED",
+      "epistemic": {
+        "provenance_class": "D_INTERNAL",
+        "claim_role": "FRAMEWORK"
+      },
+      "evidence_refs": [],
+      "source_ref": "RC-ART-P3-001",
+      "source_quote": "Problema: esquecer uma etapa.\nCompensação: externalizar intenção."
+    },
+    {
+      "id": "REL-002",
+      "type": "IMPLEMENTS",
+      "source": "SOL-LEMBRETE-CONTEXTUAL",
+      "target": "CMP-EXTERNALIZACAO",
+      "status": "VALIDATED",
+      "epistemic": {
+        "provenance_class": "D_INTERNAL",
+        "claim_role": "FRAMEWORK"
+      },
+      "evidence_refs": [],
+      "source_ref": "RC-ART-P3-001",
+      "source_quote": "Compensação: externalizar intenção.\nSolução possível: lembrete contextual."
+    },
+    {
+      "id": "REL-003",
+      "type": "ADDRESSES",
+      "source": "CMP-EXPLICITACAO",
+      "target": "EVT-NAO-SABER-COMECAR",
+      "status": "VALIDATED",
+      "epistemic": {
+        "provenance_class": "D_INTERNAL",
+        "claim_role": "FRAMEWORK"
+      },
+      "evidence_refs": [],
+      "source_ref": "RC-ART-P3-001",
+      "source_quote": "Problema: não saber começar.\nCompensação: explicitar próxima ação."
+    },
+    {
+      "id": "REL-004",
+      "type": "IMPLEMENTS",
+      "source": "SOL-INTERFACE-GUIADA",
+      "target": "CMP-EXPLICITACAO",
+      "status": "VALIDATED",
+      "epistemic": {
+        "provenance_class": "D_INTERNAL",
+        "claim_role": "FRAMEWORK"
+      },
+      "evidence_refs": [],
+      "source_ref": "RC-ART-P3-001",
+      "source_quote": "Compensação: explicitar próxima ação.\nSolução possível: interface guiada."
+    },
+    {
+      "id": "REL-005",
+      "type": "ADDRESSES",
+      "source": "CMP-PRESERVAR-ESTADO",
+      "target": "EVT-PERDA-CONTEXTO",
+      "status": "VALIDATED",
+      "epistemic": {
+        "provenance_class": "D_INTERNAL",
+        "claim_role": "FRAMEWORK"
+      },
+      "evidence_refs": [],
+      "source_ref": "RC-ART-P3-001",
+      "source_quote": "Problema: perder contexto.\nCompensação: preservar estado."
+    },
+    {
+      "id": "REL-006",
+      "type": "IMPLEMENTS",
+      "source": "CTL-CHECKPOINT",
+      "target": "CMP-PRESERVAR-ESTADO",
+      "status": "VALIDATED",
+      "epistemic": {
+        "provenance_class": "D_INTERNAL",
+        "claim_role": "FRAMEWORK"
+      },
+      "evidence_refs": [],
+      "source_ref": "RC-ART-P3-001",
+      "source_quote": "Compensação: preservar estado.\nSolução possível: checkpoint."
+    },
+    {
+      "id": "REL-007",
+      "type": "ADDRESSES",
+      "source": "CMP-REDUCAO",
+      "target": "FRC-MUITAS-OPCOES",
+      "status": "VALIDATED",
+      "epistemic": {
+        "provenance_class": "D_INTERNAL",
+        "claim_role": "FRAMEWORK"
+      },
+      "evidence_refs": [],
+      "source_ref": "RC-ART-P3-001",
+      "source_quote": "Problema: muitas opções.\nCompensação: reduzir decisões."
+    },
+    {
+      "id": "REL-008",
+      "type": "IMPLEMENTS",
+      "source": "SOL-RECOMENDACAO-PRIORIZADA",
+      "target": "CMP-REDUCAO",
+      "status": "VALIDATED",
+      "epistemic": {
+        "provenance_class": "D_INTERNAL",
+        "claim_role": "FRAMEWORK"
+      },
+      "evidence_refs": [],
+      "source_ref": "RC-ART-P3-001",
+      "source_quote": "Compensação: reduzir decisões.\nSolução possível: recomendação priorizada."
+    },
+    {
+      "id": "REL-009",
+      "type": "ADDRESSES",
+      "source": "CMP-EXPLICITACAO",
+      "target": "FRC-DEPENDENCIAS-OCULTAS",
+      "status": "VALIDATED",
+      "epistemic": {
+        "provenance_class": "D_INTERNAL",
+        "claim_role": "FRAMEWORK"
+      },
+      "evidence_refs": [],
+      "source_ref": "RC-ART-P3-001",
+      "source_quote": "Problema: dependência oculta.\nCompensação: tornar relação visível."
+    },
+    {
+      "id": "REL-010",
+      "type": "IMPLEMENTS",
+      "source": "SOL-MAPA-DEPENDENCIAS",
+      "target": "CMP-EXPLICITACAO",
+      "status": "VALIDATED",
+      "epistemic": {
+        "provenance_class": "D_INTERNAL",
+        "claim_role": "FRAMEWORK"
+      },
+      "evidence_refs": [],
+      "source_ref": "RC-ART-P3-001",
+      "source_quote": "Compensação: tornar relação visível.\nSolução possível: mapa de dependências."
+    },
+    {
+      "id": "REL-011",
+      "type": "ADDRESSES",
+      "source": "CMP-AUTOMACAO",
+      "target": "FRC-ACAO-REPETITIVA",
+      "status": "VALIDATED",
+      "epistemic": {
+        "provenance_class": "D_INTERNAL",
+        "claim_role": "FRAMEWORK"
+      },
+      "evidence_refs": [],
+      "source_ref": "RC-ART-P3-001",
+      "source_quote": "Problema: ação repetitiva.\nCompensação: automatizar."
+    },
+    {
+      "id": "REL-012",
+      "type": "IMPLEMENTS",
+      "source": "SOL-WORKFLOW-AGENTE",
+      "target": "CMP-AUTOMACAO",
+      "status": "VALIDATED",
+      "epistemic": {
+        "provenance_class": "D_INTERNAL",
+        "claim_role": "FRAMEWORK"
+      },
+      "evidence_refs": [],
+      "source_ref": "RC-ART-P3-001",
+      "source_quote": "Compensação: automatizar.\nSolução possível: workflow ou agente."
+    },
+    {
+      "id": "REL-013",
+      "type": "IMPLEMENTS",
+      "source": "MTH-RUNBOOK",
+      "target": "CMP-EXPLICITACAO",
+      "status": "VALIDATED",
+      "epistemic": {
+        "provenance_class": "D_INTERNAL",
+        "claim_role": "FRAMEWORK"
+      },
+      "evidence_refs": [],
+      "source_ref": "RC-ART-P3-001",
+      "source_quote": "Runbook é uma forma de tornar uma operação explícita e repetível."
+    },
+    {
+      "id": "REL-014",
+      "type": "IMPLEMENTS",
+      "source": "MTH-RUNBOOK",
+      "target": "CMP-EXTERNALIZACAO",
+      "status": "VALIDATED",
+      "epistemic": {
+        "provenance_class": "D_INTERNAL",
+        "claim_role": "FRAMEWORK"
+      },
+      "evidence_refs": [],
+      "source_ref": "RC-ART-P3-001",
+      "source_quote": "retirar etapas operacionais da memória e colocá-las em um fluxo verificável"
+    },
+    {
+      "id": "REL-015",
+      "type": "MITIGATES",
+      "source": "CMP-EXTERNALIZACAO",
+      "target": "FRC-DEPENDENCIA-MEMORIA",
+      "status": "VALIDATED",
+      "epistemic": {
+        "provenance_class": "D_INTERNAL",
+        "claim_role": "FRAMEWORK"
+      },
+      "evidence_refs": [],
+      "source_ref": "RC-ART-P3-001",
+      "source_quote": "É evitar que a execução dependa desnecessariamente de memória"
+    },
+    {
+      "id": "REL-016",
+      "type": "MITIGATES",
+      "source": "CMP-REDUCAO",
+      "target": "FRC-EXCESSO-INFORMACAO",
+      "status": "VALIDATED",
+      "epistemic": {
+        "provenance_class": "D_INTERNAL",
+        "claim_role": "FRAMEWORK"
+      },
+      "evidence_refs": [],
+      "source_ref": "RC-ART-P3-001",
+      "source_quote": "Retira elementos que não precisam competir pela atenção."
+    },
+    {
+      "id": "REL-017",
+      "type": "INCREASES_DEMAND_ON",
+      "source": "FRC-INTERRUPCOES",
+      "target": "COG-ATENCAO",
+      "status": "VALIDATED",
+      "epistemic": {
+        "provenance_class": "D_INTERNAL",
+        "claim_role": "FRAMEWORK"
+      },
+      "evidence_refs": [],
+      "source_ref": "RC-ART-P1-001",
+      "source_quote": "interrupções frequentes durante uma tarefa que exige atenção contínua podem alterar a exposição"
+    },
+    {
+      "id": "REL-018",
+      "type": "INCREASES_DEMAND_ON",
+      "source": "FRC-DEPENDENCIA-MEMORIA",
+      "target": "COG-MEMORIA",
+      "status": "PROPOSED",
+      "epistemic": {
+        "provenance_class": "E_INFERRED",
+        "claim_role": "HYPOTHESIS"
+      },
+      "evidence_refs": [],
+      "limitations": [
+        "Relação não explícita no texto de origem; derivada na montagem do grafo."
+      ]
+    },
+    {
+      "id": "REL-019",
+      "type": "INCREASES_DEMAND_ON",
+      "source": "FRC-EXCESSO-INFORMACAO",
+      "target": "COG-ATENCAO",
+      "status": "PROPOSED",
+      "epistemic": {
+        "provenance_class": "E_INFERRED",
+        "claim_role": "HYPOTHESIS"
+      },
+      "evidence_refs": [],
+      "limitations": [
+        "Relação não explícita no texto de origem; derivada na montagem do grafo."
+      ]
+    },
+    {
+      "id": "REL-020",
+      "type": "INCREASES_DEMAND_ON",
+      "source": "FRC-INFORMACAO-MAL-ORGANIZADA",
+      "target": "COG-INTERPRETACAO",
+      "status": "PROPOSED",
+      "epistemic": {
+        "provenance_class": "E_INFERRED",
+        "claim_role": "HYPOTHESIS"
+      },
+      "evidence_refs": [],
+      "limitations": [
+        "Relação não explícita no texto de origem; derivada na montagem do grafo."
+      ]
+    },
+    {
+      "id": "REL-021",
+      "type": "INCREASES_DEMAND_ON",
+      "source": "FRC-TAREFA-AMBIGUA",
+      "target": "COG-INTERPRETACAO",
+      "status": "PROPOSED",
+      "epistemic": {
+        "provenance_class": "E_INFERRED",
+        "claim_role": "HYPOTHESIS"
+      },
+      "evidence_refs": [],
+      "limitations": [
+        "Relação não explícita no texto de origem; derivada na montagem do grafo."
+      ]
+    },
+    {
+      "id": "REL-022",
+      "type": "INCREASES_DEMAND_ON",
+      "source": "FRC-FALTA-DECOMPOSICAO",
+      "target": "COG-PLANEJAMENTO",
+      "status": "PROPOSED",
+      "epistemic": {
+        "provenance_class": "E_INFERRED",
+        "claim_role": "HYPOTHESIS"
+      },
+      "evidence_refs": [],
+      "limitations": [
+        "Relação não explícita no texto de origem; derivada na montagem do grafo."
+      ]
+    },
+    {
+      "id": "REL-023",
+      "type": "INCREASES_DEMAND_ON",
+      "source": "FRC-DEPENDENCIAS-OCULTAS",
+      "target": "COG-MONITORAMENTO",
+      "status": "PROPOSED",
+      "epistemic": {
+        "provenance_class": "E_INFERRED",
+        "claim_role": "HYPOTHESIS"
+      },
+      "evidence_refs": [],
+      "limitations": [
+        "Relação não explícita no texto de origem; derivada na montagem do grafo."
+      ]
+    },
+    {
+      "id": "REL-024",
+      "type": "INCREASES_DEMAND_ON",
+      "source": "FRC-AMBIENTE-FRAGMENTADO",
+      "target": "COG-ALTERNANCIA-CONTEXTO",
+      "status": "PROPOSED",
+      "epistemic": {
+        "provenance_class": "E_INFERRED",
+        "claim_role": "HYPOTHESIS"
+      },
+      "evidence_refs": [],
+      "limitations": [
+        "Relação não explícita no texto de origem; derivada na montagem do grafo."
+      ]
+    },
+    {
+      "id": "REL-025",
+      "type": "INCREASES_DEMAND_ON",
+      "source": "FRC-MUITAS-OPCOES",
+      "target": "COG-DECISAO",
+      "status": "PROPOSED",
+      "epistemic": {
+        "provenance_class": "E_INFERRED",
+        "claim_role": "HYPOTHESIS"
+      },
+      "evidence_refs": [],
+      "limitations": [
+        "Relação não explícita no texto de origem; derivada na montagem do grafo."
+      ]
+    },
+    {
+      "id": "REL-026",
+      "type": "INCREASES_DEMAND_ON",
+      "source": "FRC-SOBRECARGA",
+      "target": "COG-ATENCAO",
+      "status": "PROPOSED",
+      "epistemic": {
+        "provenance_class": "E_INFERRED",
+        "claim_role": "HYPOTHESIS"
+      },
+      "evidence_refs": [],
+      "limitations": [
+        "Relação não explícita no texto de origem; derivada na montagem do grafo."
+      ]
+    },
+    {
+      "id": "REL-027",
+      "type": "INCREASES_DEMAND_ON",
+      "source": "FRC-INTERRUPCOES",
+      "target": "COG-ALTERNANCIA-CONTEXTO",
+      "status": "PROPOSED",
+      "epistemic": {
+        "provenance_class": "E_INFERRED",
+        "claim_role": "HYPOTHESIS"
+      },
+      "evidence_refs": [],
+      "limitations": [
+        "Relação não explícita no texto de origem; derivada na montagem do grafo."
+      ]
+    },
+    {
+      "id": "REL-028",
+      "type": "CONTRIBUTES_TO",
+      "source": "FRC-INTERRUPCOES",
+      "target": "EVT-PERDA-CONTEXTO",
+      "status": "PROPOSED",
+      "epistemic": {
+        "provenance_class": "E_INFERRED",
+        "claim_role": "HYPOTHESIS"
+      },
+      "evidence_refs": [],
+      "limitations": [
+        "Relação não explícita no texto de origem; derivada na montagem do grafo."
+      ]
+    },
+    {
+      "id": "REL-029",
+      "type": "CONTRIBUTES_TO",
+      "source": "FRC-AMBIENTE-FRAGMENTADO",
+      "target": "EVT-PERDA-CONTEXTO",
+      "status": "PROPOSED",
+      "epistemic": {
+        "provenance_class": "E_INFERRED",
+        "claim_role": "HYPOTHESIS"
+      },
+      "evidence_refs": [],
+      "limitations": [
+        "Relação não explícita no texto de origem; derivada na montagem do grafo."
+      ]
+    },
+    {
+      "id": "REL-030",
+      "type": "CONTRIBUTES_TO",
+      "source": "FRC-DEPENDENCIAS-OCULTAS",
+      "target": "EVT-ETAPA-ESQUECIDA",
+      "status": "PROPOSED",
+      "epistemic": {
+        "provenance_class": "E_INFERRED",
+        "claim_role": "HYPOTHESIS"
+      },
+      "evidence_refs": [],
+      "limitations": [
+        "Relação não explícita no texto de origem; derivada na montagem do grafo."
+      ]
+    },
+    {
+      "id": "REL-031",
+      "type": "CONTRIBUTES_TO",
+      "source": "FRC-DEPENDENCIA-MEMORIA",
+      "target": "EVT-ETAPA-ESQUECIDA",
+      "status": "PROPOSED",
+      "epistemic": {
+        "provenance_class": "E_INFERRED",
+        "claim_role": "HYPOTHESIS"
+      },
+      "evidence_refs": [],
+      "limitations": [
+        "Relação não explícita no texto de origem; derivada na montagem do grafo."
+      ]
+    },
+    {
+      "id": "REL-032",
+      "type": "CONTRIBUTES_TO",
+      "source": "FRC-TAREFA-AMBIGUA",
+      "target": "EVT-NAO-SABER-COMECAR",
+      "status": "PROPOSED",
+      "epistemic": {
+        "provenance_class": "E_INFERRED",
+        "claim_role": "HYPOTHESIS"
+      },
+      "evidence_refs": [],
+      "limitations": [
+        "Relação não explícita no texto de origem; derivada na montagem do grafo."
+      ]
+    },
+    {
+      "id": "REL-033",
+      "type": "CONTRIBUTES_TO",
+      "source": "FRC-FALTA-DECOMPOSICAO",
+      "target": "EVT-NAO-SABER-COMECAR",
+      "status": "PROPOSED",
+      "epistemic": {
+        "provenance_class": "E_INFERRED",
+        "claim_role": "HYPOTHESIS"
+      },
+      "evidence_refs": [],
+      "limitations": [
+        "Relação não explícita no texto de origem; derivada na montagem do grafo."
+      ]
+    },
+    {
+      "id": "REL-034",
+      "type": "CONTRIBUTES_TO",
+      "source": "FRC-EXCESSO-INFORMACAO",
+      "target": "EVT-ERRO",
+      "status": "PROPOSED",
+      "epistemic": {
+        "provenance_class": "E_INFERRED",
+        "claim_role": "HYPOTHESIS"
+      },
+      "evidence_refs": [],
+      "limitations": [
+        "Relação não explícita no texto de origem; derivada na montagem do grafo."
+      ]
+    },
+    {
+      "id": "REL-035",
+      "type": "CONTRIBUTES_TO",
+      "source": "FRC-SOBRECARGA",
+      "target": "EVT-ERRO",
+      "status": "PROPOSED",
+      "epistemic": {
+        "provenance_class": "E_INFERRED",
+        "claim_role": "HYPOTHESIS"
+      },
+      "evidence_refs": [],
+      "limitations": [
+        "Relação não explícita no texto de origem; derivada na montagem do grafo."
+      ]
+    },
+    {
+      "id": "REL-036",
+      "type": "MAY_PRODUCE",
+      "source": "EVT-PERDA-CONTEXTO",
+      "target": "IMP-RETRABALHO",
+      "status": "PROPOSED",
+      "epistemic": {
+        "provenance_class": "E_INFERRED",
+        "claim_role": "HYPOTHESIS"
+      },
+      "evidence_refs": [],
+      "limitations": [
+        "Relação não explícita no texto de origem; derivada na montagem do grafo."
+      ]
+    },
+    {
+      "id": "REL-037",
+      "type": "MAY_PRODUCE",
+      "source": "EVT-ETAPA-ESQUECIDA",
+      "target": "EVT-OMISSAO",
+      "status": "PROPOSED",
+      "epistemic": {
+        "provenance_class": "E_INFERRED",
+        "claim_role": "HYPOTHESIS"
+      },
+      "evidence_refs": [],
+      "limitations": [
+        "Relação não explícita no texto de origem; derivada na montagem do grafo."
+      ]
+    },
+    {
+      "id": "REL-038",
+      "type": "MAY_PRODUCE",
+      "source": "EVT-OMISSAO",
+      "target": "IMP-ATRASO",
+      "status": "PROPOSED",
+      "epistemic": {
+        "provenance_class": "E_INFERRED",
+        "claim_role": "HYPOTHESIS"
+      },
+      "evidence_refs": [],
+      "limitations": [
+        "Relação não explícita no texto de origem; derivada na montagem do grafo."
+      ]
+    },
+    {
+      "id": "REL-039",
+      "type": "MAY_PRODUCE",
+      "source": "EVT-ERRO",
+      "target": "IMP-RETRABALHO",
+      "status": "PROPOSED",
+      "epistemic": {
+        "provenance_class": "E_INFERRED",
+        "claim_role": "HYPOTHESIS"
+      },
+      "evidence_refs": [],
+      "limitations": [
+        "Relação não explícita no texto de origem; derivada na montagem do grafo."
+      ]
+    },
+    {
+      "id": "REL-040",
+      "type": "MAY_PRODUCE",
+      "source": "EVT-ERRO",
+      "target": "IMP-BAIXA-QUALIDADE",
+      "status": "PROPOSED",
+      "epistemic": {
+        "provenance_class": "E_INFERRED",
+        "claim_role": "HYPOTHESIS"
+      },
+      "evidence_refs": [],
+      "limitations": [
+        "Relação não explícita no texto de origem; derivada na montagem do grafo."
+      ]
+    },
+    {
+      "id": "REL-041",
+      "type": "MAY_PRODUCE",
+      "source": "EVT-NAO-SABER-COMECAR",
+      "target": "IMP-ABANDONO",
+      "status": "PROPOSED",
+      "epistemic": {
+        "provenance_class": "E_INFERRED",
+        "claim_role": "HYPOTHESIS"
+      },
+      "evidence_refs": [],
+      "limitations": [
+        "Relação não explícita no texto de origem; derivada na montagem do grafo."
+      ]
+    },
+    {
+      "id": "REL-042",
+      "type": "MAY_PRODUCE",
+      "source": "EVT-NAO-SABER-COMECAR",
+      "target": "IMP-ATRASO",
+      "status": "PROPOSED",
+      "epistemic": {
+        "provenance_class": "E_INFERRED",
+        "claim_role": "HYPOTHESIS"
+      },
+      "evidence_refs": [],
+      "limitations": [
+        "Relação não explícita no texto de origem; derivada na montagem do grafo."
+      ]
+    },
+    {
+      "id": "REL-043",
+      "type": "IMPLEMENTS",
+      "source": "CTL-CHECKLIST",
+      "target": "CMP-EXTERNALIZACAO",
+      "status": "PROPOSED",
+      "epistemic": {
+        "provenance_class": "E_INFERRED",
+        "claim_role": "HYPOTHESIS"
+      },
+      "evidence_refs": [],
+      "limitations": [
+        "Relação não explícita no texto de origem; derivada na montagem do grafo."
+      ]
+    },
+    {
+      "id": "REL-044",
+      "type": "IMPLEMENTS",
+      "source": "MTH-WIP-LIMITADO",
+      "target": "CMP-REDUCAO",
+      "status": "PROPOSED",
+      "epistemic": {
+        "provenance_class": "E_INFERRED",
+        "claim_role": "HYPOTHESIS"
+      },
+      "evidence_refs": [],
+      "limitations": [
+        "Relação não explícita no texto de origem; derivada na montagem do grafo."
+      ]
+    },
+    {
+      "id": "REL-045",
+      "type": "MITIGATES",
+      "source": "MTH-WIP-LIMITADO",
+      "target": "FRC-INTERRUPCOES",
+      "status": "PROPOSED",
+      "epistemic": {
+        "provenance_class": "E_INFERRED",
+        "claim_role": "HYPOTHESIS"
+      },
+      "evidence_refs": [],
+      "limitations": [
+        "Relação não explícita no texto de origem; derivada na montagem do grafo."
+      ]
+    },
+    {
+      "id": "REL-046",
+      "type": "MITIGATES",
+      "source": "CTL-CHECKPOINT",
+      "target": "FRC-INTERRUPCOES",
+      "status": "PROPOSED",
+      "epistemic": {
+        "provenance_class": "E_INFERRED",
+        "claim_role": "HYPOTHESIS"
+      },
+      "evidence_refs": [],
+      "limitations": [
+        "Relação não explícita no texto de origem; derivada na montagem do grafo."
+      ]
+    },
+    {
+      "id": "REL-047",
+      "type": "SUPPORTED_BY",
+      "source": "FRC-INTERRUPCOES",
+      "target": "EVD-ALTMANN-TRAFTON",
+      "status": "VALIDATED",
+      "epistemic": {
+        "provenance_class": "D_INTERNAL",
+        "claim_role": "SYNTHESIS"
+      },
+      "evidence_refs": [
+        "EVD-ALTMANN-TRAFTON"
+      ],
+      "source_ref": "RC-SRC-001",
+      "source_quote": "INTERRUPÇÕES E RETOMADA"
+    },
+    {
+      "id": "REL-048",
+      "type": "SUPPORTED_BY",
+      "source": "EVT-PERDA-CONTEXTO",
+      "target": "EVD-ALTMANN-TRAFTON",
+      "status": "VALIDATED",
+      "epistemic": {
+        "provenance_class": "D_INTERNAL",
+        "claim_role": "SYNTHESIS"
+      },
+      "evidence_refs": [
+        "EVD-ALTMANN-TRAFTON"
+      ],
+      "source_ref": "RC-SRC-001",
+      "source_quote": "INTERRUPÇÕES E RETOMADA"
+    },
+    {
+      "id": "REL-049",
+      "type": "SUPPORTED_BY",
+      "source": "CMP-EXTERNALIZACAO",
+      "target": "EVD-GILBERT-OFFLOADING",
+      "status": "VALIDATED",
+      "epistemic": {
+        "provenance_class": "D_INTERNAL",
+        "claim_role": "SYNTHESIS"
+      },
+      "evidence_refs": [
+        "EVD-GILBERT-OFFLOADING"
+      ],
+      "source_ref": "RC-SRC-001",
+      "source_quote": "EXTERNALIZAÇÃO COGNITIVA / LEMBRETES"
+    },
+    {
+      "id": "REL-050",
+      "type": "SUPPORTED_BY",
+      "source": "SOL-LEMBRETE-CONTEXTUAL",
+      "target": "EVD-GILBERT-OFFLOADING",
+      "status": "VALIDATED",
+      "epistemic": {
+        "provenance_class": "D_INTERNAL",
+        "claim_role": "SYNTHESIS"
+      },
+      "evidence_refs": [
+        "EVD-GILBERT-OFFLOADING"
+      ],
+      "source_ref": "RC-SRC-001",
+      "source_quote": "EXTERNALIZAÇÃO COGNITIVA / LEMBRETES"
+    },
+    {
+      "id": "REL-051",
+      "type": "SUPPORTED_BY",
+      "source": "MTH-RUNBOOK",
+      "target": "EVD-AWS-RUNBOOKS",
+      "status": "VALIDATED",
+      "epistemic": {
+        "provenance_class": "D_INTERNAL",
+        "claim_role": "SYNTHESIS"
+      },
+      "evidence_refs": [
+        "EVD-AWS-RUNBOOKS"
+      ],
+      "source_ref": "RC-SRC-001",
+      "source_quote": "RUNBOOKS"
+    },
+    {
+      "id": "REL-052",
+      "type": "SUPPORTED_BY",
+      "source": "FRC-SOBRECARGA",
+      "target": "EVD-ISO-10075-2",
+      "status": "VALIDATED",
+      "epistemic": {
+        "provenance_class": "D_INTERNAL",
+        "claim_role": "SYNTHESIS"
+      },
+      "evidence_refs": [
+        "EVD-ISO-10075-2"
+      ],
+      "source_ref": "RC-SRC-001",
+      "source_quote": "CARGA MENTAL E DESIGN DO TRABALHO"
+    },
+    {
+      "id": "REL-053",
+      "type": "SUPPORTED_BY",
+      "source": "FRC-INTERRUPCOES",
+      "target": "EVD-W3C-COGA",
+      "status": "VALIDATED",
+      "epistemic": {
+        "provenance_class": "D_INTERNAL",
+        "claim_role": "SYNTHESIS"
+      },
+      "evidence_refs": [
+        "EVD-W3C-COGA"
+      ],
+      "source_ref": "RC-SRC-001",
+      "source_quote": "ACESSIBILIDADE COGNITIVA / TAREFAS / INTERRUPÇÕES"
+    },
+    {
+      "id": "REL-054",
+      "type": "SUPPORTED_BY",
+      "source": "SOL-MAPA-DEPENDENCIAS",
+      "target": "EVD-OMG-BPMN",
+      "status": "VALIDATED",
+      "epistemic": {
+        "provenance_class": "D_INTERNAL",
+        "claim_role": "SYNTHESIS"
+      },
+      "evidence_refs": [
+        "EVD-OMG-BPMN"
+      ],
+      "source_ref": "RC-SRC-001",
+      "source_quote": "BPMN"
+    },
+    {
+      "id": "REL-055",
+      "type": "SUPPORTED_BY",
+      "source": "FRC-DEPENDENCIAS-OCULTAS",
+      "target": "EVD-IBM-BPM",
+      "status": "VALIDATED",
+      "epistemic": {
+        "provenance_class": "D_INTERNAL",
+        "claim_role": "SYNTHESIS"
+      },
+      "evidence_refs": [
+        "EVD-IBM-BPM"
+      ],
+      "source_ref": "RC-SRC-001",
+      "source_quote": "BPM"
+    }
+  ]
+}

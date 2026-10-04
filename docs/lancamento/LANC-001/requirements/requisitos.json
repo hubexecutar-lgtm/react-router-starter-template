@@ -528,10 +528,11 @@
       "titulo": "Schema canônico único do grafo",
       "descricao": "Armazenamento no formato CORRELATION_RECORD da Teia Única (nós e arestas tipados, proveniência, papel epistêmico, status); o mapa é projeção para 9 tipos visuais (06-DATA-SPEC).",
       "prioridade": "P1",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [],
       "fonte": "CF-05; CF-09; Teia CORRELATION_RECORD; RC-MOBILE causal_data_model; CF-17",
-      "criterio_aceite": "npm test valida o grafo contra CORRELATION_RECORD.schema.json e as 7 regras do 06-DATA-SPEC §5"
+      "criterio_aceite": "npm test valida o grafo contra CORRELATION_RECORD.schema.json e as 7 regras do 06-DATA-SPEC §5",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/23"
     },
     {
       "id": "RQ-061",
@@ -540,10 +541,11 @@
       "titulo": "Cadeia causal canônica",
       "descricao": "Objetivo → Contexto → Demanda → Vulnerabilidade → Exposição → Risco → Evento → Impacto → Compensação → Controle/Solução → Resultado → Medição → Aprendizado.",
       "prioridade": "P1",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [],
       "fonte": "CF-05; Q8; DEC-U13",
-      "criterio_aceite": "Enum de tipos do schema = esta cadeia + evidence"
+      "criterio_aceite": "Enum de tipos do schema = esta cadeia + evidence",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/23"
     },
     {
       "id": "RQ-062",
@@ -552,12 +554,13 @@
       "titulo": "Grafo inicial a partir dos artigos canônicos",
       "descricao": "Nós do vocabulário P1/P3 (interrupção, troca de tarefa, sobrecarga, ambiguidade, pressão temporal, perda de contexto, retrabalho, erro; compensações externalização, redução, explicitação, automação). Relação não explícita no texto = E_INFERRED + PROPOSED.",
       "prioridade": "P1",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [
         "RQ-060"
       ],
       "fonte": "CF-06; Teia (regra de fonte de verdade); CF-16",
-      "criterio_aceite": "Todo nó cita o artigo de origem; nenhuma relação inferida aparece como evidência"
+      "criterio_aceite": "Todo nó cita o artigo de origem; nenhuma relação inferida aparece como evidência",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/23"
     },
     {
       "id": "RQ-063",
@@ -566,10 +569,11 @@
       "titulo": "Nenhum número sem evidência",
       "descricao": "Valor quantitativo publicado exige evidence_id e fonte verificável; valores de mockup ('+42%', barras) não entram.",
       "prioridade": "P0",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [],
       "fonte": "AC-005; CF-06",
-      "criterio_aceite": "Teste falha se nó ou aresta tiver métrica sem evidence_ids"
+      "criterio_aceite": "Teste falha se nó ou aresta tiver métrica sem evidence_ids",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/23"
     },
     {
       "id": "RQ-064",
@@ -578,12 +582,13 @@
       "titulo": "Onde vive o código do grafo",
       "descricao": "Em apps/blog até o workflow consumir o mesmo grafo; então packages/rc-graph (ADR-M01).",
       "prioridade": "P2",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [
         "RQ-060"
       ],
       "fonte": "ADR-M01; CF-09",
-      "criterio_aceite": "—"
+      "criterio_aceite": "—",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/23"
     },
     {
       "id": "RQ-065",
@@ -592,10 +597,11 @@
       "titulo": "Persistência sem Supabase",
       "descricao": "Grafo versionado no repo na fase 1; Cloudflare D1 se o CMS precisar editar.",
       "prioridade": "P2",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [],
       "fonte": "CF-08; ADR-07",
-      "criterio_aceite": "Nenhuma dependência @supabase/*"
+      "criterio_aceite": "Nenhuma dependência @supabase/*",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/23"
     },
     {
       "id": "RQ-070",
