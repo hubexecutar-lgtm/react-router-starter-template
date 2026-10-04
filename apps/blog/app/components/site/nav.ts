@@ -10,7 +10,7 @@ export const PRIMARY_NAV: NavItem[] = [
   { label: "Mapas", href: "/mapas/" },
   { label: "Guias", href: "/guias/" },
   { label: "Evidências", href: "/evidencias/" },
-  { label: "Loja", href: "/loja/" },
+  { label: "Ferramentas", href: "/ferramentas/" },
   { label: "Sobre", href: "/about/" },
 ];
 

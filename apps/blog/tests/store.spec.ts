@@ -3,17 +3,17 @@ import { expect, test, type Page } from "@playwright/test";
 
 const WIDTHS = [320, 375, 768, 1024, 1440];
 const ROUTES = [
-  "/loja/",
-  "/loja/skills/",
-  "/loja/agentes/",
-  "/loja/prompts/",
-  "/loja/ebooks/",
-  "/loja/pdfs/",
-  "/loja/html/",
-  "/loja/workbooks/",
-  "/loja/assets/",
-  "/loja/skills/skill-001/",
-  "/loja/ebooks/ebook-011/",
+  "/ferramentas/",
+  "/ferramentas/skills/",
+  "/ferramentas/agentes/",
+  "/ferramentas/prompts/",
+  "/ferramentas/ebooks/",
+  "/ferramentas/pdfs/",
+  "/ferramentas/html/",
+  "/ferramentas/workbooks/",
+  "/ferramentas/assets/",
+  "/ferramentas/skills/skill-001/",
+  "/ferramentas/ebooks/ebook-011/",
 ];
 
 const items = (page: Page) => page.getByTestId("store-item");
@@ -52,7 +52,7 @@ test.describe("routes render", () => {
 
 test.describe("no horizontal overflow", () => {
   for (const width of WIDTHS) {
-    for (const route of ["/loja/", "/loja/skills/", "/loja/ebooks/", "/loja/skills/skill-001/"]) {
+    for (const route of ["/ferramentas/", "/ferramentas/skills/", "/ferramentas/ebooks/", "/ferramentas/skills/skill-001/"]) {
       test(`${route} @${width}px`, async ({ page }) => {
         await page.setViewportSize({ width, height: 900 });
         await page.goto(route);
@@ -67,7 +67,7 @@ test.describe("no horizontal overflow", () => {
 });
 
 test("hub: categories, featured, skills list and ebook grid", async ({ page }) => {
-  await page.goto("/loja/");
+  await page.goto("/ferramentas/");
   await page.waitForLoadState("networkidle"); // wait for hydration
   await expect(page.getByRole("heading", { level: 2, name: "Categorias" })).toBeVisible();
   await expect(page.getByRole("heading", { level: 2, name: "Destaque" })).toBeVisible();
@@ -80,7 +80,7 @@ test("hub: categories, featured, skills list and ebook grid", async ({ page }) =
 });
 
 test("search filters the mock dataset as the user types", async ({ page }) => {
-  await page.goto("/loja/");
+  await page.goto("/ferramentas/");
   await page.waitForLoadState("networkidle"); // wait for hydration
   const search = page.getByRole("searchbox", { name: "Buscar ferramentas" });
   await search.fill("priorização");
@@ -98,7 +98,7 @@ test("search filters the mock dataset as the user types", async ({ page }) => {
 });
 
 test("type filter (tabs) filters the same dataset in place", async ({ page }) => {
-  await page.goto("/loja/");
+  await page.goto("/ferramentas/");
   await page.waitForLoadState("networkidle"); // wait for hydration
   await page.getByRole("tab", { name: "Prompts" }).click();
   await expect(items(page)).toHaveCount(3);
@@ -110,7 +110,7 @@ test("type filter (tabs) filters the same dataset in place", async ({ page }) =>
 });
 
 test("area filter narrows results and combines with type", async ({ page }) => {
-  await page.goto("/loja/");
+  await page.goto("/ferramentas/");
   await page.waitForLoadState("networkidle"); // wait for hydration
   await page.getByRole("combobox", { name: "Filtrar por área" }).click();
   await page.getByRole("option", { name: "Artigos" }).click();
@@ -119,8 +119,8 @@ test("area filter narrows results and combines with type", async ({ page }) => {
   await expect(page.getByTestId("state-empty")).toBeVisible();
 });
 
-test("/loja/skills fixes type=skill and shares the store shell", async ({ page }) => {
-  await page.goto("/loja/skills/");
+test("/ferramentas/skills fixes type=skill and shares the store shell", async ({ page }) => {
+  await page.goto("/ferramentas/skills/");
   await page.waitForLoadState("networkidle"); // wait for hydration
   await expect(page.locator("main h1")).toHaveText(/Skills/);
   await expect(items(page)).toHaveCount(10);
@@ -129,24 +129,24 @@ test("/loja/skills fixes type=skill and shares the store shell", async ({ page }
   await expect(items(page)).toHaveCount(2);
 });
 
-test("/loja/ebooks uses the visual grid", async ({ page }) => {
-  await page.goto("/loja/ebooks/");
+test("/ferramentas/ebooks uses the visual grid", async ({ page }) => {
+  await page.goto("/ferramentas/ebooks/");
   await page.waitForLoadState("networkidle"); // wait for hydration
   await expect(items(page)).toHaveCount(3);
   await expect(items(page).first().locator("[data-slot=card]")).toBeVisible();
 });
 
 test("empty category shows the empty state", async ({ page }) => {
-  await page.goto("/loja/agentes/");
+  await page.goto("/ferramentas/agentes/");
   await page.waitForLoadState("networkidle"); // wait for hydration
   await expect(page.getByTestId("state-empty")).toBeVisible();
 });
 
 test("loading and error states", async ({ page }) => {
-  await page.goto("/loja/?estado=carregando");
+  await page.goto("/ferramentas/?estado=carregando");
   await page.waitForLoadState("networkidle"); // wait for hydration
   await expect(page.getByTestId("state-loading")).toBeVisible();
-  await page.goto("/loja/?estado=erro");
+  await page.goto("/ferramentas/?estado=erro");
   await page.waitForLoadState("networkidle"); // wait for hydration
   await expect(page.getByTestId("state-error")).toBeVisible();
   await page.getByRole("button", { name: "Tentar novamente" }).click();
@@ -154,10 +154,10 @@ test("loading and error states", async ({ page }) => {
 });
 
 test("detail: Problem, Process (3 steps), Progress and a flowchart with the same steps", async ({ page }) => {
-  await page.goto("/loja/skills/");
+  await page.goto("/ferramentas/skills/");
   await page.waitForLoadState("networkidle"); // wait for hydration
   await items(page).first().click();
-  await expect(page).toHaveURL(/\/loja\/skills\/skill-\d{3}\/$/);
+  await expect(page).toHaveURL(/\/ferramentas\/skills\/skill-\d{3}\/$/);
   await page.waitForLoadState("networkidle"); // the detail is a new document: wait for hydration
   for (const name of ["Problema", "Processo", "Progresso", "Como funciona"]) {
     await expect(page.getByRole("heading", { level: 2, name })).toBeVisible();
@@ -174,7 +174,7 @@ test("detail: Problem, Process (3 steps), Progress and a flowchart with the same
   await page.keyboard.press("Enter");
   await expect(page.getByText("Referência de exemplo A")).toBeVisible();
   await page.getByRole("link", { name: /Voltar para Skills/ }).click();
-  await expect(page).toHaveURL(/\/loja\/skills\/$/);
+  await expect(page).toHaveURL(/\/ferramentas\/skills\/$/);
 });
 
 test("detail is a single column on mobile and split on desktop", async ({ page }) => {
@@ -184,7 +184,7 @@ test("detail is a single column on mobile and split on desktop", async ({ page }
       return { left: h("como-funciona").left, right: h("problema").left };
     });
   await page.setViewportSize({ width: 375, height: 900 });
-  await page.goto("/loja/skills/skill-001/");
+  await page.goto("/ferramentas/skills/skill-001/");
   await page.waitForLoadState("networkidle"); // wait for hydration
   const m = await cols();
   expect(Math.abs(m.left - m.right)).toBeLessThan(2);
@@ -193,19 +193,19 @@ test("detail is a single column on mobile and split on desktop", async ({ page }
   expect(d.right).toBeGreaterThan(d.left + 200);
 });
 
-test("navigation: Loja is reachable by keyboard from the navbar", async ({ page }) => {
+test("navigation: Ferramentas is reachable by keyboard from the navbar", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/blog/");
   await page.waitForLoadState("networkidle"); // wait for hydration
-  const link = page.locator("header nav a[href^='/loja']").first();
+  const link = page.locator("header nav a[href^='/ferramentas']").first();
   await link.focus();
   await expect(link).toBeFocused();
   await page.keyboard.press("Enter");
-  await expect(page).toHaveURL(/\/loja\/?$/);
+  await expect(page).toHaveURL(/\/ferramentas\/?$/);
 });
 
 test("area markers: blue institutional, yellow articles, green skills, distinct and stable", async ({ page }) => {
-  await page.goto("/loja/");
+  await page.goto("/ferramentas/");
   await page.waitForLoadState("networkidle"); // wait for hydration
   const colours = await page.evaluate(() => {
     const probe = document.createElement("span");
@@ -226,7 +226,7 @@ test("area markers: blue institutional, yellow articles, green skills, distinct 
 });
 
 test("accessibility (axe) on store routes", async ({ page }) => {
-  for (const route of ["/loja/", "/loja/skills/", "/loja/ebooks/", "/loja/skills/skill-001/"]) {
+  for (const route of ["/ferramentas/", "/ferramentas/skills/", "/ferramentas/ebooks/", "/ferramentas/skills/skill-001/"]) {
     await page.goto(route);
     await page.waitForLoadState("networkidle");
     const { violations } = await new AxeBuilder({ page }).include("main").analyze();
@@ -236,7 +236,7 @@ test("accessibility (axe) on store routes", async ({ page }) => {
 });
 
 test("dark mode keeps area markers legible", async ({ page }) => {
-  await page.goto("/loja/");
+  await page.goto("/ferramentas/");
   await page.waitForLoadState("networkidle"); // wait for hydration
   await page.evaluate(() => document.documentElement.classList.add("dark"));
   const ratios = await page.evaluate(() => {
@@ -250,5 +250,26 @@ test("dark mode keeps area markers legible", async ({ page }) => {
   const bg = await page.evaluate(() => getComputedStyle(document.body).backgroundColor);
   for (const [name, colour] of ratios) {
     expect(await contrast(page, colour, bg), name).toBeGreaterThanOrEqual(4.5);
+  }
+});
+
+// ADR-14 / LANC-001 RQ-100, RQ-103: a Loja deixou de existir.
+test("Ferramentas routes never show the word Loja nor purchase wording", async ({ page }) => {
+  for (const route of ROUTES) {
+    await page.goto(route);
+    const text = await page.locator("body").innerText();
+    expect(text, route).not.toMatch(/\bLoja\b|\bcomprar\b|\bcarrinho\b|\bcheckout\b/i);
+  }
+});
+
+test("/loja/* answers 301 to the same path under /ferramentas", async ({ request }) => {
+  for (const [from, to] of [
+    ["/loja/", "/ferramentas/"],
+    ["/loja/skills/", "/ferramentas/skills/"],
+    ["/loja/skills/skill-001/", "/ferramentas/skills/skill-001/"],
+  ]) {
+    const res = await request.get(from, { maxRedirects: 0 });
+    expect(res.status(), from).toBe(301);
+    expect(new URL(res.headers()["location"], "http://x").pathname, from).toBe(to);
   }
 });

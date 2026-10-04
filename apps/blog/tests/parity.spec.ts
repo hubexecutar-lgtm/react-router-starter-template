@@ -14,7 +14,7 @@ const REFERENCE = (
 ).replace(/\/+$/, "");
 
 // Pages added after the migration have no counterpart in the original site.
-const POST_MIGRATION_PAGES = new Set(["/loja/"]);
+const POST_MIGRATION_PAGES = new Set(["/ferramentas/"]);
 
 const PAGES = [
   ...ROUTES.filter((r) => r.kind === "route" && r.path!.endsWith("/") && !POST_MIGRATION_PAGES.has(r.path!)).map(
@@ -28,9 +28,9 @@ const EXTRA_LINKS: Record<string, string[]> = {
   // /sitemap-0.xml is now a declared route, so ADR-06 requires it in the hub.
   "/admin/rotas/": ["/sitemap-0.xml"],
 };
-// Added after the migration (not in the original site): the store (/loja) and its navbar link.
-const EXTRA_LINKS_ALL = ["/loja"];
-const withoutStore = (xml: string) => xml.replace(/<url><loc>[^<]*\/loja\/[^<]*<\/loc><\/url>/g, "");
+// Added after the migration (not in the original site): Ferramentas (ex-/loja, ADR-14) and its navbar link.
+const EXTRA_LINKS_ALL = ["/ferramentas"];
+const withoutStore = (xml: string) => xml.replace(/<url><loc>[^<]*\/ferramentas\/[^<]*<\/loc><\/url>/g, "");
 
 type Snapshot = {
   status: number;

@@ -51,7 +51,7 @@ test("secondary text switches to the AA gray inside gray surfaces", async ({ pag
   // editorial surface (SURFACE) and shadcn card
   const inSurface = await page.locator("main .rc-surface .rc-eyebrow").first().evaluate((e) => getComputedStyle(e).color);
   expect(inSurface).toBe("rgb(95, 102, 112)");
-  for (const route of ["/loja/", "/temas/", "/evidencias/"]) {
+  for (const route of ["/ferramentas/", "/temas/", "/evidencias/"]) {
     await page.goto(route);
     const pairs = await page
       .locator("main :is(.rc-surface, [data-slot=card]) :is(.text-muted-foreground, .rc-eyebrow, .rc-meta)")
@@ -158,7 +158,7 @@ for (const theme of ["light", "dark"] as const) {
 
 test("reduced motion: no animation nor transition longer than 0.01s (RQ-014)", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
-  for (const route of ["/", SHOWROOM, "/blog/", "/blog/o-que-e-risco-cognitivo/", "/loja/"]) {
+  for (const route of ["/", SHOWROOM, "/blog/", "/blog/o-que-e-risco-cognitivo/", "/ferramentas/"]) {
     await page.goto(route);
     const slow = await page.evaluate(() => {
       const secs = (v: string) => v.split(",").map((x) => (x.trim().endsWith("ms") ? parseFloat(x) / 1000 : parseFloat(x)));
