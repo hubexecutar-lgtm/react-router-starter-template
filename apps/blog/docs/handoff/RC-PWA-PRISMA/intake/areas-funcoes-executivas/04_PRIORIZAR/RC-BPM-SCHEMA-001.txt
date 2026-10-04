@@ -1,0 +1,301 @@
+FUNÇÃO EXECUTIVA: Priorização
+VERBO OPERACIONAL: PRIORIZAR
+ID BASE: RC-EF-04-PRIORIZAR
+SCHEMA: RC-BPM-SCHEMA-001
+STATUS: PREPARED
+
+A estrutura pode ser formalizada como um modelo de risco operacional cognitivo aplicado a processos, projetos, trabalho e estudo.
+
+METADATA
+
+Campo	Valor
+ID	RC-BPM-SCHEMA-001
+Version	1.0.0
+Area	Risco Cognitivo × BPM × Gestão de Projetos
+Workflow	Observar → Evidenciar → Modelar → Compensar → Medir
+Owner	A DEFINIR
+Status	PREPARED
+Automation level	A1
+
+A regra central deve ser:
+
+Neurodivergência não determina déficit. O risco surge da interação entre demanda do processo, capacidade exigida, vulnerabilidade efetivamente observada, contexto e compensações disponíveis.
+
+Assim, o modelo evita a relação inadequada:
+
+TDAH → déficit X → problema Y
+
+e passa a trabalhar com:
+
+CONTEXTO → DEMANDA → CAPACIDADE → VULNERABILIDADE → EVIDÊNCIA → RISCO → COMPENSAÇÃO → RESULTADO
+
+Schema canônico
+
+#	Dimensão	Pergunta operacional	Exemplo
+01	contexto	Onde isso acontece?	Projeto, trabalho, estudo
+02	neurodivergencia_associada	Qual perfil pode estar relacionado?	TDAH
+03	funcao_executiva	Qual mecanismo executivo é exigido?	Memória de trabalho
+04	funcao_gestao	Qual função gerencial depende dele?	Planejamento
+05	processo	Em qual processo ocorre?	Planejar sprint
+06	atividade	Qual atividade concreta?	Organizar dependências
+07	capacidade_exigida	O que a tarefa exige cognitivamente?	Manter múltiplas dependências ativas
+08	vulnerabilidade_associada	Onde pode ocorrer fragilidade?	Perda do contexto ativo
+09	evidencia	O que demonstra a ocorrência?	Etapas omitidas repetidamente
+10	impacto_operacional	O que acontece no processo?	Retrabalho e atraso
+11	risco_cognitivo_antecedente	Qual mecanismo precede o erro?	Sobrecarga da memória de trabalho
+12	evento_risco	O que pode efetivamente acontecer?	Dependência não executada
+13	consequencia	Qual consequência operacional?	Entregável bloqueado
+14	compensacao_sistema	O que o sistema assume no lugar da cognição?	Externalizar dependências
+15	design_solucao_compensatorio	Como a interface/processo implementa isso?	Grafo + WIP=1 + próxima ação explícita
+16	controle_preventivo	Como evitar o evento?	Checklist automático
+17	controle_detectivo	Como perceber o erro?	Validação de dependências
+18	controle_corretivo	Como recuperar?	Replanejamento automático
+19	resultado_observavel_potencial	Qual mudança esperamos observar?	Menos etapas omitidas
+20	metrica	Como medir?	% tarefas reabertas
+21	baseline	Qual situação antes?	18%
+22	target	Qual situação desejada?	≤5%
+23	resultado_observado	O que realmente aconteceu?	6%
+24	progresso	Houve melhoria?	-12 p.p.
+25	status_risco	Qual estado atual?	CONTROLLED
+
+A arquitetura lógica completa fica:
+
+NEURODIVERGÊNCIA / PERFIL
+        ↓
+FUNÇÃO EXECUTIVA
+        ↓
+CAPACIDADE COGNITIVA EXIGIDA
+        ↓
+FUNÇÃO DE GESTÃO
+        ↓
+PROCESSO
+        ↓
+ATIVIDADE / TAREFA
+        ↓
+DEMANDA COGNITIVA
+        │
+        ├──────── CAPACIDADE DISPONÍVEL
+        │
+        ↓
+VULNERABILIDADE
+        ↓
+EVIDÊNCIA OBSERVÁVEL
+        ↓
+RISCO COGNITIVO ANTECEDENTE
+        ↓
+EVENTO DE RISCO
+        ↓
+IMPACTO OPERACIONAL
+        ↓
+COMPENSAÇÃO DE SISTEMA
+        ↓
+DESIGN COMPENSATÓRIO
+        ↓
+CONTROLE
+ preventivo
+ detectivo
+ corretivo
+        ↓
+RESULTADO OBSERVÁVEL
+        ↓
+MÉTRICA
+        ↓
+PROGRESSO
+        ↓
+RESULTADO
+
+A sua síntese pode então ser formalizada em cinco objetos principais:
+
+Macro objeto	Definição
+Risco Cognitivo	Probabilidade de uma demanda cognitiva exceder, naquele contexto, a capacidade funcional disponível
+Neurodivergência	Contexto neurocognitivo potencialmente associado; não determina isoladamente o risco
+Problema	Manifestação observável da incompatibilidade capacidade × demanda
+Processo	Local operacional onde demanda, comportamento e consequência podem ser observados
+Progresso	Mudança mensurável após introdução de compensações e controles
+
+Portanto:
+
+RISCO COGNITIVO
+      ×
+NEURODIVERGÊNCIA
+      ×
+PROBLEMA
+      ×
+PROCESSO
+      ×
+PROGRESSO
+      =
+RESULTADO OPERACIONAL
+
+Mas, para implementação matemática, eu não usaria uma multiplicação literal entre esses cinco elementos. O modelo mais defensável é:
+
+DEMANDA COGNITIVA
+        ↓
+     GAP
+        ↑
+CAPACIDADE DISPONÍVEL
+        ↓
+VULNERABILIDADE
+        ×
+EXPOSIÇÃO
+        ×
+CRITICIDADE
+        ×
+FORÇA DA EVIDÊNCIA
+        =
+RISCO COGNITIVO INERENTE
+
+Depois:
+
+RISCO INERENTE
+        ↓
+COMPENSAÇÃO DE SISTEMA
++
+DESIGN COMPENSATÓRIO
++
+CONTROLES DE PROCESSO
+        ↓
+RISCO RESIDUAL
+        ↓
+RESULTADO OBSERVADO
+
+Uma fórmula operacional pode ser:
+
+RCI =
+Demanda
+× Vulnerabilidade
+× Exposição
+× Criticidade
+× Confiança_da_Evidência
+
+e:
+
+RCR =
+RCI × (1 - Efetividade_da_Compensação)
+
+Onde RCI é risco cognitivo inerente e RCR é risco cognitivo residual.
+
+Por exemplo, numa escala normalizada 0–1:
+
+Demanda             = 0.80
+Vulnerabilidade     = 0.75
+Exposição           = 0.90
+Criticidade         = 0.70
+Evidência           = 0.90
+RCI = 0.80 × 0.75 × 0.90 × 0.70 × 0.90
+RCI = 0.3402
+
+Com compensação efetiva de 70%:
+
+RCR = 0.3402 × (1 - 0.70)
+RCR = 0.1021
+
+O elemento mais importante do modelo é o design compensatório. Em vez de tentar fazer a pessoa “executar melhor” uma função vulnerável, o sistema absorve parte dessa função.
+
+Vulnerabilidade	O sistema passa a fazer
+Memória de trabalho	Externaliza estado e contexto
+Priorização	Apresenta prioridade explícita
+Planejamento	Decompõe objetivo em etapas
+Iniciação	Mostra uma única próxima ação
+Atenção	Reduz estímulos concorrentes
+Gestão do tempo	Torna tempo visível
+Monitoramento	Exibe progresso continuamente
+Flexibilidade	Oferece caminhos alternativos
+Organização	Impõe estrutura informacional
+Conclusão	Define critério objetivo de DONE
+Regulação	Introduz pausas, limites e redução de carga
+Inibição	Remove ou atrasa estímulos concorrentes
+
+Isso produz a ponte entre neurociência cognitiva e BPM:
+
+FUNÇÃO EXECUTIVA
+"lembrar"
+        ↓
+FUNÇÃO DE GESTÃO
+"acompanhar"
+        ↓
+CAPACIDADE EXIGIDA
+"manter estado de várias tarefas"
+        ↓
+VULNERABILIDADE
+"perda de contexto"
+        ↓
+EVIDÊNCIA
+"tarefas são esquecidas após interrupções"
+        ↓
+RISCO COGNITIVO
+"estado do processo deixa de estar disponível"
+        ↓
+RISCO OPERACIONAL
+"atividade obrigatória não executada"
+        ↓
+COMPENSAÇÃO
+"estado persistido externamente"
+        ↓
+DESIGN
+dashboard + checklist + próxima ação + histórico
+        ↓
+RESULTADO
+redução de omissões
+        ↓
+PROGRESSO
+taxa de omissão: 18% → 6%
+
+O schema estrutural em YAML pode ficar assim:
+
+schema:
+  id: RC-BPM-SCHEMA-001
+  version: 1.0.0
+context:
+  domain: projeto | trabalho | estudo
+  environment: null
+  process_id: null
+  activity_id: null
+cognitive_profile:
+  neurodivergence_association: []
+  executive_function: null
+  required_capacity: null
+  associated_vulnerability: null
+management:
+  management_function: null
+  process: null
+  activity: null
+  expected_output: null
+evidence:
+  observation: null
+  source: null
+  frequency: null
+  confidence: null
+risk:
+  cognitive_antecedent: null
+  risk_event: null
+  operational_impact: null
+  exposure: null
+  severity: null
+  inherent_risk: null
+compensation:
+  system_compensation: null
+  compensatory_design: null
+  preventive_control: null
+  detective_control: null
+  corrective_control: null
+  expected_effectiveness: null
+outcome:
+  potential_observable_result: null
+  metric: null
+  baseline: null
+  target: null
+  observed_result: null
+  residual_risk: null
+  progress: null
+  status: null
+
+A ontologia final, portanto, pode ser resumida como:
+
+Pessoa não é o risco. Neurodivergência não é o risco.
+
+O objeto de gestão é:
+
+a incompatibilidade observável entre capacidade cognitiva disponível e capacidade exigida pelo processo, considerando contexto, exposição, controles e consequências.
+
+Isso permite aplicar exatamente o mesmo modelo em Projetos, Trabalho, Estudo, Rotinas, Software, BPM, Product Management e no seu sistema EXECUTAR, sem transformar uma característica neurocognitiva em diagnóstico ou falha individual.

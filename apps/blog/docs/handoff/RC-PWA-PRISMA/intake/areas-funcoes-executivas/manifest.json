@@ -1,0 +1,81 @@
+{
+  "id": "RC-EF-DIRECTORY-001",
+  "version": "1.0.0",
+  "status": "PREPARED",
+  "sequence": [
+    "INIBIR",
+    "FOCAR",
+    "LEMBRAR",
+    "PRIORIZAR",
+    "PLANEJAR",
+    "ORGANIZAR",
+    "INICIAR",
+    "SUSTENTAR",
+    "MONITORAR",
+    "ADAPTAR",
+    "REGULAR",
+    "CONCLUIR"
+  ],
+  "directories": [
+    {
+      "path": "01_INIBIR",
+      "executive_function": "Controle inibitório",
+      "verb": "INIBIR"
+    },
+    {
+      "path": "02_FOCAR",
+      "executive_function": "Atenção executiva",
+      "verb": "FOCAR"
+    },
+    {
+      "path": "03_LEMBRAR",
+      "executive_function": "Memória de trabalho",
+      "verb": "LEMBRAR"
+    },
+    {
+      "path": "04_PRIORIZAR",
+      "executive_function": "Priorização",
+      "verb": "PRIORIZAR"
+    },
+    {
+      "path": "05_PLANEJAR",
+      "executive_function": "Planejamento",
+      "verb": "PLANEJAR"
+    },
+    {
+      "path": "06_ORGANIZAR",
+      "executive_function": "Organização",
+      "verb": "ORGANIZAR"
+    },
+    {
+      "path": "07_INICIAR",
+      "executive_function": "Iniciação",
+      "verb": "INICIAR"
+    },
+    {
+      "path": "08_SUSTENTAR",
+      "executive_function": "Sustentação da atenção/esforço",
+      "verb": "SUSTENTAR"
+    },
+    {
+      "path": "09_MONITORAR",
+      "executive_function": "Monitoramento / metacognição",
+      "verb": "MONITORAR"
+    },
+    {
+      "path": "10_ADAPTAR",
+      "executive_function": "Flexibilidade cognitiva",
+      "verb": "ADAPTAR"
+    },
+    {
+      "path": "11_REGULAR",
+      "executive_function": "Regulação emocional e comportamental",
+      "verb": "REGULAR"
+    },
+    {
+      "path": "12_CONCLUIR",
+      "executive_function": "Conclusão / fechamento",
+      "verb": "CONCLUIR"
+    }
+  ]
+}

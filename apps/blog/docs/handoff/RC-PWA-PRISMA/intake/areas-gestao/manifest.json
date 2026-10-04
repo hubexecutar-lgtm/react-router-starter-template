@@ -1,0 +1,31 @@
+{
+  "id": "RC-BPM-DIRECTORY-001",
+  "version": "1.0.0",
+  "status": "PREPARED",
+  "directories": [
+    {
+      "path": "01_GESTAO_DE_PROJETOS",
+      "area": "Gestão de Projetos"
+    },
+    {
+      "path": "02_GESTAO_DE_PROCESSOS",
+      "area": "Gestão de Processos"
+    },
+    {
+      "path": "03_GESTAO_DE_RISCOS",
+      "area": "Gestão de Riscos"
+    },
+    {
+      "path": "04_ANALISE_DE_RISCOS",
+      "area": "Análise de Riscos"
+    },
+    {
+      "path": "05_RISCO_COGNITIVO",
+      "area": "Risco Cognitivo"
+    },
+    {
+      "path": "06_COMPENSACAO_E_DESIGN_DE_SOLUCAO",
+      "area": "Compensação e Design de Solução"
+    }
+  ]
+}

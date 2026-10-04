@@ -18,6 +18,7 @@ export default [
 	route("guias", "routes/guias.tsx"),
 	route("evidencias", "routes/evidencias.tsx"),
 	route("buscar", "routes/buscar.tsx"),
+	route("prisma", "routes/prisma.tsx"),
 	route("loja", "routes/loja._index.tsx"),
 	route("loja/:type", "routes/loja.$type._index.tsx"),
 	route("loja/:type/:slug", "routes/loja.$type.$slug.tsx"),

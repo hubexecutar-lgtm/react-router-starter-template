@@ -73,6 +73,7 @@ export const ROUTES: HubEntry[] = [
   { id: "buscar", title: "Busca e navegação", group: "Blog", kind: "route", path: "/buscar/", description: "Busca client-side em artigos, temas e evidências (?q=).", exposure: "public", addedAt: "2026-10-01", source: "HANDOFF-RC-GLOBAL-DESIGN-CONTENT-001" },
 
   // ---------------------------------------------------------------- Ferramentas públicas
+  { id: "prisma", title: "Prisma de execução", description: "Primeira solução da Loja (externalização cognitiva): formulário, folha A4 e PDF, local-first e instalável (PWA). Manifest e service worker em /prisma/.", group: "Ferramentas públicas", kind: "route", path: "/prisma/", exposure: "public", addedAt: "2026-10-04", source: "RC-PWA-PRISMA-SPECS v1.0.0 (ADR-14)" },
   { id: "hub-editorial", title: "Hub Editorial", group: "Ferramentas públicas", kind: "route", path: "/hub-editorial/", description: "Painel de gestão do pipeline editorial.", exposure: "public", addedAt: "2026-09-30", source: SRC },
   { id: "skills", title: "Catálogo de Skills EXECUTAR", group: "Ferramentas públicas", kind: "route", path: "/skills/", description: "Catálogo navegável com busca e filtros.", exposure: "public", addedAt: "2026-09-30", source: SRC },
   { id: "catalogo-offline", title: "Catálogo EXECUTAR (offline)", group: "Ferramentas públicas", kind: "route", path: "/catalogo-offline/", description: "Versão offline do catálogo, com detalhamento 3P.", exposure: "public", addedAt: "2026-09-30", source: SRC },

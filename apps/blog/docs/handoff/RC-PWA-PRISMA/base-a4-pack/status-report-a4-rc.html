@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Risco Cognitivo · Status Report A4</title>
+<style>
+:root{
+  --brand-name: "Risco Cognitivo";
+  --color-dark:#202124;
+  --color-light:#FFFFFF;
+  --color-mid-gray:#6B7280;
+  --color-light-gray:#F5F5F4;
+  --accent-primary:#2563EB;
+  --accent-primary-hover:#1D4ED8;
+  --accent-secondary:#8A5A00;
+  --accent-tertiary:#A33A32;
+  --brand-dark:#304E83;
+  --surface-canvas:#FFFFFF;
+  --surface-subtle:#F5F5F4;
+  --surface-hover:#F0F0EE;
+  --surface-model:#EFF6FF;
+  --border-default:#EAEAE8;
+  --border-strong:#D6D6D3;
+  --control-border:#D1D5DB;
+  --text-primary:#202124;
+  --text-secondary:#6B7280;
+  --text-secondary-on-gray:#5F6670;
+  --text-inverse:#FFFFFF;
+  --font-body:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --font-label:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,"Courier New",monospace;
+  --radius-card:2px;
+  --radius-small:4px;
+  --radius-medium:8px;
+  --radius-pill:40px;
+  --sp-1:4px; --sp-2:8px; --sp-3:12px; --sp-4:16px; --sp-5:24px; --sp-6:32px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+html{scroll-behavior:smooth;background:var(--surface-subtle)}
+body{background:var(--surface-subtle);font-family:var(--font-body);color:var(--text-primary);padding:88px 0 80px}
+.toolbar{position:fixed;top:16px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:100;background:rgba(255,255,255,.96);padding:8px;border:1px solid var(--border-default);border-radius:var(--radius-medium);box-shadow:0 8px 28px rgb(0 0 0/.10);backdrop-filter:blur(10px)}
+.toolbar button{font-family:var(--font-label);font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:9px 13px;border-radius:var(--radius-small);border:1px solid var(--control-border);background:var(--surface-canvas);color:var(--text-primary);cursor:pointer}
+.toolbar button:hover{background:var(--surface-hover)}
+.toolbar button:focus-visible{outline:3px solid rgba(37,99,235,.22);outline-offset:2px;border-color:var(--accent-primary)}
+.toolbar button.primary{background:var(--accent-primary);color:var(--text-inverse);border-color:var(--accent-primary)}
+.toolbar button.primary:hover{background:var(--accent-primary-hover)}
+.pack{display:flex;flex-direction:column;align-items:center;gap:32px}
+.sheet,.document-sheet{width:190mm;max-width:calc(100vw - 24px);min-height:277mm;background:var(--surface-canvas);padding:var(--sp-6) var(--sp-5);border-radius:var(--radius-card);box-shadow:0 8px 28px rgb(0 0 0/.10);position:relative}
+.brand-row{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border-default);padding-bottom:10px;margin-bottom:20px}
+.brand-wordmark{font-weight:700;font-size:12px;letter-spacing:-.02em}
+.brand-meta{font-family:var(--font-label);font-size:8px;letter-spacing:.12em;color:var(--text-secondary);text-transform:uppercase}
+.eyebrow{font-family:var(--font-label);font-size:10px;letter-spacing:.12em;color:var(--text-secondary);text-transform:uppercase;margin-bottom:var(--sp-1)}
+.h1{font-size:32px;font-weight:700;letter-spacing:-.025em;line-height:1.08;margin-bottom:var(--sp-3);color:var(--text-primary)}
+.lede{font-size:12.5px;line-height:1.55;color:var(--text-secondary);max-width:60ch;margin-bottom:var(--sp-6)}
+.print-note{font-family:var(--font-label);font-size:9px;color:var(--text-secondary);letter-spacing:.04em;margin-top:-16px;margin-bottom:var(--sp-6)}
+.kpi-grid{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--border-default);margin-bottom:var(--sp-6);page-break-inside:avoid;background:var(--surface-canvas)}
+.kpi{padding:var(--sp-4) var(--sp-5);border-right:1px solid var(--border-default);border-bottom:1px solid var(--border-default)}
+.kpi:nth-child(2n){border-right:none}.kpi:nth-last-child(-n+2){border-bottom:none}
+.kpi .label{font-family:var(--font-label);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-secondary);margin-bottom:var(--sp-2)}
+.kpi .value{font-family:var(--font-label);font-size:26px;font-weight:700;line-height:1;color:var(--text-primary)}
+.kpi .caption{font-size:11px;color:var(--text-secondary);margin-top:var(--sp-1)}
+.epic{border:1px solid var(--border-default);margin-bottom:var(--sp-5);page-break-inside:avoid;border-radius:var(--radius-card);overflow:hidden}
+.epic-head{display:flex;align-items:flex-start;gap:var(--sp-4);padding:var(--sp-4) var(--sp-5);border-bottom:1px solid var(--border-default);background:var(--surface-subtle)}
+.epic-badge{width:28px;height:28px;flex-shrink:0;background:var(--accent-primary);color:var(--text-inverse);display:flex;align-items:center;justify-content:center;font-family:var(--font-label);font-size:12px;font-weight:700;border-radius:var(--radius-card)}
+.epic-meta{flex:1;min-width:0}.epic-eyebrow{font-family:var(--font-label);font-size:9px;letter-spacing:.08em;color:var(--text-secondary-on-gray);margin-bottom:2px}.epic-title{font-size:16px;font-weight:700}
+.epic-progress{text-align:right;flex-shrink:0}.epic-progress .pct{font-family:var(--font-label);font-size:13px;font-weight:700}.epic-progress .bar{width:64px;height:3px;background:var(--border-strong);margin-top:var(--sp-1);position:relative}.epic-progress .bar>span{position:absolute;left:0;top:0;bottom:0;background:var(--accent-primary)}
+.epic-body{display:grid;grid-template-columns:1fr 1.3fr}.entregavel{padding:var(--sp-4) var(--sp-5);border-right:1px solid var(--border-default)}
+.entregavel .tag{display:inline-block;font-family:var(--font-label);font-size:9px;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--control-border);border-radius:var(--radius-small);padding:2px 6px;color:var(--text-primary);margin-bottom:var(--sp-2);background:var(--surface-canvas)}
+.entregavel .tag+.tag-id{font-family:var(--font-label);font-size:9px;color:var(--text-secondary);margin-left:6px}.entregavel .title{font-size:12.5px;font-weight:700;line-height:1.4;margin-bottom:var(--sp-2)}.entregavel .desc{font-size:11px;color:var(--text-secondary);line-height:1.5}
+.tarefas{padding:var(--sp-4) var(--sp-5)}.tarefas .count{font-family:var(--font-label);font-size:9px;letter-spacing:.08em;color:var(--text-secondary);margin-bottom:var(--sp-3)}
+.task{display:flex;align-items:center;gap:var(--sp-3);padding:var(--sp-2) 0;border-bottom:1px solid var(--border-default);font-size:11.5px}.task:last-child{border-bottom:none}.task .dot{width:10px;height:10px;border-radius:50%;border:1.5px solid var(--text-secondary);flex-shrink:0}.task.done .dot{background:var(--accent-primary);border-color:var(--accent-primary)}.task .name{flex:1}.task.done .name{text-decoration:line-through;color:var(--text-secondary)}
+.task .status{font-family:var(--font-label);font-size:8.5px;letter-spacing:.04em;text-transform:uppercase;padding:3px 8px;border-radius:var(--radius-pill);white-space:nowrap}.task .status.pending{background:var(--surface-subtle);color:var(--text-secondary-on-gray)}.task .status.done{background:var(--surface-model);color:var(--accent-primary)}
+.routine{border:1px solid var(--border-default);margin-top:-16px;margin-bottom:var(--sp-6);page-break-inside:avoid;border-radius:var(--radius-card);overflow:hidden}.routine-label{font-family:var(--font-label);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-secondary);padding:var(--sp-3) var(--sp-5) 0}.routine-track{display:flex;align-items:stretch;padding:var(--sp-3) var(--sp-5) var(--sp-4);gap:var(--sp-2)}
+.routine-step{flex:1;display:flex;align-items:center;gap:var(--sp-3);padding:var(--sp-3) var(--sp-4);background:var(--surface-subtle);border-left:3px solid var(--border-strong)}.routine-step.highlight{background:var(--surface-model);border-left-color:var(--accent-primary)}.routine-step .num{font-family:var(--font-label);font-size:14px;font-weight:700;color:var(--text-secondary);flex-shrink:0}.routine-step.highlight .num{color:var(--accent-primary)}.routine-step .info{min-width:0}.routine-step .name{font-size:11.5px;font-weight:700;color:var(--text-primary);line-height:1.3}.routine-step .time{font-family:var(--font-label);font-size:9.5px;color:var(--text-secondary);margin-top:2px}.routine-step.highlight .time{color:var(--brand-dark)}.routine-arrow{display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text-secondary);flex-shrink:0;width:16px}.routine-total{font-family:var(--font-label);font-size:9px;color:var(--text-secondary);text-align:right;padding:0 var(--sp-5) var(--sp-3)}.routine-total b{color:var(--text-primary)}
+.days{border:1px solid var(--border-default);margin-bottom:var(--sp-5);page-break-inside:avoid;border-radius:var(--radius-card);overflow:hidden}.days-head{display:flex;align-items:center;gap:var(--sp-4);padding:var(--sp-3) var(--sp-5);border-bottom:1px solid var(--border-strong);background:var(--surface-subtle)}.days-head .col-day{width:34px;flex-shrink:0}.days-head .col-title{flex:1;min-width:0}.days-head .col-tracks{width:150px;flex-shrink:0}.days-head span{font-family:var(--font-label);font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-secondary-on-gray)}
+.day-row{display:flex;align-items:center;gap:var(--sp-4);padding:var(--sp-3) var(--sp-5);border-bottom:1px solid var(--border-default)}.day-row:last-child{border-bottom:none}.day-row .col-day{width:34px;flex-shrink:0;font-family:var(--font-label);font-size:15px;font-weight:700;color:var(--text-primary)}.day-row .col-day .date{display:block;font-size:8px;font-weight:400;color:var(--text-secondary);margin-top:1px}.day-row .col-title{flex:1;min-width:0}.day-row .col-title .action{font-size:12px;font-weight:700;color:var(--text-primary);line-height:1.35}.day-row .col-title .milestone{margin-left:6px;vertical-align:1px}.day-row .col-tracks{width:150px;flex-shrink:0;display:flex;gap:5px}.track-pill{font-family:var(--font-label);font-size:8px;letter-spacing:.02em;padding:3px 7px;border-radius:var(--radius-pill);background:var(--surface-subtle);color:var(--text-secondary-on-gray);white-space:nowrap}.track-pill.lead{background:var(--surface-model);color:var(--accent-primary);font-weight:700}.milestone{display:inline-block;background:var(--surface-model);color:var(--accent-primary);font-family:var(--font-label);font-size:8.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:2px 6px;border-radius:var(--radius-small);margin-left:6px}
+.trace{font-family:var(--font-label);font-size:8px;color:var(--text-secondary);margin-top:var(--sp-6);padding-top:var(--sp-3);border-top:1px dashed var(--border-strong)}
+@media screen and (max-width:760px){body{padding:72px 0 40px}.toolbar{width:calc(100vw - 20px);overflow:auto;justify-content:flex-start}.sheet,.document-sheet{min-height:0;padding:24px 18px}.h1{font-size:28px}.epic-body{grid-template-columns:1fr}.entregavel{border-right:none;border-bottom:1px solid var(--border-default)}.routine-track{flex-direction:column}.routine-arrow{width:auto;transform:rotate(90deg)}.days-head .col-tracks,.day-row .col-tracks{width:100px;flex-wrap:wrap}.brand-row{gap:16px}.brand-meta{text-align:right}}
+@page{size:A4;margin:10mm}
+@media print{html,body{background:#fff}body{padding:0;display:block}.toolbar{display:none!important}.pack{display:block}.sheet,.document-sheet{width:auto;max-width:none;min-height:277mm;box-shadow:none;padding:0;margin:0;border-radius:0;page-break-after:always}.document-sheet:last-child{page-break-after:auto}.brand-row{margin-top:0}}
+
+</style>
+</head>
+<body>
+<div class="toolbar"><button class="primary" onclick="printPack()">Imprimir / Exportar PDF</button></div>
+<div class="pack"><div class="sheet document-sheet status-sheet" id="status-report"><div class="brand-row"><div class="brand-wordmark">RISCO COGNITIVO</div><div class="brand-meta">A4 · EXECUÇÃO</div></div>
+<div class="eyebrow">{{EYEBROW_TOPO}}</div>
+<h1 class="h1">{{TITULO_H1}}</h1>
+<p class="lede">{{LEDE_DESCRICAO}}</p>
+<div class="print-note">{{PRINT_NOTE}}</div>
+<div class="kpi-grid">
+<div class="kpi"><div class="label">{{KPI1_LABEL}}</div><div class="value">{{KPI1_VALUE}}</div><div class="caption">{{KPI1_CAPTION}}</div></div>
+<div class="kpi"><div class="label">{{KPI2_LABEL}}</div><div class="value">{{KPI2_VALUE}}</div><div class="caption">{{KPI2_CAPTION}}</div></div>
+<div class="kpi"><div class="label">{{KPI3_LABEL}}</div><div class="value">{{KPI3_VALUE}}</div><div class="caption">{{KPI3_CAPTION}}</div></div>
+<div class="kpi"><div class="label">{{KPI4_LABEL}}</div><div class="value">{{KPI4_VALUE}}</div><div class="caption">{{KPI4_CAPTION}}</div></div>
+</div>
+<!-- EPIC 01 -->
+<div class="epic">
+<div class="epic-head">
+<div class="epic-badge">{{EPIC1_NUMERO}}</div>
+<div class="epic-meta">
+<div class="epic-eyebrow">{{EPIC1_EYEBROW}}</div>
+<div class="epic-title">{{EPIC1_TITULO}}</div>
+</div>
+<div class="epic-progress">
+<div class="pct">{{EPIC1_PROGRESSO_PCT}}%</div>
+<div class="bar"><span style="width:{{EPIC1_PROGRESSO_PCT}}%"></span></div>
+</div>
+</div>
+<div class="epic-body">
+<div class="entregavel">
+<span class="tag">{{EPIC1_ENT_TAG}}</span><span class="tag-id">{{EPIC1_ENT_ID}}</span>
+<div class="title">{{EPIC1_ENT_TITULO}}</div>
+<div class="desc">{{EPIC1_ENT_DESC}}</div>
+</div>
+<div class="tarefas">
+<div class="count">{{EPIC1_TAREFAS_COUNT}} TAREFAS</div>
+<div class="task {{EPIC1_T1_CLASSE}}"><div class="dot"></div><div class="name">{{EPIC1_T1_NOME}}</div><div class="status {{EPIC1_T1_CLASSE}}">{{EPIC1_T1_STATUS}}</div></div>
+<div class="task {{EPIC1_T2_CLASSE}}"><div class="dot"></div><div class="name">{{EPIC1_T2_NOME}}</div><div class="status {{EPIC1_T2_CLASSE}}">{{EPIC1_T2_STATUS}}</div></div>
+<div class="task {{EPIC1_T3_CLASSE}}"><div class="dot"></div><div class="name">{{EPIC1_T3_NOME}}</div><div class="status {{EPIC1_T3_CLASSE}}">{{EPIC1_T3_STATUS}}</div></div>
+</div>
+</div>
+</div>
+<!-- EPIC 02 -->
+<div class="epic">
+<div class="epic-head">
+<div class="epic-badge">{{EPIC2_NUMERO}}</div>
+<div class="epic-meta">
+<div class="epic-eyebrow">{{EPIC2_EYEBROW}}</div>
+<div class="epic-title">{{EPIC2_TITULO}}</div>
+</div>
+<div class="epic-progress">
+<div class="pct">{{EPIC2_PROGRESSO_PCT}}%</div>
+<div class="bar"><span style="width:{{EPIC2_PROGRESSO_PCT}}%"></span></div>
+</div>
+</div>
+<div class="epic-body">
+<div class="entregavel">
+<span class="tag">{{EPIC2_ENT_TAG}}</span><span class="tag-id">{{EPIC2_ENT_ID}}</span>
+<div class="title">{{EPIC2_ENT_TITULO}}</div>
+<div class="desc">{{EPIC2_ENT_DESC}}</div>
+</div>
+<div class="tarefas">
+<div class="count">{{EPIC2_TAREFAS_COUNT}} TAREFAS</div>
+<div class="task {{EPIC2_T1_CLASSE}}"><div class="dot"></div><div class="name">{{EPIC2_T1_NOME}}</div><div class="status {{EPIC2_T1_CLASSE}}">{{EPIC2_T1_STATUS}}</div></div>
+<div class="task {{EPIC2_T2_CLASSE}}"><div class="dot"></div><div class="name">{{EPIC2_T2_NOME}}</div><div class="status {{EPIC2_T2_CLASSE}}">{{EPIC2_T2_STATUS}}</div></div>
+<div class="task {{EPIC2_T3_CLASSE}}"><div class="dot"></div><div class="name">{{EPIC2_T3_NOME}}</div><div class="status {{EPIC2_T3_CLASSE}}">{{EPIC2_T3_STATUS}}</div></div>
+</div>
+</div>
+</div>
+<!-- EPIC 03 -->
+<div class="epic">
+<div class="epic-head">
+<div class="epic-badge">{{EPIC3_NUMERO}}</div>
+<div class="epic-meta">
+<div class="epic-eyebrow">{{EPIC3_EYEBROW}}</div>
+<div class="epic-title">{{EPIC3_TITULO}}</div>
+</div>
+<div class="epic-progress">
+<div class="pct">{{EPIC3_PROGRESSO_PCT}}%</div>
+<div class="bar"><span style="width:{{EPIC3_PROGRESSO_PCT}}%"></span></div>
+</div>
+</div>
+<div class="epic-body">
+<div class="entregavel">
+<span class="tag">{{EPIC3_ENT_TAG}}</span><span class="tag-id">{{EPIC3_ENT_ID}}</span>
+<div class="title">{{EPIC3_ENT_TITULO}}</div>
+<div class="desc">{{EPIC3_ENT_DESC}}</div>
+</div>
+<div class="tarefas">
+<div class="count">{{EPIC3_TAREFAS_COUNT}} TAREFAS</div>
+<div class="task {{EPIC3_T1_CLASSE}}"><div class="dot"></div><div class="name">{{EPIC3_T1_NOME}}</div><div class="status {{EPIC3_T1_CLASSE}}">{{EPIC3_T1_STATUS}}</div></div>
+<div class="task {{EPIC3_T2_CLASSE}}"><div class="dot"></div><div class="name">{{EPIC3_T2_NOME}}</div><div class="status {{EPIC3_T2_CLASSE}}">{{EPIC3_T2_STATUS}}</div></div>
+<div class="task {{EPIC3_T3_CLASSE}}"><div class="dot"></div><div class="name">{{EPIC3_T3_NOME}}</div><div class="status {{EPIC3_T3_CLASSE}}">{{EPIC3_T3_STATUS}}</div></div>
+</div>
+</div>
+</div>
+<div class="trace">{{RODAPE_RASTREABILIDADE}}</div>
+</div></div>
+<script>function goTo(id){document.getElementById(id)?.scrollIntoView({behavior:'smooth',block:'start'});}
+function printPack(){window.print();}</script>
+</body>
+</html>

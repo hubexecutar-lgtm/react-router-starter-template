@@ -50,7 +50,9 @@ test("public icons match the sha256 of the intake MANIFEST", () => {
 test("every page has the 5 icon links and no legacy icon", async ({ request }) => {
   for (const path of scanPages().filter((p) => p.endsWith("/"))) {
     const html = await (await request.get(path)).text();
-    for (const link of LINKS) {
+    // /prisma/ declara o próprio Web App Manifest (start_url e scope em /prisma/); os outros 4 links são os do site.
+    const links = path === "/prisma/" ? LINKS.map((l) => (l.rel === "manifest" ? { ...l, href: "/prisma/manifest.webmanifest" } : l)) : LINKS;
+    for (const link of links) {
       const attrs = Object.entries(link).map(([k, v]) => `(?=[^>]*\\b${k}="${v.replace(/[.+]/g, "\\$&")}")`).join("");
       expect(html, `${path}: <link ${JSON.stringify(link)}>`).toMatch(new RegExp(`<link${attrs}[^>]*>`));
     }

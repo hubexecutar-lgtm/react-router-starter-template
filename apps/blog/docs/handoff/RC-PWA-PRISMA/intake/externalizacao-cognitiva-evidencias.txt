@@ -1,0 +1,339 @@
+Sim. A estratégia da imagem se encaixa bem no conceito de externalização cognitiva / cognitive offloading: retirar parte do processamento que precisaria ser mantido “na cabeça” e colocá-lo no ambiente — listas, lembretes, checklists, mapas, timers, estados visuais, calendários, etapas explícitas e regras de decisão. Na literatura, cognitive offloading é definido justamente como usar ações ou recursos externos para alterar os requisitos de processamento de uma tarefa e reduzir demanda cognitiva interna. 
+
+Um cuidado conceitual: no seu mapa, eu evitaria escrever TDAH → déficit executivo → falha. Estudos mostram diferenças médias de grupo em memória de trabalho, atenção, inibição, planejamento e outras funções, mas existe heterogeneidade considerável. Portanto, para um framework operacional, é mais preciso trabalhar com vulnerabilidade observada + demanda da tarefa + contexto + compensação disponível. 
+
+Relação principal
+
+A externalização não precisa ser tratada como uma tentativa de “corrigir o cérebro”. Ela funciona melhor conceitualmente como um controle de processo:
+
+CAPACIDADE INTERNA
+        +
+RECURSOS EXTERNOS
+        ↓
+CAPACIDADE FUNCIONAL DISPONÍVEL
+        ↓
+DEMANDA DA TAREFA
+        ↓
+MARGEM / SOBRECARGA
+        ↓
+RISCO DE ERRO
+
+Isso casa diretamente com o seu Mapa 3:
+
+Perfil
+  ↓
+Capacidades / vulnerabilidades
+  ↓
+Atividade
+  ↓
+Demandas executivas
+  ↓
+INTERAÇÃO PESSOA × TAREFA × CONTEXTO
+  ↓
+Risco
+  ↓
+Evento / impacto
+
+A externalização cognitiva entra principalmente entre “demandas executivas” e “interação pessoa × tarefa × contexto”, funcionando como controle compensatório. Ela também pode agir antes, redesenhando a própria tarefa.
+
+Matriz baseada em evidências
+
+Função / vulnerabilidade operacional	Demanda interna da tarefa	O que pode acontecer quando a demanda excede a capacidade disponível	Externalização correspondente	Relação com evidência
+Memória de trabalho	Manter objetivo, regras, passos e informações ativas enquanto executa	Perda de etapa, perda de contexto, repetição, abandono	checklist, instruções visíveis, quadro de etapas, notas persistentes	Forte
+Memória prospectiva	Lembrar de fazer algo no futuro	compromisso esquecido, tarefa não retomada, prazo perdido	alarmes, agenda, lembretes contextuais, notificações	Muito forte
+Planejamento	Converter objetivo em sequência executável	começar sem caminho, ordem inadequada, dependências ignoradas	plano visual, workflow, template, decomposição em passos	Forte
+Organização	Manter materiais, informações e tarefas estruturados	informação espalhada, item perdido, dificuldade de localizar próxima ação	sistema único, categorias, listas, kanban, estrutura visual	Moderada–forte
+Priorização	Comparar demandas e escolher o que recebe atenção	tudo parece igualmente urgente, troca constante de foco	fila priorizada, WIP, ranking explícito, regra de prioridade	Moderada
+Gestão temporal	Estimar, monitorar e lembrar quando agir	atraso, prazo perdido, subestimação de duração	relógio visível, timer, timebox, calendário, contagem regressiva	Forte
+Controle inibitório	Resistir a estímulos concorrentes e ações automáticas	interrupção, mudança prematura de tarefa, respostas impulsivas	redução de estímulos, regra visual, bloqueio ambiental, foco em uma ação	Indireta
+Atenção executiva	Sustentar o objetivo relevante e retornar após distração	desvio de foco, perda da meta corrente	objetivo persistente na tela, marcador de estado, próxima ação visível	Moderada/indireta
+Flexibilidade / switching	Mudar de atividade preservando contexto e regras	custo de troca, dificuldade para retomar	checkpoint, estado salvo, “onde parei”, checklist de retomada	Plausível/moderada
+Iniciação	Transformar intenção em comportamento	intenção existente sem começo observável	próxima ação concreta, gatilho, horário, preparação prévia	Moderada
+Monitoramento	Comparar execução atual com objetivo	erros não percebidos, desvio de plano	checklist de verificação, progresso, status, definição de concluído	Forte como estratégia organizacional
+Metacognição	Saber quando confiar na memória e quando usar apoio externo	subuso ou uso excessivo de ferramentas	regras explícitas de quando externalizar	Forte
+
+A evidência experimental mais direta é especialmente consistente para memória de trabalho e memória prospectiva. Representações externas podem diminuir a quantidade de informação que precisa ficar ativa internamente, embora seu benefício dependa de a representação estar bem coordenada com a tarefa. 
+
+Para memória prospectiva — “lembrar de fazer algo depois” — a evidência é particularmente clara. Uma revisão sistemática encontrou resultados positivos para recursos externos de memória, e revisões específicas sobre intention offloading mostram que calendários, lembretes e pistas externas podem melhorar o cumprimento de intenções futuras.  Uma meta-análise publicada em 2026 também encontrou benefício geral do cognitive offloading em tarefas baseadas em memória e redução da variabilidade entre indivíduos, especialmente em tarefas de memória prospectiva. 
+
+1. Memória de trabalho → externalizar o estado da tarefa
+
+Demanda operacional:
+
+“Preciso manter mentalmente o objetivo, lembrar as etapas anteriores e saber qual é a próxima.”
+
+Risco:
+
+muitas informações simultâneas
+→ sobrecarga da memória de trabalho
+→ perda de contexto
+→ omissão / repetição / interrupção
+
+Controle:
+
+objetivo visível
+etapas visíveis
+estado atual visível
+próxima ação visível
+
+Em adultos com TDAH, meta-análises encontraram diferenças de magnitude moderada em medidas de memória de trabalho em comparação com controles, embora isso não signifique que todo indivíduo tenha o mesmo perfil. 
+
+Um descritivo adequado para seu framework seria:
+
+Externalização de estado: mover objetivos, etapas, regras e informações transitórias da memória de trabalho para uma representação externa persistente, reduzindo a quantidade de informação que precisa permanecer mentalmente ativa durante a execução.
+
+2. Memória prospectiva → externalizar “quando agir”
+
+Memória prospectiva responde:
+
+“Como vou lembrar de executar essa intenção depois?”
+
+Demanda:
+
+formar intenção
++
+reter intenção
++
+detectar momento correto
++
+recuperar ação
++
+executar
+
+Externalização:
+
+agenda
+alarme
+lembrete
+trigger contextual
+objeto colocado estrategicamente
+automação
+
+Um estudo experimental mostrou que timer e memo modificam os processos de ensaio e monitoramento envolvidos em tarefas prospectivas. 
+
+Em adultos com TDAH, há evidências de dificuldades específicas em tarefas de memória prospectiva dependentes de tempo, enquanto tarefas baseadas em eventos podem mostrar padrões diferentes. 
+
+Descritivo:
+
+Externalização da intenção: converter uma intenção futura em uma pista externa capaz de reapresentar a ação no momento relevante, reduzindo a necessidade de monitoramento mental contínuo.
+
+3. Planejamento → externalizar a sequência
+
+Demanda:
+
+“Qual caminho transforma este objetivo em resultado?”
+
+Processamento interno:
+
+objetivo
+→ decomposição
+→ dependências
+→ sequência
+→ recursos
+→ critérios de término
+
+Externalização:
+
+workflow
+checklist sequencial
+BPM
+roadmap
+árvore de dependências
+kanban
+runbook
+
+Em um estudo de memória prospectiva complexa com adultos com TDAH, a diferença mais expressiva apareceu justamente no planejamento da tarefa, e não como um déficit global em todos os componentes estudados. 
+
+Descritivo:
+
+Externalização do plano: representar fora da memória interna a decomposição, sequência, dependências e critérios da atividade, transformando planejamento abstrato em um caminho perceptível e executável.
+
+4. Organização e priorização → externalizar a escolha
+
+A demanda não é apenas lembrar tarefas. É decidir:
+
+o que existe?
+o que importa?
+o que vem primeiro?
+o que está bloqueado?
+o que posso ignorar agora?
+
+Uma representação externa pode transformar um conjunto indefinido de obrigações em:
+
+BACKLOG
+   ↓
+PRIORIDADE
+   ↓
+READY
+   ↓
+WIP = 1
+   ↓
+DONE
+
+Intervenções focadas em organização, gestão de tempo e planejamento têm mostrado melhorias funcionais em estudos com pessoas apresentando sintomas de TDAH, embora a força da evidência varie conforme população e desenho de estudo. 
+
+Descritivo:
+
+Externalização de prioridade: retirar da decisão repetitiva a necessidade de reavaliar continuamente todas as possibilidades e manter uma fila explícita de atenção.
+
+5. Tempo → externalizar o relógio cognitivo
+
+Demanda executiva:
+
+quanto tempo passou?
+quanto falta?
+quando começar?
+quando interromper?
+quando retornar?
+
+Controle:
+
+horário externo
+timer
+deadline visível
+timebox
+contagem regressiva
+marcos temporais
+
+Há evidências de dificuldades relacionadas a percepção e gestão temporal em grupos de adultos com TDAH, mas novamente isso deve ser tratado como possível vulnerabilidade, não característica obrigatória de uma pessoa. 
+
+Descritivo:
+
+Externalização temporal: tornar passagem do tempo, início, duração, prazo e momento de transição perceptíveis no ambiente, reduzindo a dependência de estimativa e monitoramento internos.
+
+6. Atenção e inibição → externalizar a regra de foco
+
+Aqui a relação é mais indireta.
+
+Um checklist ou quadro não “aumenta atenção” nem “corrige inibição”. Ele pode reduzir a quantidade de controle interno necessária.
+
+Em vez de:
+
+lembrar constantemente:
+"não faça B, permaneça em A"
+
+o ambiente passa a dizer:
+
+AGORA
+A
+DEPOIS
+B, C, D
+
+Meta-análises em adultos com TDAH encontram diferenças de grupo em atenção focada/sustentada e inibição, mas essas medidas não são uniformemente alteradas em todas as pessoas. 
+
+Descritivo:
+
+Externalização do foco: manter a meta corrente e as regras de seleção perceptualmente disponíveis, diminuindo a necessidade de reconstruir repetidamente “o que devo estar fazendo agora?”.
+
+7. Retomada após interrupção → externalizar contexto
+
+Este ponto é especialmente relevante para seu modelo de risco cognitivo.
+
+Uma interrupção pode produzir:
+
+interrupção
+↓
+contexto sai da memória de trabalho
+↓
+retorno
+↓
+reconstrução do estado
+↓
+custo cognitivo
+↓
+erro / atraso / abandono
+
+O controle externo seria:
+
+ONDE PAREI
+ÚLTIMA AÇÃO
+ESTADO ATUAL
+PRÓXIMA AÇÃO
+BLOQUEIO
+
+Descritivo:
+
+Externalização de contexto: persistir externamente o estado de uma atividade para que a retomada dependa menos da reconstrução pela memória interna.
+
+8. Metacognição → decidir quando externalizar
+
+Este é um ponto central que vale incorporar ao mapa.
+
+As pessoas não externalizam apenas quando “não conseguem lembrar”. Elas tomam decisões sobre se devem confiar na memória ou criar uma pista externa. Revisões indicam que essas decisões são fortemente relacionadas à metacognição — a avaliação que a pessoa faz de sua própria memória e esforço cognitivo. 
+
+Assim:
+
+METACOGNIÇÃO
+↓
+"Essa intenção pode se perder?"
+↓
+SIM
+↓
+EXTERNALIZAR
+↓
+alarme / checklist / calendário / trigger
+
+Isso sugere uma função operacional importante para o seu framework:
+
+Externalizar por regra, não apenas depois do erro.
+
+Onde isso entra exatamente no seu mapa
+
+Eu reestruturaria a imagem assim:
+
+01 PERFIL INDIVIDUAL
+Características, experiência, estado e repertório
+            ↓
+02 CAPACIDADES / VULNERABILIDADES
+Memória de trabalho
+atenção
+inibição
+planejamento
+flexibilidade
+memória prospectiva
+gestão temporal
+            ↓
+03 ATIVIDADE / PROJETO
+Objetivo, regras, sequência e critérios
+            ↓
+04 DEMANDAS EXECUTIVAS
+Manter
+lembrar
+priorizar
+planejar
+iniciar
+monitorar
+alternar
+inibir
+            ↓
+      ┌─────────────────────┐
+      │ CONTROLES COGNITIVOS│
+      │ EXTERNALIZADOS      │
+      │                     │
+      │ checklist           │
+      │ timer               │
+      │ lembrete            │
+      │ workflow            │
+      │ próximo passo       │
+      │ estado persistente  │
+      │ prioridade explícita│
+      └─────────────────────┘
+            ↓
+05 INTERAÇÃO
+Pessoa × tarefa × contexto × controles
+            ↓
+06 RISCO RESIDUAL
+probabilidade de omissão,
+erro, atraso ou ruptura
+            ↓
+07 EVENTO / IMPACTO
+
+Essa mudança é importante porque o controle não deveria aparecer apenas depois que o risco já existe. Parte da externalização pode ser incorporada ao desenho da tarefa antes da execução.
+
+E há uma ressalva importante: externalização também tem custo. Uma representação externa mal projetada pode aumentar, em vez de reduzir, a demanda — por exemplo, espalhar informações entre várias ferramentas ou criar representações incompatíveis. Estudos de cognição distribuída mostram justamente que o benefício depende da coordenação entre informação interna e externa.  Além disso, evidência recente mostra que depender de offloading pode prejudicar posteriormente o desempenho sem o lembrete em algumas tarefas de memória prospectiva; portanto, o objetivo operacional deve ser compensar a tarefa, não assumir que a ferramenta “treina” a função cognitiva subjacente. 
+
+A formulação mais defensável para o seu framework fica:
+
+Externalização cognitiva é uma estratégia de controle que transfere parte das demandas de memória, planejamento, monitoramento, organização e gestão temporal do processamento interno para representações e sinais externos. Seu objetivo não é presumir ou corrigir um déficit individual, mas reduzir a incompatibilidade entre a demanda da tarefa e a capacidade funcional disponível naquele contexto.
+
+Isso conecta diretamente função cognitiva → demanda executiva → vulnerabilidade observável → controle externo → risco residual → impacto, e é consistente com a lógica causal da imagem.
