@@ -16,7 +16,7 @@ export type CardPattern = "list" | "grid";
 
 export interface ItemTypeDef {
   type: ItemType;
-  /** URL segment: /loja/{segment} and /loja/{segment}/{slug} */
+  /** URL segment: /ferramentas/{segment} and /ferramentas/{segment}/{slug} */
   segment: string;
   label: string;
   plural: string;
@@ -45,5 +45,5 @@ export const typeDef = (type: ItemType): ItemTypeDef => BY_TYPE.get(type)!;
 export const typeBySegment = (segment: string): ItemTypeDef | undefined =>
   BY_SEGMENT.get(segment);
 export const itemHref = (item: { type: ItemType; slug: string }) =>
-  `/loja/${typeDef(item.type).segment}/${item.slug}/`;
-export const typeHref = (type: ItemType) => `/loja/${typeDef(type).segment}/`;
+  `/ferramentas/${typeDef(item.type).segment}/${item.slug}/`;
+export const typeHref = (type: ItemType) => `/ferramentas/${typeDef(type).segment}/`;

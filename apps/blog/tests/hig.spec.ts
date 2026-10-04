@@ -291,7 +291,7 @@ test.describe("gate UX-GOV-HIG-001", () => {
 
   test("AUD-HIG-06 tema escuro mantém contraste (amostra)", async ({ page }) => {
     await useTheme(page, "dark");
-    for (const route of ["/", "/blog/o-que-e-risco-cognitivo/", "/loja/", "/about/"]) {
+    for (const route of ["/", "/blog/o-que-e-risco-cognitivo/", "/ferramentas/", "/about/"]) {
       await page.goto(route, { waitUntil: "networkidle" });
       const axe = await new AxeBuilder({ page }).withRules(["color-contrast"]).analyze();
       expect(axe.violations.map((v) => `${route} ${v.id}×${v.nodes.length}`)).toEqual([]);

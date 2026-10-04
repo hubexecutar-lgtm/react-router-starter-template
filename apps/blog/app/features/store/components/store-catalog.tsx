@@ -19,7 +19,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 const ALL_TAB = "todos";
 
 /**
- * Store shell + catalog. One island for /loja and /loja/{type}; the route only decides
+ * Store shell + catalog. One island for /ferramentas and /ferramentas/{type}; the route only decides
  * `lockedType`. `?estado=carregando|erro` previews the LOADING/ERROR states (mock phase).
  */
 export function StoreCatalog({
@@ -79,7 +79,7 @@ export function StoreCatalog({
 
   const onTab = (value: string) => {
     if (lockedType) {
-      window.location.assign(value === ALL_TAB ? "/loja/" : typeHref(value as ItemType));
+      window.location.assign(value === ALL_TAB ? "/ferramentas/" : typeHref(value as ItemType));
       return;
     }
     setType(value === ALL_TAB ? null : (value as ItemType));
@@ -111,8 +111,8 @@ export function StoreCatalog({
   return (
     <div className="min-w-0">
       <StoreHeader
-        title={def ? def.plural : "Loja"}
-        description={def ? def.description : "Descubra recursos para apoiar sua execução."}
+        title={def ? def.plural : "Ferramentas cognitivas"}
+        description={def ? def.description : "Recursos para apoiar a execução do trabalho cognitivo."}
         query={q}
         onQuery={setQ}
         area={area}

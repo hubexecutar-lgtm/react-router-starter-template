@@ -60,7 +60,7 @@ export const ROUTES: HubEntry[] = [
   { id: "contact", title: "Contato", group: "Site", kind: "route", path: "/contact/", exposure: "public", addedAt: "2026-09-30", source: SRC },
   { id: "faq", title: "Perguntas frequentes", group: "Site", kind: "route", path: "/faq/", exposure: "public", addedAt: "2026-09-30", source: SRC },
   { id: "pricing", title: "Acesso e formatos", description: "URL preservada do template; conteúdo aberto e canais do banco editorial.", group: "Site", kind: "route", path: "/pricing/", exposure: "public", addedAt: "2026-09-30", source: SRC },
-  { id: "loja", title: "Loja", group: "Site", kind: "route", path: "/loja/", description: "Catálogo de skills, agentes, prompts, e-books, PDFs, ferramentas HTML, workbooks e assets (ADR-08). Categorias em /loja/:tipo/ e itens em /loja/:tipo/:slug/.", exposure: "public", addedAt: "2026-10-01", source: SRC },
+  { id: "ferramentas", title: "Ferramentas cognitivas", group: "Site", kind: "route", path: "/ferramentas/", description: "Ferramentas cognitivas: skills, agentes, prompts, e-books, PDFs, ferramentas HTML, workbooks e assets (ADR-14, substitui a Loja). Categorias em /ferramentas/:tipo/ e itens em /ferramentas/:tipo/:slug/; /loja/* responde 301.", exposure: "public", addedAt: "2026-10-04", source: SRC },
   { id: "privacy", title: "Privacidade", group: "Site", kind: "route", path: "/privacy/", exposure: "public", addedAt: "2026-09-30", source: SRC },
 
   // ---------------------------------------------------------------- Blog

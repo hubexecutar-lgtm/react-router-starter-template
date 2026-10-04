@@ -11,3 +11,6 @@
 /blog/post-4   /blog/gestao-do-risco-cognitivo/       301
 /blog/post-5/  /blog/framework-de-risco-cognitivo/    301
 /blog/post-5   /blog/framework-de-risco-cognitivo/    301
+# ADR-14 (LANC-001 RQ-103, DEC-U9): a Loja deixou de existir; o catálogo vive em /ferramentas.
+/loja    /ferramentas/         301
+/loja/*  /ferramentas/:splat   301

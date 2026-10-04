@@ -173,7 +173,7 @@ to `apps/blog/`.
 
 ### ADR-08: Loja (`/loja`) com dados de exemplo e marcadores de área (ADR-STORE-ROUTES-UI-001)
 
-- **Status:** Aceita — implementada
+- **Status:** Substituída pelo ADR-14 (a Loja deixou de existir; o catálogo vive em `/ferramentas`)
 - **Contexto:** A Loja foi construída no repositório original (`executar-23/Risco-cognitivo-blog`,
   branch `claude/trusting-gates-go053v`, commit `c3a4219`) e trazida para cá depois da migração.
   Decisão completa em `docs/adr/ADR-STORE-ROUTES-UI-001.md`; mapas e wireframes em
@@ -347,3 +347,21 @@ to `apps/blog/`.
     `--graph-*` (≥ 3:1, nos dois temas) e verifica o reduced-motion; `tests/surfaces.spec.ts` impede hex
     `--illu-*` fora de `global.css` e `color:` com `--illu-coral`/`--illu-blue-soft`.
   - O showroom `/admin/design-system/` mostra a camada de ilustração, o grafo e o motion.
+
+### ADR-14: Ferramentas cognitivas substituem a Loja (LANC-001, DEC-U9)
+
+- **Status:** Aceita — implementada no PR-J1 do LANC-001 (RQ-100, RQ-103). Substitui o ADR-08.
+- **Contexto:** No lançamento, o usuário decidiu que "a Loja não existe": a seção chama-se **Ferramentas
+  cognitivas** (DEC-U9, `docs/lancamento/LANC-001/requirements/01-DECISOES-E-AMBIGUIDADES.md`). O catálogo,
+  os componentes e os dados de exemplo do ADR-08 continuam úteis.
+- **Decisão:**
+  - Rotas `/ferramentas/` (índice), `/ferramentas/<tipo>/` e `/ferramentas/<tipo>/<slug>/`, pré-renderizadas a
+    partir de `app/features/store/data/paths.ts` (prerender, sitemap e gate HIG). O código continua em
+    `app/features/store/` (só URLs e rótulos mudaram).
+  - `/loja` e `/loja/*` respondem **301** para o caminho equivalente em `/ferramentas` (`public/_redirects`).
+  - Nenhum texto "Loja" nem de compra nas rotas de Ferramentas; o marcador de área antigo "Loja" chama-se
+    "Catálogo". Nav, hub (ADR-06, entrada `ferramentas`), `pages.ts` e `access.ts` apontam para `/ferramentas/`.
+  - Catálogo real (ferramentas piloto, Resultado) segue bloqueado (RQ-101, RQ-102) até o conteúdo existir.
+- **Consequências:**
+  - `tests/store.spec.ts` cobre as rotas novas, a ausência de "Loja" e os 301; `tests/content.spec.ts` impede
+    link interno para `/loja` e confere o destino dos redirecionamentos.
