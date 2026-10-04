@@ -6,10 +6,10 @@
 
 | Prioridade | READY | NEEDS_CONFIRMATION | BLOCKED | BACKLOG | DONE |
 |---|---|---|---|---|---|
-| P0 | 4 | 0 | 0 | 0 | 12 |
-| P1 | 7 | 0 | 0 | 0 | 19 |
-| P2 | 4 | 0 | 1 | 0 | 6 |
-| P3 | 4 | 0 | 2 | 1 | 0 |
+| P0 | 0 | 0 | 0 | 0 | 16 |
+| P1 | 1 | 0 | 0 | 0 | 25 |
+| P2 | 2 | 0 | 1 | 0 | 8 |
+| P3 | 3 | 0 | 2 | 1 | 1 |
 
 Total: 60 requisitos em 12 épicos.
 
@@ -36,7 +36,7 @@ Total: 60 requisitos em 12 épicos.
 
 | ID | Tipo | Prio | Status | Requisito | Critério de aceite | Depende | Fonte |
 |---|---|---|---|---|---|---|---|
-| RQ-020 | FR | P0 | READY | **Nav global no desktop (≥ 900px).** Links visíveis (Artigos · Mapa · Ferramentas · Sobre) e trilha de categorias inline; sem botão de menu. | Em 1280px os links estão visíveis e o drawer não existe no DOM acessível | RQ-010, RQ-050 | DEC-U1; FT-04; CF-12; Q1; DEC-U6 |
+| RQ-020 | FR | P0 | DONE | **Nav global no desktop (≥ 900px).** Links visíveis (Artigos · Mapa · Ferramentas · Sobre) e trilha de categorias inline; sem botão de menu. | Em 1280px os links estão visíveis e o drawer não existe no DOM acessível | RQ-010, RQ-050 | DEC-U1; FT-04; CF-12; Q1; DEC-U6 |
 | RQ-021 | FR | P0 | DONE | **Drawer e barra inferior no mobile (< 900px).** Botão de menu abre drawer (largura min(84vw,360px)); barra inferior com 3 itens (Início · Mapa · Ferramentas). | Em 390px: barra inferior com 3 destinos; drawer abre e fecha por toque | RQ-010, RQ-050 | DEC-U1; FT-04; CF-12; Q1; DEC-U6 |
 | RQ-022 | FR | P1 | DONE | **Chrome que esconde junto no scroll.** Nav superior e barra inferior escondem juntas ao rolar para baixo e voltam ao rolar para cima; ficam visíveis com o drawer aberto e quando o foco do teclado está nelas. | Teste Playwright: rolar 600px esconde, rolar -100px mostra; Tab na nav mostra | RQ-020, RQ-021 | intake/README.md (v6 item 1); DEC-U1 |
 | RQ-023 | NFR | P0 | DONE | **Drawer acessível.** aria-expanded no botão, foco preso, Esc fecha, foco volta ao botão, fundo inert. | hig.spec.ts sem P0/P1; teste de teclado do drawer | RQ-021 | ADR-M03; UX-GOV-HIG-001 |
@@ -69,7 +69,7 @@ Total: 60 requisitos em 12 épicos.
 
 | ID | Tipo | Prio | Status | Requisito | Critério de aceite | Depende | Fonte |
 |---|---|---|---|---|---|---|---|
-| RQ-050 | FR | P0 | READY | **Menu principal Artigos · Mapa · Ferramentas · Sobre.** Rótulos novos sobre URLs mantidas: Artigos → /blog, Mapa → /mapas, Sobre → /about; Ferramentas → /ferramentas (Ferramentas cognitivas, substitui a Loja, RQ-103). | Menu igual no desktop, no drawer e no rodapé-diretório | — | CF-12; CF-13; Q1; Q3; DEC-U6; DEC-U8 |
+| RQ-050 | FR | P0 | DONE | **Menu principal Artigos · Mapa · Ferramentas · Sobre.** Rótulos novos sobre URLs mantidas: Artigos → /blog, Mapa → /mapas, Sobre → /about; Ferramentas → /ferramentas (Ferramentas cognitivas, substitui a Loja, RQ-103). | Menu igual no desktop, no drawer e no rodapé-diretório | — | CF-12; CF-13; Q1; Q3; DEC-U6; DEC-U8 |
 | RQ-051 | RULE | P0 | DONE | **Toda rota nova no hub e no sitemap.** Rotas novas (/mapas/explorar, /mapas/explorar/:fatorId, /mapas/personalizar, /ferramentas) entram em app/data/routes.ts. | npm run routes:check verde | — | ADR-06 |
 | RQ-052 | FR | P1 | DONE | **Quatro perguntas em toda página.** Onde estou (eyebrow ou breadcrumb), o que significa (lead), por que importa (seção) e próxima ação (CTA primário). | hig.spec verifica eyebrow, h1, lead e 1 CTA primário por região | RQ-020 | Índex de rotas (regra transversal) |
 | RQ-053 | RULE | P1 | DONE | **Escada de CTA e 1 CTA primário por região.** CTA 0 continuar lendo → 1 exemplo → 2 explorar o mapa → 3 usar a ferramenta → 4 salvar resultado → 5 guia → 6 solução. | Nenhuma região com 2 botões primários | — | Índex de rotas §7; neurodesign regra 01 |
@@ -90,17 +90,17 @@ Total: 60 requisitos em 12 épicos.
 
 | ID | Tipo | Prio | Status | Requisito | Critério de aceite | Depende | Fonte |
 |---|---|---|---|---|---|---|---|
-| RQ-070 | FR | P1 | READY | **Explorar: grafo radial focus + context.** /mapas/explorar abre com 1 nó focal e no máximo 8 nós visíveis; tocar um nó seleciona, destaca arestas, esmaece o resto, recentra e expande os vizinhos. | Teste conta ≤ 8 nós na carga; toque recentra | RQ-062, RQ-079 | RC-MOBILE SCR-02; AC-004; INT-002 |
-| RQ-071 | FR | P1 | READY | **Bottom sheet de detalhe.** Snap recolhido/médio/expandido; abas Causas · Impactos · Soluções · Evidências; arrastar e botões; Esc fecha no desktop. | Operável só por toque e só por teclado | RQ-070 | RC-MOBILE SCR-03; INT-005 |
-| RQ-072 | FR | P1 | READY | **Rota de detalhe do fator.** /mapas/explorar/:fatorId compartilhável; voltar ao mapa preserva a seleção. | Abrir fator e voltar só por toque | RQ-070 | RC-MOBILE ROUTE-FACTOR; AC-002; INT-003 |
-| RQ-073 | NFR | P0 | READY | **Alternativa em lista.** Aba Lista com o mesmo conteúdo do grafo (nós, relações em texto), navegável por teclado e leitor de tela. | Toda aresta do grafo aparece como frase na lista | RQ-070 | AC-006; accessibility.graph |
-| RQ-074 | FR | P2 | READY | **Filtros por tipo de nó.** Chips por tipo da cadeia canônica (não por estilo de vida/saúde). | Filtro reduz nós sem quebrar o foco | RQ-070 | RC-MOBILE filters; CF-06 |
-| RQ-075 | NFR | P1 | READY | **Nada depende de hover; pan/zoom são secundários.** Toda função essencial por toque e teclado; pan e zoom complementam. | Teste sem hover cobre todos os fluxos | RQ-070 | INT-001; INT-004 |
-| RQ-076 | NFR | P1 | READY | **Semântica visual além da cor.** Tipo de nó por forma + rótulo (● ◆ ■ ▲ ! ✦ ⬢ ✓ ○); tipo de aresta por traço (sólida/tracejada) + rótulo textual. | Em escala de cinza os tipos continuam distinguíveis | RQ-011, RQ-012 | Causal Knowledge Graph; accessibility.color |
-| RQ-077 | NFR | P0 | READY | **Reflow em 320px.** Mapa e sheet funcionam em 320px sem rolagem horizontal da página. | hig.spec reflow verde em /mapas/explorar | RQ-070 | AC-001 |
-| RQ-078 | FR | P2 | READY | **Modo 'Por quê?'.** A partir de um nó, mostra a cadeia de causas acima e as compensações abaixo. | Cadeia exibida também em texto | RQ-070 | Causal Knowledge Graph |
-| RQ-079 | NFR | P1 | READY | **Stack do mapa carregada só na rota.** React Flow + Dagre client-only e em lazy load em /mapas/explorar; Cytoscape adiado. | Bundle das outras rotas sem crescimento; INP ≤ 200ms no mapa | — | CF-08 |
-| RQ-080 | FR | P3 | READY | **Modos Problemas, Soluções, Evidências.** Presets de filtro sobre o mesmo grafo. | — | RQ-074 | Causal Knowledge Graph (4 modos) |
+| RQ-070 | FR | P1 | DONE | **Explorar: grafo radial focus + context.** /mapas/explorar abre com 1 nó focal e no máximo 8 nós visíveis; tocar um nó seleciona, destaca arestas, esmaece o resto, recentra e expande os vizinhos. | Teste conta ≤ 8 nós na carga; toque recentra | RQ-062, RQ-079 | RC-MOBILE SCR-02; AC-004; INT-002 |
+| RQ-071 | FR | P1 | DONE | **Bottom sheet de detalhe.** Snap recolhido/médio/expandido; abas Causas · Impactos · Soluções · Evidências; arrastar e botões; Esc fecha no desktop. | Operável só por toque e só por teclado | RQ-070 | RC-MOBILE SCR-03; INT-005 |
+| RQ-072 | FR | P1 | DONE | **Rota de detalhe do fator.** /mapas/explorar/:fatorId compartilhável; voltar ao mapa preserva a seleção. | Abrir fator e voltar só por toque | RQ-070 | RC-MOBILE ROUTE-FACTOR; AC-002; INT-003 |
+| RQ-073 | NFR | P0 | DONE | **Alternativa em lista.** Aba Lista com o mesmo conteúdo do grafo (nós, relações em texto), navegável por teclado e leitor de tela. | Toda aresta do grafo aparece como frase na lista | RQ-070 | AC-006; accessibility.graph |
+| RQ-074 | FR | P2 | DONE | **Filtros por tipo de nó.** Chips por tipo da cadeia canônica (não por estilo de vida/saúde). | Filtro reduz nós sem quebrar o foco | RQ-070 | RC-MOBILE filters; CF-06 |
+| RQ-075 | NFR | P1 | DONE | **Nada depende de hover; pan/zoom são secundários.** Toda função essencial por toque e teclado; pan e zoom complementam. | Teste sem hover cobre todos os fluxos | RQ-070 | INT-001; INT-004 |
+| RQ-076 | NFR | P1 | DONE | **Semântica visual além da cor.** Tipo de nó por forma + rótulo (● ◆ ■ ▲ ! ✦ ⬢ ✓ ○); tipo de aresta por traço (sólida/tracejada) + rótulo textual. | Em escala de cinza os tipos continuam distinguíveis | RQ-011, RQ-012 | Causal Knowledge Graph; accessibility.color |
+| RQ-077 | NFR | P0 | DONE | **Reflow em 320px.** Mapa e sheet funcionam em 320px sem rolagem horizontal da página. | hig.spec reflow verde em /mapas/explorar | RQ-070 | AC-001 |
+| RQ-078 | FR | P2 | DONE | **Modo 'Por quê?'.** A partir de um nó, mostra a cadeia de causas acima e as compensações abaixo. | Cadeia exibida também em texto | RQ-070 | Causal Knowledge Graph |
+| RQ-079 | NFR | P1 | DONE | **Stack do mapa carregada só na rota.** React Flow + Dagre client-only e em lazy load em /mapas/explorar; Cytoscape adiado. | Bundle das outras rotas sem crescimento; INP ≤ 200ms no mapa | — | CF-08 |
+| RQ-080 | FR | P3 | DONE | **Modos Problemas, Soluções, Evidências.** Presets de filtro sobre o mesmo grafo. | — | RQ-074 | Causal Knowledge Graph (4 modos) |
 | RQ-081 | FR | P3 | BACKLOG | **Simulação 'e se…' (estilo LOOPY).** Fora desta onda; só com modelo e dados que sustentem os números. | — | RQ-063 | Causal Loop Diagram |
 
 ## EP-09 — Personalizar (PR-I)
