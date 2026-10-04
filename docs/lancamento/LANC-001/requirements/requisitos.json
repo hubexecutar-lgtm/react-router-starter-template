@@ -792,12 +792,13 @@
       "titulo": "Ferramentas cognitivas: índice em /ferramentas",
       "descricao": "/ferramentas lista as ferramentas cognitivas (scanner, checklists, avaliações, ferramentas HTML, workbooks…) reaproveitando o catálogo e os componentes de app/features/store; rótulos e textos falam em ferramentas, nunca em loja ou compra.",
       "prioridade": "P2",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [
         "RQ-103"
       ],
       "fonte": "DEC-U9; GAP-06 (fechada); ADR-08",
-      "criterio_aceite": "/ferramentas e /ferramentas/:tipo/:slug renderizam o catálogo; nenhum texto 'Loja' visível; tests/store.spec.ts migrado e verde"
+      "criterio_aceite": "/ferramentas e /ferramentas/:tipo/:slug renderizam o catálogo; nenhum texto 'Loja' visível; tests/store.spec.ts migrado e verde",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/25"
     },
     {
       "id": "RQ-101",
@@ -834,12 +835,13 @@
       "titulo": "Retirar a Loja: /loja vira /ferramentas",
       "descricao": "A Loja deixa de existir (decisão do usuário). Rotas /loja, /loja/:tipo e /loja/:tipo/:slug passam a /ferramentas/… com redirect 301 em public/_redirects; nav, hub (ADR-06), sitemap e prerender atualizados; ADR-08 marcado como substituído por um ADR novo de Ferramentas cognitivas.",
       "prioridade": "P1",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [
         "RQ-050"
       ],
       "fonte": "DEC-U9; DEC-U8 (URLs mantidas, exceto a Loja); ADR-08",
-      "criterio_aceite": "GET /loja/ e /loja/:tipo/:slug/ respondem 301 para o caminho equivalente em /ferramentas; routes:check verde; nenhum link interno para /loja"
+      "criterio_aceite": "GET /loja/ e /loja/:tipo/:slug/ respondem 301 para o caminho equivalente em /ferramentas; routes:check verde; nenhum link interno para /loja",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/25"
     },
     {
       "id": "RQ-110",

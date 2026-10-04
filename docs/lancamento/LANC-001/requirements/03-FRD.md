@@ -7,8 +7,8 @@
 | Prioridade | READY | NEEDS_CONFIRMATION | BLOCKED | BACKLOG | DONE |
 |---|---|---|---|---|---|
 | P0 | 10 | 0 | 0 | 0 | 6 |
-| P1 | 21 | 0 | 0 | 0 | 5 |
-| P2 | 7 | 0 | 1 | 0 | 3 |
+| P1 | 20 | 0 | 0 | 0 | 6 |
+| P2 | 6 | 0 | 1 | 0 | 4 |
 | P3 | 4 | 0 | 2 | 1 | 0 |
 
 Total: 60 requisitos em 12 épicos.
@@ -113,10 +113,10 @@ Total: 60 requisitos em 12 épicos.
 
 | ID | Tipo | Prio | Status | Requisito | Critério de aceite | Depende | Fonte |
 |---|---|---|---|---|---|---|---|
-| RQ-100 | FR | P2 | READY | **Ferramentas cognitivas: índice em /ferramentas.** /ferramentas lista as ferramentas cognitivas (scanner, checklists, avaliações, ferramentas HTML, workbooks…) reaproveitando o catálogo e os componentes de app/features/store; rótulos e textos falam em ferramentas, nunca em loja ou compra. | /ferramentas e /ferramentas/:tipo/:slug renderizam o catálogo; nenhum texto 'Loja' visível; tests/store.spec.ts migrado e verde | RQ-103 | DEC-U9; GAP-06 (fechada); ADR-08 |
+| RQ-100 | FR | P2 | DONE | **Ferramentas cognitivas: índice em /ferramentas.** /ferramentas lista as ferramentas cognitivas (scanner, checklists, avaliações, ferramentas HTML, workbooks…) reaproveitando o catálogo e os componentes de app/features/store; rótulos e textos falam em ferramentas, nunca em loja ou compra. | /ferramentas e /ferramentas/:tipo/:slug renderizam o catálogo; nenhum texto 'Loja' visível; tests/store.spec.ts migrado e verde | RQ-103 | DEC-U9; GAP-06 (fechada); ADR-08 |
 | RQ-101 | FR | P3 | BLOCKED | **Ferramenta piloto: interrupções do processo.** 5–8 perguntas → resultado (exposição, interrupções, recuperação de contexto) → 3 ações + 1 artigo + 1 ferramenta + próximo passo. | — | RQ-100 | Índex de rotas §4; GAP-02 |
 | RQ-102 | FR | P3 | BLOCKED | **Página de Resultado.** /resultado/:id com explicação e próximos passos. | — | RQ-101 | GAP-07 |
-| RQ-103 | FR | P1 | READY | **Retirar a Loja: /loja vira /ferramentas.** A Loja deixa de existir (decisão do usuário). Rotas /loja, /loja/:tipo e /loja/:tipo/:slug passam a /ferramentas/… com redirect 301 em public/_redirects; nav, hub (ADR-06), sitemap e prerender atualizados; ADR-08 marcado como substituído por um ADR novo de Ferramentas cognitivas. | GET /loja/ e /loja/:tipo/:slug/ respondem 301 para o caminho equivalente em /ferramentas; routes:check verde; nenhum link interno para /loja | RQ-050 | DEC-U9; DEC-U8 (URLs mantidas, exceto a Loja); ADR-08 |
+| RQ-103 | FR | P1 | DONE | **Retirar a Loja: /loja vira /ferramentas.** A Loja deixa de existir (decisão do usuário). Rotas /loja, /loja/:tipo e /loja/:tipo/:slug passam a /ferramentas/… com redirect 301 em public/_redirects; nav, hub (ADR-06), sitemap e prerender atualizados; ADR-08 marcado como substituído por um ADR novo de Ferramentas cognitivas. | GET /loja/ e /loja/:tipo/:slug/ respondem 301 para o caminho equivalente em /ferramentas; routes:check verde; nenhum link interno para /loja | RQ-050 | DEC-U9; DEC-U8 (URLs mantidas, exceto a Loja); ADR-08 |
 
 ## EP-11 — Medição e performance (PR-K)
 
