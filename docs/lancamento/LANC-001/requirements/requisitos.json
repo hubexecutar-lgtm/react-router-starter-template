@@ -132,7 +132,7 @@
       "depende_de": [],
       "fonte": "DEC-U1; DEC-U2; DEC-U3; CF-01; CF-03",
       "criterio_aceite": "ADR-13 com status Aceita, citado por PR-B a PR-H",
-      "entregue_em": "PENDING_PR",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/28",
       "historico": [
         {
           "status": "DONE",
@@ -258,7 +258,7 @@
       ],
       "fonte": "DEC-U1; FT-04; CF-12; Q1; DEC-U6",
       "criterio_aceite": "Em 390px: barra inferior com 3 destinos; drawer abre e fecha por toque",
-      "entregue_em": "PENDING_PR",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/28",
       "historico": [
         {
           "status": "DONE",
@@ -283,7 +283,7 @@
       ],
       "fonte": "intake/README.md (v6 item 1); DEC-U1",
       "criterio_aceite": "Teste Playwright: rolar 600px esconde, rolar -100px mostra; Tab na nav mostra",
-      "entregue_em": "PENDING_PR",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/28",
       "historico": [
         {
           "status": "DONE",
@@ -307,7 +307,7 @@
       ],
       "fonte": "ADR-M03; UX-GOV-HIG-001",
       "criterio_aceite": "hig.spec.ts sem P0/P1; teste de teclado do drawer",
-      "entregue_em": "PENDING_PR",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/28",
       "historico": [
         {
           "status": "DONE",
@@ -331,7 +331,7 @@
       ],
       "fonte": "DEC-U1; FT-02",
       "criterio_aceite": "LCP sem regressão em relação a main",
-      "entregue_em": "PENDING_PR",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/28",
       "historico": [
         {
           "status": "DONE",
@@ -355,7 +355,7 @@
       ],
       "fonte": "RC-MOBILE-CAUSAL-MAP-UI-001 (touch.minimum_target)",
       "criterio_aceite": "Teste mede bounding box ≥ 44px",
-      "entregue_em": "PENDING_PR",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/28",
       "historico": [
         {
           "status": "DONE",
@@ -379,7 +379,7 @@
       ],
       "fonte": "FT-01; Índex de rotas §10",
       "criterio_aceite": "Sem setInterval/autoplay; setas e Tab percorrem os itens",
-      "entregue_em": "PENDING_PR",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/28",
       "historico": [
         {
           "status": "DONE",
@@ -878,7 +878,7 @@
       ],
       "fonte": "DEC-U9; GAP-06 (fechada); ADR-08",
       "criterio_aceite": "/ferramentas e /ferramentas/:tipo/:slug renderizam o catálogo; nenhum texto 'Loja' visível; tests/store.spec.ts migrado e verde",
-      "entregue_em": "PENDING_PR",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/28",
       "historico": [
         {
           "status": "DONE",
@@ -930,7 +930,7 @@
       ],
       "fonte": "DEC-U9; DEC-U8 (URLs mantidas, exceto a Loja); ADR-08",
       "criterio_aceite": "GET /loja/ e /loja/:tipo/:slug/ respondem 301 para o caminho equivalente em /ferramentas; routes:check verde; nenhum link interno para /loja",
-      "entregue_em": "PENDING_PR",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/28",
       "historico": [
         {
           "status": "DONE",
