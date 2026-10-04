@@ -401,7 +401,7 @@
       "depende_de": [],
       "fonte": "FT-05; FT-06; ADR-12",
       "criterio_aceite": "manifest com 6 entradas novas; cada uso tem alt; peso ≤ 250 KB por variante",
-      "entregue_em": "PENDING_PR"
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/29"
     },
     {
       "id": "RQ-031",
@@ -414,7 +414,7 @@
       "depende_de": [],
       "fonte": "FT-06",
       "criterio_aceite": "Nenhum arquivo REF_* em public/",
-      "entregue_em": "PENDING_PR"
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/29"
     },
     {
       "id": "RQ-032",
@@ -429,7 +429,7 @@
       ],
       "fonte": "DEC-U1; CF-11; Q2; DEC-U7",
       "criterio_aceite": "Teste falha se algum artigo publicado não renderizar imagem; <picture> com 2 fontes; reflow 320px verde",
-      "entregue_em": "PENDING_PR"
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/29"
     },
     {
       "id": "RQ-033",
@@ -444,7 +444,7 @@
       ],
       "fonte": "RQ-110",
       "criterio_aceite": "CLS ≤ 0,1 nas rotas com imagem",
-      "entregue_em": "PENDING_PR"
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/29"
     },
     {
       "id": "RQ-040",
@@ -460,7 +460,7 @@
       ],
       "fonte": "CF-14; Q7; RC-LP-001; DEC-U12",
       "criterio_aceite": "Texto idêntico ao canônico (teste compara parágrafos); hig.spec verde",
-      "entregue_em": "PENDING_PR"
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/29"
     },
     {
       "id": "RQ-041",
@@ -475,7 +475,7 @@
       ],
       "fonte": "FT-05; Q7; DEC-U12",
       "criterio_aceite": "4 rotas /blog/:slug novas no hub (ADR-06) e no sitemap",
-      "entregue_em": "PENDING_PR",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/29",
       "nota": "Sobre o Stories (DEC-U14): rotas /artigos/:slug/ (não /blog/:slug)."
     },
     {
@@ -491,7 +491,7 @@
       ],
       "fonte": "RC-SRC-001",
       "criterio_aceite": "Cada fonte com link funcionando",
-      "entregue_em": "PENDING_PR",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/29",
       "nota": "O RC-SRC-001 tem 11 fontes (não 12); listadas em /fontes/ (o antigo /evidencias saiu no reset)."
     },
     {
@@ -505,7 +505,7 @@
       "depende_de": [],
       "fonte": "CF-15; RC-EDITORIAL-PACK-001 README",
       "criterio_aceite": "Revisão editorial no PR; nenhum texto atribui o conceito a ISO/W3C",
-      "entregue_em": "PENDING_PR"
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/29"
     },
     {
       "id": "RQ-044",
@@ -520,7 +520,7 @@
       ],
       "fonte": "Índex de rotas §3 e §7",
       "criterio_aceite": "Todo artigo tem exatamente 1 CTA primário no bloco final",
-      "entregue_em": "PENDING_PR"
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/29"
     },
     {
       "id": "RQ-045",
@@ -535,7 +535,7 @@
       ],
       "fonte": "FT-08; Índex de rotas §12",
       "criterio_aceite": "Rich Results Test sem erro em 1 artigo de amostra",
-      "entregue_em": "PENDING_PR"
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/29"
     },
     {
       "id": "RQ-046",
@@ -548,7 +548,7 @@
       "depende_de": [],
       "fonte": "RC-LP-001",
       "criterio_aceite": "Todo artigo canônico tem pilar",
-      "entregue_em": "PENDING_PR",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/29",
       "nota": "/temas saiu no reset; o pilar mapeia para o artigo canônico do pilar e para os nós do grafo (app/data/article-meta.ts)."
     },
     {
@@ -575,7 +575,7 @@
       "depende_de": [],
       "fonte": "ADR-06",
       "criterio_aceite": "npm run routes:check verde",
-      "entregue_em": "PENDING_PR"
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/29"
     },
     {
       "id": "RQ-052",
@@ -590,7 +590,7 @@
       ],
       "fonte": "Índex de rotas (regra transversal)",
       "criterio_aceite": "hig.spec verifica eyebrow, h1, lead e 1 CTA primário por região",
-      "entregue_em": "PENDING_PR",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/29",
       "nota": "Exceção: a listagem /artigos/ segue a geometria do handoff Stories (ADR-18)."
     },
     {
@@ -604,7 +604,7 @@
       "depende_de": [],
       "fonte": "Índex de rotas §7; neurodesign regra 01",
       "criterio_aceite": "Nenhuma região com 2 botões primários",
-      "entregue_em": "PENDING_PR"
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/29"
     },
     {
       "id": "RQ-054",
@@ -619,7 +619,7 @@
       ],
       "fonte": "Índex de rotas §2",
       "criterio_aceite": "Chips filtram a lista e são links compartilháveis",
-      "entregue_em": "PENDING_PR"
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/29"
     },
     {
       "id": "RQ-060",
