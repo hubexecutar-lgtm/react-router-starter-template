@@ -1,6 +1,6 @@
 # HIG-WEB-AUDIT — apps/blog
 
-Gerado por `scripts/hig-audit.mjs` em 2026-10-03. Regra: **UX-GOV-HIG-001** (`docs/governance/UX-GOV-HIG-001.md`,
+Gerado por `scripts/hig-audit.mjs` em 2026-10-04. Regra: **UX-GOV-HIG-001** (`docs/governance/UX-GOV-HIG-001.md`,
 ADR-M03). Gate automatizado: `tests/hig.spec.ts` (axe WCAG 2.0/2.1/2.2 A+AA, títulos, landmarks, alvos ≥ 24 px,
 reflow 320 px, medida ≤ 75 caracteres, sem prosa mono, `alt`, halftone fora do texto, foco visível) em
 47 rotas, a 1440, 390 e 320 px, mais amostra no tema escuro.
@@ -54,7 +54,7 @@ reflow 320 px, medida ≤ 75 caracteres, sem prosa mono, `alt`, halftone fora do
 
 ## Rotas cobertas
 
-`/` · `/about/` · `/admin/` · `/admin/design-system/` · `/admin/handoff/` · `/admin/relatorio-exemplo/` · `/admin/rotas/` · `/blog/` · `/blog/controles-cognitivos/` · `/blog/do-risco-cognitivo-a-execucao-assistida/` · `/blog/eventos-de-risco-cognitivo/` · `/blog/exposicao-cognitiva/` · `/blog/fatores-de-risco-cognitivo/` · `/blog/framework-de-risco-cognitivo/` · `/blog/gestao-do-risco-cognitivo/` · `/blog/indicadores-de-risco-cognitivo/` · `/blog/o-que-e-risco-cognitivo/` · `/buscar/` · `/contact/` · `/evidencias/` · `/faq/` · `/guias/` · `/login/` · `/loja/` · `/loja/agentes/` · `/loja/assets/` · `/loja/ebooks/` · `/loja/html/` · `/loja/pdfs/` · `/loja/prompts/` · `/loja/skills/` · `/loja/skills/skill-001/` · `/loja/workbooks/` · `/mapas/` · `/pricing/` · `/privacy/` · `/rota-inexistente-hig/` · `/signup/` · `/temas/` · `/temas/controles-cognitivos/` · `/temas/eventos-de-risco-cognitivo/` · `/temas/exposicao-cognitiva/` · `/temas/fatores-de-risco-cognitivo/` · `/temas/framework-de-risco-cognitivo/` · `/temas/gestao-do-risco-cognitivo/` · `/temas/indicadores-de-risco-cognitivo/` · `/temas/risco-cognitivo/`
+`/` · `/about/` · `/admin/` · `/admin/design-system/` · `/admin/handoff/` · `/admin/relatorio-exemplo/` · `/admin/rotas/` · `/blog/` · `/blog/controles-cognitivos/` · `/blog/do-risco-cognitivo-a-execucao-assistida/` · `/blog/eventos-de-risco-cognitivo/` · `/blog/exposicao-cognitiva/` · `/blog/fatores-de-risco-cognitivo/` · `/blog/framework-de-risco-cognitivo/` · `/blog/gestao-do-risco-cognitivo/` · `/blog/indicadores-de-risco-cognitivo/` · `/blog/o-que-e-risco-cognitivo/` · `/buscar/` · `/contact/` · `/evidencias/` · `/faq/` · `/ferramentas/` · `/ferramentas/agentes/` · `/ferramentas/assets/` · `/ferramentas/ebooks/` · `/ferramentas/html/` · `/ferramentas/pdfs/` · `/ferramentas/prompts/` · `/ferramentas/skills/` · `/ferramentas/skills/skill-001/` · `/ferramentas/workbooks/` · `/guias/` · `/login/` · `/mapas/` · `/pricing/` · `/privacy/` · `/rota-inexistente-hig/` · `/signup/` · `/temas/` · `/temas/controles-cognitivos/` · `/temas/eventos-de-risco-cognitivo/` · `/temas/exposicao-cognitiva/` · `/temas/fatores-de-risco-cognitivo/` · `/temas/framework-de-risco-cognitivo/` · `/temas/gestao-do-risco-cognitivo/` · `/temas/indicadores-de-risco-cognitivo/` · `/temas/risco-cognitivo/`
 
 O detalhe completo (todas as 846 verificações automatizadas, inclusive PASS) está em
 `HIG-WEB-AUDIT.json`. Para atualizar: `HIG_AUDIT=1 npx playwright test tests/hig.spec.ts && node scripts/hig-audit.mjs`.
