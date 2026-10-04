@@ -11,6 +11,7 @@ import { LoadMore } from "./LoadMore";
 import { StoriesToolbar, type SortKey } from "./StoriesToolbar";
 import { StoryGrid } from "./StoryGrid";
 
+import { PROBLEMS, type ProblemId } from "@/data/article-meta";
 import type { StoryView } from "@/lib/articles";
 
 const FIRST_BATCH = 16; // destaque + 3 empilhadas + 12 na grade (lote inicial da referência)
@@ -29,7 +30,16 @@ function sortStories(list: StoryView[], sort: SortKey) {
 	return out.sort((a, b) => byDate(b, a) || tie(a, b));
 }
 
-export function StoriesHome({ stories, title = "Artigos" }: { stories: StoryView[]; title?: string }) {
+export function StoriesHome({
+	stories,
+	title = "Artigos",
+	problems = false,
+}: {
+	stories: StoryView[];
+	title?: string;
+	/** Mostra os chips de problema (RQ-054); a página de fixtures não usa. */
+	problems?: boolean;
+}) {
 	const [params, setParams] = useSearchParams();
 	const [visible, setVisible] = useState(FIRST_BATCH);
 
@@ -43,9 +53,23 @@ export function StoriesHome({ stories, title = "Artigos" }: { stories: StoryView
 	const asked = params.get("ordem") as SortKey | null;
 	const sort = asked && sorts.includes(asked) ? asked : defaultSort;
 
+	const askedProblem = params.get("problema") ?? "";
+	const problem = (PROBLEMS.some((p) => p.id === askedProblem) ? askedProblem : "") as ProblemId | "";
+	const problemHref = (id: ProblemId | "") => {
+		const next = new URLSearchParams(params);
+		if (id) next.set("problema", id);
+		else next.delete("problema");
+		const q = next.toString();
+		return q ? `?${q}` : "?";
+	};
+
 	const shown = useMemo(
-		() => sortStories(active ? stories.filter((s) => s.category === active) : stories, sort),
-		[stories, active, sort],
+		() =>
+			sortStories(
+				stories.filter((s) => (!active || s.category === active) && (!problem || s.problems.includes(problem))),
+				sort,
+			),
+		[stories, active, problem, sort],
 	);
 	const [featured, ...rest] = shown;
 	const stack = rest.slice(0, 3);
@@ -71,6 +95,8 @@ export function StoriesHome({ stories, title = "Artigos" }: { stories: StoryView
 					sorts={sorts}
 					onCategory={(c) => setParam("categoria", c, "")}
 					onSort={(k) => setParam("ordem", k, defaultSort)}
+					problem={problem}
+					problemHref={problems ? problemHref : undefined}
 				/>
 			</div>
 			<div className="mt-16" aria-live="polite">
@@ -89,7 +115,7 @@ export function StoriesHome({ stories, title = "Artigos" }: { stories: StoryView
 						)}
 					</>
 				) : (
-					<p className="stories-body text-muted-foreground">Nenhum artigo nesta categoria.</p>
+					<p className="stories-body text-muted-foreground">Nenhum artigo neste filtro.</p>
 				)}
 			</div>
 		</div>

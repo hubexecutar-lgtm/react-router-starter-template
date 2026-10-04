@@ -18,9 +18,9 @@ test.describe("desktop ≥ 900px (RQ-020)", () => {
   test("menu links and the pillar trail are visible; no menu button nor drawer", async ({ page }) => {
     await page.goto("/");
     const nav = page.getByRole("navigation", { name: "Principal", exact: true });
-    for (const label of ["Artigos", "Ferramentas"]) await expect(nav.getByRole("link", { name: label, exact: true })).toBeVisible();
-    const trail = page.getByRole("navigation", { name: "Pilares" });
-    for (const label of ["Riscos cognitivos"]) {
+    for (const label of ["Artigos", "Ferramentas", "Sobre"]) await expect(nav.getByRole("link", { name: label, exact: true })).toBeVisible();
+    const trail = page.getByRole("navigation", { name: "Pilares", exact: true });
+    for (const label of ["Riscos Cognitivos", "Processos Neuroadaptativos", "Ferramentas e Soluções"]) {
       await expect(trail.getByRole("link", { name: label })).toBeVisible();
     }
     await expect(page.locator("[data-menu-toggle]")).toBeHidden();
@@ -55,7 +55,7 @@ test.describe("mobile < 900px (RQ-021, RQ-023, RQ-025)", () => {
     await expect(page.locator("[data-menu-toggle]")).toHaveAttribute("aria-expanded", "true");
     const [panel] = await box(page, "#site-menu");
     expect(Math.round(panel.width)).toBe(Math.round(Math.min(0.84 * MOBILE.width, 360)));
-    for (const label of ["Artigos", "Ferramentas", "Prisma de execução"]) {
+    for (const label of ["Início", "Artigos", "Ferramentas", "Sobre", "Fontes", "Prisma de execução"]) {
       await expect(dialog.getByRole("link", { name: label, exact: true })).toBeVisible();
     }
     for (const r of await box(page, "#site-menu a, #site-menu button")) expect(Math.min(r.width, r.height)).toBeGreaterThanOrEqual(44);

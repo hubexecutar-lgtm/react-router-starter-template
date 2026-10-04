@@ -5,7 +5,8 @@ import type { ComponentType } from "react";
 
 import { z } from "zod";
 
-import { ARTICLE_MEDIA, type Media } from "@/data/article-media";
+import { ARTICLE_MEDIA, PILLAR_MEDIA, type ArtDirected, type Media, type Pillar } from "@/data/article-media";
+import { ARTICLE_META, type NextStep, type ProblemId } from "@/data/article-meta";
 
 const schema = z.object({
 	title: z.string().min(1),
@@ -30,10 +31,16 @@ export type StoryView = {
 	title: string;
 	description: string;
 	category: string;
-	/** AAAA-MM-DD; o frontmatter atual não tem data, então fica nulo (nada de data inventada). */
+	/** AAAA-MM-DD: data de publicação no site (app/data/article-meta.ts). */
 	date: string | null;
 	card: Media | null;
-	hero: Media | null;
+	/** Imagem do artigo com art direction; todo artigo tem (DEC-U7): a própria ou a do pilar. */
+	hero: ArtDirected;
+	pillar: Pillar;
+	problems: ProblemId[];
+	sources: string[];
+	contentId: string;
+	next: NextStep;
 };
 
 function load() {
@@ -52,16 +59,26 @@ const all = load();
 export function getStories(): StoryView[] {
 	return all
 		.filter((a) => a.data.status === "ready")
-		.map(({ data }) => ({
-			slug: data.slug,
-			href: `/artigos/${data.slug}/`,
-			title: data.title,
-			description: data.description,
-			category: CATEGORY_LABEL[data.contentType],
-			date: null,
-			card: ARTICLE_MEDIA[data.slug]?.card ?? null,
-			hero: ARTICLE_MEDIA[data.slug]?.hero ?? null,
-		}));
+		.map(({ data }) => {
+			const meta = ARTICLE_META[data.slug];
+			if (!meta) throw new Error(`content/artigos/${data.slug}.mdx: sem entrada em app/data/article-meta.ts`);
+			const hero = ARTICLE_MEDIA[data.slug] ?? PILLAR_MEDIA[meta.pillar];
+			return {
+				slug: data.slug,
+				href: `/artigos/${data.slug}/`,
+				title: data.title,
+				description: data.description,
+				category: CATEGORY_LABEL[data.contentType],
+				date: meta.published,
+				card: hero.landscape,
+				hero,
+				pillar: meta.pillar,
+				problems: meta.problems,
+				sources: meta.sources,
+				contentId: meta.contentId,
+				next: meta.next,
+			};
+		});
 }
 
 export function getStory(slug: string): StoryView | undefined {

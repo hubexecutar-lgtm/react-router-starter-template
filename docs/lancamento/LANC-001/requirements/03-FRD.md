@@ -6,9 +6,9 @@
 
 | Prioridade | READY | NEEDS_CONFIRMATION | BLOCKED | BACKLOG | DONE |
 |---|---|---|---|---|---|
-| P0 | 7 | 0 | 0 | 0 | 9 |
-| P1 | 17 | 0 | 0 | 0 | 9 |
-| P2 | 6 | 0 | 1 | 0 | 4 |
+| P0 | 4 | 0 | 0 | 0 | 12 |
+| P1 | 7 | 0 | 0 | 0 | 19 |
+| P2 | 4 | 0 | 1 | 0 | 6 |
 | P3 | 4 | 0 | 2 | 1 | 0 |
 
 Total: 60 requisitos em 12 épicos.
@@ -48,32 +48,32 @@ Total: 60 requisitos em 12 épicos.
 
 | ID | Tipo | Prio | Status | Requisito | Critério de aceite | Depende | Fonte |
 |---|---|---|---|---|---|---|---|
-| RQ-030 | CONTENT | P1 | READY | **Importar as 6 ilustrações RC_* para o banco.** WebP em public/images com variantes 16:9 e retrato; entradas no docs/banco-imagens/manifest.json com tem_texto false, alt descritivo e uso. | manifest com 6 entradas novas; cada uso tem alt; peso ≤ 250 KB por variante | — | FT-05; FT-06; ADR-12 |
-| RQ-031 | RULE | P0 | READY | **Imagens REF_* nunca publicadas.** As 3 referências de terceiros (Bauhaus, edifício em corte, mapa urbano) ficam só no intake como referência de estilo. | Nenhum arquivo REF_* em public/ | — | FT-06 |
-| RQ-032 | FR | P1 | READY | **Bloco de imagem vertical 100vh em todo artigo.** Todo artigo tem imagem (decisão do usuário): bloco vertical 100vh com art direction (retrato no mobile, 16:9 no desktop), sem cortar pessoa nem cérebro; artigo sem ilustração própria usa a do seu pilar. Emenda ao ADR-12 ('artigo sem ilustração fica sem imagem' deixa de valer). | Teste falha se algum artigo publicado não renderizar imagem; <picture> com 2 fontes; reflow 320px verde | RQ-030 | DEC-U1; CF-11; Q2; DEC-U7 |
-| RQ-033 | NFR | P1 | READY | **Imagens sem regressão de LCP/CLS.** Imagem de hero com fetchpriority=high, width/height explícitos, lazy fora da primeira dobra. | CLS ≤ 0,1 nas rotas com imagem | RQ-030 | RQ-110 |
+| RQ-030 | CONTENT | P1 | DONE | **Importar as 6 ilustrações RC_* para o banco.** WebP em public/images com variantes 16:9 e retrato; entradas no docs/banco-imagens/manifest.json com tem_texto false, alt descritivo e uso. | manifest com 6 entradas novas; cada uso tem alt; peso ≤ 250 KB por variante | — | FT-05; FT-06; ADR-12 |
+| RQ-031 | RULE | P0 | DONE | **Imagens REF_* nunca publicadas.** As 3 referências de terceiros (Bauhaus, edifício em corte, mapa urbano) ficam só no intake como referência de estilo. | Nenhum arquivo REF_* em public/ | — | FT-06 |
+| RQ-032 | FR | P1 | DONE | **Bloco de imagem vertical 100vh em todo artigo.** Todo artigo tem imagem (decisão do usuário): bloco vertical 100vh com art direction (retrato no mobile, 16:9 no desktop), sem cortar pessoa nem cérebro; artigo sem ilustração própria usa a do seu pilar. Emenda ao ADR-12 ('artigo sem ilustração fica sem imagem' deixa de valer). | Teste falha se algum artigo publicado não renderizar imagem; <picture> com 2 fontes; reflow 320px verde | RQ-030 | DEC-U1; CF-11; Q2; DEC-U7 |
+| RQ-033 | NFR | P1 | DONE | **Imagens sem regressão de LCP/CLS.** Imagem de hero com fetchpriority=high, width/height explícitos, lazy fora da primeira dobra. | CLS ≤ 0,1 nas rotas com imagem | RQ-030 | RQ-110 |
 
 ## EP-05 — Conteúdo canônico — 3 pilares (PR-E)
 
 | ID | Tipo | Prio | Status | Requisito | Critério de aceite | Depende | Fonte |
 |---|---|---|---|---|---|---|---|
-| RQ-040 | CONTENT | P1 | READY | **Home com o texto canônico RC-LP-001.** Texto do RC-LP-001 sem reescrita, na anatomia de página (hero, 3 seções de pilar com 'Saiba mais ›', 'Por onde começar?'), na ordem Problema → Conhecimento → Ferramenta → Ação. | Texto idêntico ao canônico (teste compara parágrafos); hig.spec verde | RQ-020, RQ-030 | CF-14; Q7; RC-LP-001; DEC-U12 |
-| RQ-041 | CONTENT | P1 | READY | **Publicar os 4 artigos canônicos.** RC-ART-P1-001, RC-ART-P2-001, RC-ART-P3-001 e RC-ART-MASTER-001 como artigos novos pelo pipeline editorial, mantendo IDs e texto. | 4 rotas /blog/:slug novas no hub (ADR-06) e no sitemap | RQ-032 | FT-05; Q7; DEC-U12 |
-| RQ-042 | CONTENT | P1 | READY | **Fontes RC-SRC-001 como referências.** As 12 fontes viram referências nos artigos e entradas em /evidencias. | Cada fonte com link funcionando | RQ-041 | RC-SRC-001 |
-| RQ-043 | RULE | P0 | READY | **Rótulo de conceito metodológico.** 'Processo neuroadaptativo' e a cadeia Risco → Compensação → Solução aparecem como conceitos do projeto, nunca como norma ou constructo científico. | Revisão editorial no PR; nenhum texto atribui o conceito a ISO/W3C | — | CF-15; RC-EDITORIAL-PACK-001 README |
-| RQ-044 | FR | P2 | READY | **Bloco 'Próximo passo' no fim de todo artigo.** Artigos terminam com um CTA contextual (mapa ou ferramenta) e conteúdos relacionados; o modelo de 9 partes (Promessa → Próximo passo) vale para artigos novos. | Todo artigo tem exatamente 1 CTA primário no bloco final | RQ-053 | Índex de rotas §3 e §7 |
-| RQ-045 | FR | P1 | READY | **JSON-LD BlogPosting nos artigos.** headline, datePublished, dateModified, author, image e publisher (Organization com logo). | Rich Results Test sem erro em 1 artigo de amostra | RQ-041 | FT-08; Índex de rotas §12 |
-| RQ-046 | DATA | P1 | READY | **Pilares como taxonomia.** Pilar 1 Riscos Cognitivos, Pilar 2 Processos Neuroadaptativos, Pilar 3 Ferramentas e Soluções mapeados para /temas e para os nós do grafo. | Todo artigo canônico tem pilar | — | RC-LP-001 |
+| RQ-040 | CONTENT | P1 | DONE | **Home com o texto canônico RC-LP-001.** Texto do RC-LP-001 sem reescrita, na anatomia de página (hero, 3 seções de pilar com 'Saiba mais ›', 'Por onde começar?'), na ordem Problema → Conhecimento → Ferramenta → Ação. | Texto idêntico ao canônico (teste compara parágrafos); hig.spec verde | RQ-020, RQ-030 | CF-14; Q7; RC-LP-001; DEC-U12 |
+| RQ-041 | CONTENT | P1 | DONE | **Publicar os 4 artigos canônicos.** RC-ART-P1-001, RC-ART-P2-001, RC-ART-P3-001 e RC-ART-MASTER-001 como artigos novos pelo pipeline editorial, mantendo IDs e texto. | 4 rotas /blog/:slug novas no hub (ADR-06) e no sitemap | RQ-032 | FT-05; Q7; DEC-U12 |
+| RQ-042 | CONTENT | P1 | DONE | **Fontes RC-SRC-001 como referências.** As 12 fontes viram referências nos artigos e entradas em /evidencias. | Cada fonte com link funcionando | RQ-041 | RC-SRC-001 |
+| RQ-043 | RULE | P0 | DONE | **Rótulo de conceito metodológico.** 'Processo neuroadaptativo' e a cadeia Risco → Compensação → Solução aparecem como conceitos do projeto, nunca como norma ou constructo científico. | Revisão editorial no PR; nenhum texto atribui o conceito a ISO/W3C | — | CF-15; RC-EDITORIAL-PACK-001 README |
+| RQ-044 | FR | P2 | DONE | **Bloco 'Próximo passo' no fim de todo artigo.** Artigos terminam com um CTA contextual (mapa ou ferramenta) e conteúdos relacionados; o modelo de 9 partes (Promessa → Próximo passo) vale para artigos novos. | Todo artigo tem exatamente 1 CTA primário no bloco final | RQ-053 | Índex de rotas §3 e §7 |
+| RQ-045 | FR | P1 | DONE | **JSON-LD BlogPosting nos artigos.** headline, datePublished, dateModified, author, image e publisher (Organization com logo). | Rich Results Test sem erro em 1 artigo de amostra | RQ-041 | FT-08; Índex de rotas §12 |
+| RQ-046 | DATA | P1 | DONE | **Pilares como taxonomia.** Pilar 1 Riscos Cognitivos, Pilar 2 Processos Neuroadaptativos, Pilar 3 Ferramentas e Soluções mapeados para /temas e para os nós do grafo. | Todo artigo canônico tem pilar | — | RC-LP-001 |
 
 ## EP-06 — Arquitetura de informação e jornada (PR-F)
 
 | ID | Tipo | Prio | Status | Requisito | Critério de aceite | Depende | Fonte |
 |---|---|---|---|---|---|---|---|
 | RQ-050 | FR | P0 | READY | **Menu principal Artigos · Mapa · Ferramentas · Sobre.** Rótulos novos sobre URLs mantidas: Artigos → /blog, Mapa → /mapas, Sobre → /about; Ferramentas → /ferramentas (Ferramentas cognitivas, substitui a Loja, RQ-103). | Menu igual no desktop, no drawer e no rodapé-diretório | — | CF-12; CF-13; Q1; Q3; DEC-U6; DEC-U8 |
-| RQ-051 | RULE | P0 | READY | **Toda rota nova no hub e no sitemap.** Rotas novas (/mapas/explorar, /mapas/explorar/:fatorId, /mapas/personalizar, /ferramentas) entram em app/data/routes.ts. | npm run routes:check verde | — | ADR-06 |
-| RQ-052 | FR | P1 | READY | **Quatro perguntas em toda página.** Onde estou (eyebrow ou breadcrumb), o que significa (lead), por que importa (seção) e próxima ação (CTA primário). | hig.spec verifica eyebrow, h1, lead e 1 CTA primário por região | RQ-020 | Índex de rotas (regra transversal) |
-| RQ-053 | RULE | P1 | READY | **Escada de CTA e 1 CTA primário por região.** CTA 0 continuar lendo → 1 exemplo → 2 explorar o mapa → 3 usar a ferramenta → 4 salvar resultado → 5 guia → 6 solução. | Nenhuma região com 2 botões primários | — | Índex de rotas §7; neurodesign regra 01 |
-| RQ-054 | FR | P2 | READY | **Blog como índice por problemas.** Chips Atenção · Memória · Sobrecarga · Interrupções · Decisão · Organização e 'Explore por' Problemas · Processos · Contextos · Soluções · Ferramentas. | Chips filtram a lista e são links compartilháveis | RQ-062 | Índex de rotas §2 |
+| RQ-051 | RULE | P0 | DONE | **Toda rota nova no hub e no sitemap.** Rotas novas (/mapas/explorar, /mapas/explorar/:fatorId, /mapas/personalizar, /ferramentas) entram em app/data/routes.ts. | npm run routes:check verde | — | ADR-06 |
+| RQ-052 | FR | P1 | DONE | **Quatro perguntas em toda página.** Onde estou (eyebrow ou breadcrumb), o que significa (lead), por que importa (seção) e próxima ação (CTA primário). | hig.spec verifica eyebrow, h1, lead e 1 CTA primário por região | RQ-020 | Índex de rotas (regra transversal) |
+| RQ-053 | RULE | P1 | DONE | **Escada de CTA e 1 CTA primário por região.** CTA 0 continuar lendo → 1 exemplo → 2 explorar o mapa → 3 usar a ferramenta → 4 salvar resultado → 5 guia → 6 solução. | Nenhuma região com 2 botões primários | — | Índex de rotas §7; neurodesign regra 01 |
+| RQ-054 | FR | P2 | DONE | **Blog como índice por problemas.** Chips Atenção · Memória · Sobrecarga · Interrupções · Decisão · Organização e 'Explore por' Problemas · Processos · Contextos · Soluções · Ferramentas. | Chips filtram a lista e são links compartilháveis | RQ-062 | Índex de rotas §2 |
 
 ## EP-07 — Modelo de dados do grafo causal (Teia Única) (PR-G)
 
