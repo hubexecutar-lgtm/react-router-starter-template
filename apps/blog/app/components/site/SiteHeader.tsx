@@ -36,8 +36,8 @@ export function SiteHeader({ inert = false }: { inert?: boolean }) {
 					<span className="rc-display text-[0.95rem] leading-none tracking-[-0.02em] whitespace-nowrap uppercase min-[360px]:text-[1.1rem] sm:text-xl">
 						{SITE_NAME}
 					</span>
-					<span className="hidden h-7 border-l border-[var(--border-strong)] xl:block" aria-hidden="true"></span>
-					<span className="rc-eyebrow hidden max-w-[11rem] text-[0.625rem] leading-snug xl:block">{SITE_TAGLINE}</span>
+					<span className="hidden h-7 border-l border-[var(--border-strong)] 2xl:block" aria-hidden="true"></span>
+					<span className="rc-eyebrow hidden max-w-[11rem] text-[0.625rem] leading-snug 2xl:block">{SITE_TAGLINE}</span>
 				</a>
 
 				<nav aria-label="Principal" className="ml-auto max-[899px]:hidden">
@@ -66,9 +66,9 @@ export function SiteHeader({ inert = false }: { inert?: boolean }) {
 				</nav>
 
 				{/* Trilha dos pilares inline na barra (RQ-020). Fica dentro dos 64 px do handoff Stories (ADR-14): uma faixa
-				    própria abaixo do cabeçalho deslocaria a geometria medida da Home. Só em telas largas. */}
+				    própria abaixo do cabeçalho deslocaria a geometria medida da Home. Só a partir de 1280 px. */}
 				{PILLAR_TRAIL.length > 0 && (
-					<nav aria-label="Pilares" className="ml-2 border-l border-[var(--border-default)] pl-3 max-[1099px]:hidden" data-pillar-trail>
+					<nav aria-label="Pilares" className="ml-2 border-l border-[var(--border-default)] pl-3 max-[1279px]:hidden" data-pillar-trail>
 						<ul className="flex items-center gap-1">
 							{PILLAR_TRAIL.map((item) => {
 								const active = isActive(pathname, item.href);

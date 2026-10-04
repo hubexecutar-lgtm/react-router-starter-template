@@ -4,12 +4,13 @@ import { data, isRouteErrorResponse } from "react-router";
 
 import type { Route } from "./+types/artigos.$slug";
 
-import { ChevronLink } from "@/components/layout/ChevronLink";
 import { NotFoundPage } from "@/components/site/NotFoundPage";
 import { ArticleBody } from "@/components/stories/ArticleBody";
 import { ArticleHero } from "@/components/stories/ArticleHero";
-import { SITE_NAME, SITE_URL } from "@/consts";
-import { SHARE_IMAGE } from "@/data/article-media";
+import { NextStep } from "@/components/stories/NextStep";
+import { References } from "@/components/stories/References";
+import { SITE_METADATA, SITE_NAME, SITE_URL } from "@/consts";
+import { PILLARS } from "@/data/article-meta";
 import DefaultLayout from "@/layouts/DefaultLayout";
 import { getArticleContent, getStory } from "@/lib/articles";
 import { seo } from "@/lib/seo";
@@ -17,46 +18,55 @@ import { seo } from "@/lib/seo";
 export function loader({ params }: Route.LoaderArgs) {
 	const story = getStory(params.slug);
 	if (!story || !getArticleContent(params.slug)) throw data(null, { status: 404 });
-	return { story };
+	// Leituras relacionadas: o artigo canônico de cada pilar, menos o próprio e o destino do CTA primário.
+	const related = (["p1", "p2", "p3"] as const)
+		.map((p) => getStory(PILLARS[p].article))
+		.filter((r): r is NonNullable<typeof r> => !!r && r.slug !== story.slug && r.href !== story.next.href)
+		.map((r) => ({ href: r.href, title: r.title }));
+	return { story, related };
 }
 
 export const meta: Route.MetaFunction = ({ data: loaded, location }) => {
 	if (!loaded) return seo({ title: "Página não encontrada", pathname: location.pathname, noindex: true });
 	const { story } = loaded;
-	const image = story.hero?.src ?? SHARE_IMAGE.src;
+	const image = story.hero.landscape.src;
 	const url = new URL(story.href, SITE_URL).href;
 	return [
 		...seo({ title: story.title, description: story.description, image, pathname: location.pathname }),
 		{
 			"script:ld+json": {
 				"@context": "https://schema.org",
-				"@type": "Article",
+				"@type": "BlogPosting",
 				headline: story.title,
 				description: story.description,
 				image: new URL(image, SITE_URL).href,
-				author: { "@type": "Organization", name: SITE_NAME },
-				publisher: { "@type": "Organization", name: SITE_NAME },
+				datePublished: story.date,
+				dateModified: story.date,
+				author: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
+				publisher: {
+					"@type": "Organization",
+					name: SITE_NAME,
+					logo: { "@type": "ImageObject", url: new URL(SITE_METADATA.logo.url, SITE_URL).href },
+				},
 				mainEntityOfPage: url,
+				identifier: story.contentId,
 			},
 		},
 	];
 };
 
 export default function Article({ loaderData }: Route.ComponentProps) {
-	const { story } = loaderData;
+	const { story, related } = loaderData;
 	// O módulo MDX não passa pelo loader (não é serializável): é resolvido pelo slug, no cliente e no servidor.
 	const Content = getArticleContent(story.slug)!;
 	return (
 		<DefaultLayout>
 			<article>
-				<ArticleHero title={story.title} lead={story.description} media={story.hero} />
+				<ArticleHero title={story.title} lead={story.description} media={story.hero} eyebrow={`Pilar · ${PILLARS[story.pillar].label}`} />
 				<ArticleBody Content={Content} />
 			</article>
-			<div className="stories-container mt-[var(--ref-section-gap)]">
-				<div className="mx-auto max-w-[var(--ref-reading-width)]">
-					<ChevronLink href="/">Todos os artigos</ChevronLink>
-				</div>
-			</div>
+			<References ids={story.sources} />
+			<NextStep next={story.next} related={related} />
 		</DefaultLayout>
 	);
 }

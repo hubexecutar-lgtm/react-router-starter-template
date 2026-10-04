@@ -176,7 +176,7 @@ export default function RoutesHub({ loaderData }: Route.ComponentProps) {
         <section id="registro" className="mt-20" aria-labelledby="registro-title" data-hub-hide-print>
           <h2 id="registro-title" className={h2}>Registro</h2>
           <p className="text-muted-foreground mt-3 max-w-2xl text-lg font-medium">Auditoria de cada entrada: origem, responsável e data de inclusão.</p>
-          <div className="mt-6 sm:overflow-x-auto" data-testid="hub-registry">
+          <div className="mt-6 sm:overflow-x-auto" data-testid="hub-registry" data-wide-table role="region" aria-label="Registro de rotas (rolagem horizontal quando necessário)" tabIndex={0}>
             <table className="ds-table ds-table--stack">
               <caption className="sr-only">Registro de rotas e links</caption>
               <thead><tr><th scope="col">Id</th><th scope="col">Título</th><th scope="col">Endereço</th><th scope="col">Exposição</th><th scope="col">Incluída em</th><th scope="col">Origem</th></tr></thead>

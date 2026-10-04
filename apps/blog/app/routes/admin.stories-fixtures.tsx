@@ -14,7 +14,8 @@ import DefaultLayout from "@/layouts/DefaultLayout";
 import type { StoryView } from "@/lib/articles";
 import { seo } from "@/lib/seo";
 
-const IMAGES = [ARTICLE_MEDIA["risco-cognitivo"].card, SHARE_IMAGE];
+const IMAGES = [ARTICLE_MEDIA["risco-cognitivo"].landscape, SHARE_IMAGE];
+const HERO = ARTICLE_MEDIA["risco-cognitivo"];
 const CATEGORIES = ["Categoria A", "Categoria B", "Categoria C"];
 
 const FIXTURES: StoryView[] = Array.from({ length: 22 }, (_, i) => {
@@ -27,7 +28,12 @@ const FIXTURES: StoryView[] = Array.from({ length: 22 }, (_, i) => {
 		category: CATEGORIES[i % CATEGORIES.length],
 		date: `2026-${String(12 - (i % 12)).padStart(2, "0")}-${String((i % 27) + 1).padStart(2, "0")}`,
 		card: IMAGES[i % IMAGES.length],
-		hero: IMAGES[i % IMAGES.length],
+		hero: HERO,
+		pillar: "p1",
+		problems: [],
+		sources: [],
+		contentId: `FIXTURE-${n}`,
+		next: { label: "Fixture", href: "#fixtures" },
 	};
 });
 

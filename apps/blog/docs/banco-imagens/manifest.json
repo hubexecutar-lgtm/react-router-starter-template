@@ -188,6 +188,138 @@
       "no_site": false,
       "arquivo_site": null,
       "usos": []
+    },
+    {
+      "id": "rc-binoculos-cidade",
+      "arquivo": "rc-binoculos-cidade-16x9-1672.webp",
+      "original": "RC_Pessoa_Binoculos_Observa_Cidade_Retrato.png",
+      "origem": "docs/lancamento/LANC-001/intake/DOCS-002/RC_IMAGENS_RENOMEADAS_v1.0.0 (LANC-001 RQ-030)",
+      "sha256_origem": "28790d6a9f0160b69e49763b3aaa708e4c34451ec656ac96d7434dd026b7390e",
+      "titulo": "Pessoa com binóculos observa a cidade do alto",
+      "tem_texto": false,
+      "transcricao": null,
+      "alt": "Ilustração isométrica de uma pessoa sentada no alto de um prédio observando a cidade com binóculos.",
+      "no_site": true,
+      "arquivo_site": [
+        "/images/rc-binoculos-cidade-16x9-836.webp",
+        "/images/rc-binoculos-cidade-16x9-1672.webp",
+        "/images/rc-binoculos-cidade-retrato-470.webp",
+        "/images/rc-binoculos-cidade-retrato-941.webp"
+      ],
+      "usos": [
+        "/artigos/riscos-cognitivos/ (hero)",
+        "imagem do pilar 1 (reserva, DEC-U7)",
+        "/ (seção do pilar 1)"
+      ]
+    },
+    {
+      "id": "rc-cerebro-urbano-mao",
+      "arquivo": "rc-cerebro-urbano-mao-16x9-1672.webp",
+      "original": "RC_Cerebro_Urbano_Sustentado_Por_Mao_Retrato_A.png",
+      "origem": "docs/lancamento/LANC-001/intake/DOCS-002/RC_IMAGENS_RENOMEADAS_v1.0.0 (LANC-001 RQ-030)",
+      "sha256_origem": "95d2155c69659d3f4da1815856a04f3fa176552be00ca7e5d7a016caa0db3558",
+      "titulo": "Cérebro urbano suspenso por uma mão (A)",
+      "tem_texto": false,
+      "transcricao": null,
+      "alt": "Ilustração de um cérebro formado por ruas, árvores e prédios, suspenso por um fio preso a uma mão.",
+      "no_site": true,
+      "arquivo_site": [
+        "/images/rc-cerebro-urbano-mao-16x9-836.webp",
+        "/images/rc-cerebro-urbano-mao-16x9-1672.webp",
+        "/images/rc-cerebro-urbano-mao-retrato-470.webp",
+        "/images/rc-cerebro-urbano-mao-retrato-941.webp"
+      ],
+      "usos": [
+        "/artigos/processos-neuroadaptativos/ (hero)",
+        "imagem do pilar 2 (reserva, DEC-U7)",
+        "/ (seção do pilar 2)"
+      ]
+    },
+    {
+      "id": "rc-pista-largada",
+      "arquivo": "rc-pista-largada-16x9-1672.webp",
+      "original": "RC_Pista_Corrida_Tres_Pessoas_Retrato.png",
+      "origem": "docs/lancamento/LANC-001/intake/DOCS-002/RC_IMAGENS_RENOMEADAS_v1.0.0 (LANC-001 RQ-030)",
+      "sha256_origem": "1568065f9ebbaaf16900ddb6328673017f810a20a2b40c21d6765028662d5372",
+      "titulo": "Três pessoas na posição de largada em pista isométrica",
+      "tem_texto": false,
+      "transcricao": null,
+      "alt": "Ilustração isométrica de três pessoas em posição de largada numa pista de corrida cercada de árvores.",
+      "no_site": true,
+      "arquivo_site": [
+        "/images/rc-pista-largada-16x9-836.webp",
+        "/images/rc-pista-largada-16x9-1672.webp",
+        "/images/rc-pista-largada-retrato-470.webp",
+        "/images/rc-pista-largada-retrato-941.webp"
+      ],
+      "usos": [
+        "/artigos/compensacao-cognitiva/ (hero)",
+        "imagem do pilar 3 (reserva, DEC-U7)",
+        "/ (seção do pilar 3)"
+      ]
+    },
+    {
+      "id": "rc-binoculos-cerebro-urbano",
+      "arquivo": "rc-binoculos-cerebro-urbano-16x9-1672.webp",
+      "original": "RC_Pessoa_Binoculos_e_Cerebro_Urbano_16x9.png",
+      "origem": "docs/lancamento/LANC-001/intake/DOCS-002/RC_IMAGENS_RENOMEADAS_v1.0.0 (LANC-001 RQ-030)",
+      "sha256_origem": "278b7e349464384bfed37dce2a4ca73239b9d4d7c2d3ce6bc73e29189aa0dc92",
+      "titulo": "Pessoa com binóculos observa cérebro urbano",
+      "tem_texto": false,
+      "transcricao": null,
+      "alt": "Ilustração de uma pessoa com binóculos, sentada num prédio, observando um cérebro formado por ruas e árvores.",
+      "no_site": true,
+      "arquivo_site": [
+        "/images/rc-binoculos-cerebro-urbano-16x9-836.webp",
+        "/images/rc-binoculos-cerebro-urbano-16x9-1672.webp",
+        "/images/rc-binoculos-cerebro-urbano-retrato-470.webp",
+        "/images/rc-binoculos-cerebro-urbano-retrato-941.webp"
+      ],
+      "usos": [
+        "/artigos/tres-pilares-riscos-cognitivos/ (hero)"
+      ]
+    },
+    {
+      "id": "rc-binoculos-mapa-cerebral",
+      "arquivo": "rc-binoculos-mapa-cerebral-16x9-1672.webp",
+      "original": "RC_Pessoa_Binoculos_Observa_Mapa_Cerebral_16x9.png",
+      "origem": "docs/lancamento/LANC-001/intake/DOCS-002/RC_IMAGENS_RENOMEADAS_v1.0.0 (LANC-001 RQ-030)",
+      "sha256_origem": "eb0931d6d56462d73fb4dc2155faaa927cb411d1e5cb40682e3e495570008297",
+      "titulo": "Pessoa com binóculos observa vias de mapa cerebral",
+      "tem_texto": false,
+      "transcricao": null,
+      "alt": "Ilustração de uma pessoa com binóculos observando um mapa de cidade que se abre a partir de um pequeno cérebro.",
+      "no_site": true,
+      "arquivo_site": [
+        "/images/rc-binoculos-mapa-cerebral-16x9-836.webp",
+        "/images/rc-binoculos-mapa-cerebral-16x9-1672.webp",
+        "/images/rc-binoculos-mapa-cerebral-retrato-470.webp",
+        "/images/rc-binoculos-mapa-cerebral-retrato-941.webp"
+      ],
+      "usos": [
+        "/ (hero da home RC-LP-001)"
+      ]
+    },
+    {
+      "id": "rc-cerebro-urbano-mao-b",
+      "arquivo": "rc-cerebro-urbano-mao-b-16x9-1672.webp",
+      "original": "RC_Cerebro_Urbano_Sustentado_Por_Mao_Retrato_B.png",
+      "origem": "docs/lancamento/LANC-001/intake/DOCS-002/RC_IMAGENS_RENOMEADAS_v1.0.0 (LANC-001 RQ-030)",
+      "sha256_origem": "69e1397ecb30c5c13fd3ad1d6534588c49821b89c7db9ed9d5c55ed24e98ff7f",
+      "titulo": "Cérebro urbano suspenso por uma mão (B)",
+      "tem_texto": false,
+      "transcricao": null,
+      "alt": "Ilustração de um cérebro urbano com ruas e lagos, sustentado por um fio que uma mão segura por baixo.",
+      "no_site": true,
+      "arquivo_site": [
+        "/images/rc-cerebro-urbano-mao-b-16x9-836.webp",
+        "/images/rc-cerebro-urbano-mao-b-16x9-1672.webp",
+        "/images/rc-cerebro-urbano-mao-b-retrato-470.webp",
+        "/images/rc-cerebro-urbano-mao-b-retrato-941.webp"
+      ],
+      "usos": [
+        "/sobre/ (hero)"
+      ]
     }
   ]
 }

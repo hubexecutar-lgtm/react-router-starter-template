@@ -5,6 +5,8 @@ import { expect, test, type Page } from "@playwright/test";
 // Tolerância de 0,75 px para frações de layout; tipografia é comparada em valor exato.
 const DESKTOP = { width: 1363, height: 936 };
 const ARTICLE = "/artigos/risco-cognitivo/";
+// Listagem Stories: era a home; desde o LANC-001 G1 vive em /artigos/ (a home é o RC-LP-001).
+const LIST = "/artigos/";
 const FIXTURES = "/admin/stories-fixtures/";
 
 const px = (v: string) => parseFloat(v);
@@ -30,7 +32,7 @@ const type = (page: Page, selector: string) =>
 test.use({ viewport: DESKTOP });
 
 test("tokens --ref-* keep the literal handoff values", async ({ page }) => {
-	await page.goto("/");
+	await page.goto(LIST);
 	const tokens = await page.evaluate(() => {
 		const s = getComputedStyle(document.documentElement);
 		const names = [
@@ -63,7 +65,7 @@ test("tokens --ref-* keep the literal handoff values", async ({ page }) => {
 });
 
 test("home: header, title, toolbar and featured block follow the handoff geometry", async ({ page }) => {
-	await page.goto("/");
+	await page.goto(LIST);
 	const header = await page.locator("body > header").evaluate((el) => el.getBoundingClientRect().height);
 	near(header, 64, 0.5); // a régua inferior é box-shadow: a barra mede 64 px, como na referência
 
@@ -91,7 +93,7 @@ test("article: hero, reading column and body follow the handoff tokens", async (
 	expect(h1).toMatchObject({ size: "61.6864px", line: "62.0103px", tracking: "-1.85059px", weight: "500" });
 	expect(h1.w).toBeLessThanOrEqual(802.5);
 
-	const lead = await type(page, "[data-article-hero] p");
+	const lead = await type(page, "[data-article-lead]"); // o 1º <p> do hero é o eyebrow do pilar (RQ-052)
 	expect(lead).toMatchObject({ size: "17px", line: "27.999px", tracking: "-0.17px", weight: "400" });
 	expect(lead.w).toBeLessThanOrEqual(596.5);
 
@@ -118,11 +120,12 @@ test("article: one h1 only (the MDX title is not repeated) and the author's MDX 
 	await expect(page.locator("h1")).toHaveCount(1);
 	await expect(page.locator("main h1")).toContainText("O que é risco cognitivo?");
 	await expect(page.locator("[data-article-body] h2")).toHaveCount(13);
-	// meta: título, canonical e JSON-LD Article
+	// meta: título, canonical e JSON-LD BlogPosting (subtipo de Article, LANC-001 RQ-045)
 	await expect(page).toHaveTitle(/O que é risco cognitivo\?.*\| Risco Cognitivo/);
 	await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", /\/artigos\/risco-cognitivo\/$/);
-	const ld = JSON.parse((await page.locator('script[type="application/ld+json"]').first().textContent()) ?? "{}");
-	expect(ld["@type"]).toBe("Article");
+	const lds = (await page.locator('script[type="application/ld+json"]').allTextContents()).map((t) => JSON.parse(t));
+	const ld = lds.find((l) => l["@type"] === "BlogPosting") ?? {};
+	expect(ld["@type"]).toBe("BlogPosting");
 	expect(ld.headline).toContain("O que é risco cognitivo?");
 });
 
@@ -205,17 +208,17 @@ test("fixtures: category tab filters and returns to Tudo", async ({ page }) => {
 });
 
 test("keyboard: the card title is a real link with a visible focus state", async ({ page }) => {
-	await page.goto("/");
+	await page.goto(LIST);
 	const link = page.locator("[data-story-card] h2 a");
 	await link.focus();
 	await expect(link).toBeFocused();
 	const style = await link.evaluate((el) => getComputedStyle(el).textDecorationLine);
 	expect(style).toContain("underline");
-	await expect(link).toHaveAttribute("href", ARTICLE);
+	await expect(link).toHaveAttribute("href", /^\/artigos\/[a-z0-9-]+\/$/);
 });
 
 test.describe("no horizontal overflow at 390, 768 and 1363", () => {
-	for (const route of ["/", ARTICLE, FIXTURES]) {
+	for (const route of ["/", LIST, ARTICLE, FIXTURES]) {
 		test(route, async ({ page }) => {
 			for (const width of [390, 768, 1363]) {
 				await page.setViewportSize({ width, height: 900 });

@@ -4,6 +4,9 @@ import { type RouteConfig, index, route } from "@react-router/dev/routes";
 // ADR-06: nova rota também entra em app/data/routes.ts.
 export default [
 	index("routes/home.tsx"),
+	route("artigos", "routes/artigos._index.tsx"),
+	route("fontes", "routes/fontes.tsx"),
+	route("sobre", "routes/sobre.tsx"),
 	route("artigos/:slug", "routes/artigos.$slug.tsx"),
 	route("prisma", "routes/prisma.tsx"),
 	route("ferramentas", "routes/ferramentas._index.tsx"),

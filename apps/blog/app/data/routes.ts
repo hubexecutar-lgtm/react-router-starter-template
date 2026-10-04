@@ -55,7 +55,10 @@ const SRC = "ADR-13 (site do zero)";
 
 export const ROUTES: HubEntry[] = [
   // ---------------------------------------------------------------- Site
-  { id: "home", title: "Página inicial", description: "Home do site novo: composição Stories do handoff (destaque, grade, carregar mais).", group: "Site", kind: "route", path: "/", exposure: "public", addedAt: "2026-10-03", source: SRC },
+  { id: "home", title: "Página inicial", description: "Texto canônico RC-LP-001 (3 pilares, por onde começar) sobre o Stories (LANC-001 RQ-040).", group: "Site", kind: "route", path: "/", exposure: "public", addedAt: "2026-10-03", source: SRC },
+  { id: "artigos", title: "Artigos", description: "Listagem Stories (destaque, grade, carregar mais) com filtro por problema (?problema=, RQ-054). Era a home até o LANC-001 PR-E.", group: "Site", kind: "route", path: "/artigos/", exposure: "public", addedAt: "2026-10-04", source: "LANC-001 G1" },
+  { id: "fontes", title: "Fontes", description: "As fontes do RC-SRC-001 com link e o tema que sustentam (RQ-042); conceitos próprios do projeto rotulados (RQ-043).", group: "Site", kind: "route", path: "/fontes/", exposure: "public", addedAt: "2026-10-04", source: "LANC-001 G1" },
+  { id: "sobre", title: "Sobre", description: "O projeto, seus princípios e o que é conceito próprio, com trechos dos textos canônicos (RQ-050).", group: "Site", kind: "route", path: "/sobre/", exposure: "public", addedAt: "2026-10-04", source: "LANC-001 G1" },
   { id: "ferramentas", title: "Ferramentas cognitivas", group: "Site", kind: "route", path: "/ferramentas/", description: "Ferramentas cognitivas sobre o layout Stories (ADR-16): skills, agentes, prompts, e-books, PDFs, ferramentas HTML, workbooks e assets. Categorias em /ferramentas/:tipo/ e itens em /ferramentas/:tipo/:slug/; /loja/* responde 301.", exposure: "public", addedAt: "2026-10-04", source: "LANC-001 PR-J1 / AUD-ORDEM-001" },
 
   // ---------------------------------------------------------------- Ferramentas públicas

@@ -8,6 +8,10 @@ import type { MDXContent } from "@/lib/articles";
 const h2 = (props: ComponentProps<"h2">) => (
 	<h2 {...props} className="stories-h2 mt-[var(--ref-section-gap)] mb-[var(--ref-block-gap)] first:mt-0" />
 );
+// Subtítulo de bloco do texto canônico (ex.: "1. EXTERNALIZAÇÃO"): corpo em 600, sem escala nova.
+const h3 = (props: ComponentProps<"h3">) => (
+	<h3 {...props} className="stories-body mt-[var(--ref-card-gap-y)] mb-2 font-semibold first:mt-0" />
+);
 const p = (props: ComponentProps<"p">) => <p {...props} className="stories-body mb-[var(--ref-block-gap)]" />;
 const ul = (props: ComponentProps<"ul">) => (
 	<ul {...props} className="stories-body mb-[var(--ref-block-gap)] list-disc space-y-2 pl-6" />
@@ -20,7 +24,7 @@ const a = (props: ComponentProps<"a">) => (
 );
 const strong = (props: ComponentProps<"strong">) => <strong {...props} className="font-semibold" />;
 
-const components: Record<string, ComponentType<any>> = { h1: () => null, h2, p, ul, ol, a, strong };
+const components: Record<string, ComponentType<any>> = { h1: () => null, h2, h3, p, ul, ol, a, strong };
 
 export function ArticleBody({ Content }: { Content: MDXContent }) {
 	return (

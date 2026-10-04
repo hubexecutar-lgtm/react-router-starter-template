@@ -300,7 +300,8 @@ to `apps/blog/`.
   - **Banco de imagens** em `docs/banco-imagens/` (16 peças, `manifest.json` com transcrição). Nas páginas só
     entram imagens **sem texto**: hoje binóculo (hero da home e de Sobre, OG), equipe com tablet (Sobre) e mão
     com chaves (login, cadastro), registradas em `IMAGES` (`HeroArt.tsx`) com `alt` descritivo. Artigos sem
-    ilustração ficam sem imagem; o schema ganhou `imageAlt`.
+    ilustração ficam sem imagem; o schema ganhou `imageAlt`. **Emenda (DEC-U7, ADR-18):** todo artigo tem imagem;
+    sem ilustração própria, usa a do seu pilar.
   - **Anatomia de página** (UX-GOV-HIG-001 / ADR-M03, referência developer.apple.com/programs), em
     `app/components/layout/`: `PageHero` (eyebrow, h1, lead ≤ 60ch, ações, arte), `Section` (h2, lead,
     "Saiba mais ›"), `FeatureBlock`/`FeatureRow` (ícone ou mídia, título, parágrafo curto, link),
@@ -412,7 +413,7 @@ to `apps/blog/`.
   largura do Stories (`stories-container`, `--ref-wide-width`). `/loja` e `/loja/*` respondem 301; nenhum texto "Loja"
   nem de compra. O `/prisma/` (ADR-17) é a primeira ferramenta publicada.
 - **Decisão — shell:** cabeçalho de 64 px do Stories (`--ref-header-h`) com menu e tema (a busca volta quando houver página); a trilha dos pilares
-  fica **dentro** da barra (≥ 1100 px), porque uma faixa abaixo deslocaria a geometria medida do handoff. Abaixo de
+  fica **dentro** da barra (≥ 1280 px), porque uma faixa abaixo deslocaria a geometria medida do handoff. Abaixo de
   900 px: drawer modal `min(84vw,360px)` (foco preso, Esc, `inert`) e barra inferior; header e barra escondem juntos ao
   descer (`components/site/shell.tsx`). O menu só lista destinos que existem (`nav.ts`): hoje Artigos e Ferramentas;
   Mapa e Sobre entram quando as páginas voltarem (DEC-U6). O carrossel é o `MediaCarousel` do Stories (scroll-snap,
@@ -446,3 +447,34 @@ to `apps/blog/`.
   - As 18 áreas das Ferramentas cognitivas (6 de gestão e 12 funções executivas) estão importadas como intake
     (`docs/handoff/RC-PWA-PRISMA/intake/`, status PREPARED) e **ainda não têm rota**: ligar áreas ao grafo (ADR-M04)
     exige nós novos com citação e passa pelo OWNER.
+
+### ADR-18: Conteúdo canônico, home RC-LP-001 e jornada sobre o Stories (LANC-001 G1 = PR-D + PR-E + PR-F)
+
+- **Status:** Aceita — implementada no G1 (merge de funções similares autorizado pelo usuário).
+- **Contexto:** Os requisitos de imagem, conteúdo e jornada do LANC-001 foram escritos para o site antigo
+  (`/blog`, `/temas`, `/evidencias`, `/about`). Sobre o Stories (DEC-U14), o usuário decidiu: o RC-LP-001 é a home,
+  a listagem Stories vai para `/artigos/`, `/fontes/` e `/sobre/` são recriadas e os chips de problema entram na
+  listagem.
+- **Decisão:**
+  - **Imagens (RQ-030…033):** as 6 ilustrações RC_* em WebP, paisagem 16:9 (836/1672) e retrato 9:16 (470/941),
+    recompostas **sem cortar** (margem na cor do fundo) por `scripts/rc-images.mjs`, ≤ 250 KB cada, no banco
+    (`docs/banco-imagens/manifest.json`). `ArtImage` faz a art direction com `<picture>` (retrato até 100svh no
+    mobile, 16:9 largo no desktop) com `width`/`height`; o hero do artigo carrega com `fetchpriority=high`.
+    Todo artigo tem imagem (emenda ao ADR-12): sem ilustração própria, a do pilar (`PILLAR_MEDIA`).
+  - **Conteúdo (RQ-040…046):** os 4 textos canônicos viram MDX por `scripts/canonical-to-mdx.py`, sem reescrita
+    (caixa alta → títulos; 1º parágrafo → lead do hero; a linha `CTA:` → bloco "Próximo passo"). A home é o
+    RC-LP-001 (`app/data/landing.ts`, gerado do canônico) na ordem Problema → Conhecimento → Ferramenta → Ação.
+    Pilar, problemas, nós do grafo, fontes, data e CTA ficam em `app/data/article-meta.ts`, fora do texto. JSON-LD
+    `BlogPosting` com publisher e logo. `/fontes/` lista o RC-SRC-001 (`app/data/sources.ts`, gerado) e a nota de
+    governança literal aparece em `/fontes/`, `/sobre/` e nas referências de cada artigo (RQ-043).
+  - **Jornada (RQ-050…054):** menu Artigos · Ferramentas · Sobre (o Mapa entra com o PR-H) igual no topo, no drawer
+    e no rodapé; trilha com os 3 pilares; "Próximo passo" com exatamente 1 CTA primário (`data-cta="primary"`) no
+    fim de todo artigo; páginas editoriais com eyebrow, h1, lead e CTA primário; chips de problema (`?problema=`)
+    ligados aos nós do grafo na listagem.
+  - Aspas tipográficas do `remark-smartypants` são tipografia do site, não reescrita do canônico.
+- **Consequências:**
+  - `tests/editorial.spec.ts` cobre RQ-030…054 (texto canônico linha a linha, imagens, CLS, JSON-LD, CTA, chips);
+    `stories.spec` mede a listagem em `/artigos/`.
+  - A listagem `/artigos/` segue a geometria do handoff (h1 "Artigos" sem eyebrow nem lead): é a exceção ao RQ-052.
+  - Nas ilustrações que só existiam em uma orientação, a outra é recomposta com margem (sem corte); uma recomposição
+    de arte (enquadramento) fica para o design.

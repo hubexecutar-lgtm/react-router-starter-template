@@ -242,7 +242,7 @@
           "motivo": "entregue sobre o site antigo; a base passou a ser o PR #19 (Stories)"
         }
       ],
-      "nota": "Shell sobre o Stories entregue; a trilha só lista pilares publicados (1 de 3) e o topo só Artigos e Ferramentas. Fecha quando PR-E (pilares) e PR-H (Mapa) publicarem os destinos."
+      "nota": "Trilha com os 3 pilares publicada (G1). Falta o Mapa no topo: fecha com o PR-H."
     },
     {
       "id": "RQ-021",
@@ -397,10 +397,11 @@
       "titulo": "Importar as 6 ilustrações RC_* para o banco",
       "descricao": "WebP em public/images com variantes 16:9 e retrato; entradas no docs/banco-imagens/manifest.json com tem_texto false, alt descritivo e uso.",
       "prioridade": "P1",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [],
       "fonte": "FT-05; FT-06; ADR-12",
-      "criterio_aceite": "manifest com 6 entradas novas; cada uso tem alt; peso ≤ 250 KB por variante"
+      "criterio_aceite": "manifest com 6 entradas novas; cada uso tem alt; peso ≤ 250 KB por variante",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/29"
     },
     {
       "id": "RQ-031",
@@ -409,10 +410,11 @@
       "titulo": "Imagens REF_* nunca publicadas",
       "descricao": "As 3 referências de terceiros (Bauhaus, edifício em corte, mapa urbano) ficam só no intake como referência de estilo.",
       "prioridade": "P0",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [],
       "fonte": "FT-06",
-      "criterio_aceite": "Nenhum arquivo REF_* em public/"
+      "criterio_aceite": "Nenhum arquivo REF_* em public/",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/29"
     },
     {
       "id": "RQ-032",
@@ -421,12 +423,13 @@
       "titulo": "Bloco de imagem vertical 100vh em todo artigo",
       "descricao": "Todo artigo tem imagem (decisão do usuário): bloco vertical 100vh com art direction (retrato no mobile, 16:9 no desktop), sem cortar pessoa nem cérebro; artigo sem ilustração própria usa a do seu pilar. Emenda ao ADR-12 ('artigo sem ilustração fica sem imagem' deixa de valer).",
       "prioridade": "P1",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [
         "RQ-030"
       ],
       "fonte": "DEC-U1; CF-11; Q2; DEC-U7",
-      "criterio_aceite": "Teste falha se algum artigo publicado não renderizar imagem; <picture> com 2 fontes; reflow 320px verde"
+      "criterio_aceite": "Teste falha se algum artigo publicado não renderizar imagem; <picture> com 2 fontes; reflow 320px verde",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/29"
     },
     {
       "id": "RQ-033",
@@ -435,12 +438,13 @@
       "titulo": "Imagens sem regressão de LCP/CLS",
       "descricao": "Imagem de hero com fetchpriority=high, width/height explícitos, lazy fora da primeira dobra.",
       "prioridade": "P1",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [
         "RQ-030"
       ],
       "fonte": "RQ-110",
-      "criterio_aceite": "CLS ≤ 0,1 nas rotas com imagem"
+      "criterio_aceite": "CLS ≤ 0,1 nas rotas com imagem",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/29"
     },
     {
       "id": "RQ-040",
@@ -449,13 +453,14 @@
       "titulo": "Home com o texto canônico RC-LP-001",
       "descricao": "Texto do RC-LP-001 sem reescrita, na anatomia de página (hero, 3 seções de pilar com 'Saiba mais ›', 'Por onde começar?'), na ordem Problema → Conhecimento → Ferramenta → Ação.",
       "prioridade": "P1",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [
         "RQ-020",
         "RQ-030"
       ],
       "fonte": "CF-14; Q7; RC-LP-001; DEC-U12",
-      "criterio_aceite": "Texto idêntico ao canônico (teste compara parágrafos); hig.spec verde"
+      "criterio_aceite": "Texto idêntico ao canônico (teste compara parágrafos); hig.spec verde",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/29"
     },
     {
       "id": "RQ-041",
@@ -464,12 +469,14 @@
       "titulo": "Publicar os 4 artigos canônicos",
       "descricao": "RC-ART-P1-001, RC-ART-P2-001, RC-ART-P3-001 e RC-ART-MASTER-001 como artigos novos pelo pipeline editorial, mantendo IDs e texto.",
       "prioridade": "P1",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [
         "RQ-032"
       ],
       "fonte": "FT-05; Q7; DEC-U12",
-      "criterio_aceite": "4 rotas /blog/:slug novas no hub (ADR-06) e no sitemap"
+      "criterio_aceite": "4 rotas /blog/:slug novas no hub (ADR-06) e no sitemap",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/29",
+      "nota": "Sobre o Stories (DEC-U14): rotas /artigos/:slug/ (não /blog/:slug)."
     },
     {
       "id": "RQ-042",
@@ -478,12 +485,14 @@
       "titulo": "Fontes RC-SRC-001 como referências",
       "descricao": "As 12 fontes viram referências nos artigos e entradas em /evidencias.",
       "prioridade": "P1",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [
         "RQ-041"
       ],
       "fonte": "RC-SRC-001",
-      "criterio_aceite": "Cada fonte com link funcionando"
+      "criterio_aceite": "Cada fonte com link funcionando",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/29",
+      "nota": "O RC-SRC-001 tem 11 fontes (não 12); listadas em /fontes/ (o antigo /evidencias saiu no reset)."
     },
     {
       "id": "RQ-043",
@@ -492,10 +501,11 @@
       "titulo": "Rótulo de conceito metodológico",
       "descricao": "'Processo neuroadaptativo' e a cadeia Risco → Compensação → Solução aparecem como conceitos do projeto, nunca como norma ou constructo científico.",
       "prioridade": "P0",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [],
       "fonte": "CF-15; RC-EDITORIAL-PACK-001 README",
-      "criterio_aceite": "Revisão editorial no PR; nenhum texto atribui o conceito a ISO/W3C"
+      "criterio_aceite": "Revisão editorial no PR; nenhum texto atribui o conceito a ISO/W3C",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/29"
     },
     {
       "id": "RQ-044",
@@ -504,12 +514,13 @@
       "titulo": "Bloco 'Próximo passo' no fim de todo artigo",
       "descricao": "Artigos terminam com um CTA contextual (mapa ou ferramenta) e conteúdos relacionados; o modelo de 9 partes (Promessa → Próximo passo) vale para artigos novos.",
       "prioridade": "P2",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [
         "RQ-053"
       ],
       "fonte": "Índex de rotas §3 e §7",
-      "criterio_aceite": "Todo artigo tem exatamente 1 CTA primário no bloco final"
+      "criterio_aceite": "Todo artigo tem exatamente 1 CTA primário no bloco final",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/29"
     },
     {
       "id": "RQ-045",
@@ -518,12 +529,13 @@
       "titulo": "JSON-LD BlogPosting nos artigos",
       "descricao": "headline, datePublished, dateModified, author, image e publisher (Organization com logo).",
       "prioridade": "P1",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [
         "RQ-041"
       ],
       "fonte": "FT-08; Índex de rotas §12",
-      "criterio_aceite": "Rich Results Test sem erro em 1 artigo de amostra"
+      "criterio_aceite": "Rich Results Test sem erro em 1 artigo de amostra",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/29"
     },
     {
       "id": "RQ-046",
@@ -532,10 +544,12 @@
       "titulo": "Pilares como taxonomia",
       "descricao": "Pilar 1 Riscos Cognitivos, Pilar 2 Processos Neuroadaptativos, Pilar 3 Ferramentas e Soluções mapeados para /temas e para os nós do grafo.",
       "prioridade": "P1",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [],
       "fonte": "RC-LP-001",
-      "criterio_aceite": "Todo artigo canônico tem pilar"
+      "criterio_aceite": "Todo artigo canônico tem pilar",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/29",
+      "nota": "/temas saiu no reset; o pilar mapeia para o artigo canônico do pilar e para os nós do grafo (app/data/article-meta.ts)."
     },
     {
       "id": "RQ-050",
@@ -547,7 +561,8 @@
       "status": "READY",
       "depende_de": [],
       "fonte": "CF-12; CF-13; Q1; Q3; DEC-U6; DEC-U8",
-      "criterio_aceite": "Menu igual no desktop, no drawer e no rodapé-diretório"
+      "criterio_aceite": "Menu igual no desktop, no drawer e no rodapé-diretório",
+      "nota": "Menu Artigos · Ferramentas · Sobre igual no topo, drawer e rodapé (G1). Falta o Mapa: fecha com o PR-H."
     },
     {
       "id": "RQ-051",
@@ -556,10 +571,11 @@
       "titulo": "Toda rota nova no hub e no sitemap",
       "descricao": "Rotas novas (/mapas/explorar, /mapas/explorar/:fatorId, /mapas/personalizar, /ferramentas) entram em app/data/routes.ts.",
       "prioridade": "P0",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [],
       "fonte": "ADR-06",
-      "criterio_aceite": "npm run routes:check verde"
+      "criterio_aceite": "npm run routes:check verde",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/29"
     },
     {
       "id": "RQ-052",
@@ -568,12 +584,14 @@
       "titulo": "Quatro perguntas em toda página",
       "descricao": "Onde estou (eyebrow ou breadcrumb), o que significa (lead), por que importa (seção) e próxima ação (CTA primário).",
       "prioridade": "P1",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [
         "RQ-020"
       ],
       "fonte": "Índex de rotas (regra transversal)",
-      "criterio_aceite": "hig.spec verifica eyebrow, h1, lead e 1 CTA primário por região"
+      "criterio_aceite": "hig.spec verifica eyebrow, h1, lead e 1 CTA primário por região",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/29",
+      "nota": "Exceção: a listagem /artigos/ segue a geometria do handoff Stories (ADR-18)."
     },
     {
       "id": "RQ-053",
@@ -582,10 +600,11 @@
       "titulo": "Escada de CTA e 1 CTA primário por região",
       "descricao": "CTA 0 continuar lendo → 1 exemplo → 2 explorar o mapa → 3 usar a ferramenta → 4 salvar resultado → 5 guia → 6 solução.",
       "prioridade": "P1",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [],
       "fonte": "Índex de rotas §7; neurodesign regra 01",
-      "criterio_aceite": "Nenhuma região com 2 botões primários"
+      "criterio_aceite": "Nenhuma região com 2 botões primários",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/29"
     },
     {
       "id": "RQ-054",
@@ -594,12 +613,13 @@
       "titulo": "Blog como índice por problemas",
       "descricao": "Chips Atenção · Memória · Sobrecarga · Interrupções · Decisão · Organização e 'Explore por' Problemas · Processos · Contextos · Soluções · Ferramentas.",
       "prioridade": "P2",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [
         "RQ-062"
       ],
       "fonte": "Índex de rotas §2",
-      "criterio_aceite": "Chips filtram a lista e são links compartilháveis"
+      "criterio_aceite": "Chips filtram a lista e são links compartilháveis",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/29"
     },
     {
       "id": "RQ-060",
