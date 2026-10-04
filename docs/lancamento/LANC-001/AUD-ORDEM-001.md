@@ -20,7 +20,8 @@
    obrigava a checar um PR aberto que mudasse a base.
 2. **Duas sessões em paralelo, sem cruzamento.** O #19 e o LANC-001 numeraram ADRs iguais (13 e 14) com conteúdos
    diferentes.
-3. **O preview fica atrás do Cloudflare Access**, então o agente não via o site que o usuário via.
+3. **A repetição durante a própria integração:** o PR #27 foi mesclado na `main` enquanto o merge do #19 aguardava o build, gerando um terceiro "ADR-14/15". Resolvido com um segundo merge da `main` no #19.
+4. **O preview fica atrás do Cloudflare Access**, então o agente não via o site que o usuário via.
 
 ## 3. Correção aplicada (Fase 1, neste PR)
 - `git merge origin/main` dentro da branch do PR #19, **com merge commit, sem rebase nem force-push**. Todo commit de
@@ -39,6 +40,7 @@
 | #24 `a955cf5` | Guia "Funções executivas" v8 (docs, outra sessão) | **Mantido** | `apps/blog/docs/editorial/funcoes-executivas/` |
 | #25 `b9c80c0` | `/ferramentas/*` no lugar da Loja, 301 de `/loja/*`, ADR "14" (RQ-100/103) | **A reimplementar** sobre o Stories (Fase 2) | Código no histórico (`b9c80c0`); **ADR-16** registra a decisão |
 | #26 `59342e6` | Shell: menu, trilha dos pilares, drawer, barra inferior, chrome no scroll, heroReveal, carrossel (RQ-020…026) | **A reimplementar** sobre o cabeçalho de 64px do Stories (Fase 2) | Código no histórico (`59342e6`); a classe `rc-hero-reveal` do `PageHero` foi mantida |
+| #27 `f04e936` (outra sessão, mesclado durante a integração) | Rota `/prisma` (Prisma de execução, PWA local-first), intake das 18 áreas, ADR "15" | **Mantido** | `app/routes/prisma.tsx`, `app/features/prisma/`, `public/prisma/`, `tests/prisma.spec.ts`; **ADR-17** (renumerado); link no rodapé |
 
 Arquivos que saíram nesta integração porque testam o que o #19 removeu, e que voltam adaptados na Fase 2:
 - `tests/shell.spec.ts` e `tests/store.spec.ts`;

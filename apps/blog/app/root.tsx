@@ -5,6 +5,7 @@ import {
 	Outlet,
 	Scripts,
 	ScrollRestoration,
+	useMatches,
 } from "react-router";
 
 import type { Route } from "./+types/root";
@@ -23,7 +24,6 @@ export const links: Route.LinksFunction = () => [
 	// Favicon
 	...SITE_METADATA.icons.icon.map((icon) => ({ rel: "icon", type: icon.type, sizes: icon.sizes, href: icon.url })),
 	...SITE_METADATA.icons.apple.map((icon) => ({ rel: "apple-touch-icon", sizes: icon.sizes, href: icon.url })),
-	{ rel: "manifest", href: SITE_METADATA.icons.manifest },
 ];
 
 // Organization com o logo publicado (LANC-001, RQ-002), em todas as rotas.
@@ -44,6 +44,8 @@ const ORGANIZATION_JSON_LD = JSON.stringify({
 const THEME_SCRIPT = `(function(){var s=localStorage.getItem('theme');var d=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.classList.toggle('dark',(s||d)==='dark');})();`;
 
 export function Layout({ children }: { children: React.ReactNode }) {
+	// Uma rota pode trazer o próprio Web App Manifest (`handle.manifest`, ex.: /prisma/); as demais usam o do site.
+	const manifest = useMatches().find((m) => (m.handle as { manifest?: string } | undefined)?.manifest)?.handle as { manifest?: string } | undefined;
 	return (
 		<html lang="pt-BR" suppressHydrationWarning>
 			<head>
@@ -51,6 +53,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 				<meta name="viewport" content="width=device-width,initial-scale=1" />
 				<script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
 				<Meta />
+				<link rel="manifest" href={manifest?.manifest ?? SITE_METADATA.icons.manifest} />
 				<Links />
 				<script type="application/ld+json" dangerouslySetInnerHTML={{ __html: ORGANIZATION_JSON_LD }} />
 			</head>

@@ -57,6 +57,9 @@ export const ROUTES: HubEntry[] = [
   // ---------------------------------------------------------------- Site
   { id: "home", title: "Página inicial", description: "Home do site novo: composição Stories do handoff (destaque, grade, carregar mais).", group: "Site", kind: "route", path: "/", exposure: "public", addedAt: "2026-10-03", source: SRC },
 
+  // ---------------------------------------------------------------- Ferramentas públicas
+  { id: "prisma", title: "Prisma de execução", description: "Primeira solução das Ferramentas cognitivas (externalização cognitiva): formulário, folha A4 e PDF, local-first e instalável (PWA). Manifest e service worker em /prisma/.", group: "Ferramentas públicas", kind: "route", path: "/prisma/", exposure: "public", addedAt: "2026-10-04", source: "RC-PWA-PRISMA-SPECS v1.0.0 (ADR-17)" },
+
   // ---------------------------------------------------------------- Interno (admin)
   { id: "admin", title: "Painel", group: "Interno (admin)", kind: "route", path: "/admin/", description: "Painel de acesso às ferramentas.", exposure: "internal", addedAt: "2026-09-30", source: SRC },
   { id: "admin-design-system", title: "Design System", group: "Interno (admin)", kind: "route", path: "/admin/design-system/", description: "Mood board, storyboard, tokens, callouts, dados, plain text e componentes.", exposure: "internal", addedAt: "2026-09-30", source: SRC },

@@ -5,6 +5,7 @@ import { type RouteConfig, index, route } from "@react-router/dev/routes";
 export default [
 	index("routes/home.tsx"),
 	route("artigos/:slug", "routes/artigos.$slug.tsx"),
+	route("prisma", "routes/prisma.tsx"),
 	route("admin", "routes/admin._index.tsx"),
 	route("admin/design-system", "routes/admin.design-system.tsx"),
 	route("admin/handoff", "routes/admin.handoff.tsx"),

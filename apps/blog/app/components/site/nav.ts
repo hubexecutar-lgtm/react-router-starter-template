@@ -8,7 +8,9 @@ export interface NavItem {
 
 export const PRIMARY_NAV: NavItem[] = [];
 
-export const FOOTER_NAV: { title: string; items: NavItem[] }[] = [];
+export const FOOTER_NAV: { title: string; items: NavItem[] }[] = [
+  { title: "Ferramentas", items: [{ label: "Prisma de execução", href: "/prisma/" }] },
+];
 
 export const isActive = (pathname: string, href: string) =>
   href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(href);

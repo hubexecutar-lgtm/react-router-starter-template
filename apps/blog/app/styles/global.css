@@ -1185,3 +1185,217 @@ html {
     animation: none !important;
   }
 }
+
+/* Prisma A4 (RC-PWA-PRISMA-FRD-001 §6 e §8, ADR-17): a folha é papel, sempre clara — no preview, no tema
+   escuro e na impressão. Os --ps-* são o único lugar com cor da folha (hex só neste arquivo). 210 × 297 mm,
+   margem de 10 mm; o preview mostra a mesma folha reduzida por transform, a impressão a mostra em tamanho real. */
+.prisma-sheet {
+  --ps-paper: #ffffff;
+  --ps-ink: #202124;
+  --ps-muted: #5f6670;
+  --ps-line: #d6d6d3;
+  --ps-soft: #f5f5f4;
+  --ps-model: #eff6ff;
+  --ps-accent: #2563eb;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 5mm;
+  width: 210mm;
+  height: 297mm;
+  padding: 10mm;
+  overflow: hidden;
+  background: var(--ps-paper);
+  color: var(--ps-ink);
+  color-scheme: light;
+  border: 1px solid var(--ps-line);
+  font-family: var(--text-family);
+  font-size: 10pt;
+  line-height: 1.38;
+  overflow-wrap: anywhere;
+}
+.prisma-sheet p,
+.prisma-sheet dd,
+.prisma-sheet li {
+  margin: 0;
+  white-space: pre-line;
+}
+.prisma-sheet p,
+.prisma-sheet dd,
+.prisma-sheet__prio li {
+  max-width: 96ch; /* a medida de leitura do site (ADR-12) vale na folha, em ch do corpo da folha (~70 caracteres) */
+}
+.prisma-sheet__brand,
+.prisma-sheet__label,
+.prisma-sheet dt {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 7.5pt;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ps-muted);
+}
+.prisma-sheet__head {
+  display: grid;
+  gap: 1.5mm;
+  padding-bottom: 4mm;
+  border-bottom: 2px solid var(--ps-accent);
+}
+.prisma-sheet__head .prisma-sheet__brand {
+  color: var(--ps-accent);
+}
+.prisma-sheet__title {
+  margin: 0;
+  font-size: 24pt;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+.prisma-sheet__name {
+  font-size: 11pt;
+  color: var(--ps-muted);
+}
+.prisma-sheet__goal {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 3mm;
+  margin: 0;
+}
+.prisma-sheet__goal > div {
+  min-width: 0;
+  padding: 3mm 4mm;
+  background: var(--ps-soft);
+  border-radius: 2px;
+}
+.prisma-sheet__goal dd {
+  margin-top: 1mm;
+  font-size: 11pt;
+  font-weight: 600;
+}
+.prisma-sheet__chain {
+  display: flex;
+  flex-direction: column;
+  gap: 3.5mm;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.prisma-sheet__step {
+  max-width: none; /* anula a medida de li do site: a folha usa a largura toda */
+  position: relative;
+  display: grid;
+  grid-template-columns: 28mm minmax(0, 1fr);
+  gap: 4mm;
+  padding: 3mm 4mm;
+  background: var(--ps-soft);
+  border-radius: 2px;
+}
+.prisma-sheet__step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 14mm;
+  bottom: -3mm;
+  width: 3mm;
+  height: 2.2mm;
+  background: var(--ps-accent);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+.prisma-sheet__step--action {
+  background: var(--ps-model);
+  border-left: 3px solid var(--ps-accent);
+}
+.prisma-sheet__step--action .prisma-sheet__label {
+  color: var(--ps-accent);
+}
+.prisma-sheet__cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4mm;
+}
+.prisma-sheet__cols > section {
+  min-width: 0;
+  padding: 3mm 4mm;
+  background: var(--ps-soft);
+  border-radius: 2px;
+}
+.prisma-sheet__cols .prisma-sheet__label {
+  margin-bottom: 1.5mm;
+}
+.prisma-sheet__prio {
+  margin: 0;
+  padding-left: 5mm;
+  list-style: decimal;
+}
+.prisma-sheet__prio li {
+  padding-left: 1mm;
+}
+.prisma-sheet__prio li::marker {
+  font-family: var(--font-mono);
+  font-size: 8pt;
+  color: var(--ps-muted);
+}
+.prisma-sheet__foot {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 6mm;
+  margin-top: auto;
+  padding-top: 3mm;
+  border-top: 1px solid var(--ps-line);
+  font-size: 8pt;
+  color: var(--ps-muted);
+}
+.prisma-sheet__foot p {
+  max-width: 125mm;
+}
+
+@page prisma {
+  size: A4;
+  margin: 0;
+}
+@media print {
+  /* só a folha vai ao papel: sem cabeçalho, rodapé, formulário, botões nem explicações */
+  body:has(.prisma-sheet) > *:not(main),
+  body:has(.prisma-sheet) .prisma-noprint {
+    display: none !important;
+  }
+  html:has(.prisma-sheet),
+  body:has(.prisma-sheet),
+  body:has(.prisma-sheet) main {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+  }
+  body:has(.prisma-sheet) main > section {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: none !important;
+  }
+  .prisma-stage {
+    height: auto !important;
+    max-width: none !important;
+    margin: 0 !important;
+  }
+  .prisma-fit {
+    width: auto !important;
+    height: auto !important;
+    transform: none !important;
+  }
+  .prisma-sheet {
+    page: prisma;
+    border: 0;
+    break-inside: avoid;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+@supports not (page: prisma) {
+  @media print {
+    .prisma-sheet {
+      width: auto;
+      height: auto;
+      padding: 0;
+    }
+  }
+}
