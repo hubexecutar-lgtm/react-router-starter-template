@@ -1,7 +1,7 @@
 # LANC-001 — PRD · Risco Cognitivo: lançamento editorial + mapa causal
 
-- **ID:** RC-PRD-001 · **Versão:** 0.1.0 · **Data:** 2026-10-04 · **Status:** PREPARED (aguarda Q1–Q8)
-- **Owner:** A DEFINIR (GAP-01) · **App:** `apps/blog` (Risco Cognitivo) · **Produção:** `main` → Workers Builds
+- **ID:** RC-PRD-001 · **Versão:** 0.2.0 · **Data:** 2026-10-04 · **Status:** READY (Q1–Q8 respondidas)
+- **Owner:** Leonardo (DEC-U10) · **App:** `apps/blog` (Risco Cognitivo) · **Produção:** `main` → Workers Builds
 - **Fontes:** `intake/` (LANC-001 e DOCS-002), decisões DEC-U1…U5, conflitos CF-01…15 (`01-DECISOES-E-AMBIGUIDADES.md`)
 
 ## 1. Problema
@@ -11,7 +11,7 @@ O site já publica conteúdo editorial sobre risco cognitivo, mas:
 - a identidade e a navegação ainda não seguem os mockups aprovados (v6/v7);
 - o conteúdo canônico novo (3 pilares, 4 artigos, fontes) ainda não está publicado;
 - não existe ponte entre ler e investigar: o mapa (`/mapas`) é estático e não há ferramenta nem resultado;
-- o conhecimento (fatores, compensações, evidências) não está num modelo de dados, então artigos, mapa, Loja e
+- o conhecimento (fatores, compensações, evidências) não está num modelo de dados, então artigos, mapa, Ferramentas e
   analytics não se correlacionam (Teia Única).
 
 ## 2. Objetivo
@@ -29,12 +29,14 @@ nunca a característica individual como risco (RC-LP-001, CF-06).
 
 | Dentro (esta onda) | Fora (backlog ou bloqueado) |
 |---|---|
-| Logo e favicon (EP-01) | Simulação "e se…" estilo LOOPY (RQ-081) |
-| Tokens Brand Local + ilustração + motion (EP-02) | Ferramentas, Resultado e conteúdo do scanner (EP-10, GAP-02) |
-| Shell e navegação v6/v7 (EP-03) | Analytics de eventos (RQ-111, GAP-03) |
-| Imagens RC e bloco 100vh do artigo (EP-04) | Adapters da Teia na Loja e no Quick Framework (EP-12, GAP-01) |
+| Logo e favicon (EP-01) · Ferramentas cognitivas no lugar da Loja (RQ-103, RQ-100) | Simulação "e se…" estilo LOOPY (RQ-081) |
+| Tokens Brand Local + ilustração + motion (EP-02) | — |
+| Shell e navegação v6/v7 (EP-03) | Ferramenta piloto e Resultado (RQ-101/102, GAP-02/07) |
+| Imagens RC e imagem em todo artigo (EP-04) | Regras de uso do logo (RQ-003, GAP-04) |
 | Home e 4 artigos canônicos + fontes (EP-05) | Contas de usuário, persistência em servidor |
 | Menu, jornada e CTAs (EP-06) | Supabase (CF-08) |
+| Analytics: Cloudflare Web Analytics + Workers Analytics Engine (EP-11) | |
+| Adapters da Teia: registries, Quick Framework, Ferramentas (EP-12) | |
 | Schema do grafo + grafo inicial (EP-07) | |
 | Mapa Explorar + Detalhe + Lista (EP-08); Personalizar (EP-09, P2) | |
 
@@ -54,7 +56,7 @@ nunca a característica individual como risco (RC-LP-001, CF-06).
 |---|---|---|
 | Core Web Vitals p75 (mobile e desktop) | LCP ≤ 2,5s · INP ≤ 200ms · CLS ≤ 0,1 | RQ-110 |
 | Gate HIG | 0 P0/P1 em todas as rotas | `tests/hig.spec.ts` |
-| Artigo → mapa ou ferramenta | taxa de clique no CTA final (linha de base na 1ª semana) | RQ-111 (quando GAP-03 fechar) |
+| Artigo → mapa ou ferramenta | taxa de clique no CTA final (linha de base na 1ª semana) | RQ-111 (Workers Analytics Engine) |
 | Mapa: sessões com ≥ 2 nós explorados | linha de base na 1ª semana | idem |
 | Rastreabilidade | 100% dos nós com artigo de origem; 0 números sem evidência | testes do RQ-062/RQ-063 |
 
@@ -67,12 +69,12 @@ nunca a característica individual como risco (RC-LP-001, CF-06).
 | Enquadramento clínico (saúde, idade) entra pelo mockup | Nós de exemplo descartados (CF-06) |
 | Coral e azul claro sem contraste | Só decorativos (RQ-012) |
 | Mudar URLs derruba SEO | Manter URLs, mudar rótulos (CF-13) |
-| Decisões em aberto travam a onda | P0 e P1 READY podem começar; NEEDS_CONFIRMATION esperam Q1–Q8 |
+| Retirar a Loja quebra links externos | 301 de `/loja/*` para `/ferramentas/*` (RQ-103) |
 
 ## 8. Entregáveis por PR (ordem em `00-PLANO-DE-IMPORTANCIA.md`)
 
-PR-A logo · PR-B tokens + ADR-13 · PR-C shell · PR-D imagens · PR-E conteúdo · PR-F jornada · PR-G grafo ·
-PR-H mapa · PR-I personalizar · PR-J ferramentas · PR-K medição · PR-L adapters da Teia.
+PR-A logo · PR-B tokens + ADR-13 · PR-C shell · PR-D imagens · PR-E conteúdo · PR-F jornada · PR-J1 ferramentas ·
+PR-G grafo · PR-H mapa · PR-I personalizar · PR-K medição · PR-L adapters da Teia · PR-J2 ferramenta piloto (bloqueado).
 
 Especificações: `03-FRD.md` (requisitos), `04-UIX-SPEC.md` (telas e interação), `05-TOKENS-SPEC.md`
 (tokens), `06-DATA-SPEC-GRAFO-CAUSAL.md` (dados).

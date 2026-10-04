@@ -1,7 +1,8 @@
 # LANC-001 — Data spec: grafo causal único (Teia Única + mapa)
 
 - **ID:** RC-DATA-001 · **Versão:** 0.1.0 · **Decisões:** CF-05, CF-06, CF-08, CF-09, CF-16
-- **Formato de armazenamento:** `CORRELATION_RECORD.schema.json` da Teia Única (intake), sem campos removidos.
+- **Formato de armazenamento:** `CORRELATION_RECORD.schema.json` da Teia Única (intake), sem campos removidos. Teia **Aceita**, OWNER Leonardo (DEC-U10, ADR-M04).
+- **Adapter `ADAPTER_SOLUTION_STORE.yaml`:** passa a alimentar **Ferramentas cognitivas** (a Loja não existe, DEC-U9).
 - **Projeção de interface:** o mapa causal lê o mesmo grafo e projeta os tipos da Teia para os 9 tipos visuais da
   spec RC-MOBILE-CAUSAL-MAP-UI-001. **Projeção não é fonte** (princípio da Teia).
 
@@ -9,7 +10,7 @@
 
 A Teia Única (Typed Property Graph), o Causal Knowledge Graph e o `causal_data_model` da spec do mapa descrevem os
 mesmos objetos com vocabulários diferentes. O schema da Teia é o mais completo: tem proveniência, papel epistêmico,
-status e IDs nativos. Ele vira o armazenamento, e cada superfície (mapa, artigo, Loja, analytics) é uma projeção.
+status e IDs nativos. Ele vira o armazenamento, e cada superfície (mapa, artigo, Ferramentas cognitivas, analytics) é uma projeção.
 
 ## 2. Cadeia canônica → tipos da Teia → tipo visual do mapa
 
@@ -87,4 +88,4 @@ Fonte: RC-ART-P1-001 e RC-ART-P3-001. Candidatos a nó, a extrair e conferir no 
 
 Na Teia, `EVENT` quer dizer **evento observável de analytics** (clique, conclusão). A cadeia causal usa "Evento"
 para **evento operacional** (erro, omissão). A proposta acima usa `OPERATIONAL_IMPACT` com a tag `stage:event`, sem
-mudar o schema. Alternativa: acrescentar o tipo `OPERATIONAL_EVENT` na v0.2.0 da Teia. Decisão do OWNER (GAP-01).
+mudar o schema. Alternativa: acrescentar o tipo `OPERATIONAL_EVENT` na v0.2.0 da Teia. Decisão do OWNER da Teia, **Leonardo** (DEC-U10); até lá vale a proposta da tag, que não muda o schema.

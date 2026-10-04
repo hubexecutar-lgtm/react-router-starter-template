@@ -1,6 +1,6 @@
 {
   "id": "RC-LANC-001-REQ",
-  "versao": "0.1.0",
+  "versao": "0.2.0",
   "data": "2026-10-04",
   "legenda": {
     "prioridade": {
@@ -13,7 +13,8 @@
       "READY": "pronto para /plan",
       "NEEDS_CONFIRMATION": "depende de pergunta Q* em 01-DECISOES",
       "BLOCKED": "depende de GAP*",
-      "BACKLOG": "fora desta onda"
+      "BACKLOG": "fora desta onda",
+      "DONE": "em main; preencher entregue_em (PR) no requisito"
     }
   },
   "epicos": [
@@ -64,7 +65,7 @@
     },
     {
       "id": "EP-10",
-      "nome": "Ferramentas e Resultado",
+      "nome": "Ferramentas cognitivas (substitui a Loja) e Resultado",
       "pr": "PR-J"
     },
     {
@@ -74,7 +75,7 @@
     },
     {
       "id": "EP-12",
-      "nome": "Adapters da Teia Única (Quick Framework, Loja)",
+      "nome": "Adapters da Teia Única (Quick Framework, Ferramentas, registries)",
       "pr": "PR-L"
     }
   ],
@@ -115,7 +116,7 @@
       "prioridade": "P2",
       "status": "BLOCKED",
       "depende_de": [],
-      "fonte": "GAP-04; CF-10",
+      "fonte": "GAP-04; CF-10; OWNER Leonardo decide (DEC-U10)",
       "criterio_aceite": "Regras registradas no ADR de marca"
     },
     {
@@ -207,12 +208,12 @@
       "titulo": "Nav global no desktop (≥ 900px)",
       "descricao": "Links visíveis (Artigos · Mapa · Ferramentas · Sobre) e trilha de categorias inline; sem botão de menu.",
       "prioridade": "P0",
-      "status": "NEEDS_CONFIRMATION",
+      "status": "READY",
       "depende_de": [
         "RQ-010",
         "RQ-050"
       ],
-      "fonte": "DEC-U1; FT-04; CF-12; Q1",
+      "fonte": "DEC-U1; FT-04; CF-12; Q1; DEC-U6",
       "criterio_aceite": "Em 1280px os links estão visíveis e o drawer não existe no DOM acessível"
     },
     {
@@ -222,12 +223,12 @@
       "titulo": "Drawer e barra inferior no mobile (< 900px)",
       "descricao": "Botão de menu abre drawer (largura min(84vw,360px)); barra inferior com 3 itens (Início · Mapa · Ferramentas).",
       "prioridade": "P0",
-      "status": "NEEDS_CONFIRMATION",
+      "status": "READY",
       "depende_de": [
         "RQ-010",
         "RQ-050"
       ],
-      "fonte": "DEC-U1; FT-04; CF-12; Q1",
+      "fonte": "DEC-U1; FT-04; CF-12; Q1; DEC-U6",
       "criterio_aceite": "Em 390px: barra inferior com 3 destinos; drawer abre e fecha por toque"
     },
     {
@@ -330,14 +331,14 @@
       "epico": "EP-04",
       "tipo": "FR",
       "titulo": "Bloco de imagem vertical 100vh em todo artigo",
-      "descricao": "Art direction: retrato no mobile e 16:9 no desktop, sem cortar pessoa nem cérebro; artigo sem ilustração própria usa a do seu pilar. Exige emenda ao ADR-12.",
+      "descricao": "Todo artigo tem imagem (decisão do usuário): bloco vertical 100vh com art direction (retrato no mobile, 16:9 no desktop), sem cortar pessoa nem cérebro; artigo sem ilustração própria usa a do seu pilar. Emenda ao ADR-12 ('artigo sem ilustração fica sem imagem' deixa de valer).",
       "prioridade": "P1",
-      "status": "NEEDS_CONFIRMATION",
+      "status": "READY",
       "depende_de": [
         "RQ-030"
       ],
-      "fonte": "DEC-U1; CF-11; Q2",
-      "criterio_aceite": "Todo artigo renderiza o bloco; <picture> com 2 fontes; teste de reflow 320px verde"
+      "fonte": "DEC-U1; CF-11; Q2; DEC-U7",
+      "criterio_aceite": "Teste falha se algum artigo publicado não renderizar imagem; <picture> com 2 fontes; reflow 320px verde"
     },
     {
       "id": "RQ-033",
@@ -360,12 +361,12 @@
       "titulo": "Home com o texto canônico RC-LP-001",
       "descricao": "Texto do RC-LP-001 sem reescrita, na anatomia de página (hero, 3 seções de pilar com 'Saiba mais ›', 'Por onde começar?'), na ordem Problema → Conhecimento → Ferramenta → Ação.",
       "prioridade": "P1",
-      "status": "NEEDS_CONFIRMATION",
+      "status": "READY",
       "depende_de": [
         "RQ-020",
         "RQ-030"
       ],
-      "fonte": "CF-14; Q7; RC-LP-001",
+      "fonte": "CF-14; Q7; RC-LP-001; DEC-U12",
       "criterio_aceite": "Texto idêntico ao canônico (teste compara parágrafos); hig.spec verde"
     },
     {
@@ -375,11 +376,11 @@
       "titulo": "Publicar os 4 artigos canônicos",
       "descricao": "RC-ART-P1-001, RC-ART-P2-001, RC-ART-P3-001 e RC-ART-MASTER-001 como artigos novos pelo pipeline editorial, mantendo IDs e texto.",
       "prioridade": "P1",
-      "status": "NEEDS_CONFIRMATION",
+      "status": "READY",
       "depende_de": [
         "RQ-032"
       ],
-      "fonte": "FT-05; Q7",
+      "fonte": "FT-05; Q7; DEC-U12",
       "criterio_aceite": "4 rotas /blog/:slug novas no hub (ADR-06) e no sitemap"
     },
     {
@@ -453,11 +454,11 @@
       "epico": "EP-06",
       "tipo": "FR",
       "titulo": "Menu principal Artigos · Mapa · Ferramentas · Sobre",
-      "descricao": "Rótulos novos sobre URLs existentes: Artigos → /blog, Mapa → /mapas, Sobre → /about; Ferramentas → /ferramentas (nova).",
+      "descricao": "Rótulos novos sobre URLs mantidas: Artigos → /blog, Mapa → /mapas, Sobre → /about; Ferramentas → /ferramentas (Ferramentas cognitivas, substitui a Loja, RQ-103).",
       "prioridade": "P0",
-      "status": "NEEDS_CONFIRMATION",
+      "status": "READY",
       "depende_de": [],
-      "fonte": "CF-12; CF-13; Q1; Q3",
+      "fonte": "CF-12; CF-13; Q1; Q3; DEC-U6; DEC-U8",
       "criterio_aceite": "Menu igual no desktop, no drawer e no rodapé-diretório"
     },
     {
@@ -531,9 +532,9 @@
       "titulo": "Cadeia causal canônica",
       "descricao": "Objetivo → Contexto → Demanda → Vulnerabilidade → Exposição → Risco → Evento → Impacto → Compensação → Controle/Solução → Resultado → Medição → Aprendizado.",
       "prioridade": "P1",
-      "status": "NEEDS_CONFIRMATION",
+      "status": "READY",
       "depende_de": [],
-      "fonte": "CF-05; Q8",
+      "fonte": "CF-05; Q8; DEC-U13",
       "criterio_aceite": "Enum de tipos do schema = esta cadeia + evidence"
     },
     {
@@ -763,26 +764,26 @@
       "titulo": "Personalizar em 3 passos",
       "descricao": "/mapas/personalizar: focos de trabalho, interesses e 'Mostrar evidências'; muda só a ordem e o destaque, nunca os fatos; guardado localmente, sem conta.",
       "prioridade": "P2",
-      "status": "NEEDS_CONFIRMATION",
+      "status": "READY",
       "depende_de": [
         "RQ-070"
       ],
-      "fonte": "RC-MOBILE SCR-04; CF-07",
+      "fonte": "RC-MOBILE SCR-04; CF-07; CF-07 (ASSUMPTION mantida)",
       "criterio_aceite": "Limpar dados do navegador volta ao padrão; nenhum dado sai do dispositivo"
     },
     {
       "id": "RQ-100",
       "epico": "EP-10",
       "tipo": "FR",
-      "titulo": "Índice de Ferramentas",
-      "descricao": "/ferramentas lista scanner, checklists e avaliações com o mesmo card-célula.",
+      "titulo": "Ferramentas cognitivas: índice em /ferramentas",
+      "descricao": "/ferramentas lista as ferramentas cognitivas (scanner, checklists, avaliações, ferramentas HTML, workbooks…) reaproveitando o catálogo e os componentes de app/features/store; rótulos e textos falam em ferramentas, nunca em loja ou compra.",
       "prioridade": "P2",
-      "status": "BLOCKED",
+      "status": "READY",
       "depende_de": [
-        "RQ-050"
+        "RQ-103"
       ],
-      "fonte": "GAP-02; GAP-06; Q4",
-      "criterio_aceite": "—"
+      "fonte": "DEC-U9; GAP-06 (fechada); ADR-08",
+      "criterio_aceite": "/ferramentas e /ferramentas/:tipo/:slug renderizam o catálogo; nenhum texto 'Loja' visível; tests/store.spec.ts migrado e verde"
     },
     {
       "id": "RQ-101",
@@ -813,11 +814,25 @@
       "criterio_aceite": "—"
     },
     {
+      "id": "RQ-103",
+      "epico": "EP-10",
+      "tipo": "FR",
+      "titulo": "Retirar a Loja: /loja vira /ferramentas",
+      "descricao": "A Loja deixa de existir (decisão do usuário). Rotas /loja, /loja/:tipo e /loja/:tipo/:slug passam a /ferramentas/… com redirect 301 em public/_redirects; nav, hub (ADR-06), sitemap e prerender atualizados; ADR-08 marcado como substituído por um ADR novo de Ferramentas cognitivas.",
+      "prioridade": "P1",
+      "status": "READY",
+      "depende_de": [
+        "RQ-050"
+      ],
+      "fonte": "DEC-U9; DEC-U8 (URLs mantidas, exceto a Loja); ADR-08",
+      "criterio_aceite": "GET /loja/ e /loja/:tipo/:slug/ respondem 301 para o caminho equivalente em /ferramentas; routes:check verde; nenhum link interno para /loja"
+    },
+    {
       "id": "RQ-110",
       "epico": "EP-11",
       "tipo": "NFR",
       "titulo": "Gate de Core Web Vitals",
-      "descricao": "p75 mobile e desktop: LCP ≤ 2,5s, INP ≤ 200ms, CLS ≤ 0,1.",
+      "descricao": "p75 mobile e desktop: LCP ≤ 2,5s, INP ≤ 200ms, CLS ≤ 0,1. Medição de campo pelo Cloudflare Web Analytics (DEC-U11).",
       "prioridade": "P1",
       "status": "READY",
       "depende_de": [],
@@ -829,14 +844,14 @@
       "epico": "EP-11",
       "tipo": "FR",
       "titulo": "Eventos por estágio da jornada",
-      "descricao": "BLOG/ARTICLE/TOOL/RESULT/BUSINESS com problem_id, solution_id, capability_id, asset_id, qfw_id, campaign_id quando houver.",
+      "descricao": "Cloudflare Web Analytics (beacon) para páginas e Core Web Vitals reais; eventos por estágio (BLOG/ARTICLE/TOOL/RESULT/BUSINESS) gravados no Workers Analytics Engine via binding, com problem_id, solution_id, capability_id, asset_id, qfw_id, campaign_id quando houver. Sem cookies nem dado pessoal.",
       "prioridade": "P2",
-      "status": "BLOCKED",
+      "status": "READY",
       "depende_de": [
         "RQ-060"
       ],
-      "fonte": "Índex de rotas §11; Teia N8; GAP-03",
-      "criterio_aceite": "—"
+      "fonte": "Índex de rotas §11; Teia N8; DEC-U11",
+      "criterio_aceite": "Binding analytics_engine no wrangler.jsonc; teste unitário do emissor de eventos; nenhum identificador pessoal no payload"
     },
     {
       "id": "RQ-120",
@@ -845,25 +860,26 @@
       "titulo": "correlation_refs no Quick Framework",
       "descricao": "Adapter adiciona correlation_refs e solution_candidates sem mudar as 12 seções.",
       "prioridade": "P3",
-      "status": "BLOCKED",
+      "status": "READY",
       "depende_de": [
         "RQ-060"
       ],
-      "fonte": "Teia N2; GAP-01",
+      "fonte": "Teia N2; DEC-U10",
       "criterio_aceite": "—"
     },
     {
       "id": "RQ-121",
       "epico": "EP-12",
       "tipo": "DATA",
-      "titulo": "Descoberta na Loja por problema + compensação",
-      "descricao": "Loja ganha correlation_refs e filtro por problem + operational_function + compensation + fit.",
+      "titulo": "Descoberta em Ferramentas por problema + compensação",
+      "descricao": "Ferramentas ganham correlation_refs e filtro por problem + operational_function + compensation + fit (adapter da Teia antes chamado Solution Store).",
       "prioridade": "P3",
-      "status": "BLOCKED",
+      "status": "READY",
       "depende_de": [
-        "RQ-060"
+        "RQ-060",
+        "RQ-100"
       ],
-      "fonte": "Teia N3/N7; GAP-01",
+      "fonte": "Teia N3/N7; DEC-U10",
       "criterio_aceite": "—"
     },
     {
@@ -873,11 +889,11 @@
       "titulo": "Registries canônicos",
       "descricao": "problems, operational_functions, cognitive_capacities, factors, compensations, controls, capabilities, app_features.",
       "prioridade": "P3",
-      "status": "BLOCKED",
+      "status": "READY",
       "depende_de": [
         "RQ-060"
       ],
-      "fonte": "Teia N1; GAP-01",
+      "fonte": "Teia N1; DEC-U10",
       "criterio_aceite": "—"
     }
   ]

@@ -13,18 +13,19 @@
 | — | `/mapas/explorar` | **nova** | SCR-02 Explorar (RQ-070) |
 | — | `/mapas/explorar/:fatorId` | **nova** | SCR-03 Detalhe (RQ-072) |
 | — | `/mapas/personalizar` | **nova**, P2 | SCR-04 (RQ-090) |
-| Ferramentas | `/ferramentas` | **nova**, bloqueada | RQ-100 (GAP-02) |
+| Ferramentas cognitivas | `/ferramentas`, `/ferramentas/:tipo`, `/ferramentas/:tipo/:slug` | **nova**, substitui a Loja | catálogo reaproveitado (RQ-100, RQ-103) |
+| — | `/loja/*` | **retirada** | 301 para `/ferramentas/*` (DEC-U9) |
 | Sobre | `/about` | existe; rótulo novo | — |
-| Temas, Guias, Evidências, Loja | `/temas`, `/guias`, `/evidencias`, `/loja` | existem | ficam no drawer e no rodapé-diretório |
+| Temas, Guias, Evidências | `/temas`, `/guias`, `/evidencias` | existem | ficam no drawer e no rodapé-diretório |
 
-URLs mantidas e só os rótulos mudam (CF-13, Q3). Toda rota nova entra no hub (RQ-051).
+URLs mantidas e só os rótulos mudam (DEC-U8), exceto a Loja, que deixa de existir (DEC-U9). Toda rota nova entra no hub (RQ-051).
 
 ## 2. Shell (todas as rotas)
 
 | Elemento | Desktop ≥ 900px | Mobile < 900px |
 |---|---|---|
 | Nav superior | marca + Artigos · Mapa · Ferramentas · Sobre + busca; trilha de categorias inline (RQ-020) | marca + busca + botão de menu |
-| Drawer | não existe | `min(84vw,360px)`, todos os destinos + Temas, Guias, Evidências, Loja (RQ-021, RQ-023) |
+| Drawer | não existe | `min(84vw,360px)`, todos os destinos + Temas, Guias, Evidências (RQ-021, RQ-023) |
 | Barra inferior | não existe | Início · Mapa · Ferramentas, alvo ≥ 44px (RQ-021, RQ-025) |
 | Scroll | nav esconde ao descer e volta ao subir | nav **e** barra inferior escondem e voltam juntas (RQ-022) |
 | Rodapé | rodapé-diretório (ADR-M03) | idem, em coluna |
@@ -47,9 +48,9 @@ Estados do chrome: `visível` → (desce > limiar) → `oculto` → (sobe, foco 
 
 **Home (RQ-040, ordem do Índex):** Hero (título RC-LP-001, lead, 2 ações: Explorar riscos · Ler os 3 pilares)
 → "O que você está enfrentando?" (chips de problema) → Entenda (3 pilares, cada um com "Saiba mais ›")
-→ Investigue (Mapa; Ferramentas quando houver) → Aplique (Guias/Loja) → Continue (próximo conteúdo).
+→ Investigue (Mapa, Ferramentas cognitivas) → Aplique (Guias) → Continue (próximo conteúdo).
 
-**Artigo (RQ-032, RQ-044, RQ-045):** eyebrow (pilar) + h1 + lead → bloco de imagem 100vh (retrato no mobile,
+**Artigo (RQ-032, RQ-044, RQ-045):** eyebrow (pilar) + h1 + lead → bloco de imagem 100vh, **obrigatório em todo artigo** (DEC-U7) (retrato no mobile,
 16:9 no desktop) → corpo dentro de `--measure` → referências → bloco "Próximo passo" (1 CTA primário + relacionados).
 
 **Mapa / Explorar (SCR-02):**

@@ -1,17 +1,17 @@
 # LANC-001 — FRD (requisitos funcionais e não funcionais)
 
-- **ID:** RC-FRD-001 · **Versão:** 0.1.0 · **Gerado de:** `requisitos.json` por `render.py` (não editar à mão: editar o JSON e rodar `python3 render.py`)
+- **ID:** RC-FRD-001 · **Versão:** 0.2.0 · **Gerado de:** `requisitos.json` por `render.py` (não editar à mão: editar o JSON e rodar `python3 render.py`)
 - **Tipos:** FR funcional · NFR não funcional · RULE regra · CONTENT conteúdo · DATA dados
-- **Status:** READY · NEEDS_CONFIRMATION (pergunta Q*) · BLOCKED (lacuna GAP*) · BACKLOG
+- **Status:** READY (pronto para /plan) · NEEDS_CONFIRMATION (depende de pergunta Q* em 01-DECISOES) · BLOCKED (depende de GAP*) · BACKLOG (fora desta onda) · DONE (em main; preencher entregue_em (PR) no requisito)
 
-| Prioridade | READY | NEEDS_CONFIRMATION | BLOCKED | BACKLOG |
-|---|---|---|---|---|
-| P0 | 13 | 3 | 0 | 0 |
-| P1 | 21 | 4 | 0 | 0 |
-| P2 | 7 | 1 | 3 | 0 |
-| P3 | 1 | 0 | 5 | 1 |
+| Prioridade | READY | NEEDS_CONFIRMATION | BLOCKED | BACKLOG | DONE |
+|---|---|---|---|---|---|
+| P0 | 16 | 0 | 0 | 0 | 0 |
+| P1 | 26 | 0 | 0 | 0 | 0 |
+| P2 | 10 | 0 | 1 | 0 | 0 |
+| P3 | 4 | 0 | 2 | 1 | 0 |
 
-Total: 59 requisitos em 12 épicos.
+Total: 60 requisitos em 12 épicos.
 
 ## EP-01 — Marca e ícones (PR-A)
 
@@ -19,7 +19,7 @@ Total: 59 requisitos em 12 épicos.
 |---|---|---|---|---|---|---|---|
 | RQ-001 | FR | P0 | READY | **Favicon e ícones do pacote BRAND-ASSET-LOGO-001.** Substituir apps/blog/public/favicon/* por favicon.ico (16/32/48/64), PNG 16/32/96, apple-touch-icon 180, PWA 192/512 e maskable 512; links em root.tsx conforme o README do pacote; site.webmanifest com nome Risco Cognitivo. | Os 5 <link> do README presentes no HTML de todas as rotas; manifest válido; arquivos com o sha256 do MANIFEST; npm test verde | — | intake/LOGO_FAVICON_PACKAGE_v1.0.0; CF-10 |
 | RQ-002 | FR | P2 | READY | **Logo como identidade em JSON-LD e social.** Usar logo-transparent e social/logo-square-1200x1200 como Organization.logo no JSON-LD e como avatar; OG das páginas continua usando a imagem de hero. | Organization.logo aponta para arquivo publicado; validador de dados estruturados sem erro | RQ-001, RQ-045 | intake/LOGO_FAVICON_PACKAGE_v1.0.0 |
-| RQ-003 | RULE | P2 | BLOCKED | **Regras de uso do logo.** Definir tamanho mínimo, área de respiro e fundos permitidos antes de usar o logo em cabeçalho. | Regras registradas no ADR de marca | — | GAP-04; CF-10 |
+| RQ-003 | RULE | P2 | BLOCKED | **Regras de uso do logo.** Definir tamanho mínimo, área de respiro e fundos permitidos antes de usar o logo em cabeçalho. | Regras registradas no ADR de marca | — | GAP-04; CF-10; OWNER Leonardo decide (DEC-U10) |
 
 ## EP-02 — Tokens: interface, ilustração, gráficos e motion (PR-B)
 
@@ -36,8 +36,8 @@ Total: 59 requisitos em 12 épicos.
 
 | ID | Tipo | Prio | Status | Requisito | Critério de aceite | Depende | Fonte |
 |---|---|---|---|---|---|---|---|
-| RQ-020 | FR | P0 | NEEDS_CONFIRMATION | **Nav global no desktop (≥ 900px).** Links visíveis (Artigos · Mapa · Ferramentas · Sobre) e trilha de categorias inline; sem botão de menu. | Em 1280px os links estão visíveis e o drawer não existe no DOM acessível | RQ-010, RQ-050 | DEC-U1; FT-04; CF-12; Q1 |
-| RQ-021 | FR | P0 | NEEDS_CONFIRMATION | **Drawer e barra inferior no mobile (< 900px).** Botão de menu abre drawer (largura min(84vw,360px)); barra inferior com 3 itens (Início · Mapa · Ferramentas). | Em 390px: barra inferior com 3 destinos; drawer abre e fecha por toque | RQ-010, RQ-050 | DEC-U1; FT-04; CF-12; Q1 |
+| RQ-020 | FR | P0 | READY | **Nav global no desktop (≥ 900px).** Links visíveis (Artigos · Mapa · Ferramentas · Sobre) e trilha de categorias inline; sem botão de menu. | Em 1280px os links estão visíveis e o drawer não existe no DOM acessível | RQ-010, RQ-050 | DEC-U1; FT-04; CF-12; Q1; DEC-U6 |
+| RQ-021 | FR | P0 | READY | **Drawer e barra inferior no mobile (< 900px).** Botão de menu abre drawer (largura min(84vw,360px)); barra inferior com 3 itens (Início · Mapa · Ferramentas). | Em 390px: barra inferior com 3 destinos; drawer abre e fecha por toque | RQ-010, RQ-050 | DEC-U1; FT-04; CF-12; Q1; DEC-U6 |
 | RQ-022 | FR | P1 | READY | **Chrome que esconde junto no scroll.** Nav superior e barra inferior escondem juntas ao rolar para baixo e voltam ao rolar para cima; ficam visíveis com o drawer aberto e quando o foco do teclado está nelas. | Teste Playwright: rolar 600px esconde, rolar -100px mostra; Tab na nav mostra | RQ-020, RQ-021 | intake/README.md (v6 item 1); DEC-U1 |
 | RQ-023 | NFR | P0 | READY | **Drawer acessível.** aria-expanded no botão, foco preso, Esc fecha, foco volta ao botão, fundo inert. | hig.spec.ts sem P0/P1; teste de teclado do drawer | RQ-021 | ADR-M03; UX-GOV-HIG-001 |
 | RQ-024 | FR | P1 | READY | **Hero com heroReveal.** Hero das páginas aplica heroReveal (RQ-014) sem atrasar o LCP (texto visível no primeiro paint com reduced-motion). | LCP sem regressão em relação a main | RQ-014 | DEC-U1; FT-02 |
@@ -50,15 +50,15 @@ Total: 59 requisitos em 12 épicos.
 |---|---|---|---|---|---|---|---|
 | RQ-030 | CONTENT | P1 | READY | **Importar as 6 ilustrações RC_* para o banco.** WebP em public/images com variantes 16:9 e retrato; entradas no docs/banco-imagens/manifest.json com tem_texto false, alt descritivo e uso. | manifest com 6 entradas novas; cada uso tem alt; peso ≤ 250 KB por variante | — | FT-05; FT-06; ADR-12 |
 | RQ-031 | RULE | P0 | READY | **Imagens REF_* nunca publicadas.** As 3 referências de terceiros (Bauhaus, edifício em corte, mapa urbano) ficam só no intake como referência de estilo. | Nenhum arquivo REF_* em public/ | — | FT-06 |
-| RQ-032 | FR | P1 | NEEDS_CONFIRMATION | **Bloco de imagem vertical 100vh em todo artigo.** Art direction: retrato no mobile e 16:9 no desktop, sem cortar pessoa nem cérebro; artigo sem ilustração própria usa a do seu pilar. Exige emenda ao ADR-12. | Todo artigo renderiza o bloco; <picture> com 2 fontes; teste de reflow 320px verde | RQ-030 | DEC-U1; CF-11; Q2 |
+| RQ-032 | FR | P1 | READY | **Bloco de imagem vertical 100vh em todo artigo.** Todo artigo tem imagem (decisão do usuário): bloco vertical 100vh com art direction (retrato no mobile, 16:9 no desktop), sem cortar pessoa nem cérebro; artigo sem ilustração própria usa a do seu pilar. Emenda ao ADR-12 ('artigo sem ilustração fica sem imagem' deixa de valer). | Teste falha se algum artigo publicado não renderizar imagem; <picture> com 2 fontes; reflow 320px verde | RQ-030 | DEC-U1; CF-11; Q2; DEC-U7 |
 | RQ-033 | NFR | P1 | READY | **Imagens sem regressão de LCP/CLS.** Imagem de hero com fetchpriority=high, width/height explícitos, lazy fora da primeira dobra. | CLS ≤ 0,1 nas rotas com imagem | RQ-030 | RQ-110 |
 
 ## EP-05 — Conteúdo canônico — 3 pilares (PR-E)
 
 | ID | Tipo | Prio | Status | Requisito | Critério de aceite | Depende | Fonte |
 |---|---|---|---|---|---|---|---|
-| RQ-040 | CONTENT | P1 | NEEDS_CONFIRMATION | **Home com o texto canônico RC-LP-001.** Texto do RC-LP-001 sem reescrita, na anatomia de página (hero, 3 seções de pilar com 'Saiba mais ›', 'Por onde começar?'), na ordem Problema → Conhecimento → Ferramenta → Ação. | Texto idêntico ao canônico (teste compara parágrafos); hig.spec verde | RQ-020, RQ-030 | CF-14; Q7; RC-LP-001 |
-| RQ-041 | CONTENT | P1 | NEEDS_CONFIRMATION | **Publicar os 4 artigos canônicos.** RC-ART-P1-001, RC-ART-P2-001, RC-ART-P3-001 e RC-ART-MASTER-001 como artigos novos pelo pipeline editorial, mantendo IDs e texto. | 4 rotas /blog/:slug novas no hub (ADR-06) e no sitemap | RQ-032 | FT-05; Q7 |
+| RQ-040 | CONTENT | P1 | READY | **Home com o texto canônico RC-LP-001.** Texto do RC-LP-001 sem reescrita, na anatomia de página (hero, 3 seções de pilar com 'Saiba mais ›', 'Por onde começar?'), na ordem Problema → Conhecimento → Ferramenta → Ação. | Texto idêntico ao canônico (teste compara parágrafos); hig.spec verde | RQ-020, RQ-030 | CF-14; Q7; RC-LP-001; DEC-U12 |
+| RQ-041 | CONTENT | P1 | READY | **Publicar os 4 artigos canônicos.** RC-ART-P1-001, RC-ART-P2-001, RC-ART-P3-001 e RC-ART-MASTER-001 como artigos novos pelo pipeline editorial, mantendo IDs e texto. | 4 rotas /blog/:slug novas no hub (ADR-06) e no sitemap | RQ-032 | FT-05; Q7; DEC-U12 |
 | RQ-042 | CONTENT | P1 | READY | **Fontes RC-SRC-001 como referências.** As 12 fontes viram referências nos artigos e entradas em /evidencias. | Cada fonte com link funcionando | RQ-041 | RC-SRC-001 |
 | RQ-043 | RULE | P0 | READY | **Rótulo de conceito metodológico.** 'Processo neuroadaptativo' e a cadeia Risco → Compensação → Solução aparecem como conceitos do projeto, nunca como norma ou constructo científico. | Revisão editorial no PR; nenhum texto atribui o conceito a ISO/W3C | — | CF-15; RC-EDITORIAL-PACK-001 README |
 | RQ-044 | FR | P2 | READY | **Bloco 'Próximo passo' no fim de todo artigo.** Artigos terminam com um CTA contextual (mapa ou ferramenta) e conteúdos relacionados; o modelo de 9 partes (Promessa → Próximo passo) vale para artigos novos. | Todo artigo tem exatamente 1 CTA primário no bloco final | RQ-053 | Índex de rotas §3 e §7 |
@@ -69,7 +69,7 @@ Total: 59 requisitos em 12 épicos.
 
 | ID | Tipo | Prio | Status | Requisito | Critério de aceite | Depende | Fonte |
 |---|---|---|---|---|---|---|---|
-| RQ-050 | FR | P0 | NEEDS_CONFIRMATION | **Menu principal Artigos · Mapa · Ferramentas · Sobre.** Rótulos novos sobre URLs existentes: Artigos → /blog, Mapa → /mapas, Sobre → /about; Ferramentas → /ferramentas (nova). | Menu igual no desktop, no drawer e no rodapé-diretório | — | CF-12; CF-13; Q1; Q3 |
+| RQ-050 | FR | P0 | READY | **Menu principal Artigos · Mapa · Ferramentas · Sobre.** Rótulos novos sobre URLs mantidas: Artigos → /blog, Mapa → /mapas, Sobre → /about; Ferramentas → /ferramentas (Ferramentas cognitivas, substitui a Loja, RQ-103). | Menu igual no desktop, no drawer e no rodapé-diretório | — | CF-12; CF-13; Q1; Q3; DEC-U6; DEC-U8 |
 | RQ-051 | RULE | P0 | READY | **Toda rota nova no hub e no sitemap.** Rotas novas (/mapas/explorar, /mapas/explorar/:fatorId, /mapas/personalizar, /ferramentas) entram em app/data/routes.ts. | npm run routes:check verde | — | ADR-06 |
 | RQ-052 | FR | P1 | READY | **Quatro perguntas em toda página.** Onde estou (eyebrow ou breadcrumb), o que significa (lead), por que importa (seção) e próxima ação (CTA primário). | hig.spec verifica eyebrow, h1, lead e 1 CTA primário por região | RQ-020 | Índex de rotas (regra transversal) |
 | RQ-053 | RULE | P1 | READY | **Escada de CTA e 1 CTA primário por região.** CTA 0 continuar lendo → 1 exemplo → 2 explorar o mapa → 3 usar a ferramenta → 4 salvar resultado → 5 guia → 6 solução. | Nenhuma região com 2 botões primários | — | Índex de rotas §7; neurodesign regra 01 |
@@ -80,7 +80,7 @@ Total: 59 requisitos em 12 épicos.
 | ID | Tipo | Prio | Status | Requisito | Critério de aceite | Depende | Fonte |
 |---|---|---|---|---|---|---|---|
 | RQ-060 | DATA | P1 | READY | **Schema canônico único do grafo.** Armazenamento no formato CORRELATION_RECORD da Teia Única (nós e arestas tipados, proveniência, papel epistêmico, status); o mapa é projeção para 9 tipos visuais (06-DATA-SPEC). | npm test valida o grafo contra CORRELATION_RECORD.schema.json e as 7 regras do 06-DATA-SPEC §5 | — | CF-05; CF-09; Teia CORRELATION_RECORD; RC-MOBILE causal_data_model; CF-17 |
-| RQ-061 | RULE | P1 | NEEDS_CONFIRMATION | **Cadeia causal canônica.** Objetivo → Contexto → Demanda → Vulnerabilidade → Exposição → Risco → Evento → Impacto → Compensação → Controle/Solução → Resultado → Medição → Aprendizado. | Enum de tipos do schema = esta cadeia + evidence | — | CF-05; Q8 |
+| RQ-061 | RULE | P1 | READY | **Cadeia causal canônica.** Objetivo → Contexto → Demanda → Vulnerabilidade → Exposição → Risco → Evento → Impacto → Compensação → Controle/Solução → Resultado → Medição → Aprendizado. | Enum de tipos do schema = esta cadeia + evidence | — | CF-05; Q8; DEC-U13 |
 | RQ-062 | DATA | P1 | READY | **Grafo inicial a partir dos artigos canônicos.** Nós do vocabulário P1/P3 (interrupção, troca de tarefa, sobrecarga, ambiguidade, pressão temporal, perda de contexto, retrabalho, erro; compensações externalização, redução, explicitação, automação). Relação não explícita no texto = E_INFERRED + PROPOSED. | Todo nó cita o artigo de origem; nenhuma relação inferida aparece como evidência | RQ-060 | CF-06; Teia (regra de fonte de verdade); CF-16 |
 | RQ-063 | RULE | P0 | READY | **Nenhum número sem evidência.** Valor quantitativo publicado exige evidence_id e fonte verificável; valores de mockup ('+42%', barras) não entram. | Teste falha se nó ou aresta tiver métrica sem evidence_ids | — | AC-005; CF-06 |
 | RQ-064 | RULE | P2 | READY | **Onde vive o código do grafo.** Em apps/blog até o workflow consumir o mesmo grafo; então packages/rc-graph (ADR-M01). | — | RQ-060 | ADR-M01; CF-09 |
@@ -107,27 +107,28 @@ Total: 59 requisitos em 12 épicos.
 
 | ID | Tipo | Prio | Status | Requisito | Critério de aceite | Depende | Fonte |
 |---|---|---|---|---|---|---|---|
-| RQ-090 | FR | P2 | NEEDS_CONFIRMATION | **Personalizar em 3 passos.** /mapas/personalizar: focos de trabalho, interesses e 'Mostrar evidências'; muda só a ordem e o destaque, nunca os fatos; guardado localmente, sem conta. | Limpar dados do navegador volta ao padrão; nenhum dado sai do dispositivo | RQ-070 | RC-MOBILE SCR-04; CF-07 |
+| RQ-090 | FR | P2 | READY | **Personalizar em 3 passos.** /mapas/personalizar: focos de trabalho, interesses e 'Mostrar evidências'; muda só a ordem e o destaque, nunca os fatos; guardado localmente, sem conta. | Limpar dados do navegador volta ao padrão; nenhum dado sai do dispositivo | RQ-070 | RC-MOBILE SCR-04; CF-07; CF-07 (ASSUMPTION mantida) |
 
-## EP-10 — Ferramentas e Resultado (PR-J)
+## EP-10 — Ferramentas cognitivas (substitui a Loja) e Resultado (PR-J)
 
 | ID | Tipo | Prio | Status | Requisito | Critério de aceite | Depende | Fonte |
 |---|---|---|---|---|---|---|---|
-| RQ-100 | FR | P2 | BLOCKED | **Índice de Ferramentas.** /ferramentas lista scanner, checklists e avaliações com o mesmo card-célula. | — | RQ-050 | GAP-02; GAP-06; Q4 |
+| RQ-100 | FR | P2 | READY | **Ferramentas cognitivas: índice em /ferramentas.** /ferramentas lista as ferramentas cognitivas (scanner, checklists, avaliações, ferramentas HTML, workbooks…) reaproveitando o catálogo e os componentes de app/features/store; rótulos e textos falam em ferramentas, nunca em loja ou compra. | /ferramentas e /ferramentas/:tipo/:slug renderizam o catálogo; nenhum texto 'Loja' visível; tests/store.spec.ts migrado e verde | RQ-103 | DEC-U9; GAP-06 (fechada); ADR-08 |
 | RQ-101 | FR | P3 | BLOCKED | **Ferramenta piloto: interrupções do processo.** 5–8 perguntas → resultado (exposição, interrupções, recuperação de contexto) → 3 ações + 1 artigo + 1 ferramenta + próximo passo. | — | RQ-100 | Índex de rotas §4; GAP-02 |
 | RQ-102 | FR | P3 | BLOCKED | **Página de Resultado.** /resultado/:id com explicação e próximos passos. | — | RQ-101 | GAP-07 |
+| RQ-103 | FR | P1 | READY | **Retirar a Loja: /loja vira /ferramentas.** A Loja deixa de existir (decisão do usuário). Rotas /loja, /loja/:tipo e /loja/:tipo/:slug passam a /ferramentas/… com redirect 301 em public/_redirects; nav, hub (ADR-06), sitemap e prerender atualizados; ADR-08 marcado como substituído por um ADR novo de Ferramentas cognitivas. | GET /loja/ e /loja/:tipo/:slug/ respondem 301 para o caminho equivalente em /ferramentas; routes:check verde; nenhum link interno para /loja | RQ-050 | DEC-U9; DEC-U8 (URLs mantidas, exceto a Loja); ADR-08 |
 
 ## EP-11 — Medição e performance (PR-K)
 
 | ID | Tipo | Prio | Status | Requisito | Critério de aceite | Depende | Fonte |
 |---|---|---|---|---|---|---|---|
-| RQ-110 | NFR | P1 | READY | **Gate de Core Web Vitals.** p75 mobile e desktop: LCP ≤ 2,5s, INP ≤ 200ms, CLS ≤ 0,1. | Lighthouse CI ou medição registrada no PR das rotas tocadas | — | Índex de rotas §12 |
-| RQ-111 | FR | P2 | BLOCKED | **Eventos por estágio da jornada.** BLOG/ARTICLE/TOOL/RESULT/BUSINESS com problem_id, solution_id, capability_id, asset_id, qfw_id, campaign_id quando houver. | — | RQ-060 | Índex de rotas §11; Teia N8; GAP-03 |
+| RQ-110 | NFR | P1 | READY | **Gate de Core Web Vitals.** p75 mobile e desktop: LCP ≤ 2,5s, INP ≤ 200ms, CLS ≤ 0,1. Medição de campo pelo Cloudflare Web Analytics (DEC-U11). | Lighthouse CI ou medição registrada no PR das rotas tocadas | — | Índex de rotas §12 |
+| RQ-111 | FR | P2 | READY | **Eventos por estágio da jornada.** Cloudflare Web Analytics (beacon) para páginas e Core Web Vitals reais; eventos por estágio (BLOG/ARTICLE/TOOL/RESULT/BUSINESS) gravados no Workers Analytics Engine via binding, com problem_id, solution_id, capability_id, asset_id, qfw_id, campaign_id quando houver. Sem cookies nem dado pessoal. | Binding analytics_engine no wrangler.jsonc; teste unitário do emissor de eventos; nenhum identificador pessoal no payload | RQ-060 | Índex de rotas §11; Teia N8; DEC-U11 |
 
-## EP-12 — Adapters da Teia Única (Quick Framework, Loja) (PR-L)
+## EP-12 — Adapters da Teia Única (Quick Framework, Ferramentas, registries) (PR-L)
 
 | ID | Tipo | Prio | Status | Requisito | Critério de aceite | Depende | Fonte |
 |---|---|---|---|---|---|---|---|
-| RQ-120 | DATA | P3 | BLOCKED | **correlation_refs no Quick Framework.** Adapter adiciona correlation_refs e solution_candidates sem mudar as 12 seções. | — | RQ-060 | Teia N2; GAP-01 |
-| RQ-121 | DATA | P3 | BLOCKED | **Descoberta na Loja por problema + compensação.** Loja ganha correlation_refs e filtro por problem + operational_function + compensation + fit. | — | RQ-060 | Teia N3/N7; GAP-01 |
-| RQ-122 | DATA | P3 | BLOCKED | **Registries canônicos.** problems, operational_functions, cognitive_capacities, factors, compensations, controls, capabilities, app_features. | — | RQ-060 | Teia N1; GAP-01 |
+| RQ-120 | DATA | P3 | READY | **correlation_refs no Quick Framework.** Adapter adiciona correlation_refs e solution_candidates sem mudar as 12 seções. | — | RQ-060 | Teia N2; DEC-U10 |
+| RQ-121 | DATA | P3 | READY | **Descoberta em Ferramentas por problema + compensação.** Ferramentas ganham correlation_refs e filtro por problem + operational_function + compensation + fit (adapter da Teia antes chamado Solution Store). | — | RQ-060, RQ-100 | Teia N3/N7; DEC-U10 |
+| RQ-122 | DATA | P3 | READY | **Registries canônicos.** problems, operational_functions, cognitive_capacities, factors, compensations, controls, capabilities, app_features. | — | RQ-060 | Teia N1; DEC-U10 |

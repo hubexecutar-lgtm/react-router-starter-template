@@ -4,10 +4,10 @@ Conversão dos pacotes do intake (`../intake/`) em requisitos rastreáveis e imp
 
 | Arquivo | O que é |
 |---|---|
-| `00-PLANO-DE-IMPORTANCIA.md` | Ondas, ordem dos PRs, caminho crítico e o que cada pergunta destrava |
-| `01-DECISOES-E-AMBIGUIDADES.md` | Decisões do usuário, fatos verificados, conflitos resolvidos, lacunas e perguntas Q1–Q8 |
+| `00-PLANO-DE-IMPORTANCIA.md` | Ondas, ordem dos PRs, dependências e caminho crítico |
+| `01-DECISOES-E-AMBIGUIDADES.md` | Decisões do usuário, fatos verificados, conflitos resolvidos, lacunas e respostas Q1–Q8 (DEC-U6…U13) |
 | `02-PRD.md` | RC-PRD-001: problema, objetivo, escopo, princípios, métricas e riscos |
-| `03-FRD.md` | RC-FRD-001: os 59 requisitos por épico, com critério de aceite (gerado) |
+| `03-FRD.md` | RC-FRD-001: os 60 requisitos por épico, com critério de aceite (gerado) |
 | `04-UIX-SPEC.md` | RC-UIX-001: rotas, shell, motion, anatomia das telas, semântica visual do grafo |
 | `05-TOKENS-SPEC.md` | RC-TOKENS-001: tokens de interface, ilustração, vetor, gráfico, grafo, motion e imagem |
 | `06-DATA-SPEC-GRAFO-CAUSAL.md` | RC-DATA-001: grafo único no formato da Teia Única e projeção para o mapa |

@@ -22,19 +22,20 @@ for i in items:
 with open(here / "requisitos.csv", "w", newline="") as f:
     w = csv.writer(f)
     w.writerow(["id", "titulo", "descricao", "tipo", "prioridade", "status", "epico", "epico_nome", "pr",
-                "depende_de", "fonte", "criterio_aceite", "labels"])
+                "depende_de", "fonte", "criterio_aceite", "labels", "entregue_em"])
     for i in items:
         w.writerow([i["id"], i["titulo"], i["descricao"], i["tipo"], i["prioridade"], i["status"], i["epico"],
                     i["epico_nome"], i["pr"], ";".join(i["depende_de"]), i["fonte"], i["criterio_aceite"],
-                    ",".join(i["labels"])])
+                    ",".join(i["labels"]), i.get("entregue_em", "")])
 
 esc = lambda s: s.replace("|", "\\|")
 L = ["# LANC-001 — FRD (requisitos funcionais e não funcionais)", "",
      f"- **ID:** RC-FRD-001 · **Versão:** {data['versao']} · **Gerado de:** `requisitos.json` por `render.py` "
      "(não editar à mão: editar o JSON e rodar `python3 render.py`)",
      "- **Tipos:** FR funcional · NFR não funcional · RULE regra · CONTENT conteúdo · DATA dados",
-     "- **Status:** READY · NEEDS_CONFIRMATION (pergunta Q*) · BLOCKED (lacuna GAP*) · BACKLOG", "",
-     "| Prioridade | READY | NEEDS_CONFIRMATION | BLOCKED | BACKLOG |", "|---|---|---|---|---|"]
+     "- **Status:** " + " · ".join(f"{k} ({v})" for k, v in data["legenda"]["status"].items()), "",
+     "| Prioridade | " + " | ".join(data["legenda"]["status"]) + " |",
+     "|---" * (len(data["legenda"]["status"]) + 1) + "|"]
 c = Counter((i["prioridade"], i["status"]) for i in items)
 for p in ["P0", "P1", "P2", "P3"]:
     L.append(f"| {p} | " + " | ".join(str(c[(p, s)]) for s in data["legenda"]["status"]) + " |")

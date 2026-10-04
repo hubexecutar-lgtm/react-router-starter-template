@@ -1,6 +1,7 @@
 # LANC-001 — Pacote de lançamento
 
-- **Status:** INTAKE ABERTO · requisitos v0.1.0 preparados (aguardam Q1–Q8)
+- **Status:** INTAKE ABERTO · requisitos v0.2.0 (Q1–Q8 respondidas) · pronto para a onda 0
+- **Próxima sessão:** [`KICKOFF-PROXIMA-SESSAO.md`](./KICKOFF-PROXIMA-SESSAO.md) · **Saídas esperadas:** [`ENTREGAVEIS-POR-ONDA.md`](./ENTREGAVEIS-POR-ONDA.md)
 - **Workflow de engenharia:** [`WORKFLOW.md`](./WORKFLOW.md) · **Requisitos:** [`requirements/`](./requirements/README.md)
 
 Esta pasta guarda os arquivos **como recebidos** (`intake/`) e os requisitos derivados deles (`requirements/`).
@@ -21,7 +22,7 @@ e o caminho/hash do intake.
 | Logo + favicon | `intake/LOGO_FAVICON_PACKAGE_v1.0.0/` | BRAND-ASSET-LOGO-001 1.0.0 · VERIFIED | EP-01 |
 | Mockups v4, v6, v7 | `intake/*.html` | v7 = Brand Local + motion | EP-02, EP-03 (DEC-U1/U2) |
 | Tokens do v6 | `intake/tokens-hybrid.{css,json}`, `intake/README.md` | v6 · paleta descartada (DEC-U2) | estrutura de layout apenas |
-| Teia Única de Correlação | `intake/EXECUTAR-TEIA-UNICA-CORRELACAO-v0.1.0/` | ARCH-EXEC-CORRELATION-GRAPH-001 · PROPOSED_FOR_APPROVAL | EP-07, EP-12 |
+| Teia Única de Correlação | `intake/EXECUTAR-TEIA-UNICA-CORRELACAO-v0.1.0/` | ARCH-EXEC-CORRELATION-GRAPH-001 · **Aceita** (OWNER Leonardo, DEC-U10) | EP-07, EP-12 |
 | Brand styling (gráfico e vetor) | `intake/DOCS-002/notas/RC-BRAND-STYLING-001.*` | RC-BRAND-STYLING-001 1.0.0 · PREPARED | EP-02 (camada `--illu-*`) |
 | Spec do mapa causal mobile | `intake/DOCS-002/notas/RC-MOBILE-CAUSAL-MAP-UI-001.md` | 1.0.0 · PREPARED | EP-07, EP-08, EP-09 |
 | Notas de mapa causal (CKG, CLD) | `intake/DOCS-002/notas/causal-*.md` | sem ID | EP-08 |
