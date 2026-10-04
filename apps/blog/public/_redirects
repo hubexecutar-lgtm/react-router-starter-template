@@ -1,2 +1,5 @@
 # Redirecionamentos permanentes (assets do Cloudflare Workers).
 # Site do zero (ADR-13): as URLs antigas (/blog, /temas, /loja…) deixaram de existir e caem no 404.
+# ADR-16 (LANC-001 RQ-103, DEC-U9): a Loja deixou de existir; o catálogo vive em /ferramentas.
+/loja    /ferramentas/         301
+/loja/*  /ferramentas/:splat   301

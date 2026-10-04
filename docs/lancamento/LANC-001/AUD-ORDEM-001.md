@@ -78,3 +78,11 @@ Já tinham saído no #19, e a `main` só os editava:
    - PR-E: RC-LP-001 dentro da Home Stories e os artigos canônicos em `content/artigos/`;
    - PR-F, PR-H (recriar `/mapas` e `/mapas/explorar`), PR-I, PR-K e PR-L.
    - Cada PR passa pelo pré-voo de base.
+
+## 9. Andamento da Fase 2
+- **PR #19 mesclado** (`1d8f095`): a base Stories, com tudo o que foi preservado, está na `main`.
+- **Shell + Ferramentas** (juntos num PR só, com autorização do usuário para "merge de funções similares"):
+  - `/ferramentas/*` volta no layout Stories, com 301 de `/loja/*`;
+  - o shell volta no cabeçalho de 64 px; a trilha entra inline para não quebrar a geometria do handoff;
+  - **reabertos e entregues de novo:** RQ-010, 021…026, 100 e 103;
+  - **RQ-020 continua aberto** até existirem os destinos dos pilares e do Mapa.

@@ -403,13 +403,22 @@ to `apps/blog/`.
     valores, contraste dos `--graph-*` nos dois temas, reduced-motion e coral/azul claro fora de texto.
   - O showroom `/admin/design-system/` mostra a camada de ilustração, o grafo e o motion.
 
-### ADR-16: Ferramentas cognitivas (LANC-001, DEC-U9) — pendente de reimplementação sobre o Stories
+### ADR-16: Ferramentas cognitivas e shell do LANC-001 sobre o Stories (LANC-001, DEC-U9, AUD-ORDEM-001)
 
-- **Status:** Aceita — **a reimplementar** (AUD-ORDEM-001, Fase 2). Implementada antes sobre o site antigo no PR #25
-  (`/ferramentas/*` + 301 de `/loja/*`); removida na integração ao PR #19 porque o reset (ADR-13) apaga a Loja.
-- **Decisão:** a seção chama-se Ferramentas cognitivas e vive em `/ferramentas/`, `/ferramentas/<tipo>/` e
-  `/ferramentas/<tipo>/<slug>/`, no layout Stories; `/loja/*` responde 301; nenhum texto "Loja" nem de compra.
-  O código anterior está no histórico (`b9c80c0`, merge do PR #25).
+- **Status:** Aceita — implementada sobre o Stories (Fase 2 da AUD-ORDEM-001). Antes, sobre o site antigo, nos PRs
+  #25 (`b9c80c0`) e #26 (`59342e6`); trazida de volta do histórico e adaptada.
+- **Decisão — Ferramentas:** a seção chama-se Ferramentas cognitivas: `/ferramentas/`, `/ferramentas/<tipo>/` e
+  `/ferramentas/<tipo>/<slug>/` (código em `app/features/store/`, prerender por `data/paths.ts`), no gutter e na
+  largura do Stories (`stories-container`, `--ref-wide-width`). `/loja` e `/loja/*` respondem 301; nenhum texto "Loja"
+  nem de compra. O `/prisma/` (ADR-17) é a primeira ferramenta publicada.
+- **Decisão — shell:** cabeçalho de 64 px do Stories (`--ref-header-h`) com menu e tema (a busca volta quando houver página); a trilha dos pilares
+  fica **dentro** da barra (≥ 1100 px), porque uma faixa abaixo deslocaria a geometria medida do handoff. Abaixo de
+  900 px: drawer modal `min(84vw,360px)` (foco preso, Esc, `inert`) e barra inferior; header e barra escondem juntos ao
+  descer (`components/site/shell.tsx`). O menu só lista destinos que existem (`nav.ts`): hoje Artigos e Ferramentas;
+  Mapa e Sobre entram quando as páginas voltarem (DEC-U6). O carrossel é o `MediaCarousel` do Stories (scroll-snap,
+  sem autoplay) e o `heroReveal` (ADR-15) entra no hero do artigo.
+- **Consequências:** `tests/store.spec.ts` (rotas, sem "Loja", 301) e `tests/shell.spec.ts` (RQ-020…026) no `npm test`;
+  `hig.spec` cobre `/ferramentas/*`.
 
 ### ADR-17: Rota `/prisma` — primeira solução das Ferramentas cognitivas, local-first e PWA (RC-PWA-PRISMA-SPECS v1.0.0)
 

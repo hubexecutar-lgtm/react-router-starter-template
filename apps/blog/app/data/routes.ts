@@ -56,6 +56,7 @@ const SRC = "ADR-13 (site do zero)";
 export const ROUTES: HubEntry[] = [
   // ---------------------------------------------------------------- Site
   { id: "home", title: "Página inicial", description: "Home do site novo: composição Stories do handoff (destaque, grade, carregar mais).", group: "Site", kind: "route", path: "/", exposure: "public", addedAt: "2026-10-03", source: SRC },
+  { id: "ferramentas", title: "Ferramentas cognitivas", group: "Site", kind: "route", path: "/ferramentas/", description: "Ferramentas cognitivas sobre o layout Stories (ADR-16): skills, agentes, prompts, e-books, PDFs, ferramentas HTML, workbooks e assets. Categorias em /ferramentas/:tipo/ e itens em /ferramentas/:tipo/:slug/; /loja/* responde 301.", exposure: "public", addedAt: "2026-10-04", source: "LANC-001 PR-J1 / AUD-ORDEM-001" },
 
   // ---------------------------------------------------------------- Ferramentas públicas
   { id: "prisma", title: "Prisma de execução", description: "Primeira solução das Ferramentas cognitivas (externalização cognitiva): formulário, folha A4 e PDF, local-first e instalável (PWA). Manifest e service worker em /prisma/.", group: "Ferramentas públicas", kind: "route", path: "/prisma/", exposure: "public", addedAt: "2026-10-04", source: "RC-PWA-PRISMA-SPECS v1.0.0 (ADR-17)" },

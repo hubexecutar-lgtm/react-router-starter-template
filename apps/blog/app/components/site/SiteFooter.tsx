@@ -5,9 +5,9 @@ import { FOOTER_NAV } from "./nav";
 
 import { SITE_NAME, SITE_TAGLINE } from "@/consts";
 
-export function SiteFooter() {
+export function SiteFooter({ inert = false }: { inert?: boolean }) {
 	return (
-		<footer className="mt-[var(--ref-section-gap)] border-t border-[var(--border-default)]">
+		<footer className="mt-[var(--ref-section-gap)] border-t border-[var(--border-default)]" {...(inert ? { inert: true } : {})}>
 			<div className="stories-container grid gap-12 py-16 md:grid-cols-[1.4fr_repeat(3,1fr)]">
 				<div className="max-w-sm">
 					<a href="/" className="rc-display text-2xl uppercase tracking-[-0.02em]">
