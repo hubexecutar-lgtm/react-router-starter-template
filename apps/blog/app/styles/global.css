@@ -1060,6 +1060,7 @@ html {
   --ref-wide-width: 1078.5px;
   /* medidas do handoff que não vinham como token (Home e artigo, desktop) */
   --ref-header-h: 64px;
+  --bottombar-h: 4rem; /* 64: barra inferior do mobile (LANC-001 RQ-021) */
   --ref-feature-w: 968.25px; /* 3 colunas de card + 2 gaps */
   --ref-feature-h: 544.64px; /* 16:9 */
   --ref-card-w: 306.75px; /* imagem quadrada */
@@ -1398,4 +1399,25 @@ html {
       padding: 0;
     }
   }
+}
+
+/* Mobile drawer (LANC-001 RQ-021): slides in from the right; zeroed under reduced motion. */
+@keyframes drawerIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes backdropIn {
+  from {
+    opacity: 0;
+  }
+}
+.rc-drawer {
+  animation: drawerIn var(--dur-base) var(--ease) both;
+}
+.rc-drawer-backdrop {
+  animation: backdropIn var(--dur-base) var(--ease) both;
 }

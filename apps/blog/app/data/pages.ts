@@ -8,4 +8,5 @@ export const PAGES = [
 	"/admin/rotas/",
 	"/admin/stories-fixtures/",
 	"/prisma/",
+	"/ferramentas/",
 ] as const;

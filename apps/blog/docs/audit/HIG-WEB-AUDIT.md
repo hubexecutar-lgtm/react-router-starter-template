@@ -1,9 +1,9 @@
 # HIG-WEB-AUDIT — apps/blog
 
-Gerado por `scripts/hig-audit.mjs` em 2026-10-03. Regra: **UX-GOV-HIG-001** (`docs/governance/UX-GOV-HIG-001.md`,
+Gerado por `scripts/hig-audit.mjs` em 2026-10-04. Regra: **UX-GOV-HIG-001** (`docs/governance/UX-GOV-HIG-001.md`,
 ADR-M03). Gate automatizado: `tests/hig.spec.ts` (axe WCAG 2.0/2.1/2.2 A+AA, títulos, landmarks, alvos ≥ 24 px,
 reflow 320 px, medida ≤ 75 caracteres, sem prosa mono, `alt`, halftone fora do texto, foco visível) em
-9 rotas, a 1440, 390 e 320 px, mais amostra no tema escuro.
+20 rotas, a 1440, 390 e 320 px, mais amostra no tema escuro.
 
 **Release: PASS** — P0/P1 abertos: 0.
 
@@ -12,7 +12,7 @@ reflow 320 px, medida ≤ 75 caracteres, sem prosa mono, `alt`, halftone fora do
 | Fase | Resultado |
 |---|---|
 | Linha de base (main @ ab685e2 (antes do RC-UX-HIG-002 PR D)) | 799 verificações · 790 PASS · 0 PARTIAL · 9 FAIL (P0 1, P1 8, P2 0, P3 0) |
-| Reteste (automatizado) | 162 verificações · 162 PASS · 0 PARTIAL · 0 FAIL (P0 0, P1 0, P2 0, P3 0) |
+| Reteste (automatizado) | 360 verificações · 360 PASS · 0 PARTIAL · 0 FAIL (P0 0, P1 0, P2 0, P3 0) |
 | Checklist manual | 8 verificações · 4 PASS · 4 PARTIAL · 0 FAIL (P0 0, P1 0, P2 3, P3 1) |
 
 ## Falhas da linha de base e correção
@@ -53,7 +53,7 @@ reflow 320 px, medida ≤ 75 caracteres, sem prosa mono, `alt`, halftone fora do
 
 ## Rotas cobertas
 
-`/` · `/admin/` · `/admin/design-system/` · `/admin/handoff/` · `/admin/relatorio-exemplo/` · `/admin/rotas/` · `/admin/stories-fixtures/` · `/artigos/risco-cognitivo/` · `/rota-inexistente-hig/`
+`/` · `/admin/` · `/admin/design-system/` · `/admin/handoff/` · `/admin/relatorio-exemplo/` · `/admin/rotas/` · `/admin/stories-fixtures/` · `/artigos/risco-cognitivo/` · `/ferramentas/` · `/ferramentas/agentes/` · `/ferramentas/assets/` · `/ferramentas/ebooks/` · `/ferramentas/html/` · `/ferramentas/pdfs/` · `/ferramentas/prompts/` · `/ferramentas/skills/` · `/ferramentas/skills/skill-001/` · `/ferramentas/workbooks/` · `/prisma/` · `/rota-inexistente-hig/`
 
-O detalhe completo (todas as 162 verificações automatizadas, inclusive PASS) está em
+O detalhe completo (todas as 360 verificações automatizadas, inclusive PASS) está em
 `HIG-WEB-AUDIT.json`. Para atualizar: `HIG_AUDIT=1 npx playwright test tests/hig.spec.ts && node scripts/hig-audit.mjs`.
