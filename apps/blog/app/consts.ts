@@ -39,15 +39,18 @@ export const SITE_METADATA = {
     index: true,
     follow: true,
   },
+  // Pacote BRAND-ASSET-LOGO-001 (LANC-001, RQ-001): os 5 <link> do README do pacote, servidos de /favicon/.
   icons: {
     icon: [
-      { url: "/favicon/favicon.svg", type: "image/svg+xml" },
-      { url: "/favicon/favicon-96x96.png", sizes: "96x96", type: "image/png" },
-      { url: "/favicon/favicon.ico", sizes: "48x48" },
+      { url: "/favicon/favicon.ico", sizes: "any" },
+      { url: "/favicon/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon/favicon-16x16.png", sizes: "16x16", type: "image/png" },
     ],
     apple: [{ url: "/favicon/apple-touch-icon.png", sizes: "180x180" }],
-    shortcut: [{ url: "/favicon/favicon.ico" }],
+    manifest: "/favicon/site.webmanifest",
   },
+  /** Logo publicado para Organization.logo (LANC-001, RQ-002). */
+  logo: { url: "/images/logo-512.png", width: 512, height: 512 },
   openGraph: {
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
