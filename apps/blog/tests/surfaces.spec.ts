@@ -46,9 +46,17 @@ test.describe("source contract", () => {
   test("neutral hex values live only in the token layer (global.css)", () => {
     const offenders = src
       .filter((f) => !f.endsWith(join("styles", "global.css")))
-      .filter((f) => /#f8f8f8|#ebebeb|#f5f5f4|#eaeae8|#eff6ff|#2563eb|#202124|#6b7280/i.test(readFileSync(f, "utf-8")))
+      // + the --illu-* layer (ADR-15 / LANC-001 RQ-011)
+      .filter((f) => /#f8f8f8|#ebebeb|#f5f5f4|#eaeae8|#eff6ff|#2563eb|#202124|#6b7280|#18346f|#3155e7|#f28f83|#a9bff4|#f4f6f1/i.test(readFileSync(f, "utf-8")))
       .map((f) => relative(ROOT, f));
     expect(offenders, "hex da paleta só em app/styles/global.css").toEqual([]);
+  });
+
+  // ADR-15 / LANC-001 RQ-011–012: coral (2.33:1) and light blue (1.83:1) are never text.
+  test("--illu-coral and --illu-blue-soft are never used as text colour", () => {
+    const textUse = /(?<![-\w])(?:color|-webkit-text-fill-color)\s*:\s*var\(--(?:illu-coral|illu-blue-soft|graph-accent-event)\)|\btext-(?:\[var\()?\(?--(?:illu-coral|illu-blue-soft|graph-accent-event)/;
+    const offenders = src.filter((f) => textUse.test(readFileSync(f, "utf-8"))).map((f) => relative(ROOT, f));
+    expect(offenders, "coral e azul claro nunca como texto (ADR-15)").toEqual([]);
   });
 
   test("shadow-md/lg/xl/2xl only on overlays; no shadow-sm on cards", () => {

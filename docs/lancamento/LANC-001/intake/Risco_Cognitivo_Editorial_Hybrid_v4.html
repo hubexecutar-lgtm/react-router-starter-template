@@ -1,0 +1,362 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Conheça o Risco Cognitivo: problemas e fenômenos, métodos de gestão e sistemas de apoio à execução."><meta name="theme-color" content="#FFFFFF"><title>Risco Cognitivo — Conhecimento que vira estrutura</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"><style>
+:root{--ink:#202124;--muted:#6B7280;--soft:#F5F5F4;--soft-2:#FFFFFF;--line:#EAEAE8;--white:#FFFFFF;--blue:#2563EB;--blue-hover:#1D4ED8;--charcoal:#202124;--black:#202124;--model:#EFF6FF;--attention:#8A5A00;--critical:#A33A32;--sf:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;--sf-text:var(--sf);--mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;--display-lg:clamp(2.5rem,5vw,61.6864px);--display-md:clamp(2rem,4vw,46.8432px);--display-xl:var(--display-lg);--body-lg:21px;--body:17px;--small:14px;--caption:12px;--nav-h:64px;--shell:1078.5px;--wide:1440px;--read:637.5px;--gutter:32px;--gap:24px;--section:120px;--r-card:2px;--r-card-lg:2px;--r-pill:40px;--glass:#FFFFFF;--shadow:none}
+
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--soft);
+  color:var(--ink);
+  font-family:var(--sf-text);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+a{color:inherit}
+button,input{font:inherit}
+button{cursor:pointer}
+img{max-width:100%;display:block}
+
+
+.global-nav{
+  position:sticky;top:0;z-index:100;
+  height:var(--nav-h);
+  background:var(--glass);
+  backdrop-filter:saturate(180%) blur(20px);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);
+  border-bottom:1px solid rgba(0,0,0,.06);
+}
+.nav-inner{
+  max-width:var(--shell);height:100%;margin:auto;padding:0 16px;
+  display:flex;align-items:center;justify-content:space-between;gap:26px;
+  font-size:12px;
+}
+.wordmark{
+  display:flex;align-items:center;gap:8px;text-decoration:none;font-weight:700;
+}
+.frame-mark{
+  width:14px;height:22px;border:3px solid var(--blue);
+}
+.nav-links{display:flex;align-items:center;justify-content:space-between;gap:26px;flex:1}
+.nav-links a{text-decoration:none;white-space:nowrap;color:#333}
+.nav-links a:hover{color:#000}
+.nav-actions{display:flex;gap:4px}
+.nav-icon{
+  border:0;background:transparent;min-width:36px;height:36px;border-radius:50%;
+}
+.nav-icon:hover{background:rgba(0,0,0,.05)}
+
+
+.category-rail{
+  background:var(--white);
+  border-bottom:1px solid var(--line);
+}
+.category-inner{
+  max-width:var(--wide);margin:auto;padding:14px var(--gutter);
+  display:flex;gap:30px;overflow:auto;scrollbar-width:none;
+  font-size:13px;font-weight:600;letter-spacing:.02em;
+}
+.category-inner::-webkit-scrollbar{display:none}
+.category-inner a{text-decoration:none;white-space:nowrap}
+.category-inner a.active{border-bottom:3px solid var(--blue);padding-bottom:8px}
+
+
+.hero{
+  background:var(--soft-2);
+  padding:var(--section) var(--gutter) 72px;
+  text-align:center;
+}
+.hero .eyebrow{
+  font-size:14px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  display:inline-flex;align-items:center;gap:12px;
+}
+.hero .eyebrow:before,.hero .eyebrow:after{
+  content:"";width:4px;height:28px;background:var(--blue);
+}
+.hero h1{
+  max-width:1100px;margin:24px auto 18px;
+  font-family:var(--sf);
+  font-size:var(--display-lg);
+  line-height:.98;letter-spacing:-.045em;font-weight:700;
+}
+.hero p{
+  max-width:800px;margin:0 auto;
+  font-size:var(--body-lg);line-height:1.45;letter-spacing:-.012em;
+  color:#3a3a3c;
+}
+.hero-actions{
+  margin-top:30px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap;
+}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;min-height:44px;
+  padding:0 22px;border-radius:var(--r-pill);text-decoration:none;
+  font-size:17px;border:1px solid transparent;
+}
+.btn-primary{background:var(--blue);color:white}
+.btn-primary:hover{background:var(--blue-hover)}
+.btn-secondary{border-color:var(--blue);color:var(--blue);background:transparent}
+.btn-yellow{background:var(--blue);color:#000;font-weight:600}
+.btn-dark{background:#000;color:#fff}
+
+
+.feature-media-wrap{background:var(--soft-2);padding:0 var(--gutter) 20px}
+.feature-media{
+  max-width:var(--wide);margin:auto;
+  min-height:clamp(420px,62vw,820px);
+  border-radius:var(--r-card-lg);
+  overflow:hidden;position:relative;
+  background:
+    radial-gradient(circle at 68% 32%,rgba(255,204,0,.92),transparent 22%),
+    radial-gradient(circle at 36% 55%,rgba(255,255,255,.92),transparent 20%),
+    linear-gradient(135deg,#111 0%,#282828 48%,#d9d9d9 100%);
+}
+.feature-media .overlay{
+  position:absolute;left:clamp(24px,5vw,72px);bottom:clamp(24px,5vw,64px);
+  max-width:560px;color:white;
+}
+.feature-media .overlay small{
+  letter-spacing:.16em;text-transform:uppercase;font-weight:700;
+}
+.feature-media .overlay h2{
+  font-size:var(--display-md);line-height:1.02;letter-spacing:-.035em;margin:12px 0 0;
+}
+
+
+.promo{
+  max-width:var(--wide);margin:0 auto;padding:var(--gap) var(--gap) var(--section);
+}
+.promo-grid{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--gap);
+}
+.tile{
+  min-height:560px;border-radius:0;background:white;overflow:hidden;position:relative;
+  padding:54px 36px;text-align:center;
+}
+.tile.dark{background:#000;color:white}
+.tile.yellow{background:var(--blue);color:#000}
+.tile.soft{background:#f5f5f7}
+.tile h3{
+  font-size:clamp(2rem,4vw,3.2rem);line-height:1;letter-spacing:-.035em;margin:0;
+}
+.tile p{font-size:19px;line-height:1.35;margin:12px auto 20px;max-width:520px}
+.tile-art{
+  position:absolute;left:7%;right:7%;bottom:0;height:54%;
+  border-radius:28px 28px 0 0;
+  background:linear-gradient(135deg,#d7d7d7,#fff 45%,#aaa);
+}
+.tile.dark .tile-art{background:linear-gradient(135deg,#191919,#3a3a3a 45%,#000)}
+.tile.yellow .tile-art{background:linear-gradient(135deg,#fff5b3,#fff,#111)}
+
+
+.article-shell{
+  background:#fff;
+  padding:var(--section) var(--gutter);
+}
+.article-meta{
+  max-width:var(--read);margin:0 auto 48px;
+  font-family:var(--sf-text);font-size:13px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);
+}
+.article-meta strong{color:#000}
+.article{
+  max-width:var(--read);margin:auto;
+}
+.article .lead{
+  font-family:var(--sf-text);
+  font-size:clamp(1.65rem,3vw,2.35rem);
+  line-height:1.43;letter-spacing:-.018em;
+}
+.article p{
+  font-family:var(--sf-text);
+  font-size:clamp(1.2rem,2vw,1.5rem);
+  line-height:1.62;margin:0 0 1.45em;
+}
+.article strong{font-weight:700}
+.article a{
+  text-decoration-color:var(--blue);
+  text-decoration-thickness:3px;
+  text-underline-offset:4px;
+}
+.article h2{
+  margin:2.25em 0 .72em;
+  font-family:var(--sf);
+  font-size:var(--display-md);
+  line-height:1.02;letter-spacing:-.035em;
+}
+.article h2:before{
+  content:"";display:block;width:52px;height:5px;background:var(--blue);margin-bottom:20px;
+}
+.pullquote{
+  margin:60px 0;padding:38px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  font-family:var(--sf);font-size:clamp(2rem,4vw,3rem);font-weight:600;
+  line-height:1.08;letter-spacing:-.03em;
+}
+.inline-media{
+  margin:64px calc((var(--read) - min(1060px, 90vw))/2);
+}
+.inline-media .media-box{
+  aspect-ratio:16/10;border-radius:var(--r-card);
+  background:
+    linear-gradient(125deg,rgba(255,204,0,.8),rgba(255,204,0,0) 35%),
+    linear-gradient(145deg,#171717,#d7d7d7);
+}
+.caption{font-family:var(--sf-text)!important;font-size:12px!important;color:var(--muted);margin-top:10px!important}
+
+
+.selection{
+  background:var(--charcoal);color:white;padding:var(--section) var(--gutter);
+}
+.selection-inner{max-width:var(--wide);margin:auto}
+.selection-title{text-align:center;margin-bottom:54px}
+.selection-title h2{
+  font-size:clamp(2rem,4vw,3rem);letter-spacing:.12em;text-transform:uppercase;margin:0;
+}
+.selection-title span{display:block;width:90px;height:5px;background:var(--blue);margin:24px auto 0}
+.selection-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.selection-card{
+  background:#111;border-radius:var(--r-card);overflow:hidden;min-height:520px;
+}
+.selection-img{
+  aspect-ratio:4/3;
+  background:
+    radial-gradient(circle at 70% 35%,rgba(255,204,0,.85),transparent 20%),
+    linear-gradient(135deg,#666,#151515);
+}
+.selection-body{padding:28px}
+.selection-body small{letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:#ddd}
+.selection-body h3{font-size:28px;line-height:1.12;margin:14px 0 0;letter-spacing:-.025em}
+
+
+.carousel-section{background:#fff;padding:var(--section) 0}
+.carousel-head{max-width:var(--wide);margin:0 auto 30px;padding:0 var(--gutter);display:flex;justify-content:space-between;align-items:end}
+.carousel-head h2{font-size:var(--display-md);margin:0;letter-spacing:-.035em}
+.carousel{
+  display:flex;gap:18px;overflow-x:auto;padding:0 var(--gutter) 22px;
+  scroll-snap-type:x mandatory;scrollbar-width:none;
+}
+.carousel::-webkit-scrollbar{display:none}
+.carousel-card{
+  flex:0 0 min(76vw,620px);scroll-snap-align:start;border-radius:var(--r-card);
+  overflow:hidden;background:var(--soft);min-height:420px;position:relative;
+}
+.carousel-card .visual{height:68%;background:linear-gradient(135deg,#111,#777)}
+.carousel-card:nth-child(2) .visual{background:linear-gradient(135deg,var(--blue),#111)}
+.carousel-card:nth-child(3) .visual{background:linear-gradient(135deg,#ddd,#fff)}
+.carousel-card .copy{padding:24px}
+.carousel-card h3{margin:0;font-size:26px;line-height:1.15}
+
+
+footer{
+  background:var(--soft);border-top:1px solid var(--line);padding:28px var(--gutter) 40px;
+  font-size:12px;color:var(--muted);
+}
+.footer-inner{max-width:var(--shell);margin:auto}
+.footer-cols{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;padding:20px 0}
+.footer-cols h4{font-size:12px;color:var(--ink);margin:0 0 10px}
+.footer-cols a{display:block;color:var(--muted);text-decoration:none;margin:7px 0}
+.footer-cols a:hover{text-decoration:underline}
+
+
+.mobile-panel{
+  position:fixed;inset:var(--nav-h) 0 auto 0;z-index:95;background:rgba(251,251,253,.98);
+  backdrop-filter:blur(20px);padding:28px var(--gutter) 36px;
+  transform:translateY(-140%);transition:.25s ease;border-bottom:1px solid var(--line);
+}
+.mobile-panel.open{transform:translateY(0)}
+.mobile-panel a{display:block;font-size:28px;font-weight:600;text-decoration:none;padding:8px 0}
+
+@media(max-width:900px){
+  .nav-links{display:none}
+  .nav-inner{justify-content:space-between}
+  .promo-grid{grid-template-columns:1fr}
+  .selection-grid{grid-template-columns:1fr 1fr}
+  .footer-cols{grid-template-columns:1fr 1fr}
+}
+@media(max-width:620px){
+  :root{--gutter:22px;--r-card:22px;--r-card-lg:0px}
+  .hero{text-align:left;padding-top:72px}
+  .hero .eyebrow{justify-content:flex-start}
+  .hero h1{font-size:clamp(2.9rem,13vw,4.2rem)}
+  .hero p{font-size:1.22rem}
+  .hero-actions{justify-content:flex-start}
+  .feature-media-wrap{padding:0}
+  .feature-media{min-height:600px}
+  .promo{padding-left:0;padding-right:0}
+  .tile{min-height:520px;border-radius:0}
+  .article-shell{padding-top:82px}
+  .article-meta{margin-bottom:36px}
+  .article .lead{font-size:1.9rem}
+  .article p{font-size:1.35rem}
+  .inline-media{margin:48px -22px}
+  .inline-media .media-box{border-radius:0}
+  .selection-grid{grid-template-columns:1fr}
+  .footer-cols{grid-template-columns:1fr 1fr}
+}
+
+body{background:var(--white);font-size:17px;line-height:1.647;letter-spacing:-.17px}h1,h2,h3{font-weight:500}a{color:var(--blue);text-underline-offset:4px}a:hover{text-decoration:underline}button,a,input,summary{touch-action:manipulation}button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid var(--blue);outline-offset:5px}section,article[id],details[id]{scroll-margin-top:86px}[hidden]{display:none!important}.skip{position:fixed;left:20px;top:-80px;z-index:200;background:white;padding:12px}.skip:focus{top:8px}.global-nav{backdrop-filter:none;border-color:var(--line)}.nav-inner{max-width:var(--wide);padding:0 var(--gutter);font-size:14px}.wordmark{color:var(--ink);font-size:16px;letter-spacing:-.02em;white-space:nowrap}.nav-links{justify-content:flex-end}.nav-links a{color:var(--ink);padding:12px 0}.nav-icon{width:44px;height:44px;border-radius:8px;color:var(--ink)}#menuBtn{display:none}.category-inner{gap:32px;padding-top:12px;padding-bottom:12px}.category-inner a{color:var(--muted);padding:8px 0}.category-inner a.active{color:var(--ink);border-color:var(--blue)}.hero{padding-bottom:64px}.hero .eyebrow,.eyebrow,.article-meta,.selection-body small{font:12px/1.6 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}.hero .eyebrow:before,.hero .eyebrow:after{display:none}.hero h1{font-size:var(--display-lg);line-height:1.00525;letter-spacing:-.03em;font-weight:500;max-width:950px}.hero p{color:var(--muted);max-width:60ch;font-size:21px;line-height:1.5}.btn{border-radius:8px;font-size:17px;min-height:48px}.btn-primary{color:white}.btn-secondary{border-color:#D1D5DB;background:white}.feature-media-wrap{padding-bottom:64px}.feature-media{background:var(--model);min-height:0;padding:64px;max-width:1078.5px}.feature-media .overlay{position:static;color:var(--ink);max-width:700px}.feature-media .overlay small{font:12px var(--mono);letter-spacing:.12em;color:var(--muted)}.feature-media .overlay h2{font-size:36px;line-height:1.15;font-weight:500;margin:12px 0 24px}.flow{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;margin:28px 0 20px}.flow>div{background:white;padding:24px;color:var(--ink)}.flow strong{font-weight:600;display:block;font-size:21px}.flow span{font-size:14px;color:var(--muted)}.feature-note{max-width:68ch;color:#5F6670;font-size:14px}.promo{padding:0 var(--gutter) var(--section)}.promo-grid{gap:24px}.tile{background:var(--soft);border-radius:2px;padding:48px;text-align:left;min-height:340px;display:flex;flex-direction:column;align-items:flex-start}.tile h3{font-size:36px;line-height:1.12;font-weight:500;margin:14px 0}.tile p{font-size:17px;line-height:1.647;color:#5F6670;margin:0 0 28px}.tile .eyebrow{color:#5F6670}.tile a{margin-top:auto}.section-intro{max-width:var(--wide);margin:0 auto 40px}.section-intro h2{font-size:var(--display-md);line-height:1.16;letter-spacing:-.0295em;margin:0 0 16px}.section-intro p{color:var(--muted);max-width:60ch}.article-shell{border-top:1px solid var(--line)}.article-meta{margin-bottom:28px}.article-header{max-width:900px;margin:0 auto 48px;text-align:center}.article-header h2{font-size:var(--display-md);line-height:1.159;letter-spacing:-.0295em;font-weight:500;margin:16px 0}.article p,.article li{font:400 17px/27.999px var(--sf-text);letter-spacing:-.17px}.article .lead{font:400 21px/1.5 var(--sf-text);color:var(--muted)}.article h3{font-size:27px;line-height:1.25;letter-spacing:-.025em;margin:48px 0 18px}.article li{margin-bottom:14px}.article ul,.article ol{padding-left:24px}.article p{margin-bottom:24px}.article .pullquote{font-size:30px;line-height:1.3;font-weight:500;margin:48px 0}.source{background:var(--soft);padding:24px;color:#5F6670;font-size:14px!important}.article-nav{display:flex;gap:24px;flex-wrap:wrap;padding-top:28px}.selection{background:var(--soft);color:var(--ink)}.selection-title h2{text-transform:none;letter-spacing:-.0295em;font-size:var(--display-md)}.selection-title span{display:none}.selection-card{background:white;min-height:0;border-radius:2px}.selection-body{padding:32px}.selection-body small{color:var(--muted)}.selection-body h3{font-size:26px;margin:16px 0}.selection-body p{color:var(--muted);font-size:17px}.carousel-card{flex-basis:min(82vw,420px);min-height:260px;padding:32px;display:flex;flex-direction:column}.carousel-card .copy{padding:0}.carousel-card h3{font-weight:500;font-size:27px}.carousel-card p{color:#5F6670}.carousel-card a{margin-top:auto}.carousel{scrollbar-width:thin}.carousel::-webkit-scrollbar{display:block;height:7px}.carousel-head{gap:24px;flex-wrap:wrap}.footer-inner{max-width:var(--wide)}footer{font-size:14px;color:#5F6670}.footer-cols a{color:#5F6670;padding:4px 0}.footer-cols h4{font-size:14px}.mobile-panel{background:white;transform:none;transition:none}.mobile-panel a{color:var(--ink);font-size:24px}.search-box{padding:24px var(--gutter);background:var(--soft)}.search-inner{max-width:1078px;margin:auto}.search-box input{display:block;margin:12px 0;width:100%;padding:14px;border:1px solid #D1D5DB;border-radius:8px;background:white;color:var(--ink)}.search-box ul{padding-left:20px}.search-box li{margin:12px 0}.method{max-width:1078.5px;margin:48px auto 0}.method details{border-bottom:1px solid var(--line);padding:18px 0}.method summary{cursor:pointer;font-size:21px;font-weight:500;padding:8px 0}.method li{margin-bottom:12px}.method ul{max-width:68ch}.shop-note{max-width:800px;margin:64px auto 0;text-align:center}.shop-note p{color:#5F6670}.print-only{display:none}
+@media(min-width:1024px){.hero h1{line-height:62.0103px;letter-spacing:-1.85059px}}
+@media(max-width:1023px){:root{--section:72px}.feature-media{padding:40px}.tile{padding:36px}.nav-links{gap:20px}.promo-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:900px){#menuBtn{display:block}.nav-links{display:none}.selection-grid{grid-template-columns:1fr}}
+@media(max-width:620px){:root{--gutter:24px;--r-card:2px;--r-card-lg:2px}.wordmark{font-size:14px}.nav-inner{gap:8px}.hero{text-align:center;padding-top:64px}.hero-actions{justify-content:center}.hero h1{font-size:40px}.hero p{font-size:19px}.feature-media{padding:28px}.feature-media .overlay h2{font-size:28px}.flow{grid-template-columns:1fr}.flow>div{padding:18px}.promo-grid{grid-template-columns:1fr}.tile{padding:28px;min-height:300px}.tile h3{font-size:30px}.article-header{text-align:left}.article-header h2{font-size:34px}.article-shell{padding-top:64px}.footer-cols{grid-template-columns:1fr 1fr}.carousel-head h2{font-size:32px}.selection-body{padding:24px}.category-inner{gap:24px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+@media print{.global-nav,.category-rail,.mobile-panel,.hero-actions,.search-box,.article-nav,.nav-actions{display:none!important}:root{--section:32px}.hero h1{font-size:36px}.article-shell{break-before:page}.article p{font-size:11pt;line-height:1.5}.tile{min-height:0}.carousel{display:block}.carousel-card{min-height:0;margin-bottom:20px}.print-only{display:block}}
+@media(max-width:620px){.feature-media-wrap{padding:0 var(--gutter) 40px}.feature-media{min-height:0}.promo{padding-left:var(--gutter);padding-right:var(--gutter)}.article .lead{font-size:21px}}
+</style><script type="application/json" id="execution-contract">{"ID": "RC-HYBRID-004", "VERSION": "1.0.0", "AREA": "Editorial / Design System", "WORKFLOW": "Inspecionar → Adaptar → Verificar → Entregar", "OWNER": "A DEFINIR", "STATUS": "PREPARED", "INPUT": ["editorial-hybrid-apple-v3(1).html", "FUNDACAO.md", "Brand Styling fornecido no pedido"], "OUTPUT": "HTML standalone com três artigos adaptados", "DEPENDS_ON": [], "BLOCKS": [], "EVIDENCE": "Fontes fornecidas pelo usuário; tokens DO HANDOFF, sem auditoria independente do repositório", "AUTOMATION_LEVEL": "A3", "HANDOFF": "Abrir HTML em navegador; catálogo e publicação não incluídos", "DECISIONS": ["Estrutura do híbrido preservada; cores e tipografia substituídas", "Cards em duas colunas preservam o híbrido em vez do grid Stories 3+1", "Artigos adaptados da fundação; IDs RC-ART-001 a 003 criados nesta entrega", "Fonte Inter/IBM Plex Mono via Google Fonts com fallback offline", "Breakpoints e diagrama tipográfico: PROPOSTA; tokens de marca: DO HANDOFF", "Sem ativos de imagem fornecidos; composição tipográfica sem placeholders", "Escalas oklch não fornecidas não foram inventadas"], "VALIDATION": {"static": "PASS: 19 IDs únicos, 39 âncoras resolvidas, sintaxe JavaScript", "browser": "BLOCKED: navegador indisponível; download falhou", "responsive": "CSS preparado; renderização não verificada"}}</script></head><body><a class="skip" href="#main-content">Pular para o conteúdo</a><div id="top"></div><nav class="global-nav" aria-label="Principal"><div class="nav-inner"><a href="#top" class="wordmark">RISCO COGNITIVO</a><div class="nav-links"><a href="#top">Início</a><a href="#artigos">Artigos</a><a href="#mapa">Mapa</a><a href="#loja">Loja</a></div><div class="nav-actions"><button class="nav-icon" id="searchBtn" aria-label="Buscar artigos" aria-expanded="false" aria-controls="searchPanel"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg></button><button class="nav-icon" id="menuBtn" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobilePanel">☰</button></div></div></nav><div class="mobile-panel" id="mobilePanel" hidden><a href="#top">Início</a><a href="#artigos">Artigos</a><a href="#mapa">Mapa</a><a href="#loja">Loja</a></div><section class="search-box" id="searchPanel" aria-label="Busca" hidden><div class="search-inner"><label for="search">Busque por tema, palavra ou ID</label><input id="search" type="search" placeholder="Ex.: memória, processos, RC-ART-003"><p id="searchStatus" role="status"></p><ul id="searchResults"></ul></div></section><div class="category-rail"><div class="category-inner"><a class="active" href="#artigos">Todos os artigos</a><a href="#rc-art-001">Problemas e fenômenos</a><a href="#rc-art-002">Métodos e gestão</a><a href="#rc-art-003">Aplicação e sistemas</a></div></div><main id="main-content"><section class="hero"><div class="eyebrow">Conhecimento que vira estrutura.</div><h1>Entenda o risco.<br>Redesenhe o trabalho.</h1><p>O trabalho acontece entre pessoas, processos e ambiente. Entenda as demandas dessa relação e transforme dificuldades observadas em apoio à execução.</p><div class="hero-actions"><a class="btn btn-primary" href="#rc-art-001">Começar a leitura</a><a class="btn btn-secondary" href="#mapa">Explorar o mapa</a></div></section><section class="feature-media-wrap" aria-label="Ideia central"><div class="feature-media"><div class="overlay"><small>A base do Risco Cognitivo</small><h2>Observe a relação.<br>Encontre o ponto de mudança.</h2></div><div class="flow"><div><strong>Ambiente</strong><span>Condições em que o trabalho acontece</span></div><div><strong>Pessoas</strong><span>Capacidades e necessidades em contexto</span></div><div><strong>Processos</strong><span>Demandas, decisões e apoios disponíveis</span></div></div><p class="feature-note">A análise parte de situações observáveis. Não atribui falhas automaticamente à pessoa nem infere um diagnóstico clínico.</p></div></section><section class="promo" id="artigos" aria-labelledby="articles-title"><div class="section-intro"><div class="eyebrow">Três pontos de partida</div><h2 id="articles-title">Do problema à aplicação.</h2><p>Uma sequência de leitura para reconhecer a dificuldade, organizar a análise e testar uma mudança.</p></div><div class="promo-grid"><article class="tile"><div class="eyebrow">P1 — Problemas e fenômenos</div><h3>Quando o trabalho exige que você lembre de tudo</h3><p>Entender o problema é o primeiro passo para mudar a forma de trabalhar.</p><a href="#rc-art-001">Ler artigo <span aria-hidden="true">↗</span></a></article><article class="tile"><div class="eyebrow">P2 — Métodos e gestão</div><h3>Do objetivo ao risco: organize a análise</h3><p>Projetos, processos e riscos ajudam a fazer perguntas diferentes sobre o mesmo trabalho.</p><a href="#rc-art-002">Ler artigo <span aria-hidden="true">↗</span></a></article><article class="tile"><div class="eyebrow">P3 — Aplicação e sistemas</div><h3>Transforme uma dificuldade em apoio concreto</h3><p>Externalizar, reduzir, automatizar ou tornar explícito: quatro caminhos para desenhar uma compensação.</p><a href="#rc-art-003">Ler artigo <span aria-hidden="true">↗</span></a></article><article class="tile"><div class="eyebrow">Mapa da fundação</div><h3>Veja como as partes se conectam.</h3><p>Do objetivo à medição: explore as etapas que sustentam o framework.</p><a href="#mapa">Explorar a estrutura <span aria-hidden="true">↗</span></a></article></div></section><section class="article-shell" id="rc-art-001"><header class="article-header"><div class="eyebrow">P1 — Problemas e fenômenos</div><h2>Quando o trabalho exige que você lembre de tudo</h2><div class="article-meta">RC-ART-001 · 2 min de leitura</div></header><article class="article" aria-label="Quando o trabalho exige que você lembre de tudo">
+<p class="lead">Um prazo perdido, uma etapa esquecida ou uma tarefa retomada do começo podem revelar um problema no modo como o trabalho foi organizado.</p>
+<p>Imagine uma atividade que chega por mensagem. A orientação fica na conversa, o prazo aparece em outro lugar e a decisão tomada durante uma reunião não é registrada. Para concluir a entrega, alguém precisa juntar essas partes e lembrar do que falta. O processo funciona enquanto essa pessoa consegue manter tudo em mente.</p>
+<p>O ponto de partida do Risco Cognitivo é observar essa relação entre ambiente, pessoas e processos. Em vez de explicar toda falha como falta de esforço, perguntamos o que a atividade exige, em quais condições ela acontece e que apoio está disponível.</p>
+<h3>O que o trabalho está exigindo?</h3>
+<p>Há tarefas que exigem atenção contínua. Outras dependem de lembrar uma decisão, ordenar etapas, escolher uma prioridade ou perceber que algo mudou. Essas exigências precisam aparecer no desenho do trabalho. Se ficam escondidas, também fica difícil entender onde uma falha pode ocorrer.</p>
+<p>Neste framework, risco cognitivo é uma forma de examinar como as demandas de uma atividade, as vulnerabilidades observadas e a exposição podem contribuir para eventos com impacto no resultado. Não é um diagnóstico da pessoa nem uma conclusão sobre sua capacidade geral.</p>
+<h3>Descreva uma situação observável</h3>
+<p>“Eu sempre me perco” é uma descrição ampla. “Depois de uma interrupção, não encontro o ponto em que parei” permite investigar uma situação concreta. Podemos perguntar se existe um registro de progresso, onde ele está e o que é necessário para retomar.</p>
+<ul><li><strong>Contexto:</strong> uma tarefa é interrompida antes da conclusão.</li><li><strong>Demanda:</strong> lembrar o estado e a próxima etapa.</li><li><strong>Condição observada:</strong> não há registro de onde o trabalho parou.</li><li><strong>Evento possível:</strong> repetir uma etapa ou deixar uma parte sem fazer.</li><li><strong>Impacto possível:</strong> retrabalho, atraso ou entrega incompleta.</li></ul>
+<p>Esse cenário é um exemplo de aplicação. Para usá-lo em um caso real, é preciso verificar o que aconteceu, com que frequência e em quais condições. Uma hipótese não substitui a observação.</p>
+<div class="pullquote">O que a pessoa precisa lembrar pode se tornar algo que o processo mostra.</div>
+<h3>Comece por uma única atividade</h3>
+<p>Escolha um ponto em que o trabalho costuma travar. Registre o objetivo, a sequência atual e a dificuldade observada. Diferencie o que aconteceu do que você imagina ser a causa. Depois, procure uma mudança pequena que possa ser testada.</p>
+<p>O resultado dessa primeira análise não precisa ser uma ferramenta. Pode ser apenas uma descrição melhor do problema. É ela que permite escolher um método e evitar uma solução que parece boa, mas não atende à dificuldade real.</p>
+<p class="source"><strong>Base editorial:</strong> FUNDACAO.md. Texto adaptado para esta versão. Os exemplos são ilustrativos; a sequência de risco cognitivo e compensação é apresentada como framework próprio, sem alegação de validação empírica.</p><nav class="article-nav" aria-label="Continuar leitura"><a href="#artigos">Todos os artigos</a><a href="#rc-art-002">Próximo artigo →</a></nav></article></section><section class="article-shell" id="rc-art-002"><header class="article-header"><div class="eyebrow">P2 — Métodos e gestão</div><h2>Do objetivo ao risco: organize a análise</h2><div class="article-meta">RC-ART-002 · 2 min de leitura</div></header><article class="article" aria-label="Do objetivo ao risco: organize a análise">
+<p class="lead">Antes de escolher uma solução, precisamos saber o que queremos mudar, como o trabalho acontece e o que pode impedir o resultado.</p>
+<p>A fundação editorial do Risco Cognitivo conecta gestão de projetos, gestão de processos e gestão de riscos. Cada perspectiva ilumina uma parte do trabalho. O projeto organiza a mudança desejada. O processo descreve como as atividades acontecem. A análise de riscos examina o que pode afetar o objetivo.</p>
+<p>A sequência apresentada aqui é uma organização didática do framework. Não significa que uma disciplina dependa sempre da outra ou que todo trabalho precise seguir uma cadeia rígida.</p>
+<h3>Defina a mudança desejada</h3>
+<p>Comece pelo objetivo e pela entrega esperada. Em um projeto, a iniciação estabelece o problema e a viabilidade. O planejamento organiza escopo, prazos, recursos, qualidade e riscos. A execução produz as entregas. O monitoramento e controle acompanha o realizado e orienta ajustes. O encerramento registra resultados e pendências.</p>
+<p>Essas atividades não precisam ser entendidas como compartimentos isolados. Acompanhar riscos e corrigir o plano faz parte do trabalho durante sua realização.</p>
+<h3>Mostre como a atividade acontece</h3>
+<p>Na visão de processos, identifique o que inicia o trabalho, quais informações entram e qual resultado deve sair. Registre atividades, decisões, responsáveis e passagens de trabalho entre pessoas ou sistemas. Isso torna visíveis etapas que dependiam de um entendimento implícito.</p>
+<p>Depois, examine gargalos, atrasos e retrabalho. O redesenho propõe uma forma de trabalhar e sua implementação coloca a mudança em uso. O monitoramento mostra se o processo está produzindo o resultado esperado.</p>
+<h3>Construa um cenário de risco</h3>
+<p>Uma lista de dificuldades ainda não é uma análise. Relacione uma causa ou condição, um evento possível e sua consequência. Por exemplo: uma decisão não registrada pode levar ao uso de uma versão antiga, o que pode gerar retrabalho.</p>
+<ol><li><strong>Defina o objeto:</strong> qual atividade ou resultado será analisado?</li><li><strong>Identifique condições e causas:</strong> o que pode contribuir para a falha?</li><li><strong>Descreva o cenário:</strong> o que pode acontecer e com qual consequência?</li><li><strong>Avalie:</strong> quais evidências sustentam a prioridade atribuída?</li><li><strong>Considere controles:</strong> o que já existe e qual exposição permanece?</li></ol>
+<p>Não é necessário atribuir números sem base. Se faltam dados para estimar probabilidade ou impacto, registre essa limitação. O próximo passo pode ser coletar ocorrências antes de classificar o risco.</p>
+<h3>Inclua a demanda cognitiva</h3>
+<p>Pergunte onde a atividade exige atenção, memória, planejamento, priorização ou monitoramento. Relacione essas exigências às condições observadas. Então escolha o tratamento e defina como acompanhar sua efetividade.</p>
+<p>Uma análise útil termina com uma decisão verificável: o que será alterado, quem assumirá a ação e qual sinal mostrará se ela ajudou. Assim, o método prepara a execução e abre espaço para aprender com o resultado.</p>
+<p class="source"><strong>Base editorial:</strong> FUNDACAO.md. Texto adaptado para esta versão. Os exemplos são ilustrativos; a sequência de risco cognitivo e compensação é apresentada como framework próprio, sem alegação de validação empírica.</p><nav class="article-nav" aria-label="Continuar leitura"><a href="#artigos">Todos os artigos</a><a href="#rc-art-003">Próximo artigo →</a></nav></article></section><section class="article-shell" id="rc-art-003"><header class="article-header"><div class="eyebrow">P3 — Aplicação e sistemas</div><h2>Transforme uma dificuldade em apoio concreto</h2><div class="article-meta">RC-ART-003 · 2 min de leitura</div></header><article class="article" aria-label="Transforme uma dificuldade em apoio concreto">
+<p class="lead">Uma solução começa a fazer sentido quando responde a uma dificuldade observada e permite verificar o que mudou.</p>
+<p>Depois de descrever o problema e analisar o risco, chega a hora de escolher o que o sistema pode assumir. No framework Risco Cognitivo, compensar significa redesenhar o trabalho para oferecer apoio à execução. Isso pode resultar em uma rotina, um registro, uma interface ou uma automação.</p>
+<p>O formato vem depois da necessidade. Criar um agente ou adicionar uma ferramenta antes de compreender o problema pode aumentar a quantidade de lugares que a pessoa precisa acompanhar.</p>
+<h3>Escolha o tipo de apoio</h3>
+<ul><li><strong>Externalizar:</strong> registrar uma informação que dependia da memória.</li><li><strong>Reduzir:</strong> diminuir passos ou decisões que não ajudam a entrega.</li><li><strong>Automatizar:</strong> transferir uma ação definida para um sistema, com controle de falhas.</li><li><strong>Tornar explícito:</strong> mostrar a prioridade, a regra ou o próximo passo.</li></ul>
+<p>Esses caminhos podem ser combinados. O importante é explicar qual demanda cada mudança pretende atender. Uma lista de tarefas, por exemplo, só ajuda a retomar o trabalho se mostrar o estado atual e uma próxima ação compreensível.</p>
+<h3>Desenhe um controle pequeno</h3>
+<p>Considere novamente a interrupção de uma tarefa. Uma proposta de compensação é registrar, antes da pausa, o que foi concluído, onde está o material e o que deve acontecer em seguida. Ao voltar, a pessoa consulta esse registro.</p>
+<p>Esse controle tem uma entrada, um momento de uso e um resultado esperado. A entrada é o estado da atividade. O momento é a interrupção ou a troca de contexto. O resultado esperado é conseguir retomar sem reconstruir toda a sequência.</p>
+<div class="pullquote">Uma boa próxima ação diz o que fazer e permite reconhecer quando terminou.</div>
+<h3>Implemente e observe</h3>
+<p>Teste a mudança em uma atividade delimitada. Defina quem mantém o registro e onde ele será encontrado. Se houver automação, verifique o que acontece quando faltam dados ou quando a execução falha. Um apoio que não é confiável pode criar uma nova fonte de retrabalho.</p>
+<p>Escolha uma medida ligada ao problema: tempo para retomar, quantidade de etapas repetidas ou entregas devolvidas por falta de informação. Compare situações suficientemente semelhantes e registre alterações no contexto. Uma melhora pontual não demonstra, sozinha, que a solução funcionará sempre.</p>
+<h3>Use o resultado para ajustar</h3>
+<p>Se o registro não é usado, investigue a razão. Pode estar longe do local de trabalho, exigir preenchimento demais ou não mostrar o que a pessoa precisa. Ajustar faz parte da validação. A meta não é defender a ferramenta criada, mas oferecer apoio que possa ser utilizado.</p>
+<p>O ciclo termina com aprendizado: o que foi observado, qual compensação foi testada, que resultado apareceu e o que permanece em aberto. Essa informação alimenta a próxima decisão e ajuda a transformar uma tentativa isolada em conhecimento aplicado.</p>
+<p class="source"><strong>Base editorial:</strong> FUNDACAO.md. Texto adaptado para esta versão. Os exemplos são ilustrativos; a sequência de risco cognitivo e compensação é apresentada como framework próprio, sem alegação de validação empírica.</p><nav class="article-nav" aria-label="Continuar leitura"><a href="#artigos">Todos os artigos</a><a href="#mapa">Explorar o mapa →</a></nav></article></section><section class="selection" id="mapa"><div class="selection-inner"><div class="selection-title"><div class="eyebrow">Mapa de leitura</div><h2>Uma base. Três perspectivas.</h2><p>O pilar organiza o assunto. A consciência orienta a abordagem.</p></div><div class="selection-grid"><article class="selection-card"><div class="selection-body"><small>C1 — Descoberta</small><h3>O que está acontecendo?</h3><p>Nomeie situações, dificuldades e sinais observáveis.</p><a href="#rc-art-001">Ir à leitura →</a></div></article><article class="selection-card"><div class="selection-body"><small>C2 — Compreensão</small><h3>Como isso funciona?</h3><p>Relacione causas, demandas, processos e controles.</p><a href="#rc-art-002">Ir à leitura →</a></div></article><article class="selection-card"><div class="selection-body"><small>C3 — Decisão</small><h3>O que posso fazer?</h3><p>Escolha uma aplicação e defina como observar seu resultado.</p><a href="#rc-art-003">Ir à leitura →</a></div></article></div><div class="method"><h3>Explore as etapas da fundação</h3><p>Organização didática do material de origem. Abra cada tema para consultar suas cinco etapas.</p><details><summary>Gestão de Projetos</summary><ol><li>Iniciação: define problema, objetivo, viabilidade, sponsor, stakeholders e autorização.</li><li>Planejamento: define escopo, entregáveis, cronograma, custos, recursos, riscos, qualidade e comunicação.</li><li>Execução: realiza o trabalho planejado e produz os entregáveis.</li><li>Monitoramento e Controle: compara planejado × realizado, mede desempenho, controla riscos, mudanças, custos e prazos.</li><li>Encerramento: aceita entregas, fecha pendências, libera recursos, registra resultados e lições aprendidas.</li></ol></details><details><summary>Gestão de Processos</summary><ol><li>Descoberta: identifica propósito, cliente, trigger, entradas, saídas, responsáveis e processo atual.</li><li>Modelagem: representa atividades, decisões, regras, handoffs, sistemas, dados e controles.</li><li>Análise: identifica gargalos, desperdícios, riscos, retrabalho, atrasos e falhas.</li><li>Redesenho e Implementação: define processo futuro, controles, automações, papéis e novos procedimentos.</li><li>Monitoramento e Melhoria: acompanha KPIs, SLAs, qualidade, capacidade e promove melhoria contínua.</li></ol></details><details><summary>Gestão de Riscos</summary><ol><li>Estabelecimento do Contexto: define objetivos, escopo, critérios, apetite e tolerância ao risco.</li><li>Identificação: registra riscos, fontes, causas, eventos, consequências e responsáveis.</li><li>Análise e Avaliação: estima probabilidade, impacto, exposição, criticidade e prioriza riscos.</li><li>Tratamento: define resposta, controles preventivos, detectivos, corretivos e contingências.</li><li>Monitoramento e Revisão: acompanha KRIs, risco residual, efetividade dos controles, mudanças e aprendizados.</li></ol></details><details><summary>Análise de Riscos</summary><ol><li>Definição do Objeto: determina objetivo, ativo, processo, atividade ou resultado analisado.</li><li>Identificação das Causas: identifica fontes, fatores, vulnerabilidades e condições de exposição.</li><li>Construção do Cenário: estrutura causa → evento → consequência.</li><li>Avaliação: analisa probabilidade, impacto, severidade, velocidade, detectabilidade e interdependências.</li><li>Determinação do Risco: estabelece risco inerente, considera controles existentes e calcula/classifica o risco residual.</li></ol></details><details><summary>Risco Cognitivo</summary><ol><li>Contextualização: define objetivo, contexto, processo, atividade e função de gestão.</li><li>Análise da Demanda Cognitiva: identifica capacidades necessárias, como atenção, memória, planejamento, priorização e monitoramento.</li><li>Análise da Vulnerabilidade e Exposição: identifica fatores, vulnerabilidades observáveis e intensidade da exposição.</li><li>Caracterização do Risco: relaciona demanda, vulnerabilidade e exposição a eventos e impactos operacionais possíveis.</li><li>Compensação e Monitoramento: define controles, design compensatório, solução, métricas e acompanha resultado.</li></ol></details><details><summary>Compensação e Design de Solução</summary><ol><li>Diagnóstico Operacional: identifica problema, demanda e impacto sem inferir diagnóstico clínico.</li><li>Definição da Compensação: decide o que deve ser externalizado, reduzido, automatizado ou tornado explícito.</li><li>Design do Controle: define controle preventivo, detectivo ou corretivo.</li><li>Implementação da Solução: transforma a compensação em skill, workflow, agente, interface ou feature.</li><li>Validação: mede uso, resultado, limitações e necessidade de ajuste.</li></ol></details></div></div></section><section class="carousel-section" id="explorar"><div class="carousel-head"><h2>Continue com uma pergunta.</h2><span>Explore os temas →</span></div><div class="carousel" tabindex="0" aria-label="Perguntas para aplicar ao trabalho"><article class="carousel-card"><div class="copy"><h3>O que precisa mudar?</h3><p>Defina o objetivo e a entrega que permitem reconhecer o resultado.</p></div><a href="#rc-art-002">Aprofundar →</a></article><article class="carousel-card"><div class="copy"><h3>Onde o trabalho trava?</h3><p>Observe uma atividade e diferencie o fato da hipótese sobre sua causa.</p></div><a href="#rc-art-001">Aprofundar →</a></article><article class="carousel-card"><div class="copy"><h3>Que apoio pode ajudar?</h3><p>Escolha uma compensação pequena e planeje como verificar seu uso.</p></div><a href="#rc-art-003">Aprofundar →</a></article></div></section><section class="selection" id="loja"><div class="shop-note"><div class="eyebrow">Loja</div><h2>Recursos para colocar em prática.</h2><p>O catálogo ainda não foi incluído nesta versão. Enquanto isso, use a leitura sobre compensação para desenhar seu primeiro apoio à execução.</p><a class="btn btn-secondary" href="#rc-art-003">Ler sobre aplicação</a></div></section></main><footer id="footer"><div class="footer-inner"><div class="footer-cols"><div><h4>RISCO COGNITIVO</h4><p>Conhecimento que vira estrutura.</p></div><div><h4>Explorar</h4><a href="#artigos">Artigos</a><a href="#mapa">Mapa</a><a href="#loja">Loja</a></div><div><h4>Pilares</h4><a href="#rc-art-001">Problemas e fenômenos</a><a href="#rc-art-002">Métodos e gestão</a><a href="#rc-art-003">Aplicação e sistemas</a></div><div><h4>Sobre esta edição</h4><p>Base: FUNDACAO.md<br>Adaptação editorial · outubro de 2026<br>Ecossistema EXECUTAR</p></div></div><p>Transformar conhecimento aplicado em estrutura para decisões melhores.</p></div></footer><script>const articles=[{"id": "rc-art-001", "title": "Quando o trabalho exige que você lembre de tudo", "text": "\n Um prazo perdido, uma etapa esquecida ou uma tarefa retomada do começo podem revelar um problema no modo como o trabalho foi organizado. \n Imagine uma atividade que chega por mensagem. A orientação fica na conversa, o prazo aparece em outro lugar e a decisão tomada durante uma reunião não é registrada. Para concluir a entrega, alguém precisa juntar essas partes e lembrar do que falta. O processo funciona enquanto essa pessoa consegue manter tudo em mente. \n O ponto de partida do Risco Cognitivo é observar essa relação entre ambiente, pessoas e processos. Em vez de explicar toda falha como falta de esforço, perguntamos o que a atividade exige, em quais condições ela acontece e que apoio está disponível. \n O que o trabalho está exigindo? \n Há tarefas que exigem atenção contínua. Outras dependem de lembrar uma decisão, ordenar etapas, escolher uma prioridade ou perceber que algo mudou. Essas exigências precisam aparecer no desenho do trabalho. Se ficam escondidas, também fica difícil entender onde uma falha pode ocorrer. \n Neste framework, risco cognitivo é uma forma de examinar como as demandas de uma atividade, as vulnerabilidades observadas e a exposição podem contribuir para eventos com impacto no resultado. Não é um diagnóstico da pessoa nem uma conclusão sobre sua capacidade geral. \n Descreva uma situação observável \n “Eu sempre me perco” é uma descrição ampla. “Depois de uma interrupção, não encontro o ponto em que parei” permite investigar uma situação concreta. Podemos perguntar se existe um registro de progresso, onde ele está e o que é necessário para retomar. \n   Contexto:  uma tarefa é interrompida antes da conclusão.   Demanda:  lembrar o estado e a próxima etapa.   Condição observada:  não há registro de onde o trabalho parou.   Evento possível:  repetir uma etapa ou deixar uma parte sem fazer.   Impacto possível:  retrabalho, atraso ou entrega incompleta.  \n Esse cenário é um exemplo de aplicação. Para usá-lo em um caso real, é preciso verificar o que aconteceu, com que frequência e em quais condições. Uma hipótese não substitui a observação. \n O que a pessoa precisa lembrar pode se tornar algo que o processo mostra. \n Comece por uma única atividade \n Escolha um ponto em que o trabalho costuma travar. Registre o objetivo, a sequência atual e a dificuldade observada. Diferencie o que aconteceu do que você imagina ser a causa. Depois, procure uma mudança pequena que possa ser testada. \n O resultado dessa primeira análise não precisa ser uma ferramenta. Pode ser apenas uma descrição melhor do problema. É ela que permite escolher um método e evitar uma solução que parece boa, mas não atende à dificuldade real. \n", "pillar": "P1 — Problemas e fenômenos"}, {"id": "rc-art-002", "title": "Do objetivo ao risco: organize a análise", "text": "\n Antes de escolher uma solução, precisamos saber o que queremos mudar, como o trabalho acontece e o que pode impedir o resultado. \n A fundação editorial do Risco Cognitivo conecta gestão de projetos, gestão de processos e gestão de riscos. Cada perspectiva ilumina uma parte do trabalho. O projeto organiza a mudança desejada. O processo descreve como as atividades acontecem. A análise de riscos examina o que pode afetar o objetivo. \n A sequência apresentada aqui é uma organização didática do framework. Não significa que uma disciplina dependa sempre da outra ou que todo trabalho precise seguir uma cadeia rígida. \n Defina a mudança desejada \n Comece pelo objetivo e pela entrega esperada. Em um projeto, a iniciação estabelece o problema e a viabilidade. O planejamento organiza escopo, prazos, recursos, qualidade e riscos. A execução produz as entregas. O monitoramento e controle acompanha o realizado e orienta ajustes. O encerramento registra resultados e pendências. \n Essas atividades não precisam ser entendidas como compartimentos isolados. Acompanhar riscos e corrigir o plano faz parte do trabalho durante sua realização. \n Mostre como a atividade acontece \n Na visão de processos, identifique o que inicia o trabalho, quais informações entram e qual resultado deve sair. Registre atividades, decisões, responsáveis e passagens de trabalho entre pessoas ou sistemas. Isso torna visíveis etapas que dependiam de um entendimento implícito. \n Depois, examine gargalos, atrasos e retrabalho. O redesenho propõe uma forma de trabalhar e sua implementação coloca a mudança em uso. O monitoramento mostra se o processo está produzindo o resultado esperado. \n Construa um cenário de risco \n Uma lista de dificuldades ainda não é uma análise. Relacione uma causa ou condição, um evento possível e sua consequência. Por exemplo: uma decisão não registrada pode levar ao uso de uma versão antiga, o que pode gerar retrabalho. \n   Defina o objeto:  qual atividade ou resultado será analisado?   Identifique condições e causas:  o que pode contribuir para a falha?   Descreva o cenário:  o que pode acontecer e com qual consequência?   Avalie:  quais evidências sustentam a prioridade atribuída?   Considere controles:  o que já existe e qual exposição permanece?  \n Não é necessário atribuir números sem base. Se faltam dados para estimar probabilidade ou impacto, registre essa limitação. O próximo passo pode ser coletar ocorrências antes de classificar o risco. \n Inclua a demanda cognitiva \n Pergunte onde a atividade exige atenção, memória, planejamento, priorização ou monitoramento. Relacione essas exigências às condições observadas. Então escolha o tratamento e defina como acompanhar sua efetividade. \n Uma análise útil termina com uma decisão verificável: o que será alterado, quem assumirá a ação e qual sinal mostrará se ela ajudou. Assim, o método prepara a execução e abre espaço para aprender com o resultado. \n", "pillar": "P2 — Métodos e gestão"}, {"id": "rc-art-003", "title": "Transforme uma dificuldade em apoio concreto", "text": "\n Uma solução começa a fazer sentido quando responde a uma dificuldade observada e permite verificar o que mudou. \n Depois de descrever o problema e analisar o risco, chega a hora de escolher o que o sistema pode assumir. No framework Risco Cognitivo, compensar significa redesenhar o trabalho para oferecer apoio à execução. Isso pode resultar em uma rotina, um registro, uma interface ou uma automação. \n O formato vem depois da necessidade. Criar um agente ou adicionar uma ferramenta antes de compreender o problema pode aumentar a quantidade de lugares que a pessoa precisa acompanhar. \n Escolha o tipo de apoio \n   Externalizar:  registrar uma informação que dependia da memória.   Reduzir:  diminuir passos ou decisões que não ajudam a entrega.   Automatizar:  transferir uma ação definida para um sistema, com controle de falhas.   Tornar explícito:  mostrar a prioridade, a regra ou o próximo passo.  \n Esses caminhos podem ser combinados. O importante é explicar qual demanda cada mudança pretende atender. Uma lista de tarefas, por exemplo, só ajuda a retomar o trabalho se mostrar o estado atual e uma próxima ação compreensível. \n Desenhe um controle pequeno \n Considere novamente a interrupção de uma tarefa. Uma proposta de compensação é registrar, antes da pausa, o que foi concluído, onde está o material e o que deve acontecer em seguida. Ao voltar, a pessoa consulta esse registro. \n Esse controle tem uma entrada, um momento de uso e um resultado esperado. A entrada é o estado da atividade. O momento é a interrupção ou a troca de contexto. O resultado esperado é conseguir retomar sem reconstruir toda a sequência. \n Uma boa próxima ação diz o que fazer e permite reconhecer quando terminou. \n Implemente e observe \n Teste a mudança em uma atividade delimitada. Defina quem mantém o registro e onde ele será encontrado. Se houver automação, verifique o que acontece quando faltam dados ou quando a execução falha. Um apoio que não é confiável pode criar uma nova fonte de retrabalho. \n Escolha uma medida ligada ao problema: tempo para retomar, quantidade de etapas repetidas ou entregas devolvidas por falta de informação. Compare situações suficientemente semelhantes e registre alterações no contexto. Uma melhora pontual não demonstra, sozinha, que a solução funcionará sempre. \n Use o resultado para ajustar \n Se o registro não é usado, investigue a razão. Pode estar longe do local de trabalho, exigir preenchimento demais ou não mostrar o que a pessoa precisa. Ajustar faz parte da validação. A meta não é defender a ferramenta criada, mas oferecer apoio que possa ser utilizado. \n O ciclo termina com aprendizado: o que foi observado, qual compensação foi testada, que resultado apareceu e o que permanece em aberto. Essa informação alimenta a próxima decisão e ajuda a transformar uma tentativa isolada em conhecimento aplicado. \n", "pillar": "P3 — Aplicação e sistemas"}];const menuBtn=document.getElementById('menuBtn'),panel=document.getElementById('mobilePanel'),searchBtn=document.getElementById('searchBtn'),searchPanel=document.getElementById('searchPanel'),search=document.getElementById('search');
+function closeMenu(){panel.hidden=true;menuBtn.setAttribute('aria-expanded','false');menuBtn.setAttribute('aria-label','Abrir menu');menuBtn.textContent='☰'}
+menuBtn.addEventListener('click',()=>{const open=panel.hidden;panel.hidden=!open;menuBtn.setAttribute('aria-expanded',String(open));menuBtn.setAttribute('aria-label',open?'Fechar menu':'Abrir menu');menuBtn.textContent=open?'×':'☰'});
+panel.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
+searchBtn.addEventListener('click',()=>{const open=searchPanel.hidden;searchPanel.hidden=!open;searchBtn.setAttribute('aria-expanded',String(open));if(open){closeMenu();search.focus();renderSearch()}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(!panel.hidden){closeMenu();menuBtn.focus()}else if(!searchPanel.hidden){searchPanel.hidden=true;searchBtn.setAttribute('aria-expanded','false');searchBtn.focus()}}});
+function norm(s){return s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase()}
+function renderSearch(){const q=norm(search.value.trim());const matches=articles.filter(a=>norm(a.title+' '+a.text+' '+a.pillar+' '+a.id).includes(q));const list=document.getElementById('searchResults');list.replaceChildren();for(const a of matches){const li=document.createElement('li'),link=document.createElement('a');link.href='#'+a.id;link.textContent=a.title;li.append(link);list.append(li)}document.getElementById('searchStatus').textContent=matches.length+' artigo(s) encontrado(s).'}search.addEventListener('input',renderSearch);
+window.matchMedia('(min-width:901px)').addEventListener('change',e=>{if(e.matches)closeMenu()});
+</script></body></html>

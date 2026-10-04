@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Editorial System — NatGeo × Apple UX (v6)</title>
+<meta name="description" content="v6: chrome (topo + barra inferior) soma/aparece com o scroll para maximizar a leitura; nav visível com trilha de categorias em desktop, drawer e barra inferior reservados ao mobile; imagens sempre verticais em tela cheia.">
+<link rel="stylesheet" href="tokens-hybrid.css">
+</head>
+<body>
+
+<!-- BARRA SUPERIOR
+     Mobile: 3 elementos (menu · marca · busca) — chrome soma ao rolar para baixo.
+     Desktop: nav visível com links + trilha de categorias (padrão Apple), sem menu/drawer. -->
+<nav class="global-nav" id="topNav">
+  <div class="nav-inner">
+    <button class="nav-icon menu-btn-mobile" id="menuBtn" aria-label="Abrir navegação" aria-controls="drawer" aria-expanded="false">☰</button>
+    <a href="#top" class="wordmark" aria-label="Início">
+      <span class="frame-mark" aria-hidden="true"></span>
+      EXECUTAR
+    </a>
+    <div class="nav-links-desktop" aria-label="Navegação principal">
+      <a href="#article">História</a>
+      <a href="#selection">Seleção</a>
+      <a href="#explore">Explorar</a>
+      <a href="#footer">Sobre</a>
+    </div>
+    <button class="nav-icon" aria-label="Buscar">⌕</button>
+  </div>
+  <div class="category-rail-desktop">
+    <div class="category-inner">
+      <a href="#story">Ciência</a>
+      <a href="#story">Viagem</a>
+      <a href="#story">Animais</a>
+      <a class="active" href="#story">História</a>
+      <a href="#explore">Fotografia</a>
+    </div>
+  </div>
+</nav>
+
+<!-- DRAWER LATERAL — toda a navegação (seções + categorias) vive aqui -->
+<div class="drawer-backdrop" id="drawerBackdrop"></div>
+<aside class="drawer" id="drawer" aria-hidden="true">
+  <div class="drawer-header">
+    <div class="drawer-id">
+      <span class="drawer-mark" aria-hidden="true"></span>
+      <div>
+        <strong>EXECUTAR</strong>
+        <span>Editorial</span>
+      </div>
+    </div>
+    <button class="drawer-close" id="drawerClose" aria-label="Fechar navegação">✕</button>
+  </div>
+
+  <div class="drawer-group">
+    <div class="drawer-label">Navegar</div>
+    <a class="drawer-link active" href="#top">Início</a>
+    <a class="drawer-link" href="#article">História</a>
+    <a class="drawer-link" href="#selection">Seleção</a>
+    <a class="drawer-link" href="#explore">Explorar</a>
+    <a class="drawer-link" href="#footer">Sobre</a>
+  </div>
+
+  <div class="drawer-divider"></div>
+
+  <div class="drawer-group">
+    <div class="drawer-label">Categorias</div>
+    <a class="drawer-link" href="#story">Ciência</a>
+    <a class="drawer-link" href="#story">Viagem</a>
+    <a class="drawer-link" href="#story">Animais</a>
+    <a class="drawer-link" href="#story">História</a>
+    <a class="drawer-link" href="#explore">Fotografia</a>
+  </div>
+</aside>
+
+<main id="top">
+  <section class="hero" id="story">
+    <div class="hero-inner">
+      <div class="eyebrow">História</div>
+      <h1>Histórias profundas. Interface silenciosa.</h1>
+      <p>Uma experiência editorial que combina amarelo e preto de alto contraste com tipografia de sistema Apple, navegação em drawer lateral e imagens verticais em tela cheia.</p>
+      <div class="hero-actions">
+        <a class="btn btn-accent" href="#article">Ler história</a>
+        <a class="btn btn-outline-dark" href="#selection">Ver seleção</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MÍDIA DE DESTAQUE — vertical, 100vh, sem gutter: a "vitrine" de tela cheia -->
+  <section class="feature-media-wrap">
+    <div class="feature-media" id="featureMedia">
+      <div class="overlay">
+        <small>Reportagem especial</small>
+        <h2>Conteúdo primeiro. Interface depois.</h2>
+      </div>
+    </div>
+  </section>
+
+  <section class="promo" aria-label="Destaques">
+    <div class="promo-grid">
+      <article class="tile soft">
+        <h3>Leitura sem ruído.</h3>
+        <p>Tipografia ampla, largura controlada e contraste consistente.</p>
+        <a class="btn btn-primary" href="#article">Saiba mais</a>
+        <div class="tile-art" aria-hidden="true"></div>
+      </article>
+      <article class="tile dark">
+        <h3>Preto. Branco. Amarelo.</h3>
+        <p>Uma gramática editorial simples com hierarquia forte.</p>
+        <a class="btn btn-accent" href="#selection">Explorar</a>
+        <div class="tile-art" aria-hidden="true"></div>
+      </article>
+      <article class="tile yellow">
+        <h3>Destaque que funciona.</h3>
+        <p>Amarelo para atenção; preto para legibilidade.</p>
+        <a class="btn btn-primary" href="#article">Abrir</a>
+        <div class="tile-art" aria-hidden="true"></div>
+      </article>
+      <article class="tile soft">
+        <h3>Responsivo por padrão.</h3>
+        <p>Desktop, tablet e mobile usam a mesma hierarquia semântica.</p>
+        <a class="btn btn-outline-dark" href="#explore">Ver módulos</a>
+        <div class="tile-art" aria-hidden="true"></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="article-shell" id="article">
+    <div class="article-meta">
+      <strong>Por Redação Editorial</strong><br>
+      Publicado em 06 set. 2026 · Atualizado em 06 set. 2026
+    </div>
+
+    <article class="article">
+      <p class="lead">O sistema combina a força visual editorial do amarelo e preto com uma navegação lateral discreta, botões grandes, cards de cantos retos e imagens sempre verticais.</p>
+
+      <p>A navegação principal saiu do topo e virou um drawer lateral — como no Outlook — liberando a página inteira para o conteúdo. <a href="#selection">Links e chamadas</a> recebem marcação precisa sem comprometer o corpo do texto.</p>
+
+      <h2>1. Navegação lateral</h2>
+      <p>Um único botão no topo abre um painel com todas as seções e categorias. A barra superior nunca precisa de mais de três elementos: menu, marca e busca.</p>
+
+      <div class="inline-media">
+        <div class="media-box" role="img" aria-label="Placeholder editorial vertical"></div>
+        <p class="caption">Imagem editorial vertical de exemplo, sangrando até a borda da tela. Substitua por conteúdo próprio ou devidamente licenciado.</p>
+      </div>
+
+      <h2>2. Barra inferior de três destinos</h2>
+      <p>Início, Seleção e Explorar ficam sempre a um toque de distância. A barra soma-se ao scroll: desaparece ao descer a página e volta assim que você rola para cima.</p>
+
+      <div class="pullquote">Três opções em cima, três embaixo — o suficiente para orientar sem competir com o conteúdo.</div>
+
+      <h2>3. Imagens verticais, tela cheia</h2>
+      <p>Toda imagem de destaque — hero, seleção e carrossel — usa proporção vertical e ocupa a largura total da tela, criando espaço negativo generoso entre os blocos de texto.</p>
+
+      <h2>4. Claro como padrão</h2>
+      <p>A superfície clara volta a ser a base do sistema, para legibilidade. O preto aparece de forma pontual — no drawer não, mas na seção "Nossa Seleção" — como o único momento de alto contraste da página.</p>
+    </article>
+  </section>
+
+  <section class="selection" id="selection">
+    <div class="selection-inner">
+      <div class="selection-title">
+        <h2>Nossa seleção</h2><span></span>
+      </div>
+      <div class="selection-grid">
+        <article class="selection-card">
+          <div class="selection-img"></div>
+          <div class="selection-body"><small>Animais</small><h3>Uma história visual em destaque com hierarquia forte</h3></div>
+        </article>
+        <article class="selection-card">
+          <div class="selection-img"></div>
+          <div class="selection-body"><small>Ciência</small><h3>Conteúdo profundo em uma superfície de alto contraste</h3></div>
+        </article>
+        <article class="selection-card">
+          <div class="selection-img"></div>
+          <div class="selection-body"><small>História</small><h3>Leitura editorial com comportamento responsivo</h3></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="carousel-section" id="explore">
+    <div class="carousel-head">
+      <h2>Explore mais</h2>
+      <span>Arraste →</span>
+    </div>
+    <div class="carousel">
+      <article class="carousel-card"><div class="visual"></div><div class="copy"><h3>Grandes histórias, imagens verticais.</h3></div></article>
+      <article class="carousel-card"><div class="visual"></div><div class="copy"><h3>Identidade amarela com UI silenciosa.</h3></div></article>
+      <article class="carousel-card"><div class="visual"></div><div class="copy"><h3>Cards retos, altos e responsivos.</h3></div></article>
+    </div>
+  </section>
+</main>
+
+<footer id="footer">
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="#footer">Sobre</a>
+      <a href="#footer">Privacidade</a>
+      <a href="#article">Tipografia</a>
+      <a href="#top">Design</a>
+    </div>
+    <p>Protótipo independente. Usa padrões gerais de UI e layout inspirados na linguagem pública do site Apple e no padrão de navegação do Outlook, sem copiar código-fonte, marcas, textos, imagens ou ativos proprietários.</p>
+  </div>
+</footer>
+
+<!-- BARRA INFERIOR — exatamente 3 destinos -->
+<nav class="bottom-bar" id="bottomBar" aria-label="Navegação inferior">
+  <a class="bottom-tab active" href="#top" data-tab="inicio">
+    <span class="glyph" aria-hidden="true">⌂</span>
+    Início
+  </a>
+  <a class="bottom-tab" href="#selection" data-tab="selecao">
+    <span class="glyph" aria-hidden="true">◆</span>
+    Seleção
+  </a>
+  <a class="bottom-tab" href="#explore" data-tab="explorar">
+    <span class="glyph" aria-hidden="true">▤</span>
+    Explorar
+  </a>
+</nav>
+
+<script>
+// ---- Drawer lateral ----
+const menuBtn=document.getElementById('menuBtn');
+const drawer=document.getElementById('drawer');
+const backdrop=document.getElementById('drawerBackdrop');
+const drawerClose=document.getElementById('drawerClose');
+
+function openDrawer(){
+  drawer.classList.add('open');
+  backdrop.classList.add('open');
+  drawer.setAttribute('aria-hidden','false');
+  menuBtn.setAttribute('aria-expanded','true');
+  // com o drawer aberto, o chrome fica visível — evita esconder o botão de fechar
+  topNav.classList.remove('hidden');
+  bottomBar.classList.remove('hidden');
+}
+function closeDrawer(){
+  drawer.classList.remove('open');
+  backdrop.classList.remove('open');
+  drawer.setAttribute('aria-hidden','true');
+  menuBtn.setAttribute('aria-expanded','false');
+}
+menuBtn.addEventListener('click',openDrawer);
+drawerClose.addEventListener('click',closeDrawer);
+backdrop.addEventListener('click',closeDrawer);
+document.querySelectorAll('.drawer-link').forEach(a=>a.addEventListener('click',closeDrawer));
+document.addEventListener('keydown',(e)=>{if(e.key==='Escape')closeDrawer();});
+
+// ---- Chrome (topo + barra inferior): some ao descer, aparece ao subir ----
+// Mesma lógica do Safari/Apple — maximiza a área de leitura durante o scroll contínuo.
+const bottomBar=document.getElementById('bottomBar');
+const topNav=document.getElementById('topNav');
+let lastY=window.scrollY;
+let ticking=false;
+window.addEventListener('scroll',()=>{
+  if(!ticking){
+    requestAnimationFrame(()=>{
+      const y=window.scrollY;
+      const goingDown = y>lastY && y>80;
+      bottomBar.classList.toggle('hidden',goingDown);
+      topNav.classList.toggle('hidden',goingDown);
+      lastY=y;
+      ticking=false;
+    });
+    ticking=true;
+  }
+},{passive:true});
+
+// ---- Reveal único: mídia de destaque ----
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const feature = document.getElementById('featureMedia');
+if(reduceMotion){
+  feature.classList.add('in');
+}else{
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        feature.classList.add('in');
+        io.unobserve(feature);
+      }
+    });
+  },{threshold:.1});
+  io.observe(feature);
+}
+</script>
+</body>
+</html>

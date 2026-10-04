@@ -1,0 +1,22 @@
+id: VALIDATION-TEIA-001
+version: 0.1.0
+fail_if:
+- edge_without_epistemic_class
+- inferred_edge_marked_observed
+- qf_recommendation_without_solution_id_or_unresolved_candidate
+- solution_claim_without_problem_or_fit_reference
+- neurodivergence_used_as_user_diagnosis
+- clinical_association_promoted_to_product_effect
+- target_metric_written_as_observed
+- store_card_used_as_source_of_truth
+- quick_framework_prose_used_as_primary_evidence
+- native_id_dropped
+- asset_recreates_semantics_without_refs
+pass_if:
+- native_ids_preserved
+- cross_document_bridges_explicit
+- claims_have_evidence_or_gap
+- problem_to_solution_traceable
+- solution_to_execution_to_event_traceable
+- quick_framework_to_problem_to_solution_traceable
+- learning_appends_without_overwriting_history

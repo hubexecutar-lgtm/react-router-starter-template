@@ -173,7 +173,7 @@ to `apps/blog/`.
 
 ### ADR-08: Loja (`/loja`) com dados de exemplo e marcadores de área (ADR-STORE-ROUTES-UI-001)
 
-- **Status:** Aceita — implementada
+- **Status:** Substituída — a Loja saiu no reset (ADR-13) e volta como Ferramentas cognitivas (ADR-16)
 - **Contexto:** A Loja foi construída no repositório original (`executar-23/Risco-cognitivo-blog`,
   branch `claude/trusting-gates-go053v`, commit `c3a4219`) e trazida para cá depois da migração.
   Decisão completa em `docs/adr/ADR-STORE-ROUTES-UI-001.md`; mapas e wireframes em
@@ -379,3 +379,34 @@ to `apps/blog/`.
     Auditoria: `docs/audit/aud-web-002/`.
   - Fora desta etapa: CMS, API, banco, preview, busca, filtro por tópicos, alternância grade/lista, vídeo e exemplos
     de conversa, rodapé de cinco colunas e a política de privacidade (AUD-HIG-08).
+
+### ADR-15: Camada de ilustração, grafo e motion sobre o Stories (LANC-001, AUD-ORDEM-001)
+
+- **Status:** Aceita — tokens implementados (LANC-001 PR-B, PR #22, integrados ao PR #19 pela AUD-ORDEM-001).
+  Na `main` este conteúdo nasceu como "ADR-13 Brand Local v7"; o número e a identidade mudaram na integração.
+- **Contexto:** A identidade do site é a do front-end Stories (ADR-14, tokens `--ref-*`), com as cores do ADR-11.
+  O pacote de lançamento LANC-001 traz ainda a paleta de ilustração RC-BRAND-STYLING-001 e o motion do v7, que o
+  Stories não define. Decisão do usuário (DEC-U14, 2026-10-04): a base é o PR #19.
+- **Decisão:**
+  - **Interface = Stories (ADR-14) + cores do ADR-11.** Tipografia, grade, medidas e anatomia de Home e artigo vêm
+    dos `--ref-*`; o v6/v7 não define mais layout nem tipografia.
+  - **Camada de ilustração e vetor** `--illu-ink/blue/coral/blue-soft/canvas` (RC-BRAND-STYLING-001): só SVG,
+    ilustrações, fundos decorativos e halftone. Coral e azul claro nunca como texto nem como único indicador; marca
+    gráfica com significado ≥ 3:1 (contorno `--graph-accent-event-outline`).
+  - **Grafo causal** com aliases `--graph-*` (sem hex novo); gráficos seguem o ADR-04.
+  - **Motion do v7:** `--ease`, `--dur-fast/base/slow`, `@keyframes heroReveal` (`rc-hero-reveal`); sob
+    `prefers-reduced-motion` nada passa de 0,01 s.
+  - **Geometria:** `--radius-sheet` 20px, `--radius-pill`/`--radius-node` 40px, `--radius-control` 8px,
+    `--radius-card` 2px, `--shadow-overlay`.
+- **Consequências:**
+  - Hex só em `app/styles/global.css` (inclui `--illu-*`); `tests/tokens.spec.ts` e `tests/surfaces.spec.ts` travam
+    valores, contraste dos `--graph-*` nos dois temas, reduced-motion e coral/azul claro fora de texto.
+  - O showroom `/admin/design-system/` mostra a camada de ilustração, o grafo e o motion.
+
+### ADR-16: Ferramentas cognitivas (LANC-001, DEC-U9) — pendente de reimplementação sobre o Stories
+
+- **Status:** Aceita — **a reimplementar** (AUD-ORDEM-001, Fase 2). Implementada antes sobre o site antigo no PR #25
+  (`/ferramentas/*` + 301 de `/loja/*`); removida na integração ao PR #19 porque o reset (ADR-13) apaga a Loja.
+- **Decisão:** a seção chama-se Ferramentas cognitivas e vive em `/ferramentas/`, `/ferramentas/<tipo>/` e
+  `/ferramentas/<tipo>/<slug>/`, no layout Stories; `/loja/*` responde 301; nenhum texto "Loja" nem de compra.
+  O código anterior está no histórico (`b9c80c0`, merge do PR #25).

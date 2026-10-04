@@ -56,6 +56,22 @@ const chartPalette = [
   ['chart-4', 'brand.500 (primitivo)', 'série única clara (radar, áreas)'],
   ['chart-5', 'muted-foreground', 'meta e referência (traço tracejado)'],
 ];
+// ---- Illustration layer, causal graph and motion (ADR-15 / LANC-001 RQ-011…015)
+const illuLayer = [
+  ['illu-ink', 'traço principal, texto embutido em SVG'],
+  ['illu-blue', 'contorno, via, foco da cena'],
+  ['illu-coral', 'ênfase pontual; nunca texto'],
+  ['illu-blue-soft', 'planos e profundidade; nunca texto'],
+  ['illu-canvas', 'fundo de ilustração'],
+];
+const graphTokens = [
+  ['graph-node-bg', 'surface-model', 'fundo do nó'],
+  ['graph-node-border-selected', 'primary', 'contorno do nó selecionado'],
+  ['graph-edge', 'muted-foreground', 'aresta padrão (≥ 3:1)'],
+  ['graph-edge-active', 'primary', 'aresta destacada'],
+  ['graph-accent-event', 'illu-coral + contorno illu-ink', 'ênfase de evento (decorativa)'],
+];
+const motionTokens = ['--ease', '--dur-fast', '--dur-base', '--dur-slow', '--radius-pill', '--radius-sheet'];
 // ---- Plain text system (ADR-05 / ADR-BLOG-ASCII-001 + annex A)
 const storeRows = [
   ['STORE_HEADER', 'StoreHeader (h1 + descrição + selo "Catálogo de exemplo")', 'components/store-header.tsx', 'texto fixo', 'READY'],
@@ -226,7 +242,9 @@ const surfaceScale = [
 // Hex values shown in this page are read from the token source, never duplicated here.
 export function loader() {
   return {
-    tokens: Object.fromEntries(surfaceScale.map(([n]) => [n, tokenValue(`--${n}`)])),
+    tokens: Object.fromEntries(
+      [...surfaceScale.map(([n]) => n), ...illuLayer.map(([n]) => n), ...motionTokens.map((t) => t.slice(2))].map((n) => [n, tokenValue(`--${n}`)]),
+    ),
     grammar: Object.fromEntries(
       [...grammarSurfaces.map((g) => g.token), '--foreground', '--muted-foreground', '--primary'].map((t) => [t, tokenValue(t)]),
     ),
@@ -504,6 +522,60 @@ export default function DesignSystem({ loaderData }: Route.ComponentProps) {
             ))}
           </div>
 
+          <h3 className="mt-10 text-xl font-medium">Camada de ilustração e vetor</h3>
+          <p className="text-muted-foreground mt-2 max-w-2xl text-base font-medium">
+            RC-BRAND-STYLING-001 vale só para SVG, ilustrações e fundos decorativos (ADR-15). Azul orienta e conecta;
+            coral marca evento com moderação; azul claro dá profundidade. Coral e azul claro nunca são texto.
+          </p>
+          <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5" data-testid="illu-layer">
+            {illuLayer.map(([n, use]) => (
+              <div key={n} className="flex min-w-0 flex-col gap-2 rc-cell p-3">
+                <span className="h-12 rounded-lg" data-illu-swatch={n} style={css(`background: var(--${n}); box-shadow: inset 0 0 0 1px var(--illu-ink)`)}></span>
+                <span className="font-mono text-xs">--{n}</span>
+                <span className="text-muted-foreground text-xs">{tokens[n]} · {use}</span>
+              </div>
+            ))}
+          </div>
+
+          <h3 className="mt-10 text-xl font-medium">Grafo causal</h3>
+          <p className="text-muted-foreground mt-2 max-w-2xl text-base font-medium">
+            Aliases sobre a interface e a ilustração, sem cor nova. Toda marca com significado tem contraste de 3:1 ou mais;
+            o tipo do nó vem da forma e do rótulo, não só da cor.
+          </p>
+          <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5" data-testid="graph-tokens">
+            {graphTokens.map(([n, from, use]) => (
+              <div key={n} className="flex min-w-0 flex-col gap-2 rc-cell p-3">
+                <span
+                  className="h-12 rounded-[var(--radius-node)]"
+                  data-graph-swatch={n}
+                  style={css(n === 'graph-accent-event' ? `background: var(--${n}); box-shadow: inset 0 0 0 2px var(--graph-accent-event-outline)` : `background: var(--${n})`)}
+                ></span>
+                <span className="font-mono text-xs">--{n}</span>
+                <span className="text-muted-foreground text-xs">{from}</span>
+                <span className="text-muted-foreground-subtle text-xs">{use}</span>
+              </div>
+            ))}
+          </div>
+
+          <h3 className="mt-10 text-xl font-medium">Motion</h3>
+          <p className="text-muted-foreground mt-2 max-w-2xl text-base font-medium">
+            Curva e entrada do v7. Com redução de movimento ativada no sistema, nada se move.
+          </p>
+          <div className="mt-4 grid gap-4 md:grid-cols-2" data-testid="motion">
+            <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 rc-cell p-5 text-sm">
+              {motionTokens.map((t) => (
+                <div key={t} className="contents">
+                  <dt className="font-mono text-xs">{t}</dt>
+                  <dd className="text-muted-foreground font-mono text-xs">{tokens[t.slice(2)].toLowerCase()}</dd>
+                </div>
+              ))}
+            </dl>
+            <div className="rc-cell rc-hero-reveal p-5" data-testid="hero-reveal">
+              <p className="text-lg font-medium">heroReveal</p>
+              <p className="text-muted-foreground text-sm">Opacidade de 0 a 1 e subida de 18px, em --dur-slow com --ease.</p>
+            </div>
+          </div>
+
           <h3 className="mt-10 text-xl font-medium">Tipografia</h3>
           <div className="mt-4 flex flex-col gap-6 rc-cell p-6">
             <div><p className="text-muted-foreground font-mono text-xs">h1 · display</p><p className="text-3xl tracking-tight sm:text-4xl md:text-5xl lg:text-6xl" style={css("font-family: var(--font-display); font-weight: var(--display-weight)")}>Do risco à execução</p></div>
@@ -536,6 +608,7 @@ export default function DesignSystem({ loaderData }: Route.ComponentProps) {
               <span>--callout-motion-fast: 120ms</span>
               <span>--callout-motion-default: 180ms</span>
               <span>--callout-easing: cubic-bezier(0.2, 0, 0, 1)</span>
+              <span>--ease: cubic-bezier(.22, 1, .36, 1) (v7, ADR-15)</span>
               <span>prefers-reduced-motion: transições removidas</span>
             </div>
           </div>

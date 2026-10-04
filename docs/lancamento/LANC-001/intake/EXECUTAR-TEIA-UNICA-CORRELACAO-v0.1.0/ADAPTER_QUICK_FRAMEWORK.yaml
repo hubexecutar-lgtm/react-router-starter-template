@@ -1,0 +1,38 @@
+adapter_id: ADAPTER-QF-001
+source_skill: executar-block-quick-frameworks
+status: PROPOSED
+rule: Preservar as 12 seções atuais e adicionar correlation_refs.
+field_map:
+  titulo: QUICK_FRAMEWORK.label; opcionalmente CONCEPT
+  contexto: CONTEXT
+  5w2h.o_que: PROBLEM|CONCEPT|METHOD após resolução de tipo
+  5w2h.por_que: OBJECTIVE / rationale
+  5w2h.onde: CONTEXT
+  5w2h.quando: CONTEXT.trigger
+  5w2h.quem: CONTEXT.audience
+  5w2h.como: METHOD
+  5w2h.quanto: CONTEXT.constraint ou METRIC.target; nunca observed
+  referencia_padrao_ouro: EVIDENCE metadata; autoridade não substitui evidência
+  problema_existente: PROBLEM
+  problema_solucionado: COMPENSATION ou METHOD; não auto-criar SOLUTION
+  processo: METHOD
+  visao_do_sistema: projeção Mermaid de edges canônicas
+  progresso_esperado: OBJECTIVE / METRIC.target
+  aviso: limitations/scope
+  next_01_02_03: METHOD.next_actions
+  fontes: EVIDENCE
+  infografico: ASSET
+  ferramentas_recomendadas: RECOMMENDS→SOLUTION com solution_id ou candidate unresolved
+new_output_block:
+  correlation_refs:
+    problem_refs: []
+    concept_refs: []
+    operational_function_refs: []
+    cognitive_capacity_refs: []
+    factor_refs: []
+    claim_refs: []
+    evidence_refs: []
+    method_refs: []
+    compensation_refs: []
+    solution_candidates: []
+    asset_refs: []

@@ -1,0 +1,221 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:executar:correlation-record:0.1.0",
+  "title": "EXECUTAR Correlation Graph Record",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "nodes",
+    "edges"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.1.0"
+    },
+    "example_id": {
+      "type": "string"
+    },
+    "note": {
+      "type": "string"
+    },
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "type",
+          "label",
+          "status",
+          "source_refs"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "enum": [
+              "OBJECTIVE",
+              "CONTEXT",
+              "PROBLEM",
+              "CONCEPT",
+              "OPERATIONAL_FUNCTION",
+              "COGNITIVE_CAPACITY",
+              "RISK_FACTOR",
+              "NEURODIVERGENCE_PROFILE",
+              "VULNERABILITY",
+              "EXPOSURE",
+              "RISK",
+              "OPERATIONAL_IMPACT",
+              "COMPENSATION",
+              "CONTROL",
+              "METHOD",
+              "SOLUTION",
+              "CAPABILITY",
+              "APP_FEATURE",
+              "KNOWLEDGE_PACK",
+              "QUICK_FRAMEWORK",
+              "LEARNING_OBJECT",
+              "CLAIM",
+              "EVIDENCE",
+              "ASSET",
+              "EXECUTION",
+              "EVENT",
+              "METRIC",
+              "LEARNING"
+            ]
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1
+          },
+          "status": {
+            "enum": [
+              "DRAFT",
+              "PROPOSED",
+              "DEFINED",
+              "VALIDATED",
+              "DEPRECATED"
+            ]
+          },
+          "source_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "native_ids": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "type",
+          "source",
+          "target",
+          "status",
+          "epistemic",
+          "evidence_refs"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "enum": [
+              "OCCURS_IN",
+              "SERVES_OBJECTIVE",
+              "IMPACTS_FUNCTION",
+              "REQUIRES_CAPACITY",
+              "INCREASES_DEMAND_ON",
+              "ASSOCIATED_WITH",
+              "MODULATES",
+              "CONTRIBUTES_TO",
+              "MAY_PRODUCE",
+              "ADDRESSES",
+              "MITIGATES",
+              "IMPLEMENTS",
+              "EXPOSES_CAPABILITY",
+              "INTEGRATES",
+              "EXPLAINS",
+              "SUPPORTED_BY",
+              "CONTAINS",
+              "DERIVES_FROM",
+              "RECOMMENDS",
+              "CTA_TO",
+              "INVOKES",
+              "EMITS",
+              "AGGREGATED_BY",
+              "UPDATES",
+              "TEACHES"
+            ]
+          },
+          "source": {
+            "type": "string",
+            "minLength": 1
+          },
+          "target": {
+            "type": "string",
+            "minLength": 1
+          },
+          "status": {
+            "enum": [
+              "PROPOSED",
+              "VALIDATED",
+              "REJECTED",
+              "DEPRECATED"
+            ]
+          },
+          "epistemic": {
+            "type": "object",
+            "required": [
+              "provenance_class",
+              "claim_role"
+            ],
+            "properties": {
+              "provenance_class": {
+                "enum": [
+                  "A_OBSERVED",
+                  "B_PRIMARY",
+                  "C_PUBLISHED",
+                  "D_INTERNAL",
+                  "E_INFERRED"
+                ]
+              },
+              "claim_role": {
+                "enum": [
+                  "FACT",
+                  "OFFICIAL_GUIDANCE",
+                  "SYNTHESIS",
+                  "FRAMEWORK",
+                  "HYPOTHESIS",
+                  "PRODUCT_DECISION",
+                  "RECOMMENDATION"
+                ]
+              },
+              "native_class": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "additionalProperties": false
+          },
+          "evidence_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "limitations": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,62 @@
+{
+  "package_id": "EXECUTAR-TEIA-UNICA-CORRELACAO",
+  "version": "0.1.0",
+  "status": "PREPARED",
+  "files": [
+    {
+      "path": "ADAPTER_EXISTING_DOCS.yaml",
+      "sha256": "a02f5c79e3dfc4af17fe719074abe341fe67158b88bdc42c0b8d72e5e1161ba9",
+      "bytes": 1632
+    },
+    {
+      "path": "ADAPTER_QUICK_FRAMEWORK.yaml",
+      "sha256": "4c25373a0cba1d3241a7109462c7fc38a27d859b43c4002a7747589d22139deb",
+      "bytes": 1319
+    },
+    {
+      "path": "ADAPTER_SOLUTION_STORE.yaml",
+      "sha256": "f867993db70a46021a641b94cc09462a008a1d5de25ad6fd6956577420de8bcb",
+      "bytes": 1421
+    },
+    {
+      "path": "ADR-TEIA-UNICA-001.md",
+      "sha256": "2cf24cb73911eb0a11bee97b6e3e3434d0d65651f4c5a09151c6f24a5e91ff6d",
+      "bytes": 1049
+    },
+    {
+      "path": "CORRELATION_RECORD.schema.json",
+      "sha256": "409b7f52436e1a46fa4f0885272cac9e122e4e3a62db4b0ca8f2a588c6dcd781",
+      "bytes": 5249
+    },
+    {
+      "path": "EXAMPLE_THREAD.yaml",
+      "sha256": "0f35c6979d57fa1b87717871aa7f1d7e3fc32205cb2a23c7ab35506b085fc98c",
+      "bytes": 3416
+    },
+    {
+      "path": "EXECUTAR_UNIFIED_CORRELATION_SCHEMA.yaml",
+      "sha256": "7954541797272dc75bccbbc50b10bae9e1aa6a59a461dd8d4e8f9cc29c5df688",
+      "bytes": 3304
+    },
+    {
+      "path": "MAPPING_MATRIX.csv",
+      "sha256": "3fa9d0409953d8154cd409eba0ab4fc2eda12247eef82c81c8b02e4204bed471",
+      "bytes": 2432
+    },
+    {
+      "path": "MIGRATION_PLAN.md",
+      "sha256": "b04c7a5ce60709c8170360ef280f4f89040b2e3b859fa57e9bb8a868cf2ce934",
+      "bytes": 1319
+    },
+    {
+      "path": "README.md",
+      "sha256": "3b18dee8eda531216b75ac477d57313a2576480c7a12032a47738c336f7196ec",
+      "bytes": 2057
+    },
+    {
+      "path": "VALIDATION_RULES.yaml",
+      "sha256": "dd8b22f8342d9ee07cc3fafefdce48d42f3e013aabaa493aa7628e5818b0f1e1",
+      "bytes": 768
+    }
+  ]
+}

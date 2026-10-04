@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Risco Cognitivo — Brand Local v7</title>
+<meta name="description" content="Protótipo local standalone de Risco Cognitivo, aplicado ao Brand Styling canônico: Inter, azul #2563EB, fundo branco, cards-célula e hierarquia editorial acessível.">
+<style>
+:root{
+  --brand:#2563EB;
+  --brand-hover:#1D4ED8;
+  --brand-deep:#304E83;
+  --attention:#8A5A00;
+  --critical:#A33A32;
+  --ink:#202124;
+  --muted:#6B7280;
+  --muted-on-subtle:#5F6670;
+  --paper:#FFFFFF;
+  --soft:#F5F5F4;
+  --soft-2:#F0F0EE;
+  --line:#EAEAE8;
+  --line-strong:#D6D6D3;
+  --control:#D1D5DB;
+  --model:#EFF6FF;
+  --white:#FFFFFF;
+
+  --font-sans:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,"Courier New",monospace;
+
+  --display-xl:clamp(3.25rem,7vw,6rem);
+  --display-lg:clamp(2.7rem,6vw,3.8554rem);
+  --display-md:clamp(2rem,4.5vw,2.9277rem);
+  --headline:clamp(1.75rem,3vw,2.5rem);
+  --body-lg:clamp(1.125rem,1.8vw,1.35rem);
+  --body:1.0625rem;
+  --small:.875rem;
+  --caption:.75rem;
+
+  --nav-h:56px;
+  --bottombar-h:64px;
+  --drawer-w:min(84vw,360px);
+  --shell:980px;
+  --wide:1078.5px;
+  --read:637.5px;
+  --measure:68ch;
+  --gutter:clamp(24px,5vw,32px);
+  --gap:24px;
+  --section:clamp(72px,9vw,120px);
+
+  --radius-card:2px;
+  --radius-filter:4px;
+  --radius-control:8px;
+  --radius-pill:40px;
+  --shadow-raised:0 1px 2px rgb(0 0 0 / .04);
+  --shadow-overlay:0 8px 28px rgb(0 0 0 / .10);
+  --glass-light:rgba(255,255,255,.92);
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--paper);color:var(--ink);font-family:var(--font-sans);
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  padding-top:var(--nav-h);padding-bottom:var(--bottombar-h);
+}
+a{color:inherit} button,input{font:inherit} button{cursor:pointer} img{max-width:100%;display:block}
+:focus-visible{outline:2px solid var(--brand);outline-offset:3px}
+
+.global-nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;background:var(--glass-light);
+  backdrop-filter:saturate(160%) blur(18px);-webkit-backdrop-filter:saturate(160%) blur(18px);
+  border-bottom:1px solid var(--line);color:var(--ink);transition:transform .28s var(--ease)
+}
+.global-nav.hidden{transform:translateY(-100%)}
+.nav-inner{max-width:var(--wide);height:var(--nav-h);margin:auto;padding:0 16px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.nav-icon{border:1px solid transparent;background:transparent;min-width:40px;height:40px;border-radius:var(--radius-control);color:var(--ink);display:flex;align-items:center;justify-content:center;font-size:18px}
+.nav-icon:hover{background:var(--soft-2)}
+.wordmark{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:700;color:var(--ink);font-size:14px;letter-spacing:-.02em;text-transform:uppercase}
+.frame-mark{width:22px;height:22px;border-radius:6px;background:var(--brand);position:relative;flex:0 0 auto}
+.frame-mark::after{content:"RC";position:absolute;inset:0;display:grid;place-items:center;color:#fff;font-size:8px;font-weight:800;letter-spacing:-.02em}
+.nav-links-desktop,.category-rail-desktop{display:none}
+
+.drawer-backdrop{position:fixed;inset:0;z-index:198;background:rgba(32,33,36,.36);opacity:0;pointer-events:none;transition:opacity .3s var(--ease)}
+.drawer-backdrop.open{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;bottom:0;left:0;z-index:199;width:var(--drawer-w);background:var(--paper);transform:translateX(-100%);transition:transform .32s var(--ease);display:flex;flex-direction:column;overflow-y:auto;box-shadow:var(--shadow-overlay)}
+.drawer.open{transform:translateX(0)}
+.drawer-header{padding:28px 24px 20px;background:var(--soft);border-bottom:1px solid var(--line);display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.drawer-id{display:flex;align-items:center;gap:12px}.drawer-mark{width:30px;height:30px;border-radius:8px;background:var(--brand);position:relative}.drawer-mark::after{content:"RC";position:absolute;inset:0;display:grid;place-items:center;color:#fff;font-size:10px;font-weight:800}.drawer-id strong{display:block;font-size:15px;letter-spacing:-.02em}.drawer-id span{display:block;font-size:12px;color:var(--muted-on-subtle);margin-top:2px}
+.drawer-close{border:0;background:transparent;min-width:36px;height:36px;border-radius:var(--radius-control);font-size:18px;color:var(--ink)}.drawer-close:hover{background:var(--soft-2)}
+.drawer-group{padding:12px 8px}.drawer-label{padding:14px 16px 6px;font-family:var(--font-mono);font-size:12px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted-on-subtle)}
+.drawer-link{display:flex;align-items:center;justify-content:space-between;padding:16px;min-height:56px;text-decoration:none;color:var(--ink);font-size:17px;font-weight:600;border-radius:var(--radius-control)}.drawer-link:hover{background:var(--soft)}.drawer-link.active{color:var(--ink);box-shadow:inset 3px 0 0 var(--brand);background:var(--soft)}
+.drawer-divider{height:1px;background:var(--line);margin:8px 16px}
+
+.bottom-bar{position:fixed;left:0;right:0;bottom:0;z-index:90;height:var(--bottombar-h);background:var(--glass-light);backdrop-filter:saturate(160%) blur(18px);-webkit-backdrop-filter:saturate(160%) blur(18px);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(3,1fr);transform:translateY(0);transition:transform .28s var(--ease)}
+.bottom-bar.hidden{transform:translateY(100%)}
+.bottom-tab{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;text-decoration:none;color:var(--muted);font-size:12px;font-weight:600}.bottom-tab .glyph{font-size:20px;line-height:1}.bottom-tab.active{color:var(--ink)}.bottom-tab.active .glyph{color:var(--brand)}
+
+.hero{background:var(--paper);padding:var(--section) var(--gutter) 72px;text-align:center}.hero-inner{animation:heroReveal .9s var(--ease) both}@keyframes heroReveal{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.hero .eyebrow{font-family:var(--font-mono);font-size:12px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;display:inline-flex;align-items:center;gap:12px;color:var(--brand)}
+.hero .eyebrow:before,.hero .eyebrow:after{content:"";width:18px;height:1px;background:var(--brand)}
+.hero h1{max-width:960px;margin:24px auto 18px;font-family:var(--font-sans);font-size:var(--display-lg);line-height:1.005;letter-spacing:-.03em;font-weight:700;color:var(--ink)}
+.hero p{max-width:60ch;margin:0 auto;font-size:var(--body-lg);line-height:1.5;letter-spacing:-.01em;color:var(--muted)}
+.hero-actions{margin-top:30px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 26px;border-radius:var(--radius-control);text-decoration:none;font-size:16px;font-weight:600;border:1px solid transparent;transition:transform .15s var(--ease),background .15s var(--ease),border-color .15s var(--ease)}.btn:active{transform:scale(.98)}
+.btn-primary,.btn-accent{background:var(--brand);color:#fff}.btn-primary:hover,.btn-accent:hover{background:var(--brand-hover)}
+.btn-outline-light{border-color:rgba(255,255,255,.6);color:#fff;background:transparent}.btn-outline-light:hover{border-color:#fff;background:rgba(255,255,255,.08)}
+.btn-outline-dark{border-color:var(--control);color:var(--ink);background:var(--paper)}.btn-outline-dark:hover{background:var(--soft-2)}
+
+.feature-media-wrap{background:var(--paper);padding:0 var(--gutter)}
+.feature-media{width:min(100%,var(--wide));margin:0 auto;min-height:min(76vh,760px);border-radius:2px;overflow:hidden;position:relative;background:radial-gradient(circle at 68% 32%,rgba(37,99,235,.28),transparent 23%),radial-gradient(circle at 36% 55%,rgba(239,246,255,.95),transparent 22%),linear-gradient(150deg,#FFFFFF 0%,#EFF6FF 48%,#CBD5F5 100%);opacity:0;transform:scale(.985);transition:opacity .9s var(--ease),transform .9s var(--ease)}.feature-media.in{opacity:1;transform:scale(1)}
+.feature-media .overlay{position:absolute;left:clamp(24px,5vw,72px);bottom:clamp(32px,7vw,88px);max-width:560px;color:var(--ink)}.feature-media .overlay small{font-family:var(--font-mono);letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:var(--brand)}.feature-media .overlay h2{font-size:var(--display-md);line-height:1.05;letter-spacing:-.025em;margin:12px 0 0}
+
+.promo{max-width:var(--wide);margin:0 auto;padding:var(--section) var(--gutter)}.promo-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.tile{min-height:480px;border-radius:var(--radius-card);background:var(--soft);overflow:hidden;position:relative;padding:48px 36px;text-align:left}.tile.dark{background:var(--ink);color:white}.tile.yellow{background:var(--model);color:var(--ink)}.tile.soft{background:var(--soft)}
+.tile h3{font-size:clamp(1.8rem,3.4vw,2.8rem);line-height:1.05;letter-spacing:-.025em;margin:0}.tile p{font-size:18px;line-height:1.5;margin:12px 0 22px;max-width:46ch;color:inherit}.tile-art{position:absolute;left:36px;right:36px;bottom:0;height:44%;border-radius:2px;background:linear-gradient(145deg,#EFF6FF,#FFFFFF 46%,#CBD5F5)}.tile.dark .tile-art{background:linear-gradient(145deg,#304E83,#2563EB 52%,#202124)}.tile.yellow .tile-art{background:linear-gradient(145deg,#FFFFFF,#EFF6FF 50%,#99B0F4)}
+
+.article-shell{background:var(--paper);padding:var(--section) var(--gutter)}.article-meta{max-width:var(--read);margin:0 auto 48px;font-family:var(--font-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}.article-meta strong{color:var(--ink)}.article{max-width:var(--read);margin:auto}
+.article .lead{font-family:var(--font-sans);font-size:clamp(1.35rem,2.5vw,1.75rem);line-height:1.5;letter-spacing:-.018em;color:var(--ink)}.article p{font-family:var(--font-sans);font-size:17px;line-height:1.647;margin:0 0 1.45em;letter-spacing:-.01em}.article strong{font-weight:700}.article a{color:var(--brand);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px}.article h2{margin:2.25em 0 .72em;font-family:var(--font-sans);font-size:var(--display-md);line-height:1.08;letter-spacing:-.025em;font-weight:700}.article h2:before{content:"";display:block;width:52px;height:3px;background:var(--brand);margin-bottom:20px}
+.pullquote{margin:60px 0;padding:38px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-family:var(--font-sans);font-size:clamp(1.75rem,3.4vw,2.5rem);font-weight:600;line-height:1.18;letter-spacing:-.025em}
+.inline-media{margin:64px calc((var(--read) - min(100vw - (2 * var(--gutter)), var(--wide)))/2)}.inline-media .media-box{aspect-ratio:16/9;border-radius:2px;background:linear-gradient(125deg,rgba(37,99,235,.18),rgba(37,99,235,0) 38%),linear-gradient(145deg,#FFFFFF,#EFF6FF 54%,#99B0F4)}.caption{font-family:var(--font-sans)!important;font-size:14px!important;line-height:1.64!important;color:var(--muted);margin:10px 0 0!important}
+
+.selection{background:var(--paper);color:var(--ink);padding:var(--section) var(--gutter)}.selection-inner{max-width:var(--wide);margin:auto}.selection-title{text-align:center;margin-bottom:54px}.selection-title h2{font-size:clamp(2rem,4vw,3rem);letter-spacing:-.025em;margin:0}.selection-title span{display:block;width:90px;height:3px;background:var(--brand);margin:24px auto 0}.selection-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}.selection-card{background:var(--soft);border-radius:var(--radius-card);overflow:hidden}.selection-img{aspect-ratio:1/1;background:radial-gradient(circle at 70% 35%,rgba(37,99,235,.25),transparent 22%),linear-gradient(145deg,#FFFFFF,#EFF6FF 54%,#CBD5F5)}.selection-body{padding:24px}.selection-body small{font-family:var(--font-mono);letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:var(--brand)}.selection-body h3{font-size:24px;line-height:1.2;margin:14px 0 0;letter-spacing:-.02em}
+
+.carousel-section{background:var(--paper);padding:var(--section) 0}.carousel-head{max-width:var(--wide);margin:0 auto 30px;padding:0 var(--gutter);display:flex;justify-content:space-between;align-items:end}.carousel-head h2{font-size:var(--display-md);margin:0;letter-spacing:-.025em}.carousel{display:flex;gap:24px;overflow-x:auto;padding:0 max(var(--gutter),calc((100vw - var(--wide))/2)) 22px;scroll-snap-type:x mandatory;scrollbar-width:none}.carousel::-webkit-scrollbar{display:none}.carousel-card{flex:0 0 min(62vw,340px);scroll-snap-align:start;border-radius:var(--radius-card);overflow:hidden;background:var(--soft)}.carousel-card .visual{aspect-ratio:1/1;background:linear-gradient(145deg,#FFFFFF,#EFF6FF 52%,#CBD5F5)}.carousel-card:nth-child(2) .visual{background:linear-gradient(145deg,#EFF6FF,#99B0F4 55%,#2563EB)}.carousel-card:nth-child(3) .visual{background:linear-gradient(145deg,#FFFFFF,#F5F5F4 52%,#EAEAE8)}.carousel-card .copy{padding:24px}.carousel-card h3{margin:0;font-size:22px;line-height:1.2}
+
+footer{background:var(--soft);border-top:1px solid var(--line);padding:32px var(--gutter) 40px;font-size:12px;color:var(--muted-on-subtle)}.footer-inner{max-width:var(--shell);margin:auto}.footer-links{display:flex;gap:20px;margin-bottom:16px;flex-wrap:wrap}.footer-links a{color:var(--ink);text-decoration:none;font-weight:600;font-size:13px}.footer-links a:hover{text-decoration:underline;text-underline-offset:4px}
+
+@media(prefers-reduced-motion:reduce){.hero-inner{animation:none}.feature-media{transition:none}.drawer,.drawer-backdrop,.bottom-bar{transition:none}}
+@media(max-width:900px){.promo-grid{grid-template-columns:1fr}.selection-grid{grid-template-columns:1fr 1fr}}
+@media(min-width:900px){:root{--nav-h-total:calc(56px + 46px)}body{padding-top:var(--nav-h-total);padding-bottom:0}.menu-btn-mobile{display:none}.bottom-bar{display:none}.nav-inner{justify-content:flex-start;gap:32px}.nav-links-desktop{display:flex;align-items:center;gap:28px;flex:1;font-size:13px;font-weight:600;letter-spacing:.01em}.nav-links-desktop a{text-decoration:none;color:var(--ink)}.nav-links-desktop a:hover{color:var(--brand);text-decoration:underline;text-underline-offset:4px}.category-rail-desktop{display:block;background:var(--paper);border-bottom:1px solid var(--line)}.category-rail-desktop .category-inner{max-width:var(--wide);margin:auto;padding:12px var(--gutter);display:flex;gap:30px;font-size:13px;font-weight:600;letter-spacing:.02em}.category-rail-desktop a{text-decoration:none;color:var(--muted)}.category-rail-desktop a:hover{color:var(--ink)}.category-rail-desktop a.active{color:var(--ink);border-bottom:3px solid var(--brand);padding-bottom:6px}}
+@media(max-width:620px){:root{--gutter:22px}.hero{text-align:left;padding-top:56px}.hero .eyebrow{justify-content:flex-start}.hero h1{font-size:clamp(2.7rem,12vw,3.8rem)}.hero p{font-size:1.15rem}.hero-actions{justify-content:flex-start}.promo{padding-left:22px;padding-right:22px}.tile{min-height:460px}.article-shell{padding-top:64px}.article-meta{margin-bottom:36px}.article .lead{font-size:1.55rem}.article p{font-size:17px}.selection-grid{grid-template-columns:1fr}.inline-media{margin:48px calc(-1 * var(--gutter))}.inline-media .media-box{border-radius:0}.caption{margin-left:var(--gutter)!important;margin-right:var(--gutter)!important}}
+</style>
+<meta name="generator" content="ChatGPT local standalone renderer">
+</head>
+<body>
+<!-- BRAND CONTRACT: Risco Cognitivo Brand Styling | applied locally | unresolved: logo clear-space/min-size/backgrounds, photography, final dark theme, named spacing scale -->
+
+<!-- BARRA SUPERIOR
+     Mobile: 3 elementos (menu · marca · busca) — chrome soma ao rolar para baixo.
+     Desktop: nav visível com links + trilha de categorias (padrão Apple), sem menu/drawer. -->
+<nav class="global-nav" id="topNav">
+  <div class="nav-inner">
+    <button class="nav-icon menu-btn-mobile" id="menuBtn" aria-label="Abrir navegação" aria-controls="drawer" aria-expanded="false">☰</button>
+    <a href="#top" class="wordmark" aria-label="Início">
+      <span class="frame-mark" aria-hidden="true"></span>
+      RISCO COGNITIVO
+    </a>
+    <div class="nav-links-desktop" aria-label="Navegação principal">
+      <a href="#article">Artigo</a>
+      <a href="#selection">Sistemas</a>
+      <a href="#explore">Ferramentas</a>
+      <a href="#footer">Sobre</a>
+    </div>
+    <button class="nav-icon" aria-label="Buscar">⌕</button>
+  </div>
+  <div class="category-rail-desktop">
+    <div class="category-inner">
+      <a href="#story">Risco Cognitivo</a>
+      <a href="#story">Processos</a>
+      <a href="#story">Produtividade</a>
+      <a class="active" href="#story">Sistemas</a>
+      <a href="#explore">Ferramentas</a>
+    </div>
+  </div>
+</nav>
+
+<!-- DRAWER LATERAL — toda a navegação (seções + categorias) vive aqui -->
+<div class="drawer-backdrop" id="drawerBackdrop"></div>
+<aside class="drawer" id="drawer" aria-hidden="true">
+  <div class="drawer-header">
+    <div class="drawer-id">
+      <span class="drawer-mark" aria-hidden="true"></span>
+      <div>
+        <strong>RISCO COGNITIVO</strong>
+        <span>Conhecimento que vira estrutura.</span>
+      </div>
+    </div>
+    <button class="drawer-close" id="drawerClose" aria-label="Fechar navegação">✕</button>
+  </div>
+
+  <div class="drawer-group">
+    <div class="drawer-label">Navegar</div>
+    <a class="drawer-link active" href="#top">Início</a>
+    <a class="drawer-link" href="#article">Artigo</a>
+    <a class="drawer-link" href="#selection">Sistemas</a>
+    <a class="drawer-link" href="#explore">Ferramentas</a>
+    <a class="drawer-link" href="#footer">Sobre</a>
+  </div>
+
+  <div class="drawer-divider"></div>
+
+  <div class="drawer-group">
+    <div class="drawer-label">Categorias</div>
+    <a class="drawer-link" href="#story">Risco Cognitivo</a>
+    <a class="drawer-link" href="#story">Processos</a>
+    <a class="drawer-link" href="#story">Produtividade</a>
+    <a class="drawer-link" href="#story">Sistemas</a>
+    <a class="drawer-link" href="#explore">Ferramentas</a>
+  </div>
+</aside>
+
+<main id="top">
+  <section class="hero" id="story">
+    <div class="hero-inner">
+      <div class="eyebrow">Risco Cognitivo</div>
+      <h1>Conhecimento que vira estrutura.</h1>
+      <p>Uma experiência editorial sóbria e clara para transformar conhecimento aplicado em estrutura para decisões melhores.</p>
+      <div class="hero-actions">
+        <a class="btn btn-accent" href="#article">Ler artigo</a>
+        <a class="btn btn-outline-dark" href="#selection">Ver sistemas</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MÍDIA DE DESTAQUE — vertical, 100vh, sem gutter: a "vitrine" de tela cheia -->
+  <section class="feature-media-wrap">
+    <div class="feature-media" id="featureMedia">
+      <div class="overlay">
+        <small>Framework editorial</small>
+        <h2>Clareza primeiro. Estrutura para executar.</h2>
+      </div>
+    </div>
+  </section>
+
+  <section class="promo" aria-label="Destaques">
+    <div class="promo-grid">
+      <article class="tile soft">
+        <h3>Leitura sem ruído.</h3>
+        <p>Inter, medida de leitura controlada e contraste compatível com WCAG 2.2 AA.</p>
+        <a class="btn btn-primary" href="#article">Saiba mais</a>
+        <div class="tile-art" aria-hidden="true"></div>
+      </article>
+      <article class="tile dark">
+        <h3>Branco. Neutros. Azul.</h3>
+        <p>Azul só para ação, link e foco; neutros organizam a hierarquia.</p>
+        <a class="btn btn-accent" href="#selection">Explorar</a>
+        <div class="tile-art" aria-hidden="true"></div>
+      </article>
+      <article class="tile yellow">
+        <h3>Cards como células.</h3>
+        <p>Superfícies cinza suaves, sem sombra, com bordas apenas estruturais.</p>
+        <a class="btn btn-primary" href="#article">Abrir</a>
+        <div class="tile-art" aria-hidden="true"></div>
+      </article>
+      <article class="tile soft">
+        <h3>Responsivo por padrão.</h3>
+        <p>Desktop, tablet e mobile usam a mesma hierarquia semântica.</p>
+        <a class="btn btn-outline-dark" href="#explore">Ver módulos</a>
+        <div class="tile-art" aria-hidden="true"></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="article-shell" id="article">
+    <div class="article-meta">
+      <strong>Risco Cognitivo</strong><br>
+      Brand Styling aplicado · versão local standalone
+    </div>
+
+    <article class="article">
+      <p class="lead">O sistema usa Canvas branco, texto #202124 e azul #2563EB para ação, links e foco. Cards funcionam como células editoriais, sem sombra e com hierarquia explícita.</p>
+
+      <p>A navegação prioriza o conteúdo e mantém ações previsíveis. <a href="#selection">Links e chamadas</a> usam o azul de ação apenas sobre superfícies em que o contraste permanece adequado.</p>
+
+      <h2>1. Hierarquia clara</h2>
+      <p>Títulos, lead, corpo, metadados e rótulos têm papéis separados. Inter domina a prosa; IBM Plex Mono fica restrita a IDs, rótulos e metadados.</p>
+
+      <div class="inline-media">
+        <div class="media-box" role="img" aria-label="Placeholder editorial vertical"></div>
+        <p class="caption">Área visual de exemplo seguindo a família azul da marca, sem texto incorporado à imagem.</p>
+      </div>
+
+      <h2>2. Cor com função</h2>
+      <p>O azul primário indica ação, link e foco. Atenção e crítico permanecem reservados para seus estados sem criar novas famílias cromáticas.</p>
+
+      <div class="pullquote">Conhecimento aplicado precisa permanecer legível, copiável e rastreável antes de se tornar interface.</div>
+
+      <h2>3. Superfícies previsíveis</h2>
+      <p>Canvas branco domina; cards usam #F5F5F4; painéis de modelo usam #EFF6FF. Sombra fica restrita a overlays e controles elevados.</p>
+
+      <h2>4. Acessibilidade como gate</h2>
+      <p>A versão local preserva contraste, foco visível, movimento reduzido e leitura mobile first. O tema escuro não é tratado como definitivo.</p>
+    </article>
+  </section>
+
+  <section class="selection" id="selection">
+    <div class="selection-inner">
+      <div class="selection-title">
+        <h2>Sistemas aplicados</h2><span></span>
+      </div>
+      <div class="selection-grid">
+        <article class="selection-card">
+          <div class="selection-img"></div>
+          <div class="selection-body"><small>Sistemas</small><h3>Estrutura visual para organizar informação sem ruído</h3></div>
+        </article>
+        <article class="selection-card">
+          <div class="selection-img"></div>
+          <div class="selection-body"><small>Processos</small><h3>Componentes previsíveis para orientar decisão e execução</h3></div>
+        </article>
+        <article class="selection-card">
+          <div class="selection-img"></div>
+          <div class="selection-body"><small>Ferramentas</small><h3>Leitura editorial responsiva e rastreável</h3></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="carousel-section" id="explore">
+    <div class="carousel-head">
+      <h2>Explore o sistema</h2>
+      <span>Arraste →</span>
+    </div>
+    <div class="carousel">
+      <article class="carousel-card"><div class="visual"></div><div class="copy"><h3>Tipografia e leitura controlada.</h3></div></article>
+      <article class="carousel-card"><div class="visual"></div><div class="copy"><h3>Azul de ação com neutros funcionais.</h3></div></article>
+      <article class="carousel-card"><div class="visual"></div><div class="copy"><h3>Cards-célula sem sombra e responsivos.</h3></div></article>
+    </div>
+  </section>
+</main>
+
+<footer id="footer">
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="#footer">Sobre</a>
+      <a href="#footer">Privacidade</a>
+      <a href="#article">Brand Styling</a>
+      <a href="#top">Design</a>
+    </div>
+    <p>Protótipo local de Risco Cognitivo. Os pontos ainda marcados como A DEFINIR no Brand Styling — fotografia, regras completas de logo e tema escuro definitivo — não foram inventados nesta versão.</p>
+  </div>
+</footer>
+
+<!-- BARRA INFERIOR — exatamente 3 destinos -->
+<nav class="bottom-bar" id="bottomBar" aria-label="Navegação inferior">
+  <a class="bottom-tab active" href="#top" data-tab="inicio">
+    <span class="glyph" aria-hidden="true">⌂</span>
+    Início
+  </a>
+  <a class="bottom-tab" href="#selection" data-tab="selecao">
+    <span class="glyph" aria-hidden="true">◆</span>
+    Sistemas
+  </a>
+  <a class="bottom-tab" href="#explore" data-tab="explorar">
+    <span class="glyph" aria-hidden="true">▤</span>
+    Ferramentas
+  </a>
+</nav>
+
+<script>
+// ---- Drawer lateral ----
+const menuBtn=document.getElementById('menuBtn');
+const drawer=document.getElementById('drawer');
+const backdrop=document.getElementById('drawerBackdrop');
+const drawerClose=document.getElementById('drawerClose');
+
+function openDrawer(){
+  drawer.classList.add('open');
+  backdrop.classList.add('open');
+  drawer.setAttribute('aria-hidden','false');
+  menuBtn.setAttribute('aria-expanded','true');
+  // com o drawer aberto, o chrome fica visível — evita esconder o botão de fechar
+  topNav.classList.remove('hidden');
+  bottomBar.classList.remove('hidden');
+}
+function closeDrawer(){
+  drawer.classList.remove('open');
+  backdrop.classList.remove('open');
+  drawer.setAttribute('aria-hidden','true');
+  menuBtn.setAttribute('aria-expanded','false');
+}
+menuBtn.addEventListener('click',openDrawer);
+drawerClose.addEventListener('click',closeDrawer);
+backdrop.addEventListener('click',closeDrawer);
+document.querySelectorAll('.drawer-link').forEach(a=>a.addEventListener('click',closeDrawer));
+document.addEventListener('keydown',(e)=>{if(e.key==='Escape')closeDrawer();});
+
+// ---- Chrome (topo + barra inferior): some ao descer, aparece ao subir ----
+// Mesma lógica do Safari/Apple — maximiza a área de leitura durante o scroll contínuo.
+const bottomBar=document.getElementById('bottomBar');
+const topNav=document.getElementById('topNav');
+let lastY=window.scrollY;
+let ticking=false;
+window.addEventListener('scroll',()=>{
+  if(!ticking){
+    requestAnimationFrame(()=>{
+      const y=window.scrollY;
+      const goingDown = y>lastY && y>80;
+      bottomBar.classList.toggle('hidden',goingDown);
+      topNav.classList.toggle('hidden',goingDown);
+      lastY=y;
+      ticking=false;
+    });
+    ticking=true;
+  }
+},{passive:true});
+
+// ---- Reveal único: mídia de destaque ----
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const feature = document.getElementById('featureMedia');
+if(reduceMotion){
+  feature.classList.add('in');
+}else{
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        feature.classList.add('in');
+        io.unobserve(feature);
+      }
+    });
+  },{threshold:.1});
+  io.observe(feature);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+﻿Source,Native field/object,Canonical object,Rule,Risk
+Quick Framework,Contexto,CONTEXT,preserve prose + refs,low
+Quick Framework,5W2H,CONTEXT/PROBLEM/METHOD/OBJECTIVE,store actual values; not only validation booleans,high
+Quick Framework,Problema existente,PROBLEM,reuse/assign problem_id,low
+Quick Framework,Problema solucionado,COMPENSATION or METHOD,do not auto-create SOLUTION,medium
+Quick Framework,Processo,METHOD,preserve Entender/Estruturar/Executar,low
+Quick Framework,Progresso esperado,OBJECTIVE/METRIC target,never observed,medium
+Quick Framework,Fontes,EVIDENCE,"normalize refs, preserve citation",low
+Quick Framework,Ferramenta recomendada,RECOMMENDS→SOLUTION,requires solution_id or unresolved candidate,high
+EDU-FORM-001,Situação/Problema/Mecanismo/Conceito,CONTEXT/PROBLEM/CONCEPT,education is rendering profile,low
+RC-KNW-001,TP-001.PROBLEM.V1,PROBLEM,native id preserved,low
+RC-KNW-001,FRC-01..20,RISK_FACTOR,canonical ids preserved,low
+RC-KNW-001,E1/E2/S/FW,CLAIM/EVIDENCE epistemics,preserve native class + canonical map,medium
+RC-KNW-001,RC-SOLUTION-001,SOLUTION,pack→solution,low
+DATA-ADHD-PM-001,GP functions,OPERATIONAL_FUNCTION,stable ids,low
+DATA-ADHD-PM-001,human/executive capacity,COGNITIVE_CAPACITY,population/context required,medium
+DATA-ADHD-PM-001,TDAH association,NDV ASSOCIATED_WITH COG/VUL,evidence required; never user diagnosis,high
+DATA-ADHD-PM-001,impact,OPERATIONAL_IMPACT,preserve mechanism/consequence,low
+DATA-ADHD-PM-001,compensation,COMPENSATION,separate from product decision,low
+METHOD,WIP/time/dependency,CONTROL/constraint,not progress points,low
+METHOD,Flow/Context Score,METHOD ranking signals,not accumulated metrics,medium
+METHOD,Best Next Action,CAPABILITY/EXECUTION,runtime output,low
+Solution Store,solution.yaml identity,SOLUTION,canonical solution source,low
+Solution Store,capability_contract,CAPABILITY + METHOD,normalize inputs/outputs/dependencies,low
+Solution Store,usage_fit,CONTEXT + PROBLEM,use for matching,low
+Solution Store,evidence_matrix_18,typed cross-domain edges,split monolithic row into edges,high
+Store Route,Card,projection of SOLUTION,never source,low
+Store Route,Start,EXECUTION intent/event,distinct from Download,low
+Store Route,Download,ASSET/event,distinct from Start,low
+Analytics,events,EVENT,observed only after emission,low
+Learning,decision record,LEARNING→UPDATES,append; never destroy history,low

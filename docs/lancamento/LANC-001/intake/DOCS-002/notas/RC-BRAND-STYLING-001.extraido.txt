@@ -1,0 +1,200 @@
+Risco Cognitivo Brand Styling
+ID: RC-BRAND-STYLING-001 · Versão: 1.0.0 · Área: Identidade visual e editorial · Owner: A DEFINIR · Status: PREPARED
+Base da coleta: imagens, Índex.md, Copy_imagens_texto_extraido.csv e pacote editorial do ZIP enviado. [O] significa observado nas imagens ou no texto; [P], proposta para tornar o guia aplicável; A DEFINIR, dado que a coleta não comprova. Os valores hexadecimais abaixo são aproximações visuais, não tokens oficiais extraídos de um arquivo de design.
+Overview
+To access Risco Cognitivo’s visual identity and style resources, use this guide.
+Keywords: risco cognitivo, neurodivergência, processos neuroadaptativos, mapa cognitivo, ilustração editorial, cartografia, cérebro, sistemas, clareza, acessibilidade cognitiva.
+Descrição da marca [O]: conteúdo e ferramentas para compreender riscos cognitivos e investigar como demandas, contexto e desenho dos processos afetam a execução. A jornada documentada segue conteúdo → mapa ou ferramenta → resultado → próxima ação.
+Brand Guidelines
+Colors
+Papel|Valor|Uso|
+Dark|#18346F [P]|Texto e traços azuis de maior contraste|
+Light|#FFFFFF [O]|Fundo branco e áreas de respiro|
+Mid Gray|#748094 [P]|Texto secundário e anotações|
+Light Gray|#F4F6F1 [O, aproximado]|Fundo claro das ilustrações|
+Accent 01 — Azul|#3155E7 [P]|Ação, contornos e foco visual|
+Accent 02 — Coral|#F28F83 [P]|Destaques narrativos e pontos de atenção|
+Accent 03 — Azul claro|#A9BFF4 [P]|Planos, preenchimentos e apoio|
+Cores adicionais observadas: rosa e pêssego suaves, azul muito claro e branco. Seus valores exatos ficam A DEFINIR. Não use o coral como único indicador de estado ou significado.
+Typography
+A coleta contém textos editoriais e referências ilustradas, mas não identifica arquivos de fonte nem comprova uma família tipográfica oficial.
+Papel|Definição de aplicação [P]|
+Headings|Inter, fallback Arial, sans-serif|
+Body|Inter, fallback Arial, sans-serif|
+Display / Hero|Inter|
+Subheading|Inter|
+Caption|Inter|
+Monospace / Code|ui-monospace, SFMono-Regular, Consolas, monospace|
+Nota: Inter é uma escolha de implementação proposta. A fonte oficial da marca permanece A DEFINIR. Em artefatos que não incorporem a fonte, use o fallback disponível.
+Smart Font Application
+	•	Aplica a família de headings a h1–h6, mantendo uma escala coerente.
+	•	Aplica a família de body a parágrafos, listas, formulários e legendas.
+	•	Usa os fallbacks definidos quando a fonte principal não estiver disponível.
+	•	Evita texto essencial embutido em imagens.
+	•	Preserva quebras de linha e largura confortável de leitura em mobile.
+Text Styling
+Elemento|Regra proposta [P]|
+H1|clamp(2rem, 5vw, 4rem); peso 700; line-height 1.1; letter-spacing -0.03em|
+H2–H3|Escala decrescente; peso 650–700; line-height 1.2–1.3|
+Body|1rem–1.125rem; peso 400; line-height 1.55–1.7; letter-spacing normal|
+Caption|0.875rem; line-height 1.4|
+Texto primário|#18346F sobre fundo claro|
+Texto secundário|#56647A [P]|
+Texto em fundo escuro|#FFFFFF|
+Texto em fundo claro|#18346F|
+Texto de destaque|Azul #3155E7, sujeito a contraste adequado|
+Selecione a cor do texto pela legibilidade da combinação real de primeiro plano e fundo. Não aplique texto branco sobre coral claro ou azul claro sem verificar contraste.
+Shape and Accent Colors
+	•	Acento primário: azul #3155E7.
+	•	Secundário: coral #F28F83.
+	•	Terciário: azul claro #A9BFF4.
+	•	Alternância: azul orienta e conecta; coral marca um evento ou foco; azul claro constrói profundidade. Não alterne cores mecanicamente a cada cartão.
+	•	Fundo: branco ou cinza muito claro, com amplo espaço negativo.
+	•	Bordas: finas e azuis nas ilustrações; discretas nas interfaces.
+	•	Ícones: lineares, com espessura consistente e significado reconhecível.
+	•	Regra adicional: diagramas devem distinguir relações também por posição, forma ou rótulo.
+Visual Hierarchy
+	•	Primary: uma pergunta, ideia ou cena principal por seção.
+	•	Secondary: explicação curta e uma ação contextual.
+	•	Supporting Elements: legendas, ampliações, evidências e detalhes cartográficos.
+	•	Emphasis: use escala e espaço antes de acrescentar mais cor. O coral destaca poucos pontos por composição.
+Layout Rules
+Item|Regra|
+Default alignment|Texto alinhado à esquerda; ilustrações podem usar composição central [P]|
+Content width|Leitura editorial de aproximadamente 65–75ch [P]|
+Outer margins|Margens responsivas; preservar os elementos inteiros e área de respiro [P]|
+Internal spacing|Escala de 8 px [P]|
+Grid|Uma coluna no mobile; grade editorial responsiva em telas maiores [P]|
+Corner radius|Discreto, 8–16px em componentes de interface [P]|
+Borders|1px discreto; traços azuis finos nas ilustrações|
+Shadows|Ausentes ou suaves; nunca substituem a hierarquia por espaço e contraste [P]|
+Image and Illustration Style
+	•	Photography: A DEFINIR; não há conjunto fotográfico suficiente na coleta.
+	•	Illustration [O]: cenas editoriais isométricas e cartográficas. Cérebros representados como mapas, vias e sistemas; pessoas pequenas exploram ou observam a cena. Contornos azuis finos, base branca ou clara, planos azuis e intervenções coral.
+	•	Iconography [P]: símbolos simples, lineares, consistentes com os contornos da ilustração.
+	•	Image treatment [O/P]: preservar o espaço negativo, a projeção, os objetos inteiros e os detalhes de apoio. Evitar filtros que alterem as cores ou a leitura da cena.
+	•	Aspect ratios [O]: o pacote inclui composições horizontais e verticais. Para novas peças, preparar variantes 16:9 e retrato/mobile por recomposição, sem cortar o elemento narrativo principal.
+	•	Image background [O]: branco ou claro; a imagem deve continuar legível junto à superfície da página.
+Logo Usage
+Campo|Estado|
+Primary logo|A DEFINIR — o ZIP analisado não fornece um arquivo de logo identificável|
+Secondary logo|A DEFINIR|
+Minimum size|A DEFINIR após validar o logo final|
+Clear space|A DEFINIR após validar o logo final|
+Allowed backgrounds|Proposta: branco e superfícies claras; outras aplicações exigem teste|
+Forbidden treatments|Proposta: não distorcer, recolorir arbitrariamente, aplicar sombra forte ou sobrepor detalhes da ilustração|
+Technical Details
+Font Management
+Use Inter se estiver incluída no produto; caso contrário, use Arial, sans-serif. Para código, use a pilha monoespaçada definida acima. A instalação de Inter não é requisito comprovado pela coleta. Fontes opcionais 01 e 02: A DEFINIR.
+Color Application
+Color system: valores HEX em tokens CSS [P]. Exemplo de implementação:
+:root {
+  --rc-ink: #18346f;
+  --rc-paper: #ffffff;
+  --rc-canvas: #f4f6f1;
+  --rc-blue: #3155e7;
+  --rc-coral: #f28f83;
+  --rc-blue-soft: #a9bff4;
+}
+Exemplos: texto principal em --rc-ink; página em --rc-paper; ação principal em --rc-blue. A fidelidade de cor deve ser conferida em web, apresentações e peças exportadas.
+Brand Tokens
+BRAND_NAME=Risco Cognitivo
+
+COLOR_DARK=#18346F
+COLOR_LIGHT=#FFFFFF
+COLOR_MID_GRAY=#748094
+COLOR_LIGHT_GRAY=#F4F6F1
+
+ACCENT_PRIMARY=#3155E7
+ACCENT_SECONDARY=#F28F83
+ACCENT_TERTIARY=#A9BFF4
+
+FONT_HEADING=Inter
+FONT_HEADING_FALLBACK=Arial,sans-serif
+FONT_BODY=Inter
+FONT_BODY_FALLBACK=Arial,sans-serif
+
+TEXT_PRIMARY=#18346F
+TEXT_SECONDARY=#56647A
+TEXT_INVERSE=#FFFFFF
+
+BACKGROUND_PRIMARY=#FFFFFF
+BACKGROUND_SECONDARY=#F4F6F1
+BACKGROUND_ACCENT=#E8EEFC
+BORDER_DEFAULT=#D9E1EB
+
+RADIUS_SMALL=8px
+RADIUS_MEDIUM=12px
+RADIUS_LARGE=16px
+
+SPACE_XS=4px
+SPACE_SM=8px
+SPACE_MD=16px
+SPACE_LG=24px
+SPACE_XL=40px
+
+SHADOW_SMALL=0 2px 8px rgb(24 52 111 / 6%)
+SHADOW_MEDIUM=0 6px 20px rgb(24 52 111 / 8%)
+SHADOW_LARGE=0 12px 32px rgb(24 52 111 / 10%)
+Controle: os tokens acima, exceto branco e o fundo claro aproximado, são propostas de trabalho. Não os rotule como valores oficiais até confrontá-los com o CSS ou o arquivo-fonte do design system.
+Brand Behavior Rules
+DO
+	•	Explicar o problema em linguagem clara antes de apresentar termos técnicos.
+	•	Fazer a imagem mostrar uma relação compreensível entre pessoa, processo e contexto.
+	•	Manter uma ação principal por região da interface.
+	•	Adaptar a composição para mobile preservando a cena essencial.
+	•	Oferecer orientação visível entre artigo, mapa, ferramenta, resultado e próxima ação.
+DO NOT
+	•	Tratar neurodivergência como déficit inevitável.
+	•	Usar “neurodesign” como promessa de persuasão subliminar.
+	•	Sobrecarregar a página com CTAs e elementos competindo pela atenção.
+	•	Cortar o cérebro, a pessoa ou a ligação visual entre ambos ao mudar a proporção.
+	•	Apresentar cores, fontes ou logo propostos como identidade oficial aprovada.
+Output Requirements
+Todo artefato gerado deve:
+	1.	Usar a paleta de trabalho com a distinção entre observado e proposto.
+	2.	Aplicar hierarquia tipográfica consistente.
+	3.	Manter contraste e leitura adequados.
+	4.	Reservar azul para orientação e coral para ênfase pontual.
+	5.	Preservar espaço negativo e alinhamento.
+	6.	Usar o logo somente após obter seu arquivo e regras aprovadas.
+	7.	Usar fontes fallback quando necessário.
+	8.	Manter consistência entre web, editorial e exportações.
+	9.	Entregar composição própria para mobile, sem depender de corte automático.
+	10.	Distinguir evidência, hipótese e proposta em conteúdos sobre risco cognitivo.
+Custom Variables
+brand:
+  name: "Risco Cognitivo"
+  description: "Conteúdo e ferramentas para compreender riscos cognitivos e investigar demandas, contexto, processos e soluções."
+  personality: "Clara, investigativa, acolhedora e orientada à ação."
+
+colors:
+  dark: "#18346F"
+  light: "#FFFFFF"
+  mid_gray: "#748094"
+  light_gray: "#F4F6F1"
+  accents:
+    primary: { name: "Azul", value: "#3155E7" }
+    secondary: { name: "Coral", value: "#F28F83" }
+    tertiary: { name: "Azul claro", value: "#A9BFF4" }
+
+typography:
+  headings: { primary: "Inter", fallback: "Arial, sans-serif" }
+  body: { primary: "Inter", fallback: "Arial, sans-serif" }
+
+layout:
+  grid: "Uma coluna mobile; grade editorial responsiva em telas maiores"
+  spacing: "Escala proposta de 8 px"
+  radius: "8–16 px em componentes de interface"
+  shadow: "Suave e opcional"
+
+visual_language:
+  photography: "A DEFINIR"
+  illustration: "Editorial isométrica e cartográfica; contornos azuis; azul e coral sobre fundo claro"
+  iconography: "Linear e de espessura consistente"
+
+implementation:
+  color_system: "Tokens CSS com valores HEX propostos"
+  target_environment: "Web mobile first e peças editoriais"
+  supported_outputs: "Web, imagens horizontais e verticais, documentos e apresentações"
+Pendência para aprovação como guia oficial: confrontar os hexadecimais e a tipografia propostos com os tokens do blog; incorporar o logo original e suas regras de uso. A coleta já sustenta a direção editorial, a linguagem das ilustrações e a jornada de conteúdo.

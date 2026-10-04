@@ -1,0 +1,62 @@
+adapter_id: ADAPTER-EXISTING-DOCS-001
+status: PROPOSED
+documents:
+  EDU-FORM-001:
+    role: LEARNING_OBJECT projection
+    native_spine: experiência→problema→mecanismo→conceito→exemplo→aplicação→verificação
+    maps_to:
+    - CONTEXT
+    - PROBLEM
+    - CONCEPT
+    - METHOD
+    - CLAIM
+    - LEARNING_OBJECT
+  RC-KNW-001:
+    role: KNOWLEDGE_PACK/evidence authority for TP-001
+    native_spine: problema→fator→demanda→exposição→possível risco→controle→solução→asset→métrica→learning
+    maps_to:
+    - KNOWLEDGE_PACK
+    - PROBLEM
+    - RISK_FACTOR
+    - VULNERABILITY
+    - EXPOSURE
+    - RISK
+    - CONTROL
+    - SOLUTION
+    - CLAIM
+    - EVIDENCE
+    - ASSET
+    - METRIC
+    - LEARNING
+  DATA-ADHD-PM-001:
+    role: correlation matrix
+    native_spine: função de gestão→capacidade humana→vulnerabilidade associada→impacto→compensação→produto/design
+    maps_to:
+    - OPERATIONAL_FUNCTION
+    - COGNITIVE_CAPACITY
+    - NEURODIVERGENCE_PROFILE
+    - VULNERABILITY
+    - OPERATIONAL_IMPACT
+    - COMPENSATION
+    - APP_FEATURE
+    - EVIDENCE
+  PRD-EXEC-DISPATCH-004:
+    role: runtime METHOD/CAPABILITY
+    native_spine: DAG→eligible pool→constraints→flow/context rank→best next→DoD→progress
+    maps_to:
+    - METHOD
+    - CONTROL
+    - CAPABILITY
+    - OPERATIONAL_FUNCTION
+    - EXECUTION
+    - EVENT
+    - METRIC
+  DOC-STORE-UNICO-001:
+    role: SOLUTION discovery projection/storefront
+    native_spine: problema→discover→detail→Start|Download→onboarding→analytics
+    maps_to:
+    - SOLUTION
+    - ASSET
+    - EVENT
+    - METRIC
+    - CONTEXT
