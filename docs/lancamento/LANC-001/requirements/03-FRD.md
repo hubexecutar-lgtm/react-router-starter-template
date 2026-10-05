@@ -7,8 +7,8 @@
 | Prioridade | READY | NEEDS_CONFIRMATION | BLOCKED | BACKLOG | DONE |
 |---|---|---|---|---|---|
 | P0 | 0 | 0 | 0 | 0 | 16 |
-| P1 | 1 | 0 | 0 | 0 | 25 |
-| P2 | 1 | 0 | 1 | 0 | 9 |
+| P1 | 0 | 0 | 0 | 0 | 26 |
+| P2 | 0 | 0 | 1 | 0 | 10 |
 | P3 | 3 | 0 | 2 | 1 | 1 |
 
 Total: 60 requisitos em 12 épicos.
@@ -122,8 +122,8 @@ Total: 60 requisitos em 12 épicos.
 
 | ID | Tipo | Prio | Status | Requisito | Critério de aceite | Depende | Fonte |
 |---|---|---|---|---|---|---|---|
-| RQ-110 | NFR | P1 | READY | **Gate de Core Web Vitals.** p75 mobile e desktop: LCP ≤ 2,5s, INP ≤ 200ms, CLS ≤ 0,1. Medição de campo pelo Cloudflare Web Analytics (DEC-U11). | Lighthouse CI ou medição registrada no PR das rotas tocadas | — | Índex de rotas §12 |
-| RQ-111 | FR | P2 | READY | **Eventos por estágio da jornada.** Cloudflare Web Analytics (beacon) para páginas e Core Web Vitals reais; eventos por estágio (BLOG/ARTICLE/TOOL/RESULT/BUSINESS) gravados no Workers Analytics Engine via binding, com problem_id, solution_id, capability_id, asset_id, qfw_id, campaign_id quando houver. Sem cookies nem dado pessoal. | Binding analytics_engine no wrangler.jsonc; teste unitário do emissor de eventos; nenhum identificador pessoal no payload | RQ-060 | Índex de rotas §11; Teia N8; DEC-U11 |
+| RQ-110 | NFR | P1 | DONE | **Gate de Core Web Vitals.** p75 mobile e desktop: LCP ≤ 2,5s, INP ≤ 200ms, CLS ≤ 0,1. Medição de campo pelo Cloudflare Web Analytics (DEC-U11). | Lighthouse CI ou medição registrada no PR das rotas tocadas | — | Índex de rotas §12 |
+| RQ-111 | FR | P2 | DONE | **Eventos por estágio da jornada.** Cloudflare Web Analytics (beacon) para páginas e Core Web Vitals reais; eventos por estágio (BLOG/ARTICLE/TOOL/RESULT/BUSINESS) gravados no Workers Analytics Engine via binding, com problem_id, solution_id, capability_id, asset_id, qfw_id, campaign_id quando houver. Sem cookies nem dado pessoal. | Binding analytics_engine no wrangler.jsonc; teste unitário do emissor de eventos; nenhum identificador pessoal no payload | RQ-060 | Índex de rotas §11; Teia N8; DEC-U11 |
 
 ## EP-12 — Adapters da Teia Única (Quick Framework, Ferramentas, registries) (PR-L)
 

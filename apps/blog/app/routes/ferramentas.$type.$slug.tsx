@@ -1,5 +1,7 @@
 import { data } from "react-router";
 
+import { useTrackView } from "@/lib/analytics/track";
+
 import type { Route } from "./+types/ferramentas.$type.$slug";
 
 import { ItemDetail } from "@/features/store/components/item-detail";
@@ -30,6 +32,7 @@ export const meta: Route.MetaFunction = ({ params, location }) => {
 
 export default function FerramentasItem({ params }: Route.ComponentProps) {
 	const item = find(params.type, params.slug)!;
+	useTrackView({ stage: "TOOL", action: "view", asset_id: params.slug }, `${params.type}/${params.slug}`);
 	return (
 		<DefaultLayout>
 			<section className="stories-container max-w-[var(--ref-wide-width)] pt-12 pb-16 lg:pt-[88px] lg:pb-24">

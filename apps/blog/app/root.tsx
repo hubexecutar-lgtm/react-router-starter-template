@@ -11,7 +11,7 @@ import {
 import type { Route } from "./+types/root";
 
 import "@/styles/global.css";
-import { SITE_METADATA, SITE_NAME, SITE_URL } from "@/consts";
+import { CF_WEB_ANALYTICS_TOKEN, SITE_METADATA, SITE_NAME, SITE_URL } from "@/consts";
 
 export const links: Route.LinksFunction = () => [
 	// Google Fonts (ADR-11): Inter for display and text, IBM Plex Mono for technical text.
@@ -61,6 +61,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
 				{children}
 				<ScrollRestoration />
 				<Scripts />
+				{CF_WEB_ANALYTICS_TOKEN && (
+					<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon={JSON.stringify({ token: CF_WEB_ANALYTICS_TOKEN })} />
+				)}
 			</body>
 		</html>
 	);

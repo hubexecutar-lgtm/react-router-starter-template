@@ -40,6 +40,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { track } from "@/lib/analytics/track";
 import { cn } from "@/lib/utils";
 
 type View = "intro" | "form" | "preview";
@@ -310,7 +311,11 @@ export function PrismaApp({ intro }: { intro: ReactNode }) {
 						</h1>
 						<p className="rc-lead mt-4">Esta é a folha que sai no PDF. Se algo estiver errado, volte e edite: seus dados continuam aqui.</p>
 						<div className="mt-6 flex flex-wrap items-center gap-3">
-							<Button type="button" size="lg" className="min-h-12 px-6" onClick={() => window.print()}>
+							<Button type="button" size="lg" className="min-h-12 px-6" onClick={() => {
+									// RQ-111: resultado gerado; o conteúdo da folha nunca entra no evento.
+									track({ stage: "RESULT", action: "complete", asset_id: "prisma" });
+									window.print();
+								}}>
 								<FileDown aria-hidden="true" /> Exportar PDF
 							</Button>
 							<Button asChild variant="outline" size="lg" className="min-h-12 px-6">

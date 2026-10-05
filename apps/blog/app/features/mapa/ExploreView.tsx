@@ -7,6 +7,7 @@ import { Link, useSearchParams } from "react-router";
 
 import type { MapMode } from "./CausalMap.client";
 import { FactorSheet, type Snap } from "./FactorSheet";
+import { track } from "@/lib/analytics/track";
 import { clearPrefs, loadPrefs, preferredFirst, preferredFocus, type MapPrefs } from "./prefs";
 import { EdgeSentence, TypeBadge, WhyChain, type NodeLink } from "./parts";
 
@@ -121,6 +122,10 @@ export function ExploreView() {
 
 	const select = useCallback(
 		(id: string) => {
+			// RQ-111: escolha de um fator no mapa (estágio TOOL), com o ID no campo do seu tipo.
+			const kind = nodeById(RC_GRAPH, id)?.visual;
+			const field = kind === "compensation" ? "solution_id" : kind === "capacity" ? "capability_id" : kind === "evidence" ? "asset_id" : "problem_id";
+			track({ stage: "TOOL", action: "select", [field]: id });
 			setSnap("collapsed");
 			setCleared(false);
 			setParams(

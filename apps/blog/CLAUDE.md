@@ -514,3 +514,29 @@ to `apps/blog/`.
   Personalizar e no Explorar) ou limpar os dados do navegador volta ao mapa padrão. `tests/personalizar.spec.ts` cobre
   o fluxo por toque e por teclado, a rede (só GET, nada com as escolhas), a Lista igual com e sem personalização e
   preferência inválida.
+
+### ADR-20: Medição da jornada sem cookies — Workers Analytics Engine + Cloudflare Web Analytics (LANC-001 PR-K, RQ-110/111)
+
+- **Status:** Aceita — eventos implementados; o beacon do Web Analytics espera o token do site (`CF_WEB_ANALYTICS_TOKEN`).
+- **Contexto:** DEC-U11 escolheu o que já está no stack: Cloudflare Web Analytics para páginas e Core Web Vitals de campo,
+  e eventos próprios no Workers Analytics Engine, ligados aos IDs do grafo (ADR-M04) para medir artigo → mapa → ferramenta.
+- **Decisão:**
+  - **Contrato único** em `app/lib/analytics/events.ts`: estágio (`BLOG/ARTICLE/TOOL/RESULT/BUSINESS`), ação
+    (`view/cta/select/complete`), caminho sem query e os IDs opcionais `problem_id`, `solution_id`, `capability_id`,
+    `asset_id`, `qfw_id`, `campaign_id`. Validação estrita: campo desconhecido é ignorado; ID fora do formato, com `@`,
+    número longo ou CPF derruba o evento inteiro.
+  - **Worker:** `POST /api/eventos` (`workers/app.ts`) grava no binding `EVENTS` (`wrangler.jsonc`, dataset
+    `rc_journey_events`; index = estágio, blobs = ação, caminho e os 6 IDs). Não lê IP, user agent nem cookies e não
+    devolve cookie; 400/405/413 para o resto.
+  - **Navegador:** `track()`/`useTrackView()` (`app/lib/analytics/track.ts`) por `sendBeacon`; respeitam Do Not Track e
+    nunca quebram a página. Emitem: listagem (`BLOG`, com o problema do chip), leitura do artigo e clique no "Próximo
+    passo" (`ARTICLE`, problema principal + slug), fator escolhido no mapa (`TOOL`, ID no campo do tipo do nó), item das
+    Ferramentas (`TOOL`) e folha do Prisma impressa (`RESULT`, sem nada do conteúdo). `BUSINESS` fica reservado.
+    Campanha só vem de `?utm_campaign=` válido.
+  - **Web Analytics:** o `root.tsx` injeta o beacon só quando `CF_WEB_ANALYTICS_TOKEN` (em `app/consts.ts`) não está vazio.
+- **Consequências:**
+  - `tests/analytics.spec.ts`: unidade do emissor (válidos, recusas de dado pessoal, campos ignorados), o endpoint
+    (204 sem cookie, 400, 405, 413), os eventos reais da página (payload exato, sem cookies, Do Not Track) e o gate de
+    laboratório de Core Web Vitals (LCP ≤ 2,5 s e CLS ≤ 0,1 em celular emulado nas rotas principais; o INP do mapa já é
+    medido no `mapa.spec`).
+  - Consulta: SQL API do Analytics Engine sobre `rc_journey_events` (ex.: contagem por `index1` e `blob3`).

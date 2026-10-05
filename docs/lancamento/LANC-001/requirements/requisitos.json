@@ -981,10 +981,12 @@
       "titulo": "Gate de Core Web Vitals",
       "descricao": "p75 mobile e desktop: LCP ≤ 2,5s, INP ≤ 200ms, CLS ≤ 0,1. Medição de campo pelo Cloudflare Web Analytics (DEC-U11).",
       "prioridade": "P1",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [],
       "fonte": "Índex de rotas §12",
-      "criterio_aceite": "Lighthouse CI ou medição registrada no PR das rotas tocadas"
+      "criterio_aceite": "Lighthouse CI ou medição registrada no PR das rotas tocadas",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/32",
+      "nota": "Gate de laboratório no npm test (LCP/CLS em celular emulado; INP do mapa no mapa.spec). p75 de campo chega com o token do Web Analytics (CF_WEB_ANALYTICS_TOKEN)."
     },
     {
       "id": "RQ-111",
@@ -993,12 +995,14 @@
       "titulo": "Eventos por estágio da jornada",
       "descricao": "Cloudflare Web Analytics (beacon) para páginas e Core Web Vitals reais; eventos por estágio (BLOG/ARTICLE/TOOL/RESULT/BUSINESS) gravados no Workers Analytics Engine via binding, com problem_id, solution_id, capability_id, asset_id, qfw_id, campaign_id quando houver. Sem cookies nem dado pessoal.",
       "prioridade": "P2",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [
         "RQ-060"
       ],
       "fonte": "Índex de rotas §11; Teia N8; DEC-U11",
-      "criterio_aceite": "Binding analytics_engine no wrangler.jsonc; teste unitário do emissor de eventos; nenhum identificador pessoal no payload"
+      "criterio_aceite": "Binding analytics_engine no wrangler.jsonc; teste unitário do emissor de eventos; nenhum identificador pessoal no payload",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/32",
+      "nota": "Eventos no Workers Analytics Engine (binding EVENTS). Beacon do Web Analytics pronto; falta o token do site no painel da Cloudflare."
     },
     {
       "id": "RQ-120",
