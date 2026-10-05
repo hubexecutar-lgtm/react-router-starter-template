@@ -22,6 +22,7 @@ const TEXTS: Record<string, string> = {
   "RC-ART-MASTER-001": `${CANON}/01_CANONICO/05_RC_ARTIGO_MASTER_3_PILARES_1500.txt`,
   "RC-SRC-001": `${CANON}/02_REFERENCIAS/01_FONTES_WEB.txt`,
   "RC-HOME-002": `${INTAKE}/HOME-002/RC_HOME_002.txt`,
+  "RC-SRC-002": `${INTAKE}/RC-PUB-PACK-003/RC_SRC_002_FONTES_CIENTIFICAS.txt`,
 };
 const norm = (s: string) => s.replace(/\s+/g, " ").trim().toLocaleLowerCase("pt-BR");
 const text = (id: string) => norm(read(TEXTS[id]));
@@ -106,8 +107,12 @@ test.describe("initial graph from the canonical articles (RQ-061, RQ-062)", () =
     for (const l of ["Interrupções", "Tarefa ambígua", "Sobrecarga", "Perda de contexto", "Retrabalho", "Erro", "Atenção", "Memória", "Planejamento", "Tomada de decisão", "Externalização", "Redução", "Explicitação", "Automação", "Checkpoint", "Checklist", "Runbook"]) {
       expect(labels, l).toContain(l);
     }
-    expect(graph.nodes.filter((n) => n.type === "EVIDENCE").length).toBe(11);
-    for (const n of graph.nodes.filter((n) => n.type === "EVIDENCE")) expect(text("RC-SRC-001"), n.id).toContain(norm(String(n.url)));
+    // RC-SRC-001: as 11 fontes do canônico; RC-SRC-002: as fontes científicas da série (RC-PUB-PACK-003).
+    const evidence = graph.nodes.filter((n) => n.type === "EVIDENCE");
+    expect(evidence.filter((n) => n.source_refs.includes("RC-SRC-001")).length).toBe(11);
+    const src2 = read(TEXTS["RC-SRC-002"]).split("\n").filter((l) => l.split(" | ").length >= 7);
+    expect(evidence.filter((n) => n.source_refs.includes("RC-SRC-002")).length).toBe(src2.length);
+    for (const n of evidence) expect(text(n.source_refs[0]), n.id).toContain(norm(String(n.url)));
   });
 
   test("the projection covers the causal chain with the 9 visual types (RQ-061)", () => {

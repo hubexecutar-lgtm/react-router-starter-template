@@ -1,0 +1,145 @@
+{
+  "pack_id": "RC-PUB-PACK-003",
+  "version": "3.0.0",
+  "status": "VERIFIED_STATIC",
+  "render_build": "NOT_RUN",
+  "files": {
+    "01-articles/01-o-que-sao-riscos-cognitivos.mdx": {
+      "frontmatter": "PASS",
+      "imports": "PASS",
+      "jsx_balance": "PASS",
+      "string_safety": "PASS",
+      "links": "PASS",
+      "source_preservation": "PASS",
+      "layout_semantics": "PASS",
+      "block_reconciliation": "N/A",
+      "images_and_alt": "PASS",
+      "render_build": "NOT_RUN"
+    },
+    "01-articles/00-riscos-cognitivos-guia-fundador.mdx": {
+      "frontmatter": "PASS",
+      "imports": "PASS",
+      "jsx_balance": "PASS",
+      "string_safety": "PASS",
+      "links": "PASS",
+      "source_preservation": "PASS",
+      "layout_semantics": "PASS",
+      "block_reconciliation": "N/A",
+      "images_and_alt": "PASS",
+      "render_build": "NOT_RUN"
+    },
+    "01-articles/02-funcoes-executivas-demandas-e-risco.mdx": {
+      "frontmatter": "PASS",
+      "imports": "PASS",
+      "jsx_balance": "PASS",
+      "string_safety": "PASS",
+      "links": "PASS",
+      "source_preservation": "PASS",
+      "layout_semantics": "PASS",
+      "block_reconciliation": "N/A",
+      "images_and_alt": "PASS",
+      "render_build": "NOT_RUN"
+    },
+    "01-articles/04-seis-estrategias-para-reduzir-riscos-cognitivos.mdx": {
+      "frontmatter": "PASS",
+      "imports": "PASS",
+      "jsx_balance": "PASS",
+      "string_safety": "PASS",
+      "links": "PASS",
+      "source_preservation": "PASS",
+      "layout_semantics": "PASS",
+      "block_reconciliation": "N/A",
+      "images_and_alt": "PASS",
+      "render_build": "NOT_RUN"
+    },
+    "01-articles/03-riscos-cognitivos-rotina-estudos-trabalho.mdx": {
+      "frontmatter": "PASS",
+      "imports": "PASS",
+      "jsx_balance": "PASS",
+      "string_safety": "PASS",
+      "links": "PASS",
+      "source_preservation": "PASS",
+      "layout_semantics": "PASS",
+      "block_reconciliation": "N/A",
+      "images_and_alt": "PASS",
+      "render_build": "NOT_RUN"
+    },
+    "02-solutions/02-plano-dos-7-dias.mdx": {
+      "frontmatter": "PASS",
+      "imports": "PASS",
+      "jsx_balance": "PASS",
+      "string_safety": "PASS",
+      "links": "PASS",
+      "source_preservation": "PASS",
+      "layout_semantics": "PASS",
+      "block_reconciliation": "N/A",
+      "images_and_alt": "PASS",
+      "render_build": "NOT_RUN"
+    },
+    "02-solutions/03-meu-processo-de-trabalho.mdx": {
+      "frontmatter": "PASS",
+      "imports": "PASS",
+      "jsx_balance": "PASS",
+      "string_safety": "PASS",
+      "links": "PASS",
+      "source_preservation": "PASS",
+      "layout_semantics": "PASS",
+      "block_reconciliation": "N/A",
+      "images_and_alt": "PASS",
+      "render_build": "NOT_RUN"
+    },
+    "02-solutions/04-formulario-padrao-do-ciclo.mdx": {
+      "frontmatter": "PASS",
+      "imports": "PASS",
+      "jsx_balance": "PASS",
+      "string_safety": "PASS",
+      "links": "PASS",
+      "source_preservation": "PASS",
+      "layout_semantics": "PASS",
+      "block_reconciliation": "N/A",
+      "images_and_alt": "PASS",
+      "render_build": "NOT_RUN"
+    },
+    "02-solutions/06-scroll-task.mdx": {
+      "frontmatter": "PASS",
+      "imports": "PASS",
+      "jsx_balance": "PASS",
+      "string_safety": "PASS",
+      "links": "PASS",
+      "source_preservation": "PASS",
+      "layout_semantics": "PASS",
+      "block_reconciliation": "N/A",
+      "images_and_alt": "PASS",
+      "render_build": "NOT_RUN"
+    },
+    "02-solutions/01-status-report.mdx": {
+      "frontmatter": "PASS",
+      "imports": "PASS",
+      "jsx_balance": "PASS",
+      "string_safety": "PASS",
+      "links": "PASS",
+      "source_preservation": "PASS",
+      "layout_semantics": "PASS",
+      "block_reconciliation": "N/A",
+      "images_and_alt": "PASS",
+      "render_build": "NOT_RUN"
+    },
+    "02-solutions/05-plano-operacional-rastreavel.mdx": {
+      "frontmatter": "PASS",
+      "imports": "PASS",
+      "jsx_balance": "PASS",
+      "string_safety": "PASS",
+      "links": "PASS",
+      "source_preservation": "PASS",
+      "layout_semantics": "PASS",
+      "block_reconciliation": "N/A",
+      "images_and_alt": "PASS",
+      "render_build": "NOT_RUN"
+    }
+  },
+  "unresolved_gaps": [
+    "Confirmar no repositório se o import real dos componentes é @/components/plain ou provider global.",
+    "Executar build/render no blog antes de afirmar validação de runtime.",
+    "Publicação, commit, push e deploy não foram autorizados nem executados."
+  ]
+}

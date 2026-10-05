@@ -1,7 +1,7 @@
 {
   "schema_version": "0.1.0",
   "example_id": "RC-GRAPH-001",
-  "note": "Grafo canônico do Risco Cognitivo (LANC-001 PR-G, ADR-M04). Fonte: RC-ART-P1-001, RC-ART-P3-001, RC-LP-001, RC-ART-MASTER-001, RC-SRC-001 (docs/lancamento/LANC-001/intake/DOCS-002) e RC-HOME-002 (intake/HOME-002: os nós Memória de trabalho, Controle inibitório e Flexibilidade cognitiva, aprovados pelo OWNER no HOME-BRAIN-001). Relações não explícitas no texto são E_INFERRED + PROPOSED; eventos operacionais usam OPERATIONAL_IMPACT + tag stage:event (CF-16).",
+  "note": "Grafo canônico do Risco Cognitivo (LANC-001 PR-G, ADR-M04). Fonte: RC-ART-P1-001, RC-ART-P3-001, RC-LP-001, RC-ART-MASTER-001, RC-SRC-001 (docs/lancamento/LANC-001/intake/DOCS-002), RC-SRC-002 (intake/RC-PUB-PACK-003: fontes científicas da série, PMIDs conferidos) e RC-HOME-002 (intake/HOME-002: os nós Memória de trabalho, Controle inibitório e Flexibilidade cognitiva, aprovados pelo OWNER no HOME-BRAIN-001). Relações não explícitas no texto são E_INFERRED + PROPOSED; eventos operacionais usam OPERATIONAL_IMPACT + tag stage:event (CF-16).",
   "nodes": [
     {
       "id": "FRC-EXCESSO-INFORMACAO",
@@ -614,6 +614,149 @@
       ],
       "source_quote": "Gilbert — Strategic use of reminders / cognitive offloading",
       "url": "https://journals.sagepub.com/doi/10.1080/17470218.2014.972963"
+    },
+    {
+      "id": "EVD-DIAMOND-2013",
+      "type": "EVIDENCE",
+      "label": "Diamond (2013) — Executive functions",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-SRC-002"
+      ],
+      "source_quote": "Executive functions",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/23020641/"
+    },
+    {
+      "id": "EVD-BOONSTRA-2005",
+      "type": "EVIDENCE",
+      "label": "Boonstra (2005) — Executive functioning in adult ADHD: a meta-analytic review",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-SRC-002"
+      ],
+      "source_quote": "Executive functioning in adult ADHD: a meta-analytic review",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/16116936/"
+    },
+    {
+      "id": "EVD-SENKOWSKI-2024",
+      "type": "EVIDENCE",
+      "label": "Senkowski (2024) — Assessing Inhibitory Control Deficits in Adult ADHD: A Systematic Review and Meta-analysis of the Stop-signal Task",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-SRC-002"
+      ],
+      "source_quote": "Assessing Inhibitory Control Deficits in Adult ADHD: A Systematic Review and Meta-analysis of the Stop-signal Task",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/37300725/"
+    },
+    {
+      "id": "EVD-SOLANTO-2010",
+      "type": "EVIDENCE",
+      "label": "Solanto (2010) — Efficacy of meta-cognitive therapy for adult ADHD",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-SRC-002"
+      ],
+      "source_quote": "Efficacy of meta-cognitive therapy for adult ADHD",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/20231319/"
+    },
+    {
+      "id": "EVD-NAKASHIMA-2022",
+      "type": "EVIDENCE",
+      "label": "Nakashima (2022) — Efficacy of Group Cognitive Behavior Therapy Targeting Time Management for Adults with Attention Deficit/Hyperactivity Disorder in Japan: A Randomized Control Pilot Trial",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-SRC-002"
+      ],
+      "source_quote": "Efficacy of Group Cognitive Behavior Therapy Targeting Time Management for Adults with Attention Deficit/Hyperactivity Disorder in Japan: A Randomized Control Pilot Trial",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/33472510/"
+    },
+    {
+      "id": "EVD-LIDSTROM-2026",
+      "type": "EVIDENCE",
+      "label": "Lidström Holmqvist (2026) — Effectiveness of a group-based time-management intervention: a pragmatic randomised controlled trial",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-SRC-002"
+      ],
+      "source_quote": "Effectiveness of a group-based time-management intervention: a pragmatic randomised controlled trial",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/41527987/"
+    },
+    {
+      "id": "EVD-HARKIN-2016",
+      "type": "EVIDENCE",
+      "label": "Harkin (2016) — Does monitoring goal progress promote goal attainment? A meta-analysis of the experimental evidence",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-SRC-002"
+      ],
+      "source_quote": "Does monitoring goal progress promote goal attainment? A meta-analysis of the experimental evidence",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/26479070/"
+    },
+    {
+      "id": "EVD-TOLI-2016",
+      "type": "EVIDENCE",
+      "label": "Toli (2016) — Does forming implementation intentions help people with mental health problems to achieve goals? A meta-analysis of experimental studies with clinical and analogue samples",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-SRC-002"
+      ],
+      "source_quote": "Does forming implementation intentions help people with mental health problems to achieve goals? A meta-analysis of experimental studies with clinical and analogue samples",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/25965276/"
+    },
+    {
+      "id": "EVD-KIESEL-2010",
+      "type": "EVIDENCE",
+      "label": "Kiesel (2010) — Control and interference in task switching--a review",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-SRC-002"
+      ],
+      "source_quote": "Control and interference in task switching--a review",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/20804238/"
+    },
+    {
+      "id": "EVD-BURNETT-2026",
+      "type": "EVIDENCE",
+      "label": "Burnett (2026) — Meta-analytic investigations of the effect of cognitive offloading on memory-based task performance and interindividual variability",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-SRC-002"
+      ],
+      "source_quote": "Meta-analytic investigations of the effect of cognitive offloading on memory-based task performance and interindividual variability",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/40500483/"
+    },
+    {
+      "id": "EVD-LIU-2026",
+      "type": "EVIDENCE",
+      "label": "Liu (2026) — A meta-analysis of the intervention effect of cognitive behavioral therapy on adult ADHD",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-SRC-002"
+      ],
+      "source_quote": "A meta-analysis of the intervention effect of cognitive behavioral therapy on adult ADHD",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/41483880/"
+    },
+    {
+      "id": "EVD-SONG-2021",
+      "type": "EVIDENCE",
+      "label": "Song (2021) — The prevalence of adult attention-deficit hyperactivity disorder: A global systematic review and meta-analysis",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-SRC-002"
+      ],
+      "source_quote": "The prevalence of adult attention-deficit hyperactivity disorder: A global systematic review and meta-analysis",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/33692893/"
+    },
+    {
+      "id": "EVD-IBGE-2025",
+      "type": "EVIDENCE",
+      "label": "IBGE (2025) — Censo 2022 contou 2,4 milhões de pessoas diagnosticadas com autismo no Brasil",
+      "status": "DEFINED",
+      "source_refs": [
+        "RC-SRC-002"
+      ],
+      "source_quote": "Censo 2022 contou 2,4 milhões de pessoas diagnosticadas com autismo no Brasil",
+      "url": "https://educa.ibge.gov.br/jovens/materias-especiais/22700-censo-2022-contou-2-4-milhoes-de-pessoas-diagnosticadas-com-autismo-no-brasil.html"
     }
   ],
   "edges": [

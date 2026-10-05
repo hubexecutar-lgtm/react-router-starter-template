@@ -1,0 +1,58 @@
+{
+  "assets": [
+    {
+      "id": "01-status-report",
+      "file": "/images/risco-cognitivo/solucoes/01-status-report.png",
+      "source": "status_report_risco_cognitivo_em_foco.png",
+      "role": "inline solution infographic",
+      "alt": "Infográfico 16:9 da solução 01-status-report.png",
+      "sha256": "6e08683e318ae52601217953e143204b83f5d5afcfad3b08928b4128bde324d4",
+      "status": "READY"
+    },
+    {
+      "id": "02-plano-dos-7-dias",
+      "file": "/images/risco-cognitivo/solucoes/02-plano-dos-7-dias.png",
+      "source": "plano_dos_7_dias_gestão_cognitiva.png",
+      "role": "inline solution infographic",
+      "alt": "Infográfico 16:9 da solução 02-plano-dos-7-dias.png",
+      "sha256": "84dda892d3d9cf5e473992e02bbfd2f331b512d2a119a74ec10d4b61d725e4c9",
+      "status": "READY"
+    },
+    {
+      "id": "03-meu-processo-de-trabalho",
+      "file": "/images/risco-cognitivo/solucoes/03-meu-processo-de-trabalho.png",
+      "source": "meu_processo_de_trabalho_risco_cognitivo.png",
+      "role": "inline solution infographic",
+      "alt": "Infográfico 16:9 da solução 03-meu-processo-de-trabalho.png",
+      "sha256": "f57d1d5c717ca3e3f144c8a7d420595fed498802cd12fbed95f5fddfe6e21e0a",
+      "status": "READY"
+    },
+    {
+      "id": "04-formulario-padrao-do-ciclo",
+      "file": "/images/risco-cognitivo/solucoes/04-formulario-padrao-do-ciclo.png",
+      "source": "formulário_padrão_do_ciclo_cognitivo.png",
+      "role": "inline solution infographic",
+      "alt": "Infográfico 16:9 da solução 04-formulario-padrao-do-ciclo.png",
+      "sha256": "c6bc63b29641bf5a69ccdcfacce0fa41dd32ec75cd984b32caa6a58fff522ca1",
+      "status": "READY"
+    },
+    {
+      "id": "05-plano-operacional-rastreavel",
+      "file": "/images/risco-cognitivo/solucoes/05-plano-operacional-rastreavel.png",
+      "source": "plano_operacional_rastreável_de_riscos_cognitivos.png",
+      "role": "inline solution infographic",
+      "alt": "Infográfico 16:9 da solução 05-plano-operacional-rastreavel.png",
+      "sha256": "741a69df5c39ab7fe506833cecf43324895baddd0f9363e1870b984bcbc263d6",
+      "status": "READY"
+    },
+    {
+      "id": "06-scroll-task",
+      "file": "/images/risco-cognitivo/solucoes/06-scroll-task.png",
+      "source": "risco_cognitivo_scroll_task.png",
+      "role": "inline solution infographic",
+      "alt": "Infográfico 16:9 da solução 06-scroll-task.png",
+      "sha256": "6f3b8be3eb7e89cc3a82e27357e08dc01c48004a12c2a9256cdae41e9892849c",
+      "status": "READY"
+    }
+  ]
+}

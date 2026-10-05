@@ -1,0 +1,42 @@
+RC-SRC-002 — FONTES CIENTÍFICAS DA SÉRIE RISCOS COGNITIVOS (RC-PUB-PACK-003)
+
+Origem: RC_PUBLICATION_PACK_v3.0.0/04-evidence/EVIDENCE-REGISTRY.md. Cada PMID conferido no PubMed (esummary) em 2026-10-05; autor, revista e ano abaixo são os do PubMed.
+
+diamond2013 | Executive functions | Diamond A | Annu Rev Psychol | 2013 | PMID 23020641 | https://pubmed.ncbi.nlm.nih.gov/23020641/
+Sustenta: Funções executivas centrais incluem inibição, memória de trabalho e flexibilidade cognitiva.
+
+boonstra2005 | Executive functioning in adult ADHD: a meta-analytic review | Boonstra AM et al. | Psychol Med | 2005 | PMID 16116936 | https://pubmed.ncbi.nlm.nih.gov/16116936/
+Sustenta: Adultos com TDAH apresentam diferenças médias em alguns domínios executivos, com limitações de especificidade.
+
+senkowski2024 | Assessing Inhibitory Control Deficits in Adult ADHD: A Systematic Review and Meta-analysis of the Stop-signal Task | Senkowski D et al. | Neuropsychol Rev | 2024 | PMID 37300725 | https://pubmed.ncbi.nlm.nih.gov/37300725/
+Sustenta: Meta-análise encontrou diferença média moderada em controle inibitório em adultos com TDAH.
+
+solanto2010 | Efficacy of meta-cognitive therapy for adult ADHD | Solanto MV et al. | Am J Psychiatry | 2010 | PMID 20231319 | https://pubmed.ncbi.nlm.nih.gov/20231319/
+Sustenta: Intervenção metacognitiva manualizada direcionada a gestão do tempo, organização e planejamento em adultos com TDAH.
+
+nakashima2022 | Efficacy of Group Cognitive Behavior Therapy Targeting Time Management for Adults with Attention Deficit/Hyperactivity Disorder in Japan: A Randomized Control Pilot Trial | Nakashima M et al. | J Atten Disord | 2022 | PMID 33472510 | https://pubmed.ncbi.nlm.nih.gov/33472510/
+Sustenta: Ensaio piloto randomizado de CBT em grupo com foco em gestão do tempo em adultos com TDAH.
+
+lgo2026 | Effectiveness of a group-based time-management intervention: a pragmatic randomised controlled trial | Lidström Holmqvist K et al. | Disabil Rehabil | 2026 | PMID 41527987 | https://pubmed.ncbi.nlm.nih.gov/41527987/
+Sustenta: Ensaio pragmático de intervenção de gestão do tempo em adultos com dificuldades de gestão do tempo, incluindo TDAH e autismo.
+
+harkin2016 | Does monitoring goal progress promote goal attainment? A meta-analysis of the experimental evidence | Harkin B et al. | Psychol Bull | 2016 | PMID 26479070 | https://pubmed.ncbi.nlm.nih.gov/26479070/
+Sustenta: Meta-análise de 138 estudos; aumentar monitoramento de progresso promoveu alcance de metas, sobretudo quando o progresso era registrado.
+
+toli2016 | Does forming implementation intentions help people with mental health problems to achieve goals? A meta-analysis of experimental studies with clinical and analogue samples | Toli A et al. | Br J Clin Psychol | 2016 | PMID 25965276 | https://pubmed.ncbi.nlm.nih.gov/25965276/
+Sustenta: Meta-análise de planos se-então em amostras clínicas e análogas encontrou efeito positivo no alcance de metas.
+
+kiesel2010 | Control and interference in task switching--a review | Kiesel A et al. | Psychol Bull | 2010 | PMID 20804238 | https://pubmed.ncbi.nlm.nih.gov/20804238/
+Sustenta: Revisão sobre controle, interferência e custos associados à troca de tarefas.
+
+burnett2026 | Meta-analytic investigations of the effect of cognitive offloading on memory-based task performance and interindividual variability | Burnett LK & Richmond LL | Mem Cognit | 2026 | PMID 40500483 | https://pubmed.ncbi.nlm.nih.gov/40500483/
+Sustenta: Meta-análises mostram benefício do cognitive offloading em tarefas baseadas em memória e redução de variabilidade entre indivíduos.
+
+liu2026 | A meta-analysis of the intervention effect of cognitive behavioral therapy on adult ADHD | Liu Y et al. | J Affect Disord | 2026 | PMID 41483880 | https://pubmed.ncbi.nlm.nih.gov/41483880/
+Sustenta: Meta-análise de RCTs encontrou benefícios de CBT para sintomas centrais e função executiva em adultos com TDAH.
+
+song2021 | The prevalence of adult attention-deficit hyperactivity disorder: A global systematic review and meta-analysis | Song P et al. | J Glob Health | 2021 | PMID 33692893 | https://pubmed.ncbi.nlm.nih.gov/33692893/
+Sustenta: Estimativas globais de 2020: 2,58% para TDAH persistente e 6,76% para TDAH sintomático em adultos.
+
+ibge2025 | Censo 2022 contou 2,4 milhões de pessoas diagnosticadas com autismo no Brasil | IBGE | IBGE Educa | 2025 | sem PMID | https://educa.ibge.gov.br/jovens/materias-especiais/22700-censo-2022-contou-2-4-milhoes-de-pessoas-diagnosticadas-com-autismo-no-brasil.html
+Sustenta: Censo 2022: 2,4 milhões de pessoas declaradas com diagnóstico profissional de autismo, 1,2% da população residente.

@@ -24,6 +24,7 @@ export function StoreHeader({
   area,
   onArea,
   searchLabel,
+  sample = true,
 }: {
   title: string;
   description: string;
@@ -32,12 +33,14 @@ export function StoreHeader({
   area: AreaId | null;
   onArea: (a: AreaId | null) => void;
   searchLabel: string;
+  /** Catálogo com dados de exemplo (mock-items). As Soluções (RC-PUB-PACK-003) são conteúdo publicado. */
+  sample?: boolean;
 }) {
   return (
     <header>
       <div className="flex flex-wrap items-center gap-3">
         <h1 className="stories-h2">{title}</h1>
-        <Badge variant="outline">Catálogo de exemplo</Badge>
+        {sample && <Badge variant="outline">Catálogo de exemplo</Badge>}
       </div>
       <p className="text-muted-foreground mt-3 max-w-xl text-lg font-medium">{description}</p>
 

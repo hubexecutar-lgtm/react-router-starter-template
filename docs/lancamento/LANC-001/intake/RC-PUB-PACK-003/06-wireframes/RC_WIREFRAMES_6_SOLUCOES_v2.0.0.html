@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Risco Cognitivo · 6 Soluções no Schema</title>
+<style>
+:root{--ink:#202124;--muted:#6B7280;--paper:#fff;--canvas:#F5F5F4;--line:#D6D6D3;--blue:#2563EB;--yellow:#F4C542;--red:#D93341;--gray:#E5E7EB;--green:#2E7D32;--font:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;--mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+*{box-sizing:border-box} html{background:var(--canvas)} body{margin:0;padding:28px;background:var(--canvas);font-family:var(--font);color:var(--ink)} .pack{display:flex;flex-direction:column;gap:28px;align-items:center}
+.sheet{width:210mm;min-height:297mm;max-width:100%;background:var(--paper);padding:13mm 13mm 11mm;border:1px solid #e8e8e6;box-shadow:0 12px 36px rgba(0,0,0,.08);display:flex;flex-direction:column}
+.topbar{display:flex;justify-content:space-between;gap:16px;border-bottom:1px solid var(--line);padding-bottom:8px} .brand{font-weight:800;font-size:13px} .meta{font:700 8px/1.4 var(--mono);letter-spacing:.06em;color:var(--muted);text-transform:uppercase;text-align:right}
+.eyebrow{font:700 8px/1.2 var(--mono);letter-spacing:.11em;color:var(--blue);text-transform:uppercase;margin-top:14px} h1{font-size:28px;line-height:1.05;letter-spacing:-.03em;margin:5px 0 10px}
+.pain{border-left:5px solid var(--blue);padding:11px 14px;margin:0 0 12px;background:#F8FAFC;font-size:14px;line-height:1.45;font-weight:650}
+.matrix{display:grid;grid-template-columns:1fr 1fr;border:1px solid #cfd3d8;flex:1} .quad{padding:14px 15px;min-height:88mm} .quad:nth-child(1),.quad:nth-child(2){border-bottom:1px solid #fff} .quad:nth-child(1),.quad:nth-child(3){border-right:1px solid #fff}
+.q1{background:var(--yellow);color:#332800} .q2{background:var(--red);color:#fff} .q3{background:var(--gray);color:#30343A} .q4{background:var(--green);color:#fff}
+.qnum{font:800 8px/1 var(--mono);letter-spacing:.07em;text-transform:uppercase;opacity:.86} .quad h2{margin:6px 0 7px;font-size:18px;line-height:1.08} .statement{font-size:14px;line-height:1.32;font-weight:850;margin:10px 0}
+.quad p{font-size:10.2px;line-height:1.4;margin:8px 0} ul{margin:9px 0 0;padding-left:18px} li{margin:7px 0;font-size:11.2px;line-height:1.33}
+.step{display:grid;grid-template-columns:22px 1fr;gap:7px;align-items:flex-start;padding:6px 0;border-bottom:1px solid rgba(0,0,0,.10);font-size:10.8px;line-height:1.35} .step span{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#fff;border:1px solid #b7bec7;font:800 8px var(--mono)}
+.apply{font-size:9.8px;line-height:1.35;margin-top:7px;padding-top:6px;border-top:1px dashed rgba(0,0,0,.18)} .risk{margin-top:12px!important;border-top:1px solid rgba(255,255,255,.30);padding-top:9px} .evidence{margin-top:10px!important}
+.metric{padding:7px 0;border-bottom:1px solid rgba(255,255,255,.25);font-size:10.8px;line-height:1.3} .badge{display:inline-block;margin-top:10px;border:1px solid rgba(255,255,255,.7);border-radius:999px;padding:4px 7px;font:800 7px var(--mono);letter-spacing:.05em}
+footer{margin-top:9px;border-top:1px solid var(--line);padding-top:7px;font-size:7.6px;line-height:1.42;color:var(--muted)} footer b{font-family:var(--mono);font-size:7px;color:#3d4248} .caveat{margin-top:4px;font-style:italic}
+@media(max-width:800px){body{padding:8px}.sheet{min-height:auto;padding:18px 14px;box-shadow:none}.matrix{grid-template-columns:1fr}.quad{min-height:auto;border-right:none!important;border-bottom:1px solid #fff!important}.quad:last-child{border-bottom:none!important}}
+@page{size:A4;margin:0} @media print{html,body{background:#fff}body{padding:0}.pack{gap:0}.sheet{width:210mm;height:297mm;min-height:297mm;box-shadow:none;border:none;page-break-after:always}.sheet:last-child{page-break-after:auto}}
+</style>
+</head>
+<body><main class="pack">
+    <article class="sheet">
+      <header class="topbar">
+        <div class="brand">RISCO COGNITIVO</div>
+        <div class="meta">RC-SOL-001 · v2.0<br>Status Report</div>
+      </header>
+      <div class="eyebrow">Gestão e Controle de Riscos Cognitivos · Risco Cognitivo · Pack A4 Unificado</div>
+      <h1>Status Report</h1>
+      <p class="pain">“Eu trabalhei o dia inteiro, mas no fim não consigo dizer com clareza o que avancei, o que ficou bloqueado e qual é a próxima ação.”</p>
+
+      <section class="matrix">
+        <div class="quad q1">
+          <div class="qnum">01 · ATENÇÃO / MACRO PROBLEMA</div>
+          <h2>O que essa dor representa?</h2>
+          <div class="statement">Falta de monitoramento oculta desvios, bloqueios e progresso até tarde demais operacional.</div>
+          <p><b>Vulnerabilidade:</b> Depender da percepção subjetiva para avaliar progresso, risco, bloqueio e conclusão.</p>
+          <p><b>Evidência científica:</b> Dificuldades executivas podem afetar monitoramento e autorregulação; associação populacional não equivale a diagnóstico individual.</p>
+        </div>
+
+        <div class="quad q2">
+          <div class="qnum">02 · DÉFICITS / DEMANDA EXECUTIVA</div>
+          <h2>O que a tarefa exige?</h2>
+          <ul><li>Metacognição — comparar estado real com objetivo.</li><li>Memória de trabalho — manter estado, pendências e dependências disponíveis.</li><li>Flexibilidade cognitiva — ajustar o plano quando aparece desvio.</li></ul>
+          <p class="risk"><b>Risco cognitivo:</b> Persistir em execução ineficaz sem perceber desvio ou bloqueio.</p>
+        </div>
+
+        <div class="quad q3">
+          <div class="qnum">03 · TÉCNICA / MACRO PROCESSO</div>
+          <h2>Status Report + checkpoint de progresso</h2>
+          <div class='step'><span>1</span><div>Registrar feito, bloqueio e evidência observável.</div></div><div class='step'><span>2</span><div>Comparar estado atual com critério de conclusão e risco.</div></div><div class='step'><span>3</span><div>Definir uma próxima ação explícita antes de encerrar.</div></div>
+          <div class="apply"><b>Nos estudos</b><br>Registrar conteúdo concluído, lacunas, acertos/erros e próxima revisão; não usar apenas “horas estudadas”.</div>
+          <div class="apply"><b>No trabalho</b><br>Registrar entregável, dependência, bloqueio, evidência e próxima ação em checkpoints curtos.</div>
+          <p class="evidence"><b>Evidência:</b> Harkin et al. (2016): meta-análise de 138 estudos (N=19.951); aumentar monitoramento de progresso promoveu alcance de metas, com efeitos maiores quando o progresso era registrado.</p>
+        </div>
+
+        <div class="quad q4">
+          <div class="qnum">04 · PROGRESSO</div>
+          <h2>O que deve mudar?</h2>
+          <div class='metric'><span>Desvios percebidos mais cedo</span></div><div class='metric'><span>Bloqueios sem registro ↓</span></div><div class='metric'><span>Entregas com evidência ↑</span></div><div class='metric'><span>Próxima ação explícita ↑</span></div>
+          <p><b>Risco mitigado:</b> Persistir em execução ineficaz sem perceber desvio ou bloqueio.</p>
+          <div class="badge">MECANISMO APOIADO</div>
+        </div>
+      </section>
+
+      <footer>
+        <div><b>SCHEMA</b> DOR → CONTEXTO → DEMANDA → FUNÇÃO → VULNERABILIDADE → RISCO → TÉCNICA → APLICAÇÃO → INDICADOR → PROGRESSO</div>
+        <div><b>FONTES CIENTÍFICAS</b> PMID 26479070 · PMID 16116936</div>
+        <div class="caveat">Nota: evidência do mecanismo não significa validação clínica do produto/interface. Associação populacional não diagnostica um indivíduo.</div>
+      </footer>
+    </article>
+    
+    <article class="sheet">
+      <header class="topbar">
+        <div class="brand">RISCO COGNITIVO</div>
+        <div class="meta">RC-SOL-002 · v2.0<br>Plano dos 7 Dias</div>
+      </header>
+      <div class="eyebrow">Gestão e Controle de Riscos Cognitivos · Risco Cognitivo · Pack A4 Unificado / Workbook 7 Dias</div>
+      <h1>Plano dos 7 Dias</h1>
+      <p class="pain">“Eu tenho prioridades importantes, mas a semana vira uma sequência de urgências. Prazos, blocos de foco e tarefas acabam competindo entre si.”</p>
+
+      <section class="matrix">
+        <div class="quad q1">
+          <div class="qnum">01 · ATENÇÃO / MACRO PROBLEMA</div>
+          <h2>O que essa dor representa?</h2>
+          <div class="statement">Sem estrutura temporal, prioridades competem e prazos dependem excessivamente da memória interna.</div>
+          <p><b>Vulnerabilidade:</b> Planejar tarde demais, subestimar capacidade e manter prazos/ordem apenas mentalmente.</p>
+          <p><b>Evidência científica:</b> Em adultos com TDAH, organização, planejamento e gestão do tempo são alvos funcionais relevantes, com heterogeneidade entre indivíduos.</p>
+        </div>
+
+        <div class="quad q2">
+          <div class="qnum">02 · DÉFICITS / DEMANDA EXECUTIVA</div>
+          <h2>O que a tarefa exige?</h2>
+          <ul><li>Planejamento — distribuir objetivos em dias e blocos.</li><li>Memória prospectiva — lembrar de intenções futuras no momento adequado.</li><li>Metacognição — revisar carga, progresso e necessidade de ajuste.</li></ul>
+          <p class="risk"><b>Risco cognitivo:</b> Perda de prazo, sobrecarga e conflito entre prioridades por planejamento temporal insuficiente.</p>
+        </div>
+
+        <div class="quad q3">
+          <div class="qnum">03 · TÉCNICA / MACRO PROCESSO</div>
+          <h2>Planejamento semanal externalizado</h2>
+          <div class='step'><span>1</span><div>Definir entrega principal e limite de capacidade da semana.</div></div><div class='step'><span>2</span><div>Distribuir etapas em dias, preservando buffer e dependências.</div></div><div class='step'><span>3</span><div>Revisar diariamente e replanejar sem abrir trabalho concorrente desnecessário.</div></div>
+          <div class="apply"><b>Nos estudos</b><br>Separar leituras, exercícios, revisões e entregas por dia; reservar buffer para atraso e recuperação.</div>
+          <div class="apply"><b>No trabalho</b><br>Converter entregáveis em blocos diários, com prazo, dependência e capacidade visíveis.</div>
+          <p class="evidence"><b>Evidência:</b> Solanto et al. (2010) testaram terapia metacognitiva manualizada voltada a gestão do tempo, organização e planejamento em adultos com TDAH; ensaios posteriores também estudam intervenções específicas de gestão do tempo.</p>
+        </div>
+
+        <div class="quad q4">
+          <div class="qnum">04 · PROGRESSO</div>
+          <h2>O que deve mudar?</h2>
+          <div class='metric'><span>Prazos esquecidos ↓</span></div><div class='metric'><span>Carga acima da capacidade ↓</span></div><div class='metric'><span>Entregas semanais concluídas ↑</span></div><div class='metric'><span>Replanejamentos explícitos ↑</span></div>
+          <p><b>Risco mitigado:</b> Perda de prazo, sobrecarga e conflito entre prioridades por planejamento temporal insuficiente.</p>
+          <div class="badge">COMPONENTES APOIADOS</div>
+        </div>
+      </section>
+
+      <footer>
+        <div><b>SCHEMA</b> DOR → CONTEXTO → DEMANDA → FUNÇÃO → VULNERABILIDADE → RISCO → TÉCNICA → APLICAÇÃO → INDICADOR → PROGRESSO</div>
+        <div><b>FONTES CIENTÍFICAS</b> PMID 20231319 · PMID 33472510 · PMID 41527987</div>
+        <div class="caveat">Nota: evidência do mecanismo não significa validação clínica do produto/interface. Associação populacional não diagnostica um indivíduo.</div>
+      </footer>
+    </article>
+    
+    <article class="sheet">
+      <header class="topbar">
+        <div class="brand">RISCO COGNITIVO</div>
+        <div class="meta">RC-SOL-003 · v2.0<br>Meu Processo de Trabalho</div>
+      </header>
+      <div class="eyebrow">Gestão e Controle de Riscos Cognitivos · Processo de Trabalho — Risco Cognitivo</div>
+      <h1>Meu Processo de Trabalho</h1>
+      <p class="pain">“Eu começo a executar antes de fechar a sequência. No meio descubro dependências, volto etapas e refaço decisões que deveriam ter sido resolvidas antes.”</p>
+
+      <section class="matrix">
+        <div class="quad q1">
+          <div class="qnum">01 · ATENÇÃO / MACRO PROBLEMA</div>
+          <h2>O que essa dor representa?</h2>
+          <div class="statement">Sequências implícitas aumentam decisões, trocas, retrabalho e risco de pular etapas críticas.</div>
+          <p><b>Vulnerabilidade:</b> Executar sem sequência explícita, gate de saída e dependências previamente verificadas.</p>
+          <p><b>Evidência científica:</b> Trocas e reconfiguração entre conjuntos de tarefas geram custos de controle; planejamento reduz decisões improvisadas durante a execução.</p>
+        </div>
+
+        <div class="quad q2">
+          <div class="qnum">02 · DÉFICITS / DEMANDA EXECUTIVA</div>
+          <h2>O que a tarefa exige?</h2>
+          <ul><li>Planejamento — ordenar etapas e pré-condições.</li><li>Controle inibitório — não pular para a etapa seguinte antes do gate.</li><li>Flexibilidade cognitiva — ajustar a sequência quando uma dependência muda.</li></ul>
+          <p class="risk"><b>Risco cognitivo:</b> Retrabalho, salto de dependência e progressão para etapas não prontas.</p>
+        </div>
+
+        <div class="quad q3">
+          <div class="qnum">03 · TÉCNICA / MACRO PROCESSO</div>
+          <h2>Workflow explícito + gates de saída</h2>
+          <div class='step'><span>1</span><div>Exibir a sequência completa com ponto de entrada e saída.</div></div><div class='step'><span>2</span><div>Definir gate verificável antes de liberar a próxima etapa.</div></div><div class='step'><span>3</span><div>Bloquear avanço quando dependência ou critério ainda estiver aberto.</div></div>
+          <div class="apply"><b>Nos estudos</b><br>Separar pesquisa → compreensão → exercício → revisão; só avançar quando o critério do bloco estiver satisfeito.</div>
+          <div class="apply"><b>No trabalho</b><br>Sequenciar preparação → produção → revisão → aprovação → publicação, com gates verificáveis.</div>
+          <p class="evidence"><b>Evidência:</b> A evidência é indireta para este workflow específico: task-switching documenta custos de alternância; implementation intentions apoiam ligar situações a ações previamente definidas.</p>
+        </div>
+
+        <div class="quad q4">
+          <div class="qnum">04 · PROGRESSO</div>
+          <h2>O que deve mudar?</h2>
+          <div class='metric'><span>Etapas refeitas ↓</span></div><div class='metric'><span>Dependências descobertas tarde ↓</span></div><div class='metric'><span>Gates atendidos ↑</span></div><div class='metric'><span>Sequência executada como planejado ↑</span></div>
+          <p><b>Risco mitigado:</b> Retrabalho, salto de dependência e progressão para etapas não prontas.</p>
+          <div class="badge">EVIDÊNCIA INDIRETA</div>
+        </div>
+      </section>
+
+      <footer>
+        <div><b>SCHEMA</b> DOR → CONTEXTO → DEMANDA → FUNÇÃO → VULNERABILIDADE → RISCO → TÉCNICA → APLICAÇÃO → INDICADOR → PROGRESSO</div>
+        <div><b>FONTES CIENTÍFICAS</b> PMID 20804238 · PMID 25965276</div>
+        <div class="caveat">Nota: evidência do mecanismo não significa validação clínica do produto/interface. Associação populacional não diagnostica um indivíduo.</div>
+      </footer>
+    </article>
+    
+    <article class="sheet">
+      <header class="topbar">
+        <div class="brand">RISCO COGNITIVO</div>
+        <div class="meta">RC-SOL-004 · v2.0<br>Formulário Padrão do Ciclo</div>
+      </header>
+      <div class="eyebrow">Gestão e Controle de Riscos Cognitivos · Processo de Trabalho — formulário do ciclo</div>
+      <h1>Formulário Padrão do Ciclo</h1>
+      <p class="pain">“Eu começo uma tarefa grande sem fechar objetivo, critérios e variáveis. Depois preciso parar várias vezes para decidir coisas que poderiam estar definidas antes.”</p>
+
+      <section class="matrix">
+        <div class="quad q1">
+          <div class="qnum">01 · ATENÇÃO / MACRO PROBLEMA</div>
+          <h2>O que essa dor representa?</h2>
+          <div class="statement">Perguntas abertas durante execução consomem memória, aumentam ambiguidade e atrasam decisões importantes.</div>
+          <p><b>Vulnerabilidade:</b> Manter objetivo, restrições, critérios e decisões em aberto enquanto a execução já começou.</p>
+          <p><b>Evidência científica:</b> Externalizar informação reduz demanda de memória; planos específicos ajudam a converter intenção em comportamento.</p>
+        </div>
+
+        <div class="quad q2">
+          <div class="qnum">02 · DÉFICITS / DEMANDA EXECUTIVA</div>
+          <h2>O que a tarefa exige?</h2>
+          <ul><li>Memória de trabalho — sustentar múltiplas variáveis durante execução.</li><li>Planejamento — esclarecer objetivo, critérios e sequência antes de começar.</li><li>Metacognição — identificar lacunas antes que virem interrupções.</li></ul>
+          <p class="risk"><b>Risco cognitivo:</b> Interrupções decisórias, ambiguidade e sobrecarga de memória durante a execução.</p>
+        </div>
+
+        <div class="quad q3">
+          <div class="qnum">03 · TÉCNICA / MACRO PROCESSO</div>
+          <h2>Intake pré-execução + externalização de critérios</h2>
+          <div class='step'><span>1</span><div>Preencher objetivo, escopo, critérios, datas e evidências antes de começar.</div></div><div class='step'><span>2</span><div>Transformar lacunas em campos A DEFINIR, sem decidir silenciosamente durante a execução.</div></div><div class='step'><span>3</span><div>Liberar execução somente quando as variáveis mínimas estiverem fechadas.</div></div>
+          <div class="apply"><b>Nos estudos</b><br>Antes de estudar: objetivo, material, questão-alvo, duração, critério de conclusão e próxima revisão.</div>
+          <div class="apply"><b>No trabalho</b><br>Antes de produzir: objetivo, entrada, saída, dependências, definição de pronto, prazo e evidência.</div>
+          <p class="evidence"><b>Evidência:</b> Meta-análises de cognitive offloading e implementation intentions apoiam os mecanismos; o formulário específico não foi validado clinicamente.</p>
+        </div>
+
+        <div class="quad q4">
+          <div class="qnum">04 · PROGRESSO</div>
+          <h2>O que deve mudar?</h2>
+          <div class='metric'><span>Perguntas descobertas no meio ↓</span></div><div class='metric'><span>Decisões repetidas ↓</span></div><div class='metric'><span>Critérios definidos antes ↑</span></div><div class='metric'><span>Tempo até primeira ação ↓</span></div>
+          <p><b>Risco mitigado:</b> Interrupções decisórias, ambiguidade e sobrecarga de memória durante a execução.</p>
+          <div class="badge">MECANISMOS APOIADOS</div>
+        </div>
+      </section>
+
+      <footer>
+        <div><b>SCHEMA</b> DOR → CONTEXTO → DEMANDA → FUNÇÃO → VULNERABILIDADE → RISCO → TÉCNICA → APLICAÇÃO → INDICADOR → PROGRESSO</div>
+        <div><b>FONTES CIENTÍFICAS</b> PMID 40500483 · PMID 25965276 · PMID 33393806</div>
+        <div class="caveat">Nota: evidência do mecanismo não significa validação clínica do produto/interface. Associação populacional não diagnostica um indivíduo.</div>
+      </footer>
+    </article>
+    
+    <article class="sheet">
+      <header class="topbar">
+        <div class="brand">RISCO COGNITIVO</div>
+        <div class="meta">RC-SOL-005 · v2.0<br>Plano Operacional Rastreável</div>
+      </header>
+      <div class="eyebrow">Gestão e Controle de Riscos Cognitivos · Skill Plano Operacional Rastreável</div>
+      <h1>Plano Operacional Rastreável</h1>
+      <p class="pain">“Eu tenho várias frentes, prioridades, dependências e riscos. Sei que tudo importa, mas não consigo transformar isso em uma ordem executável sem perder contexto.”</p>
+
+      <section class="matrix">
+        <div class="quad q1">
+          <div class="qnum">01 · ATENÇÃO / MACRO PROBLEMA</div>
+          <h2>O que essa dor representa?</h2>
+          <div class="statement">Muitas frentes sem dependências explícitas aumentam sobrecarga, conflito e execução desordenada diária.</div>
+          <p><b>Vulnerabilidade:</b> Objetivos amplos permanecem simultaneamente ativos, sem decomposição, dependências, capacidade e critério de conclusão explícitos.</p>
+          <p><b>Evidência científica:</b> Déficits executivos em adultos com TDAH aparecem em média em domínios como inibição, memória de trabalho e planejamento, mas não são universais.</p>
+        </div>
+
+        <div class="quad q2">
+          <div class="qnum">02 · DÉFICITS / DEMANDA EXECUTIVA</div>
+          <h2>O que a tarefa exige?</h2>
+          <ul><li>Planejamento — decompor objetivo e ordenar dependências.</li><li>Memória de trabalho — não sustentar todo o plano internamente.</li><li>Controle inibitório — proteger a prioridade e evitar abrir frentes concorrentes.</li></ul>
+          <p class="risk"><b>Risco cognitivo:</b> Sobrecarga, paralelismo excessivo, ordem incorreta e conclusão apenas declarada.</p>
+        </div>
+
+        <div class="quad q3">
+          <div class="qnum">03 · TÉCNICA / MACRO PROCESSO</div>
+          <h2>Decomposição rastreável + dependências + próxima ação única</h2>
+          <div class='step'><span>1</span><div>Converter objetivos em tarefas observáveis com critério de conclusão.</div></div><div class='step'><span>2</span><div>Ordenar dependências, capacidade, riscos e gates antes da execução.</div></div><div class='step'><span>3</span><div>Selecionar exatamente uma próxima ação desbloqueada e registrar evidência ao concluir.</div></div>
+          <div class="apply"><b>Nos estudos</b><br>Transformar prova/trabalho em entregas pequenas, dependências, ordem e uma próxima ação; registrar evidência de conclusão.</div>
+          <div class="apply"><b>No trabalho</b><br>Mapear entregáveis, dependências, riscos, critérios e capacidade; executar uma unidade desbloqueada por vez.</div>
+          <p class="evidence"><b>Evidência:</b> Intervenções metacognitivas/CBT voltadas a organização, planejamento e gestão do tempo apresentam benefício; o plano rastreável completo é uma composição operacional própria.</p>
+        </div>
+
+        <div class="quad q4">
+          <div class="qnum">04 · PROGRESSO</div>
+          <h2>O que deve mudar?</h2>
+          <div class='metric'><span>WIP concorrente ↓</span></div><div class='metric'><span>Dependências explícitas ↑</span></div><div class='metric'><span>Conclusões verificadas ↑</span></div><div class='metric'><span>Tempo decidindo o que fazer ↓</span></div>
+          <p><b>Risco mitigado:</b> Sobrecarga, paralelismo excessivo, ordem incorreta e conclusão apenas declarada.</p>
+          <div class="badge">COMPONENTES APOIADOS</div>
+        </div>
+      </section>
+
+      <footer>
+        <div><b>SCHEMA</b> DOR → CONTEXTO → DEMANDA → FUNÇÃO → VULNERABILIDADE → RISCO → TÉCNICA → APLICAÇÃO → INDICADOR → PROGRESSO</div>
+        <div><b>FONTES CIENTÍFICAS</b> PMID 16116936 · PMID 20231319 · PMID 41483880</div>
+        <div class="caveat">Nota: evidência do mecanismo não significa validação clínica do produto/interface. Associação populacional não diagnostica um indivíduo.</div>
+      </footer>
+    </article>
+    
+    <article class="sheet">
+      <header class="topbar">
+        <div class="brand">RISCO COGNITIVO</div>
+        <div class="meta">RC-SOL-006 · v2.0<br>Scroll Task</div>
+      </header>
+      <div class="eyebrow">Gestão e Controle de Riscos Cognitivos · Executar App — Scroll Task Prototype</div>
+      <h1>Scroll Task</h1>
+      <p class="pain">“Quando abro o projeto vejo coisa demais. Gasto energia escolhendo, alterno de item e preciso reconstruir o contexto antes de conseguir avançar.”</p>
+
+      <section class="matrix">
+        <div class="quad q1">
+          <div class="qnum">01 · ATENÇÃO / MACRO PROBLEMA</div>
+          <h2>O que essa dor representa?</h2>
+          <div class="statement">Excesso visual e alternância frequente fragmentam atenção, contexto e continuidade da execução.</div>
+          <p><b>Vulnerabilidade:</b> Múltiplas unidades competem visualmente; cada troca exige reconfiguração de objetivo, regras e contexto.</p>
+          <p><b>Evidência científica:</b> Task switching exige controle e produz custos de interferência; em TDAH adulto há evidência de diferenças médias em controle inibitório, sem universalidade.</p>
+        </div>
+
+        <div class="quad q2">
+          <div class="qnum">02 · DÉFICITS / DEMANDA EXECUTIVA</div>
+          <h2>O que a tarefa exige?</h2>
+          <ul><li>Controle inibitório — manter a unidade ativa apesar de alternativas visíveis.</li><li>Memória de trabalho — preservar o contexto da ação atual.</li><li>Iniciação — tornar inequívoca a próxima ação executável.</li></ul>
+          <p class="risk"><b>Risco cognitivo:</b> Troca excessiva de contexto, paralelismo e atraso para iniciar a próxima ação.</p>
+        </div>
+
+        <div class="quad q3">
+          <div class="qnum">03 · TÉCNICA / MACRO PROCESSO</div>
+          <h2>Uma unidade por viewport + WIP 1:1 + timer</h2>
+          <div class='step'><span>1</span><div>Mostrar somente uma ação central, curta e inequívoca.</div></div><div class='step'><span>2</span><div>Executar com timer previsto; demais unidades ficam fora do foco principal.</div></div><div class='step'><span>3</span><div>Concluir, adiar ou avançar deliberadamente; tempo esgotado nunca equivale a concluído.</div></div>
+          <div class="apply"><b>Nos estudos</b><br>Uma questão/exercício por vez, com bloco de tempo e contexto mínimo; registrar onde retomar.</div>
+          <div class="apply"><b>No trabalho</b><br>Uma ação ativa por viewport; interrupções ficam registradas fora do foco; mudança somente deliberada.</div>
+          <p class="evidence"><b>Evidência:</b> A evidência é direta para custos de task switching e indireta para a interface WIP 1:1/timer. O protótipo deve ser tratado como hipótese de design a validar.</p>
+        </div>
+
+        <div class="quad q4">
+          <div class="qnum">04 · PROGRESSO</div>
+          <h2>O que deve mudar?</h2>
+          <div class='metric'><span>Trocas manuais de contexto ↓</span></div><div class='metric'><span>Tempo até iniciar ↓</span></div><div class='metric'><span>Conclusões por sessão ↑</span></div><div class='metric'><span>Retomadas sem contexto ↓</span></div>
+          <p><b>Risco mitigado:</b> Troca excessiva de contexto, paralelismo e atraso para iniciar a próxima ação.</p>
+          <div class="badge">EVIDÊNCIA INDIRETA</div>
+        </div>
+      </section>
+
+      <footer>
+        <div><b>SCHEMA</b> DOR → CONTEXTO → DEMANDA → FUNÇÃO → VULNERABILIDADE → RISCO → TÉCNICA → APLICAÇÃO → INDICADOR → PROGRESSO</div>
+        <div><b>FONTES CIENTÍFICAS</b> PMID 20804238 · PMID 37300725 · PMID 16116936</div>
+        <div class="caveat">Nota: evidência do mecanismo não significa validação clínica do produto/interface. Associação populacional não diagnostica um indivíduo.</div>
+      </footer>
+    </article>
+    </main></body></html>

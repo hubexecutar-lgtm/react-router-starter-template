@@ -6,6 +6,7 @@ import type { Route } from "./+types/fontes";
 import { ChevronLink } from "@/components/layout/ChevronLink";
 import { HOME_SOURCES } from "@/data/home";
 import { GOVERNANCE_NOTE, SOURCES } from "@/data/sources";
+import { SCIENTIFIC_SOURCES } from "@/data/sources-scientific";
 import DefaultLayout from "@/layouts/DefaultLayout";
 import { seo } from "@/lib/seo";
 
@@ -41,6 +42,31 @@ export default function Fontes() {
 								<a href={s.url} rel="noopener" className="stories-body text-primary font-medium underline underline-offset-4 hover:no-underline">
 									{s.label}
 								</a>
+							</li>
+						))}
+					</ul>
+				</div>
+			</section>
+			<section className="stories-container mt-[var(--ref-section-gap)]" aria-labelledby="fontes-cientificas">
+				<div className="mx-auto max-w-[var(--ref-wide-width)]">
+					<h2 id="fontes-cientificas" className="stories-h2">
+						Fontes científicas
+					</h2>
+					<p className="stories-body mt-[var(--ref-block-gap)] max-w-[60ch] text-muted-foreground">
+						Estudos que sustentam a série sobre riscos cognitivos e as soluções. Sustentam mecanismos e componentes, não
+						validam clinicamente as soluções.
+					</p>
+					<ul className="mt-[var(--ref-block-gap)] grid gap-[var(--ref-grid-gap)] md:grid-cols-2" data-scientific-sources>
+						{SCIENTIFIC_SOURCES.map((s) => (
+							<li key={s.id} id={s.id} className="hy-tile hy-tile--compact gap-2">
+								<p className="hy-eyebrow">
+									{s.authors} · {s.year}
+									{s.pmid ? ` · PMID ${s.pmid}` : ""}
+								</p>
+								<a href={s.url} rel="noopener" className="stories-body text-primary font-medium underline underline-offset-4 hover:no-underline">
+									{s.title}
+								</a>
+								<p className="text-[15px] text-muted-foreground">{s.journal}</p>
 							</li>
 						))}
 					</ul>

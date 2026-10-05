@@ -118,6 +118,7 @@ export function StoreCatalog({
         area={area}
         onArea={setArea}
         searchLabel={def ? `Buscar em ${def.plural}` : "Buscar ferramentas"}
+        sample={def?.type !== "solution"}
       />
 
       <Tabs value={type ?? ALL_TAB} onValueChange={onTab} className="mt-6">

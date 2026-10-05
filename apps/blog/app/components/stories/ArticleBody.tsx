@@ -3,9 +3,13 @@
 // painéis plain text e diagramas vêm do próprio MDX e mantêm a tipografia deles.
 import type { ComponentType } from "react";
 
+import { ArticleTable } from "./ArticleTable";
+
 import type { MDXContent } from "@/lib/articles";
 
-const components: Record<string, ComponentType<any>> = { h1: () => null };
+
+// Tabela Markdown: tabela empilhada do site (ArticleTable), sem estourar a coluna no celular (AUD-HIG-05).
+const components: Record<string, ComponentType<any>> = { h1: () => null, table: ArticleTable };
 
 export function ArticleBody({ Content }: { Content: MDXContent }) {
 	return (

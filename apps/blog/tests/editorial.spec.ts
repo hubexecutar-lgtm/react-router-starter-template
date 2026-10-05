@@ -267,9 +267,9 @@ test.describe("F · jornada (RQ-050…054)", () => {
     await expect(page).toHaveURL(/\?problema=sobrecarga$/);
     await expect.poll(() => page.locator("[data-story-card]").count()).toBeLessThan(all);
     const hrefs = await page.locator("[data-story-card] h2 a, [data-story-card] h3 a").evaluateAll((els) => els.map((e) => e.getAttribute("href")));
-    expect(hrefs.sort()).toEqual(["/artigos/risco-cognitivo/", "/artigos/tres-pilares-riscos-cognitivos/"]);
+    expect(hrefs.sort()).toEqual(["/artigos/estrategias-reduzir-riscos-cognitivos/", "/artigos/risco-cognitivo/", "/artigos/tres-pilares-riscos-cognitivos/"]);
     // o link compartilhado abre já filtrado
     await page.goto("/artigos/?problema=sobrecarga");
-    await expect.poll(() => page.locator("[data-story-card]").count()).toBe(2);
+    await expect.poll(() => page.locator("[data-story-card]").count()).toBe(3);
   });
 });
