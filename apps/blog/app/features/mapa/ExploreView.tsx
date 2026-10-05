@@ -179,10 +179,10 @@ export function ExploreView() {
 	return (
 		<div className={cn("stories-container pb-16", selected && "max-[899px]:pb-[200px]")}>
 			<div className="mx-auto max-w-[var(--ref-wide-width)]">
-				<header className="pt-12 lg:pt-[88px]">
-					<p className="stories-meta text-muted-foreground">Mapa causal · Explorar</p>
+				<header className="pt-[var(--hy-section)]">
+					<p className="hy-eyebrow">Mapa causal · Explorar</p>
 					<h1 className="stories-h2 mt-3">Explorar</h1>
-					<p className="stories-body text-muted-foreground mt-[var(--ref-block-gap)] max-w-[var(--ref-hero-lead-w)]">
+					<p className="hy-lead mt-[var(--ref-block-gap)] max-w-[60ch]">
 						Um fator no centro e as relações mais próximas. Toque em um fator para trazê-lo ao centro e ver causas, impactos, soluções e
 						evidências.
 					</p>

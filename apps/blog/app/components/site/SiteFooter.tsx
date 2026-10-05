@@ -1,45 +1,39 @@
-// Rodapé global. RC-FRONT-001: fundo branco e gutter de 32 px do handoff (OPENAI-STORIES-DESIGN-001).
-// As cinco colunas de navegação do handoff dependem de páginas que ainda não existem: os grupos vêm de
-// FOOTER_NAV (nav.ts, hoje vazio) e o rodapé cresce junto com o site.
+// Rodapé global na arquitetura Editorial Hybrid v4 (ADR-22): 4 colunas sobre Subtle (marca + 3 grupos de FOOTER_NAV),
+// 14 px muted sobre cinza; 2 colunas abaixo de 900 px. O menu do topo se repete aqui (RQ-050).
 import { FOOTER_NAV } from "./nav";
 
 import { SITE_NAME, SITE_TAGLINE } from "@/consts";
 
 export function SiteFooter({ inert = false }: { inert?: boolean }) {
 	return (
-		<footer className="mt-[var(--ref-section-gap)] border-t border-[var(--border-default)]" {...(inert ? { inert: true } : {})}>
-			<div className="stories-container grid gap-12 py-16 md:grid-cols-[1.4fr_repeat(3,1fr)]">
-				<div className="max-w-sm">
-					<a href="/" className="rc-display text-2xl uppercase tracking-[-0.02em]">
-						{SITE_NAME}
-					</a>
-					<p className="stories-body text-muted-foreground mt-3">{SITE_TAGLINE}</p>
+		<footer className="hy-footer mt-[var(--hy-section)]" {...(inert ? { inert: true } : {})}>
+			<div className="mx-auto max-w-[var(--hy-wide)] px-[var(--ref-gutter)]">
+				<div className="hy-footer-cols">
+					<div>
+						<h2>
+							<a href="/" className="!text-foreground font-bold uppercase">
+								{SITE_NAME}
+							</a>
+						</h2>
+						<p>{SITE_TAGLINE}</p>
+					</div>
+					{FOOTER_NAV.map((group) => (
+						<nav key={group.title} aria-label={group.title}>
+							<h2>{group.title}</h2>
+							<ul>
+								{group.items.map((item) => (
+									<li key={item.href}>
+										<a href={item.href}>{item.label}</a>
+									</li>
+								))}
+							</ul>
+						</nav>
+					))}
 				</div>
-				{FOOTER_NAV.map((group) => (
-					<nav key={group.title} aria-label={group.title}>
-						<p className="rc-eyebrow">{group.title}</p>
-						<ul className="mt-4 space-y-2.5">
-							{group.items.map((item) => (
-								<li key={item.href}>
-									<a
-										href={item.href}
-										className="text-foreground hover:text-primary inline-flex min-h-6 items-center text-[length:var(--text-small)] transition-colors"
-									>
-										{item.label}
-									</a>
-								</li>
-							))}
-						</ul>
-					</nav>
-				))}
-			</div>
-			<div className="border-t border-[var(--border-default)]">
-				<div className="stories-container flex flex-col gap-2 py-6 sm:flex-row sm:items-center sm:justify-between">
-					<p className="rc-meta">{SITE_NAME}</p>
-					<p className="rc-meta">
-						<a href="/admin/" className="hover:text-foreground transition-colors">
-							Painel interno
-						</a>
+				<div className="flex flex-col gap-2 border-t border-[var(--border-default)] py-6 sm:flex-row sm:items-center sm:justify-between">
+					<p>{SITE_NAME}</p>
+					<p>
+						<a href="/admin/">Painel interno</a>
 					</p>
 				</div>
 			</div>

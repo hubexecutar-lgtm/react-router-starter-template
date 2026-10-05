@@ -570,7 +570,7 @@
         "SOURCE": "WCAG 2.2 AA",
         "STATUS": "PASS",
         "SEVERITY": "P1",
-        "EVIDENCE": "24 regras ok",
+        "EVIDENCE": "28 regras ok",
         "REMEDIATION": "—",
         "OWNER": "A DEFINIR",
         "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
@@ -1974,7 +1974,7 @@
         "SOURCE": "WCAG 2.2 AA",
         "STATUS": "PASS",
         "SEVERITY": "P1",
-        "EVIDENCE": "24 regras ok",
+        "EVIDENCE": "29 regras ok",
         "REMEDIATION": "—",
         "OWNER": "A DEFINIR",
         "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
@@ -2208,7 +2208,7 @@
         "SOURCE": "WCAG 2.2 AA",
         "STATUS": "PASS",
         "SEVERITY": "P1",
-        "EVIDENCE": "22 regras ok",
+        "EVIDENCE": "27 regras ok",
         "REMEDIATION": "—",
         "OWNER": "A DEFINIR",
         "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
@@ -2442,7 +2442,7 @@
         "SOURCE": "WCAG 2.2 AA",
         "STATUS": "PASS",
         "SEVERITY": "P1",
-        "EVIDENCE": "22 regras ok",
+        "EVIDENCE": "21 regras ok",
         "REMEDIATION": "—",
         "OWNER": "A DEFINIR",
         "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
@@ -2676,7 +2676,7 @@
         "SOURCE": "WCAG 2.2 AA",
         "STATUS": "PASS",
         "SEVERITY": "P1",
-        "EVIDENCE": "22 regras ok",
+        "EVIDENCE": "21 regras ok",
         "REMEDIATION": "—",
         "OWNER": "A DEFINIR",
         "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
@@ -2910,7 +2910,7 @@
         "SOURCE": "WCAG 2.2 AA",
         "STATUS": "PASS",
         "SEVERITY": "P1",
-        "EVIDENCE": "29 regras ok",
+        "EVIDENCE": "28 regras ok",
         "REMEDIATION": "—",
         "OWNER": "A DEFINIR",
         "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
@@ -3144,7 +3144,7 @@
         "SOURCE": "WCAG 2.2 AA",
         "STATUS": "PASS",
         "SEVERITY": "P1",
-        "EVIDENCE": "22 regras ok",
+        "EVIDENCE": "21 regras ok",
         "REMEDIATION": "—",
         "OWNER": "A DEFINIR",
         "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
@@ -3378,7 +3378,7 @@
         "SOURCE": "WCAG 2.2 AA",
         "STATUS": "PASS",
         "SEVERITY": "P1",
-        "EVIDENCE": "22 regras ok",
+        "EVIDENCE": "21 regras ok",
         "REMEDIATION": "—",
         "OWNER": "A DEFINIR",
         "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
@@ -7590,7 +7590,7 @@
         "SOURCE": "WCAG 2.2 AA",
         "STATUS": "PASS",
         "SEVERITY": "P1",
-        "EVIDENCE": "22 regras ok",
+        "EVIDENCE": "21 regras ok",
         "REMEDIATION": "—",
         "OWNER": "A DEFINIR",
         "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"

@@ -7,7 +7,7 @@ import DefaultLayout from "@/layouts/DefaultLayout";
 import { MODES, NODE_TYPES, RC_GRAPH, allEdgeViews, factorIds } from "@/lib/graph";
 import { seo } from "@/lib/seo";
 
-const LEAD = "Os fatores que tornam a execução mais difícil, o que eles afetam e o que pode compensá-los, ligados por relações com fonte.";
+import { MAP_LEAD } from "@/features/mapa/copy";
 
 const MODE_TEXT: Record<(typeof MODES)[number]["id"], string> = {
 	problemas: "Fatores de demanda, capacidades, eventos e impactos: de onde vem a dificuldade e onde ela aparece.",
@@ -15,22 +15,22 @@ const MODE_TEXT: Record<(typeof MODES)[number]["id"], string> = {
 	evidencias: "As fontes que sustentam cada fator, as mesmas da página Fontes.",
 };
 
-export const meta: Route.MetaFunction = ({ location }) => seo({ title: "Mapa causal", description: LEAD, pathname: location.pathname });
+export const meta: Route.MetaFunction = ({ location }) => seo({ title: "Mapa causal", description: MAP_LEAD, pathname: location.pathname });
 
 export default function Mapas() {
 	const edges = allEdgeViews(RC_GRAPH);
 	const inferred = edges.filter((e) => e.inferred).length;
 	return (
 		<DefaultLayout>
-			<header className="stories-container pt-12 lg:pt-[88px]">
+			<header className="stories-container pt-[var(--hy-section)]">
 				<div className="rc-hero-reveal mx-auto max-w-[var(--ref-wide-width)]">
-					<p className="stories-meta text-muted-foreground">Risco Cognitivo · Mapa causal</p>
+					<p className="hy-eyebrow">Risco Cognitivo · Mapa causal</p>
 					<h1 className="stories-h2 mt-3">Mapa causal</h1>
-					<p className="stories-body text-muted-foreground mt-[var(--ref-block-gap)] max-w-[var(--ref-hero-lead-w)]">{LEAD}</p>
+					<p className="hy-lead mt-[var(--ref-block-gap)] max-w-[60ch]">{MAP_LEAD}</p>
 					<a
 						href="/mapas/explorar/"
 						data-cta="primary"
-						className="bg-foreground text-background focus-visible:ring-ring/50 mt-[var(--ref-block-gap)] inline-flex min-h-11 items-center rounded-[var(--ref-pill-radius)] px-6 py-2 text-sm font-medium outline-none focus-visible:ring-[3px]"
+						className="hy-btn-primary mt-[var(--ref-block-gap)]"
 					>
 						Explorar o mapa
 					</a>
@@ -43,8 +43,8 @@ export default function Mapas() {
 					</h2>
 					<ul className="mt-[var(--ref-block-gap)] grid gap-[var(--ref-grid-gap)] md:grid-cols-3" data-map-mode-cards>
 						{MODES.map((m) => (
-							<li key={m.id} className="rc-cell rc-surface flex flex-col gap-3 p-6">
-								<p className="stories-meta text-muted-foreground" aria-hidden="true">
+							<li key={m.id} className="hy-tile hy-tile--compact gap-3">
+								<p className="hy-eyebrow" aria-hidden="true">
 									{m.types.map((t) => NODE_TYPES[t].glyph).join(" ")}
 								</p>
 								<h3 className="text-xl font-semibold">{m.label}</h3>

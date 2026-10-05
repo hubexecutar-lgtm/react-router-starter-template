@@ -1,21 +1,26 @@
-// Home RC-LP-001 (LANC-001 RQ-040) sobre o Stories (ADR-14): texto canônico sem reescrita (app/data/landing.ts),
-// na ordem do Índex Problema → Conhecimento → Ferramenta → Ação, com a anatomia de página do ADR-12
-// (hero, seções de pilar com "Saiba mais ›", "Por onde começar?"). Um CTA primário só, no hero (RQ-053).
+// Home RC-LP-001 (LANC-001 RQ-040) na arquitetura Editorial Hybrid v4 (ADR-22): texto canônico sem reescrita
+// (app/data/landing.ts), na ordem do Índex Problema → Conhecimento → Ferramenta → Ação. Composição do híbrido:
+// hero centrado, painel de modelo (Problema), tiles 2×2 (os 3 pilares + o mapa), banda de cards (o ciclo) e carrossel
+// de perguntas (por onde começar). Um CTA primário só, no hero (RQ-053).
 import { ChevronLink } from "@/components/layout/ChevronLink";
 import { ArtImage } from "@/components/stories/ArtImage";
+import { SITE_TAGLINE } from "@/consts";
 import { PILLAR_MEDIA, RC_IMAGES, type Pillar } from "@/data/article-media";
 import { PILLARS } from "@/data/article-meta";
 import { LANDING, type LandingBlock } from "@/data/landing";
+import { MAP_LEAD } from "@/features/mapa/copy";
 
 const articleHref = (p: Pillar) => `/artigos/${PILLARS[p].article}/`;
 const PILLAR_ORDER: Pillar[] = ["p1", "p2", "p3"];
+/** Os três passos do canônico ("Problema → Método → Aplicação"), na ordem dos pilares. */
+const STEP: Record<Pillar, string> = { p1: "Problema", p2: "Método", p3: "Aplicação" };
 
-function Paragraphs({ blocks }: { blocks: LandingBlock[] }) {
+function Paragraphs({ blocks, className }: { blocks: LandingBlock[]; className?: string }) {
 	return (
 		<>
 			{blocks.map((b, i) =>
 				"p" in b ? (
-					<p key={i} className={b.p.includes("→") ? "stories-body font-semibold" : "stories-body text-muted-foreground"}>
+					<p key={i} className={b.p.includes("→") ? `font-semibold ${className ?? ""}` : className}>
 						{b.p}
 					</p>
 				) : null,
@@ -24,17 +29,12 @@ function Paragraphs({ blocks }: { blocks: LandingBlock[] }) {
 	);
 }
 
-function Section({ id, eyebrow, heading, children }: { id: string; eyebrow: string; heading: string; children: React.ReactNode }) {
+function Intro({ id, eyebrow, heading }: { id: string; eyebrow: string; heading: string }) {
 	return (
-		<section className="stories-container mt-[var(--ref-section-gap)]" aria-labelledby={id} data-landing-section={eyebrow}>
-			<div className="mx-auto max-w-[var(--ref-wide-width)]">
-				<p className="stories-meta text-muted-foreground">{eyebrow}</p>
-				<h2 id={id} className="stories-h2 mt-3 max-w-[24ch]">
-					{heading}
-				</h2>
-				<div className="mt-[var(--ref-block-gap)]">{children}</div>
-			</div>
-		</section>
+		<header className="hy-section-intro">
+			<p className="hy-eyebrow">{eyebrow}</p>
+			<h2 id={id}>{heading}</h2>
+		</header>
 	);
 }
 
@@ -50,83 +50,122 @@ export function Landing() {
 	return (
 		<>
 			{/* Hero: onde estou, o que significa, próxima ação (RQ-052) */}
-			<header className="stories-container pt-12 lg:pt-[88px]" data-landing-hero>
-				<div className="rc-hero-reveal mx-auto flex max-w-[var(--ref-hero-title-w)] flex-col items-center gap-6 text-center">
-					<p className="stories-meta text-muted-foreground">Risco Cognitivo · Início</p>
-					<h1 className="stories-h1">{LANDING.title}</h1>
-					<p className="stories-body text-muted-foreground" style={{ maxWidth: "var(--ref-hero-lead-w)" }}>
-						{"p" in lead ? lead.p : null}
-					</p>
-					<a
-						href={articleHref("p1")}
-						data-cta="primary"
-						className="bg-foreground text-background focus-visible:ring-ring/50 inline-flex min-h-11 max-w-full items-center rounded-[var(--ref-pill-radius)] px-6 py-2 text-sm font-medium outline-none focus-visible:ring-[3px]"
-					>
+			<header className="hy-hero rc-hero-reveal" data-landing-hero>
+				<p className="hy-eyebrow">{SITE_TAGLINE}</p>
+				<h1>{LANDING.title}</h1>
+				<p className="hy-lead">{"p" in lead ? lead.p : null}</p>
+				<div className="hy-actions">
+					<a href={articleHref("p1")} data-cta="primary" className="hy-btn-primary">
 						{LANDING.cta}
 					</a>
-				</div>
-				<div className="mx-auto mt-16 max-w-[var(--ref-wide-width)]">
-					<ArtImage media={RC_IMAGES.binoculosMapaCerebral} priority />
+					<a href="/mapas/" className="hy-btn-secondary">
+						Explorar o mapa
+					</a>
 				</div>
 			</header>
 
-			{/* Problema */}
-			<Section id="problema" eyebrow="Problema" heading={oQue.heading ?? ""}>
-				<div className="max-w-[var(--ref-reading-width)] space-y-[var(--ref-block-gap)]">
-					<Paragraphs blocks={introRest} />
-					<Paragraphs blocks={oQue.blocks} />
+			<div className="hy-shell">
+				<div>
+					<ArtImage media={RC_IMAGES.binoculosMapaCerebral} priority />
 				</div>
-			</Section>
+			</div>
 
-			{/* Conhecimento: os 3 pilares, cada um com "Saiba mais ›" */}
-			<Section id="pilares" eyebrow="Conhecimento" heading={pilares.heading ?? ""}>
-				<div className="flex flex-col gap-[var(--ref-section-gap)]">
-					{groups.map((g, i) => {
-						const p = PILLAR_ORDER[i];
-						return (
-							<article key={g.title} className="grid items-center gap-8 md:grid-cols-2" data-pillar={p}>
-								<ArtImage media={PILLAR_MEDIA[p]} className={i % 2 ? "md:order-2" : undefined} />
-								<div className="space-y-[var(--ref-block-gap)]">
-									<h3 className="stories-body font-semibold">{g.title}</h3>
-									<Paragraphs blocks={g.blocks} />
-									<ChevronLink href={articleHref(p)}>Saiba mais sobre {PILLARS[p].label}</ChevronLink>
-								</div>
-							</article>
-						);
-					})}
-				</div>
-			</Section>
-
-			{/* Ferramenta: a cadeia do projeto ao aprendizado */}
-			<Section id="ciclo" eyebrow="Ferramenta" heading={ciclo.heading ?? ""}>
-				<dl className="grid gap-x-8 gap-y-6 sm:grid-cols-2 lg:grid-cols-5">
-					{ciclo.blocks.map((b) =>
-						"term" in b ? (
-							<div key={b.term}>
-								<dt className="stories-meta font-semibold">{b.term}</dt>
-								<dd className="stories-body text-muted-foreground mt-1">{b.text}</dd>
-							</div>
-						) : null,
-					)}
-				</dl>
-				<ChevronLink href="/ferramentas/" className="mt-[var(--ref-block-gap)]">
-					Ver as ferramentas cognitivas
-				</ChevronLink>
-			</Section>
-
-			{/* Ação: por onde começar */}
-			<Section id="comecar" eyebrow="Ação" heading={comecar.heading ?? ""}>
-				<ul className="max-w-[var(--ref-reading-width)] space-y-[var(--ref-block-gap)]">
-					{comecar.blocks.map((b, i) =>
-						"p" in b ? (
-							<li key={i} className="space-y-1">
-								<p className="stories-body">{b.p}</p>
-								<ChevronLink href={articleHref(PILLAR_ORDER[i])}>{PILLARS[PILLAR_ORDER[i]].label}</ChevronLink>
+			{/* Problema: painel de modelo do híbrido, com os três pilares em fluxo */}
+			<section className="hy-shell mt-[var(--hy-section)]" aria-labelledby="problema" data-landing-section="Problema">
+				<div className="hy-model">
+					<p className="hy-eyebrow">Problema</p>
+					<h2 id="problema">{oQue.heading}</h2>
+					<div className="max-w-[var(--hy-read)] space-y-[var(--ref-block-gap)]">
+						<Paragraphs blocks={introRest} />
+					</div>
+					<ol className="hy-flow" aria-label="Os três pilares">
+						{PILLAR_ORDER.map((p) => (
+							<li key={p}>
+								<strong>{PILLARS[p].label}</strong>
+								<span>{STEP[p]}</span>
 							</li>
-						) : null,
-					)}
-				</ul>
-			</Section>
+						))}
+					</ol>
+					<div className="max-w-[var(--hy-read)] space-y-[var(--ref-block-gap)]">
+						<Paragraphs blocks={oQue.blocks} />
+					</div>
+				</div>
+			</section>
+
+			{/* Conhecimento: os 3 pilares em tiles, mais o mapa */}
+			<section className="hy-wide hy-section" aria-labelledby="pilares" data-landing-section="Conhecimento">
+				<div>
+					<Intro id="pilares" eyebrow="Conhecimento" heading={pilares.heading ?? ""} />
+					<div className="hy-tile-grid" role="list">
+						{groups.map((g, i) => {
+							const p = PILLAR_ORDER[i];
+							const img = PILLAR_MEDIA[p].landscape;
+							return (
+								<div key={g.title} role="listitem">
+									<article className="hy-tile" data-pillar={p}>
+										<div className="hy-tile-media aspect-video">
+											<img src={img.src} srcSet={img.srcSet} sizes="(min-width: 1024px) 520px, 100vw" width={img.width} height={img.height} alt={img.alt} loading="lazy" className="size-full object-contain" />
+										</div>
+										<p className="hy-eyebrow">
+											{p.toUpperCase()} — {STEP[p]}
+										</p>
+										<h3>{g.title}</h3>
+										<Paragraphs blocks={g.blocks} />
+										<ChevronLink href={articleHref(p)}>Saiba mais sobre {PILLARS[p].label}</ChevronLink>
+									</article>
+								</div>
+							);
+						})}
+						<div role="listitem">
+							<article className="hy-tile">
+								<p className="hy-eyebrow">Mapa causal</p>
+								<h3>Veja como as partes se conectam</h3>
+								<p>{MAP_LEAD}</p>
+								<ChevronLink href="/mapas/">Explorar o mapa causal</ChevronLink>
+							</article>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			{/* Ferramenta: a cadeia do projeto ao aprendizado, em cards brancos sobre a banda Subtle */}
+			<section className="hy-band hy-section" aria-labelledby="ciclo" data-landing-section="Ferramenta">
+				<div className="hy-wide">
+					<div>
+						<Intro id="ciclo" eyebrow="Ferramenta" heading={ciclo.heading ?? ""} />
+						<dl className="hy-card-grid">
+							{ciclo.blocks.map((b) =>
+								"term" in b ? (
+									<div key={b.term} className="hy-card">
+										<dt className="hy-eyebrow">{b.term}</dt>
+										<dd className="mt-4 text-[17px] leading-[1.647]">{b.text}</dd>
+									</div>
+								) : null,
+							)}
+						</dl>
+						<ChevronLink href="/ferramentas/" className="mt-10">
+							Ver as ferramentas cognitivas
+						</ChevronLink>
+					</div>
+				</div>
+			</section>
+
+			{/* Ação: por onde começar, em cards de pergunta */}
+			<section className="hy-wide hy-section" aria-labelledby="comecar" data-landing-section="Ação">
+				<div>
+					<Intro id="comecar" eyebrow="Ação" heading={comecar.heading ?? ""} />
+					<ul className="hy-carousel" tabIndex={0} aria-label="Por onde começar">
+						{comecar.blocks.map((b, i) =>
+							"p" in b ? (
+								<li key={i}>
+									<p className="text-[17px] leading-[1.647]">{b.p}</p>
+									<ChevronLink href={articleHref(PILLAR_ORDER[i])}>{PILLARS[PILLAR_ORDER[i]].label}</ChevronLink>
+								</li>
+							) : null,
+						)}
+					</ul>
+				</div>
+			</section>
 		</>
 	);
 }

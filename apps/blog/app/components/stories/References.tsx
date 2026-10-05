@@ -12,30 +12,32 @@ export const sourcesById = (ids: string[]) =>
 export function References({ ids }: { ids: string[] }) {
 	if (!ids.length) return null;
 	return (
-		<section className="stories-container mt-[var(--ref-section-gap)]" aria-labelledby="referencias" data-references>
-			<div className="mx-auto max-w-[var(--ref-reading-width)]">
-				<h2 id="referencias" className="stories-h2 mb-[var(--ref-block-gap)]">
-					Referências
-				</h2>
-				<ul className="stories-body space-y-3">
-					{sourcesById(ids).map((s) => (
-						<li key={s.id}>
-							<a href={s.url} rel="noopener" className="text-primary underline underline-offset-4 hover:no-underline">
-								{s.label}
+		<section className="mt-12 px-[var(--ref-gutter)]" aria-labelledby="referencias" data-references>
+			<div className="hy-article">
+				<div className="hy-source">
+					<h2 id="referencias" className="text-foreground mb-4 text-[17px] font-semibold">
+						Referências
+					</h2>
+					<ul className="space-y-3">
+						{sourcesById(ids).map((s) => (
+							<li key={s.id}>
+								<a href={s.url} rel="noopener" className="text-primary underline underline-offset-4 hover:no-underline">
+									{s.label}
+								</a>
+								<span className="block">{s.topic}</span>
+							</li>
+						))}
+					</ul>
+					<div className="mt-4 space-y-2" data-governance-note>
+						{GOVERNANCE_NOTE.map((l) => (
+							<p key={l}>{l}</p>
+						))}
+						<p>
+							<a href="/fontes/" className="text-primary underline underline-offset-4">
+								Todas as fontes
 							</a>
-							<span className="stories-caption text-muted-foreground block">{s.topic}</span>
-						</li>
-					))}
-				</ul>
-				<div className="stories-caption text-muted-foreground mt-[var(--ref-block-gap)] space-y-2" data-governance-note>
-					{GOVERNANCE_NOTE.map((l) => (
-						<p key={l}>{l}</p>
-					))}
-					<p>
-						<a href="/fontes/" className="text-primary underline underline-offset-4">
-							Todas as fontes
-						</a>
-					</p>
+						</p>
+					</div>
 				</div>
 			</div>
 		</section>

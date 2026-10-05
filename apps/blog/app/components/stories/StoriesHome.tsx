@@ -1,23 +1,21 @@
-// Home "Stories" (handoff OPENAI-STORIES-DESIGN-001): título, barra de categorias/ordenação, bloco editorial
-// (destaque + pilha), grade de quatro colunas e "Carregar mais". Recebe as histórias por props, então a
-// mesma composição serve à Home real e à página de fixtures (/admin/stories-fixtures/).
-// Medidas desktop (1363 px): título em y=152, barra em y=222, destaque em y=326; cada gap vem de tokens --ref-*.
+// Listagem de artigos na arquitetura Editorial Hybrid v4 (ADR-22): introdução de seção (eyebrow + h1), barra de
+// categorias/ordenação e chips de problema, tiles em 2 colunas e "Carregar mais". Recebe as histórias por props,
+// então a mesma composição serve a /artigos/ e à página de fixtures (/admin/stories-fixtures/).
 import { useMemo, useState } from "react";
 
 import { useSearchParams } from "react-router";
 
 import { useTrackView } from "@/lib/analytics/track";
 
-import { FeaturedStories } from "./FeaturedStories";
 import { LoadMore } from "./LoadMore";
 import { StoriesToolbar, type SortKey } from "./StoriesToolbar";
-import { StoryGrid } from "./StoryGrid";
+import { StoryCard } from "./StoryCard";
 
 import { PROBLEMS, type ProblemId } from "@/data/article-meta";
 import type { StoryView } from "@/lib/articles";
 
-const FIRST_BATCH = 16; // destaque + 3 empilhadas + 12 na grade (lote inicial da referência)
-const STEP = 12;
+const FIRST_BATCH = 8; // 4 linhas de 2 tiles
+const STEP = 8;
 const ALL_SORTS: SortKey[] = ["date_desc", "date_asc", "title_asc", "title_desc"];
 
 function sortStories(list: StoryView[], sort: SortKey) {
@@ -75,9 +73,7 @@ export function StoriesHome({
 			),
 		[stories, active, problem, sort],
 	);
-	const [featured, ...rest] = shown;
-	const stack = rest.slice(0, 3);
-	const grid = rest.slice(3, visible - 1);
+	const page = shown.slice(0, visible);
 	const hasMore = shown.length > visible;
 
 	const setParam = (key: string, value: string, fallback: string) => {
@@ -89,9 +85,12 @@ export function StoriesHome({
 	};
 
 	return (
-		<div className="stories-container pt-12 lg:pt-[88px]">
-			<h1 className="stories-h2">{title}</h1>
-			<div className="mt-4">
+		<div className="hy-wide pt-[var(--hy-section)]">
+			<div>
+				<header className="hy-section-intro">
+					<p className="hy-eyebrow">Risco Cognitivo · {title}</p>
+					<h1 className="stories-h2">{title}</h1>
+				</header>
 				<StoriesToolbar
 					categories={categories}
 					active={active}
@@ -102,25 +101,26 @@ export function StoriesHome({
 					problem={problem}
 					problemHref={problems ? problemHref : undefined}
 				/>
-			</div>
-			<div className="mt-16" aria-live="polite">
-				{featured ? (
-					<>
-						<FeaturedStories featured={featured} stack={stack} />
-						{grid.length > 0 && (
-							<div className="mt-[var(--ref-card-gap-y)]">
-								<StoryGrid stories={grid} />
+				<div className="mt-10" aria-live="polite">
+					{page.length ? (
+						<>
+							<div className="hy-tile-grid" role="list" data-story-grid>
+								{page.map((s, i) => (
+									<div key={s.slug} role="listitem">
+										<StoryCard story={s} headingLevel={2} priority={i < 2} />
+									</div>
+								))}
 							</div>
-						)}
-						{hasMore && (
-							<div className="mt-[var(--ref-card-gap-y)]">
-								<LoadMore onClick={() => setVisible((v) => v + STEP)} />
-							</div>
-						)}
-					</>
-				) : (
-					<p className="stories-body text-muted-foreground">Nenhum artigo neste filtro.</p>
-				)}
+							{hasMore && (
+								<div className="mt-12">
+									<LoadMore onClick={() => setVisible((v) => v + STEP)} />
+								</div>
+							)}
+						</>
+					) : (
+						<p className="stories-body text-muted-foreground">Nenhum artigo neste filtro.</p>
+					)}
+				</div>
 			</div>
 		</div>
 	);

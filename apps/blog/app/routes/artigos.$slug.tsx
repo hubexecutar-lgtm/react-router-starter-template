@@ -11,6 +11,7 @@ import { NextStep } from "@/components/stories/NextStep";
 import { References } from "@/components/stories/References";
 import { SITE_METADATA, SITE_NAME, SITE_URL } from "@/consts";
 import { PILLARS, PROBLEMS } from "@/data/article-meta";
+import { formatDate, storyEyebrow } from "@/components/stories/StoryCard";
 import { useTrackView } from "@/lib/analytics/track";
 import DefaultLayout from "@/layouts/DefaultLayout";
 import { getArticleContent, getStory } from "@/lib/articles";
@@ -66,7 +67,13 @@ export default function Article({ loaderData }: Route.ComponentProps) {
 	return (
 		<DefaultLayout>
 			<article>
-				<ArticleHero title={story.title} lead={story.description} media={story.hero} eyebrow={`Pilar · ${PILLARS[story.pillar].label}`} />
+				<ArticleHero
+					title={story.title}
+					lead={story.description}
+					media={story.hero}
+					eyebrow={storyEyebrow(story)}
+					meta={[/^RC-/.test(story.contentId) ? story.contentId : null, story.date ? formatDate(story.date) : null].filter(Boolean).join(" · ")}
+				/>
 				<ArticleBody Content={Content} />
 			</article>
 			<References ids={story.sources} />

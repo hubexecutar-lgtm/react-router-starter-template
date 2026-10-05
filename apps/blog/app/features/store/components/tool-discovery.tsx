@@ -102,7 +102,7 @@ export function ToolDiscovery() {
 				{results.length ? (
 					<ul className="grid gap-[var(--ref-grid-gap)] md:grid-cols-2" data-discovery-results>
 						{results.map((t) => (
-							<li key={t.id} className="rc-cell rc-surface flex flex-col gap-3 p-6" data-tool={t.id}>
+							<li key={t.id} className="hy-tile hy-tile--compact gap-3" data-tool={t.id}>
 								<a href={t.href} className="text-primary text-xl font-semibold underline underline-offset-4 hover:no-underline">
 									{t.name}
 								</a>

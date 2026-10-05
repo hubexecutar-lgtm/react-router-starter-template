@@ -13,15 +13,15 @@ export const meta: Route.MetaFunction = ({ location }) =>
 export default function Fontes() {
 	return (
 		<DefaultLayout>
-			<header className="stories-container pt-12 lg:pt-[88px]">
+			<header className="stories-container pt-[var(--hy-section)]">
 				<div className="rc-hero-reveal mx-auto max-w-[var(--ref-wide-width)]">
-					<p className="stories-meta text-muted-foreground">Risco Cognitivo · Fontes</p>
+					<p className="hy-eyebrow">Risco Cognitivo · Fontes</p>
 					<h1 className="stories-h2 mt-3">Fontes</h1>
-					<p className="stories-body text-muted-foreground mt-[var(--ref-block-gap)] max-w-[var(--ref-hero-lead-w)]">{GOVERNANCE_NOTE[0]}</p>
+					<p className="hy-lead mt-[var(--ref-block-gap)] max-w-[60ch]">{GOVERNANCE_NOTE[0]}</p>
 					<a
 						href="/artigos/"
 						data-cta="primary"
-						className="bg-foreground text-background focus-visible:ring-ring/50 mt-[var(--ref-block-gap)] inline-flex min-h-11 items-center rounded-[var(--ref-pill-radius)] px-6 py-2 text-sm font-medium outline-none focus-visible:ring-[3px]"
+						className="hy-btn-primary mt-[var(--ref-block-gap)]"
 					>
 						Ler os artigos
 					</a>
@@ -34,8 +34,8 @@ export default function Fontes() {
 					</h2>
 					<ul className="grid gap-[var(--ref-grid-gap)] md:grid-cols-2" data-sources>
 						{SOURCES.map((s) => (
-							<li key={s.id} className="rc-cell rc-surface flex flex-col gap-2 p-6">
-								<p className="stories-meta text-muted-foreground">{s.topic}</p>
+							<li key={s.id} className="hy-tile hy-tile--compact gap-2">
+								<p className="hy-eyebrow">{s.topic}</p>
 								<a href={s.url} rel="noopener" className="stories-body text-primary font-medium underline underline-offset-4 hover:no-underline">
 									{s.label}
 								</a>
