@@ -1,7 +1,7 @@
 {
   "schema_version": "0.1.0",
   "example_id": "RC-GRAPH-001",
-  "note": "Grafo canônico do Risco Cognitivo (LANC-001 PR-G, ADR-M04). Fonte: RC-ART-P1-001, RC-ART-P3-001, RC-LP-001, RC-ART-MASTER-001 e RC-SRC-001 (docs/lancamento/LANC-001/intake/DOCS-002). Relações não explícitas no texto são E_INFERRED + PROPOSED; eventos operacionais usam OPERATIONAL_IMPACT + tag stage:event (CF-16).",
+  "note": "Grafo canônico do Risco Cognitivo (LANC-001 PR-G, ADR-M04). Fonte: RC-ART-P1-001, RC-ART-P3-001, RC-LP-001, RC-ART-MASTER-001, RC-SRC-001 (docs/lancamento/LANC-001/intake/DOCS-002) e RC-HOME-002 (intake/HOME-002: os nós Memória de trabalho, Controle inibitório e Flexibilidade cognitiva, aprovados pelo OWNER no HOME-BRAIN-001). Relações não explícitas no texto são E_INFERRED + PROPOSED; eventos operacionais usam OPERATIONAL_IMPACT + tag stage:event (CF-16).",
   "nodes": [
     {
       "id": "FRC-EXCESSO-INFORMACAO",
@@ -203,6 +203,36 @@
         "RC-ART-P1-001"
       ],
       "source_quote": "iniciação"
+    },
+    {
+      "id": "COG-MEMORIA-TRABALHO",
+      "type": "COGNITIVE_CAPACITY",
+      "label": "Memória de trabalho",
+      "status": "DRAFT",
+      "source_refs": [
+        "RC-HOME-002"
+      ],
+      "source_quote": "Memória de trabalho: Mantém e manipula informações no curto prazo."
+    },
+    {
+      "id": "COG-CONTROLE-INIBITORIO",
+      "type": "COGNITIVE_CAPACITY",
+      "label": "Controle inibitório",
+      "status": "DRAFT",
+      "source_refs": [
+        "RC-HOME-002"
+      ],
+      "source_quote": "Controle inibitório: Ajuda a focar e evitar distrações."
+    },
+    {
+      "id": "COG-FLEXIBILIDADE",
+      "type": "COGNITIVE_CAPACITY",
+      "label": "Flexibilidade cognitiva",
+      "status": "DRAFT",
+      "source_refs": [
+        "RC-HOME-002"
+      ],
+      "source_quote": "Flexibilidade cognitiva: Permite adaptar estratégias e lidar com mudanças."
     },
     {
       "id": "EVT-PERDA-CONTEXTO",
@@ -1403,6 +1433,36 @@
       ],
       "source_ref": "RC-SRC-001",
       "source_quote": "BPM"
+    },
+    {
+      "id": "REL-056",
+      "type": "INCREASES_DEMAND_ON",
+      "source": "FRC-DEPENDENCIA-MEMORIA",
+      "target": "COG-MEMORIA-TRABALHO",
+      "status": "PROPOSED",
+      "epistemic": {
+        "provenance_class": "E_INFERRED",
+        "claim_role": "HYPOTHESIS"
+      },
+      "evidence_refs": [],
+      "limitations": [
+        "Relação não explícita no texto de origem: derivada do exemplo da home RC-HOME-002 (HOME-BRAIN-001), que liga a demanda à função sem afirmar causalidade."
+      ]
+    },
+    {
+      "id": "REL-057",
+      "type": "INCREASES_DEMAND_ON",
+      "source": "FRC-INTERRUPCOES",
+      "target": "COG-CONTROLE-INIBITORIO",
+      "status": "PROPOSED",
+      "epistemic": {
+        "provenance_class": "E_INFERRED",
+        "claim_role": "HYPOTHESIS"
+      },
+      "evidence_refs": [],
+      "limitations": [
+        "Relação não explícita no texto de origem: derivada do exemplo da home RC-HOME-002 (HOME-BRAIN-001), que liga a demanda à função sem afirmar causalidade."
+      ]
     }
   ]
 }

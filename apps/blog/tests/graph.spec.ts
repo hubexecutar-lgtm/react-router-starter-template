@@ -21,6 +21,7 @@ const TEXTS: Record<string, string> = {
   "RC-ART-P3-001": `${CANON}/01_CANONICO/04_RC_ARTIGO_P3_FERRAMENTAS_SOLUCOES.txt`,
   "RC-ART-MASTER-001": `${CANON}/01_CANONICO/05_RC_ARTIGO_MASTER_3_PILARES_1500.txt`,
   "RC-SRC-001": `${CANON}/02_REFERENCIAS/01_FONTES_WEB.txt`,
+  "RC-HOME-002": `${INTAKE}/HOME-002/RC_HOME_002.txt`,
 };
 const norm = (s: string) => s.replace(/\s+/g, " ").trim().toLocaleLowerCase("pt-BR");
 const text = (id: string) => norm(read(TEXTS[id]));

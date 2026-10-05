@@ -99,12 +99,48 @@ test.describe("D · imagens RC (RQ-030…033)", () => {
 });
 
 test.describe("E · conteúdo canônico (RQ-040…046)", () => {
-  test("home = RC-LP-001 sem reescrita, na ordem Problema → Conhecimento → Ferramenta → Ação (RQ-040)", async ({ page }) => {
-    const text = await pageText(page, "/");
+  test("/comece/ = RC-LP-001 sem reescrita, na ordem Problema → Conhecimento → Ferramenta → Ação (RQ-040)", async ({ page }) => {
+    const text = await pageText(page, "/comece/");
     for (const line of canonicalLines("01_CANONICO/01_RC_LANDING_3_PILARES.txt")) expect(text, line).toContain(norm(line));
     const order = await page.locator("[data-landing-section]").evaluateAll((els) => els.map((e) => e.getAttribute("data-landing-section")));
     expect(order).toEqual(["Problema", "Conhecimento", "Ferramenta", "Ação"]);
     for (const p of ["p1", "p2", "p3"]) await expect(page.locator(`[data-pillar=${p}] a`, { hasText: "Saiba mais" })).toHaveCount(1);
+  });
+
+  test("home = RC-HOME-002 sem reescrita, na ordem do esboço (HOME-BRAIN-001)", async ({ page }) => {
+    await page.goto("/");
+    // textContent: as explicações das 4 funções estão no HTML, só a selecionada fica visível.
+    const text = norm((await page.locator("main").textContent()) ?? "");
+    const lines = readFileSync(join(ROOT, "../../docs/lancamento/LANC-001/intake/HOME-002/RC_HOME_002.txt"), "utf8")
+      .split("\n")
+      .map((l) => l.trim().replace(/^CTA: /, ""))
+      .filter((l) => l && !l.startsWith("FONTES DOS DADOS") && !/\| https?:/.test(l));
+    for (const line of lines) {
+      // Separadores de forma do canônico (": " de rótulo, " | " de tabela, " → " de cadeia, "01 " de passo) viram layout.
+      for (const part of line.replace(/^\d+\.?\s+/, "").split(/: | \| | → |, (?=[A-ZÁÉÍÓÚ])/)) {
+        if (part.trim()) expect(text, line).toContain(norm(part.replace(/[.→]+$/, "")));
+      }
+    }
+    const order = await page.locator("[data-home-section]").evaluateAll((els) => els.map((e) => e.getAttribute("data-home-section")));
+    expect(order).toEqual(["Hero", "Dados", "Risco", "Mapa", "Trilha", "Exigências", "Problemas", "Método", "Apoio", "CTA"]);
+    await expect(page.locator("[data-cta=primary]")).toHaveCount(1);
+    await expect(page.getByRole("link", { name: "Comece por aqui" }).first()).toHaveAttribute("href", "/comece/");
+    // Camada própria da home (ADR-23): o home.css só entra na home.
+    const homeCss = () => page.evaluate(() => [...document.querySelectorAll<HTMLLinkElement>("link[rel=stylesheet]")].some((l) => /\/home[-.][^/]*\.css$/.test(l.href)));
+    expect(await homeCss()).toBe(true);
+    expect(await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue("--home-accent").trim())).toBe("#ff5b0a");
+    await page.goto("/comece/");
+    expect(await homeCss()).toBe(false);
+  });
+
+  test("os números da home citam a fonte primária, também listada em /fontes/", async ({ page }) => {
+    await page.goto("/");
+    for (const href of ["https://educa.ibge.gov.br/jovens/materias-especiais/22700-censo-2022-contou-2-4-milhoes-de-pessoas-diagnosticadas-com-autismo-no-brasil.html", "https://doi.org/10.7189/jogh.11.04009"]) {
+      await expect(page.locator(`.home-stat a[href="${href}"]`)).toHaveCount(1);
+      await page.goto("/fontes/");
+      await expect(page.locator(`[data-home-sources] a[href="${href}"]`)).toHaveCount(1);
+      await page.goto("/");
+    }
   });
 
   for (const [slug, file] of Object.entries(ARTICLES)) {

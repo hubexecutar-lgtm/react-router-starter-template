@@ -31,6 +31,16 @@ As respostas vieram numeradas R1–R9 sem R5; R6–R9 respondem Q5–Q8.
 | DEC-U13 | Q8 cadeia | "Sim" | Cadeia canônica do CF-05 confirmada |
 | DEC-U14 | Base do site (2026-10-04, AUD-ORDEM-001) | "O design system certo é o do PR #19 … todo o seu trabalho deve ser implementado a partir do PR 19 inteiro" | A base é o PR #19 (`chore/site-do-zero`): reset do site (ADR-13) + front-end Stories (ADR-14, `--ref-*`). Layout, tipografia e anatomia de Home e artigo = Stories; cores = ADR-11; ilustração, grafo e motion = ADR-15. **Restringe** DEC-U1/DEC-U2 a cores, ilustração e motion; **substitui** DEC-U8: artigos em `/artigos/:slug/`, rotas antigas removidas sem 301. RQ-010, 020…026, 100 e 103 reabertos |
 
+### Decisões do HOME-BRAIN-001 (2026-10-05)
+
+| ID | Decisão do usuário | Efeito |
+|---|---|---|
+| DEC-U15 | Base: "Esperar #34 e partir dele" (AUD-ORDEM-001) | Branch `feat/home-brain-3d` a partir de `main` @ 5f1cb05 |
+| DEC-U16 | "Home do esboço completa" | A home passa a ser o RC-HOME-002 (`intake/HOME-002`). **Emenda o RQ-040 e a DEC-U12:** o RC-LP-001 sai da `/` |
+| DEC-U17 | RC-LP-001 em "Nova rota /comece/" | `/comece/` mostra o RC-LP-001 sem reescrita, e o teste do RQ-040 passa a verificar essa rota |
+| DEC-U18 | "Criar 3 nós novos no grafo" (aval do OWNER, ADR-M04) | `COG-MEMORIA-TRABALHO`, `COG-CONTROLE-INIBITORIO`, `COG-FLEXIBILIDADE` (DRAFT, fonte RC-HOME-002) e `REL-056`/`REL-057` (E_INFERRED + PROPOSED) |
+| DEC-U19 | Estatísticas: "Manter com fonte linkada" | IBGE Censo 2022 e Song et al. 2021 (*J Glob Health* 11:04009), conferidas e listadas em `/fontes/` |
+
 ## 2. Fatos verificados
 
 | ID | Fato |

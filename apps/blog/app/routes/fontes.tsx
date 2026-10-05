@@ -1,10 +1,12 @@
 // Fontes (LANC-001 RQ-042/043): as fontes do RC-SRC-001 com link, agrupadas pelo tema que sustentam, e a nota de
-// governança literal. Substitui o antigo /evidencias (removido no reset do ADR-13).
+// governança literal. Substitui o antigo /evidencias (removido no reset do ADR-13). Os dados da home (RC-HOME-002)
+// têm a própria lista, com as fontes primárias dos números.
 import type { Route } from "./+types/fontes";
 
 import { ChevronLink } from "@/components/layout/ChevronLink";
-import DefaultLayout from "@/layouts/DefaultLayout";
+import { HOME_SOURCES } from "@/data/home";
 import { GOVERNANCE_NOTE, SOURCES } from "@/data/sources";
+import DefaultLayout from "@/layouts/DefaultLayout";
 import { seo } from "@/lib/seo";
 
 export const meta: Route.MetaFunction = ({ location }) =>
@@ -36,6 +38,23 @@ export default function Fontes() {
 						{SOURCES.map((s) => (
 							<li key={s.id} className="hy-tile hy-tile--compact gap-2">
 								<p className="hy-eyebrow">{s.topic}</p>
+								<a href={s.url} rel="noopener" className="stories-body text-primary font-medium underline underline-offset-4 hover:no-underline">
+									{s.label}
+								</a>
+							</li>
+						))}
+					</ul>
+				</div>
+			</section>
+			<section className="stories-container mt-[var(--ref-section-gap)]" aria-labelledby="fontes-home">
+				<div className="mx-auto max-w-[var(--ref-wide-width)]">
+					<h2 id="fontes-home" className="stories-h2">
+						Dados da página inicial
+					</h2>
+					<ul className="mt-[var(--ref-block-gap)] grid gap-[var(--ref-grid-gap)] md:grid-cols-2" data-home-sources>
+						{HOME_SOURCES.map((s) => (
+							<li key={s.id} className="hy-tile hy-tile--compact gap-2">
+								<p className="hy-eyebrow">RC-HOME-002</p>
 								<a href={s.url} rel="noopener" className="stories-body text-primary font-medium underline underline-offset-4 hover:no-underline">
 									{s.label}
 								</a>

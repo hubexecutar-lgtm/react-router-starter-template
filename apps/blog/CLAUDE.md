@@ -602,3 +602,36 @@ to `apps/blog/`.
   - `stories.spec` mede a nova composição (tiles 2×2 com gap 24 e padding 48, cabeçalho do artigo, régua do h2) e
     continua travando os tokens `--ref-*` literais; `tokens.spec` espera títulos em 500; baselines visuais regeneradas.
   - Itens de grade não são `li`: a regra de medida de leitura (68ch) vale para o texto dentro do tile, não para a célula.
+
+### ADR-23: Home RC-HOME-002 com cérebro 3D; RC-LP-001 em `/comece/` (HOME-BRAIN-001)
+
+- **Status:** Aceita — implementada. Emenda o ADR-18 (a home deixa de ser o RC-LP-001) e o ADR-03 (exceção de cor só
+  nesta home). Registro em `docs/handoff/HOME-BRAIN-001/`.
+- **Contexto:** O usuário enviou o esboço `risco-cognitivo-home-css-v4.html`, capturas da cloudflare.com ("Region: Earth")
+  e um pacote com um cérebro WebGL. Decidiu (2026-10-05) que a home do esboço substitui o RC-LP-001, que vai para
+  `/comece/`; que os seletores Memória de trabalho, Controle inibitório e Flexibilidade cognitiva viram nós do grafo; e
+  que as estatísticas ficam, com a fonte primária.
+- **Decisão:**
+  - **Texto:** canônico novo `RC-HOME-002` (`docs/lancamento/LANC-001/intake/HOME-002/`), servido por `app/data/home.ts`
+    sem reescrita e aceito como fonte em `CANONICAL_SOURCES`. O RC-LP-001 continua integral em `/comece/` (RQ-040).
+  - **Grafo (ADR-M04, aval do OWNER):** `COG-MEMORIA-TRABALHO`, `COG-CONTROLE-INIBITORIO` e `COG-FLEXIBILIDADE` com status
+    `DRAFT`, citando o RC-HOME-002. Só duas arestas, ambas `E_INFERRED` + `PROPOSED` (`REL-056`, `REL-057`). Os seletores
+    abrem `/mapas/explorar/?foco=<ID>`.
+  - **Cérebro 3D:** Three.js puro (sem React Three Fiber), importado só depois da hidratação. Os pontos vêm do OpenNeuro
+    ds006128 (CC0) por `scripts/prepare-home-brain.mjs`, que é determinístico e confere os hashes. Imagem estática,
+    seletores e links funcionam sem JS, sem WebGL ou com falha do asset. Movimento reduzido começa parado.
+  - **Tokens e CSS próprios:** a home tem a sua camada em `app/styles/home.css`, carregada só pela rota `/` (`links`).
+    O arquivo abre com o bloco de tokens `--home-*` (cor, hero e composição, claro e escuro), o único lugar com hex da
+    home, seguido dos componentes, que só usam `var()`. O `global.css` não tem nada da home.
+  - **Cor:** `--home-accent` (#FF5B0A), `--home-accent-strong` (#C2410C), `--home-accent-soft`, `--home-accent-line` e
+    `--home-hero-glow`, no bloco de tokens do `home.css`. O `--home-accent` serve
+    à ilustração (pontos, marcadores, cantos, réguas) e nunca é texto nem indicador único. Só o `--home-accent-strong`
+    (5,18:1) pode ser texto: o fundo do hero com texto branco e os números dos passos. O resto do texto segue o ADR-11.
+  - **Gate:** `npm run test:brain` (`playwright.brain.config.ts`, WebGL por software) roda à parte, porque o `npm test`
+    não depende de GPU e ignora `home-brain.spec.ts`.
+- **Consequências:**
+  - `editorial.spec` compara a home com o RC-HOME-002 linha a linha e o `/comece/` com o RC-LP-001. Mudar texto da home
+    exige mudar o canônico e o `MANIFEST.sha256` do intake no mesmo PR.
+  - Cor laranja fora da home continua proibida (ADR-03). Para levá-la a outra página, é preciso um ADR novo.
+  - `surfaces.spec` trava a camada: hex só no bloco de tokens do `home.css` e nada de `--home-*` no `global.css`.
+    `editorial.spec` confere que o `home.css` entra na `/` e não em outra rota.

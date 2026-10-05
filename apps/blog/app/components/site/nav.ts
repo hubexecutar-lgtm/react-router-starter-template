@@ -14,9 +14,10 @@ export const PRIMARY_NAV: NavItem[] = [
   { label: "Sobre", href: "/sobre/" },
 ];
 
-/** Drawer (< 900px): Início, todos os destinos do topo, Fontes e as ferramentas publicadas. */
+/** Drawer (< 900px): Início, Comece por aqui (RC-LP-001), todos os destinos do topo, Fontes e as ferramentas publicadas. */
 export const DRAWER_NAV: NavItem[] = [
   { label: "Início", href: "/" },
+  { label: "Comece por aqui", href: "/comece/" },
   ...PRIMARY_NAV,
   { label: "Fontes", href: "/fontes/" },
   { label: "Prisma de execução", href: "/prisma/" },
@@ -38,7 +39,7 @@ export const PILLAR_TRAIL: NavItem[] = [
 
 /** Rodapé-diretório: o mesmo menu do topo (RQ-050), mais Início, Fontes, os pilares e as ferramentas. */
 export const FOOTER_NAV: { title: string; items: NavItem[] }[] = [
-  { title: "Explorar", items: [{ label: "Início", href: "/" }, ...PRIMARY_NAV, { label: "Fontes", href: "/fontes/" }] },
+  { title: "Explorar", items: [{ label: "Início", href: "/" }, { label: "Comece por aqui", href: "/comece/" }, ...PRIMARY_NAV, { label: "Fontes", href: "/fontes/" }] },
   { title: "Os 3 pilares", items: PILLAR_TRAIL },
   { title: "Ferramentas", items: [{ label: "Prisma de execução", href: "/prisma/" }] },
 ];

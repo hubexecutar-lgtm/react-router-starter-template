@@ -7,6 +7,7 @@ export default [
 	route("artigos", "routes/artigos._index.tsx"),
 	route("fontes", "routes/fontes.tsx"),
 	route("sobre", "routes/sobre.tsx"),
+	route("comece", "routes/comece.tsx"),
 	route("artigos/:slug", "routes/artigos.$slug.tsx"),
 	route("mapas", "routes/mapas._index.tsx"),
 	route("mapas/explorar", "routes/mapas.explorar._index.tsx"),
