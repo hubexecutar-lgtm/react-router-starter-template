@@ -1,4 +1,4 @@
-// Mapa interativo da home (HOME-BRAIN-001): cérebro 3D pontilhado (Three.js, só depois da hidratação) com os 4
+// Mapa interativo da home (HOME-BRAIN-001), no lugar do "Region: Earth" da cloudflare.com (ADR-25): cérebro 3D pontilhado (Three.js, só depois da hidratação) com os 4
 // seletores do esboço RC-HOME-002 sobre a figura e a explicação da função em HTML, fora do canvas.
 // Sem JS, sem WebGL ou com falha do asset: a imagem estática, os seletores e os links do mapa continuam.
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
@@ -106,8 +106,8 @@ export function BrainHero({ topics }: { topics: BrainTopic[] }) {
 
 	return (
 		<section id="mapa" className="home-map" aria-labelledby="mapa-titulo" data-home-section="Mapa" data-brain-status={status}>
-			<header className="home-map-intro">
-				<p className="hy-eyebrow">{HOME_MAP.eyebrow}</p>
+			<header className="cfh-head">
+				<p className="cfh-label">{HOME_MAP.eyebrow}</p>
 				<h2 id="mapa-titulo">{HOME_MAP.heading}</h2>
 				<p>{HOME_MAP.lead}</p>
 			</header>
@@ -192,10 +192,6 @@ export function BrainHero({ topics }: { topics: BrainTopic[] }) {
 			)}
 
 			<div id="brain-detail" className="brain-detail" aria-live="polite">
-				<span className="brain-corner" data-corner="tl" aria-hidden="true" />
-				<span className="brain-corner" data-corner="tr" aria-hidden="true" />
-				<span className="brain-corner" data-corner="bl" aria-hidden="true" />
-				<span className="brain-corner" data-corner="br" aria-hidden="true" />
 				{functions.map((f) => (
 					<FunctionDetail key={f.id} fn={f} hidden={f.id !== selectedId} />
 				))}

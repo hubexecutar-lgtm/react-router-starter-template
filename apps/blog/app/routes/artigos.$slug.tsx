@@ -4,16 +4,17 @@ import { data, isRouteErrorResponse } from "react-router";
 
 import type { Route } from "./+types/artigos.$slug";
 
+import { CategoryRail } from "@/components/site/CategoryRail";
 import { NotFoundPage } from "@/components/site/NotFoundPage";
 import { ArticleBody } from "@/components/stories/ArticleBody";
 import { ArticleHero } from "@/components/stories/ArticleHero";
 import { NextStep } from "@/components/stories/NextStep";
 import { References } from "@/components/stories/References";
+import { formatDate, storyEyebrow } from "@/components/stories/StoryCard";
 import { SITE_METADATA, SITE_NAME, SITE_URL } from "@/consts";
 import { PILLARS, PROBLEMS } from "@/data/article-meta";
-import { formatDate, storyEyebrow } from "@/components/stories/StoryCard";
-import { useTrackView } from "@/lib/analytics/track";
 import DefaultLayout from "@/layouts/DefaultLayout";
+import { useTrackView } from "@/lib/analytics/track";
 import { getArticleContent, getStory } from "@/lib/articles";
 import { seo } from "@/lib/seo";
 
@@ -66,6 +67,7 @@ export default function Article({ loaderData }: Route.ComponentProps) {
 	useTrackView({ ...event, action: "view" }, story.slug);
 	return (
 		<DefaultLayout>
+			<CategoryRail />
 			<article>
 				<ArticleHero
 					title={story.title}
