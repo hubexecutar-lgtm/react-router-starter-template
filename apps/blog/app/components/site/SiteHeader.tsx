@@ -1,16 +1,17 @@
-// Cabeçalho global do shell (LANC-001 RQ-020…022) sobre o Stories: barra de 64 px (--ref-header-h), gutter de
-// 32 px (--ref-gutter) e régua inferior em box-shadow, como no handoff OPENAI-STORIES-DESIGN-001 (ADR-14).
-// ≥ 900px: marca, Artigos · Mapa · Ferramentas · Sobre, e tema, e a trilha dos 3 pilares; sem menu.
+// Cabeçalho global do shell (LANC-001 RQ-020…022) na arquitetura Editorial Hybrid v4 (ADR-22): barra de 64 px
+// (--ref-header-h), marca à esquerda e links à direita em 14 px, na largura do híbrido (1440). A trilha dos 3 pilares
+// saiu da barra e virou a faixa de categorias logo abaixo (CategoryRail).
+// ≥ 900px: marca, Artigos · Mapa · Ferramentas · Sobre, e tema; sem menu.
 // < 900px: marca, busca, tema e o botão do drawer (MobileDrawer). Esconde ao descer e volta ao subir,
 // junto com a barra inferior (estado em shell.tsx). Renderizado no servidor: os links funcionam sem JS.
 import { Menu } from "lucide-react";
 import { useLocation } from "react-router";
 
-import { PILLAR_TRAIL, PRIMARY_NAV, isActive } from "./nav";
+import { PRIMARY_NAV, isActive } from "./nav";
 import { useShell } from "./shell";
 
 import { ThemeToggle } from "@/components/theme-toggle";
-import { SITE_NAME, SITE_TAGLINE } from "@/consts";
+import { SITE_NAME } from "@/consts";
 import { cn } from "@/lib/utils";
 
 const iconButton =
@@ -27,21 +28,19 @@ export function SiteHeader({ inert = false }: { inert?: boolean }) {
 			data-chrome
 			data-hidden={chromeHidden || undefined}
 			className={cn(
-				"bg-background/95 supports-[backdrop-filter]:bg-background/80 sticky top-0 z-50 shadow-[0_1px_0_var(--border-default)] backdrop-blur-[20px] backdrop-saturate-[1.8]",
+				"bg-background sticky top-0 z-50 shadow-[0_1px_0_var(--border-default)]",
 				"transition-transform duration-[var(--dur-base)] ease-[var(--ease)] data-[hidden]:-translate-y-full",
 			)}
 		>
-			<div className="stories-container flex h-[var(--ref-header-h)] items-center gap-2 sm:gap-4">
+			<div className="mx-auto flex h-[var(--ref-header-h)] w-full max-w-[var(--hy-wide)] items-center gap-2 px-[var(--ref-gutter)] sm:gap-4">
 				<a href="/" className="flex min-h-11 min-w-0 shrink-0 items-center gap-3" aria-label={`${SITE_NAME} — página inicial`}>
-					<span className="rc-display text-[0.95rem] leading-none tracking-[-0.02em] whitespace-nowrap uppercase min-[360px]:text-[1.1rem] sm:text-xl">
+					<span className="text-foreground text-[14px] leading-none font-bold tracking-[-0.02em] whitespace-nowrap uppercase sm:text-[16px]">
 						{SITE_NAME}
 					</span>
-					<span className="hidden h-7 border-l border-[var(--border-strong)] 2xl:block" aria-hidden="true"></span>
-					<span className="rc-eyebrow hidden max-w-[11rem] text-[0.625rem] leading-snug 2xl:block">{SITE_TAGLINE}</span>
 				</a>
 
 				<nav aria-label="Principal" className="ml-auto max-[899px]:hidden">
-					<ul className="flex items-center gap-1">
+					<ul className="flex items-center gap-[20px] lg:gap-[26px]">
 						{PRIMARY_NAV.map((item) => {
 							const active = isActive(pathname, item.href);
 							return (
@@ -50,10 +49,10 @@ export function SiteHeader({ inert = false }: { inert?: boolean }) {
 										href={item.href}
 										aria-current={active ? "page" : undefined}
 										className={cn(
-											"relative inline-flex h-11 items-center rounded-md px-3 text-[0.95rem] font-medium transition-colors",
-											"hover:bg-[var(--surface-hover)] focus-visible:ring-ring/50 outline-none focus-visible:ring-[3px]",
+											"relative inline-flex h-11 items-center rounded-sm text-[14px] transition-colors",
+											"hover:text-primary focus-visible:ring-ring/50 outline-none focus-visible:ring-[3px]",
 											active
-												? "text-primary after:bg-primary after:absolute after:inset-x-3 after:-bottom-[5px] after:h-0.5 after:rounded-full"
+												? "text-primary after:bg-primary after:absolute after:inset-x-0 after:-bottom-[5px] after:h-0.5 after:rounded-full"
 												: "text-foreground",
 										)}
 									>
@@ -65,34 +64,7 @@ export function SiteHeader({ inert = false }: { inert?: boolean }) {
 					</ul>
 				</nav>
 
-				{/* Trilha dos pilares inline na barra (RQ-020). Fica dentro dos 64 px do handoff Stories (ADR-14): uma faixa
-				    própria abaixo do cabeçalho deslocaria a geometria medida da Home. Só a partir de 1280 px. */}
-				{PILLAR_TRAIL.length > 0 && (
-					<nav aria-label="Pilares" className="ml-2 border-l border-[var(--border-default)] pl-3 max-[1279px]:hidden" data-pillar-trail>
-						<ul className="flex items-center gap-1">
-							{PILLAR_TRAIL.map((item) => {
-								const active = isActive(pathname, item.href);
-								return (
-									<li key={item.href}>
-										<a
-											href={item.href}
-											aria-current={active ? "page" : undefined}
-											className={cn(
-												"inline-flex h-11 items-center rounded-md px-3 text-[0.8125rem] font-semibold tracking-[0.01em] transition-colors",
-												"hover:bg-[var(--surface-hover)] focus-visible:ring-ring/50 outline-none focus-visible:ring-[3px]",
-												active ? "text-foreground" : "text-muted-foreground hover:text-foreground",
-											)}
-										>
-											{item.label}
-										</a>
-									</li>
-								);
-							})}
-						</ul>
-					</nav>
-				)}
-
-				<div className="ml-auto flex items-center gap-0.5 sm:gap-1.5 min-[900px]:ml-2 min-[900px]:border-l min-[900px]:border-[var(--border-default)] min-[900px]:pl-3">
+				<div className="ml-auto flex items-center gap-0.5 sm:gap-1.5 min-[900px]:ml-4">
 					<ThemeToggle />
 					<button
 						type="button"

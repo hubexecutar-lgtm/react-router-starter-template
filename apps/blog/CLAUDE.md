@@ -351,6 +351,8 @@ to `apps/blog/`.
 ### ADR-14: Front-end novo sobre os tokens do handoff OPENAI-STORIES-DESIGN-001 (RC-FRONT-001)
 
 - **Status:** Aceita — implementada (só front-end). Sucede o ADR-13 no que toca à Home: deixa de ser provisória.
+  **Emenda (ADR-22):** os tokens `--ref-*` continuam; a composição (cards quadrados, destaque + pilha, grade de 4
+  colunas, hero do artigo em 61,6864) foi substituída pela do Editorial Hybrid v4.
 - **Contexto:** Depois do reset (ADR-13), o usuário enviou um artigo (`risco-cognitivo.mdx`), duas ilustrações e o
   handoff `OPENAI_STORIES_CAPTURE_HANDOFF_v1.0.0` (capturas e medidas da home "Stories" e de um artigo da OpenAI),
   pedindo que artigos e imagens consumam **os novos tokens** e que os valores do handoff sejam usados **literais**.
@@ -413,7 +415,7 @@ to `apps/blog/`.
   largura do Stories (`stories-container`, `--ref-wide-width`). `/loja` e `/loja/*` respondem 301; nenhum texto "Loja"
   nem de compra. O `/prisma/` (ADR-17) é a primeira ferramenta publicada.
 - **Decisão — shell:** cabeçalho de 64 px do Stories (`--ref-header-h`) com menu e tema (a busca volta quando houver página); a trilha dos pilares
-  fica **dentro** da barra (≥ 1280 px), porque uma faixa abaixo deslocaria a geometria medida do handoff. Abaixo de
+  ficava **dentro** da barra (≥ 1280 px); desde o ADR-22 é a faixa de categorias logo abaixo do cabeçalho. Abaixo de
   900 px: drawer modal `min(84vw,360px)` (foco preso, Esc, `inert`) e barra inferior; header e barra escondem juntos ao
   descer (`components/site/shell.tsx`). O menu só lista destinos que existem (`nav.ts`): Artigos · Mapa · Ferramentas · Sobre
   desde o PR-H (DEC-U6); barra inferior Início · Mapa · Ferramentas. O carrossel é o `MediaCarousel` do Stories (scroll-snap,
@@ -571,3 +573,32 @@ to `apps/blog/`.
     (12 seções, proveniência, candidatas, nenhum ref solto); Ferramentas sem correlação inventada, citação literal,
     problema derivado e o filtro na página.
   - Código do grafo vai para `packages/rc-graph` só quando o `apps/workflow` passar a ler o grafo (ADR-M01).
+
+### ADR-22: Editorial Hybrid v4 fundido com os tokens Stories — cards e estrutura (RC-HYBRID-004)
+
+- **Status:** Aceita — implementada. Emenda o ADR-14 (composição), o ADR-16 (trilha) e o ADR-18 (exceção do RQ-052).
+- **Contexto:** O usuário enviou `Risco_Cognitivo_Editorial_Hybrid_v4.html` e pediu a arquitetura e o CSS completos fundidos
+  com os tokens OpenAI existentes, aplicados na fonte: o ponto de erro principal eram os cards e a estrutura.
+- **Decisão:**
+  - **Tokens:** nada novo de cor. As cores do híbrido são as do ADR-11 (`#202124`, `#6B7280`, `#F5F5F4`, `#EAEAE8`,
+    `#2563EB`/`#1D4ED8`, `#EFF6FF`, `#5F6670`, `#D1D5DB` = `--input`) e as medidas são as `--ref-*` do Stories. O bloco
+    `EDITORIAL-HYBRID-V4` do `global.css` só define a composição (`--hy-*` como aliases) e as classes `hy-*`. Títulos em
+    peso 500 (`--display-weight`). Breakpoints do híbrido: seção 120 → 72 px abaixo de 1024; tile 48/36/28 px; gutter 24 px
+    abaixo de 620.
+  - **Componentes na fonte:**
+    - cabeçalho com marca à esquerda e links em 14 px à direita, na largura de 1440;
+    - **faixa de categorias** (`CategoryRail`: Todos os artigos + 3 pilares) abaixo do cabeçalho;
+    - rodapé em 4 colunas sobre Subtle;
+    - botões `hy-btn-primary`/`hy-btn-secondary` (raio 8, 48 px) no lugar da cápsula preta;
+    - **card de artigo = tile** do híbrido (Subtle, raio 2, padding 48, ilustração 16:9, rótulo do pilar em mono, título 36,
+      lead, "Ler artigo ↗"), em grade 2×2 (`hy-tile-grid`, `role="list"`) na listagem `/artigos/`;
+    - **home** com hero centrado, painel de modelo (Problema, com os 3 pilares em fluxo), tiles dos pilares + mapa, banda
+      de cards brancos (o ciclo) e carrossel de perguntas (por onde começar), sem tirar nenhuma linha do RC-LP-001;
+    - **artigo** com cabeçalho editorial (rótulo, título 46,8432, lead 21, ID e data em mono), coluna de 637,5, h2 com
+      régua de ação 52 × 5, h3 27, referências em caixa Subtle e "Próximo passo" com botão primário e navegação de leitura;
+    - Fontes, Sobre, Mapa, Ferramentas (incluindo os cards do catálogo) e Personalizar com os mesmos rótulos, botões e tiles.
+  - O conteúdo do HTML de referência (textos e IDs RC-ART-001…003 criados lá) **não** entrou: só arquitetura e CSS.
+- **Consequências:**
+  - `stories.spec` mede a nova composição (tiles 2×2 com gap 24 e padding 48, cabeçalho do artigo, régua do h2) e
+    continua travando os tokens `--ref-*` literais; `tokens.spec` espera títulos em 500; baselines visuais regeneradas.
+  - Itens de grade não são `li`: a regra de medida de leitura (68ch) vale para o texto dentro do tile, não para a célula.

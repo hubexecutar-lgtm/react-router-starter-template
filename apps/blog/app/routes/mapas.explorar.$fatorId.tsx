@@ -41,7 +41,7 @@ export default function Fator({ params }: Route.ComponentProps) {
 		<DefaultLayout>
 			<article className="stories-container pb-16">
 				<div className="mx-auto max-w-[var(--ref-reading-width)]">
-					<header className="pt-12 lg:pt-[88px]">
+					<header className="pt-[var(--hy-section)]">
 						<a
 							href={exploreHref(node.id)}
 							data-back-to-map
@@ -59,7 +59,7 @@ export default function Fator({ params }: Route.ComponentProps) {
 						<a
 							href={exploreHref(node.id)}
 							data-cta="primary"
-							className="bg-foreground text-background focus-visible:ring-ring/50 mt-[var(--ref-block-gap)] inline-flex min-h-11 items-center rounded-[var(--ref-pill-radius)] px-6 py-2 text-sm font-medium outline-none focus-visible:ring-[3px]"
+							className="hy-btn-primary mt-[var(--ref-block-gap)]"
 						>
 							Ver no mapa
 						</a>

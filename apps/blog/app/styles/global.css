@@ -132,7 +132,7 @@
   /* StyleGlide provides a better abstraction for fonts */
   --display-family: var(--font-sans);
   --text-family: var(--font-inter);
-  --display-weight: 700;
+  --display-weight: 500; /* Editorial Hybrid v4 + Stories (ADR-22): títulos em 500 */
   --text-weight: 400;
 
   /* ===== DS-CALLOUT-001 / PAL-ANNEX-01 ===== */
@@ -954,6 +954,12 @@ body {
     .rc-surface,
     .rc-cell,
     .rc-band,
+    .hy-tile,
+    .hy-band,
+    .hy-carousel > *,
+    .hy-source,
+    .hy-footer,
+    .hy-model,
     .bg-card,
     .bg-muted,
     .bg-secondary,
@@ -1443,4 +1449,587 @@ html {
 .rc-map .rc-map-node {
   pointer-events: all;
   cursor: pointer;
+}
+
+/* ===== EDITORIAL-HYBRID-V4 (RC-HYBRID-004) ==========================================================
+   Arquitetura e CSS do "Risco Cognitivo — Editorial Hybrid v4" fundidos com os tokens OPENAI-STORIES-DESIGN-001
+   (ADR-22). Nenhum hex novo: as cores do híbrido são as do ADR-11 (texto, muted, Subtle, Tabular, ação, Diagram,
+   muted sobre cinza) e as medidas são as --ref-* do Stories (header 64, gutter 32, leitura 637,5, larga 1078,5,
+   seção 120, h1 61,6864, h2 46,8432). O híbrido acrescenta só a composição: hero centrado, painel de modelo,
+   tiles 2×2 em Subtle, banda de cards brancos, cabeçalho editorial do artigo, faixa de categorias e rodapé em 4 colunas.
+   Abaixo de 1024 px a seção cai para 72 px e o tile para 36/28 px (breakpoints do híbrido: 1024, 900, 620). */
+:root {
+  --hy-shell: var(--ref-wide-width);
+  --hy-wide: 1440px;
+  --hy-read: var(--ref-reading-width);
+  --hy-section: var(--ref-section-gap);
+  --hy-gap: var(--ref-grid-gap);
+  --hy-radius: 2px; /* card = célula (ADR-12) */
+  --hy-btn-radius: var(--radius-control); /* 8 */
+  --hy-btn-h: 48px;
+  --hy-display-lg: var(--ref-h1-size);
+  --hy-display-md: var(--ref-h2-size);
+  --hy-tile-pad: 48px;
+  --hy-tile-min: 340px;
+  --hy-model-pad: 64px;
+  --hy-lead-size: 21px;
+  --hy-title-size: 36px; /* título de tile e do painel de modelo */
+  --hy-card-title: 26px;
+  --hy-subhead: 27px; /* h3 do artigo e título do card do carrossel */
+}
+@media (max-width: 1023.98px) {
+  :root {
+    --hy-section: 72px;
+    --hy-tile-pad: 36px;
+    --hy-model-pad: 40px;
+  }
+}
+@media (max-width: 619.98px) {
+  :root {
+    --ref-gutter: 24px;
+    --hy-tile-pad: 28px;
+    --hy-tile-min: 300px;
+    --hy-model-pad: 28px;
+    --hy-title-size: 30px;
+    --hy-lead-size: 19px;
+  }
+}
+
+/* Rótulo (eyebrow): mono 12, caixa alta, .12em. Só para rótulos curtos (a regra de mono do ADR-12 vale para prosa). */
+.hy-eyebrow {
+  font: 400 12px/1.6 var(--font-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+/* Botões do híbrido: raio 8, altura 48, corpo 17. Um primário por região (RQ-053). */
+.hy-btn-primary,
+.hy-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--hy-btn-h);
+  max-width: 100%;
+  padding: 0 22px;
+  border-radius: var(--hy-btn-radius);
+  border: 1px solid transparent;
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.3;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color var(--dur-fast) var(--ease);
+}
+.hy-btn-primary {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+.hy-btn-primary:hover {
+  background: var(--primary-hover);
+  text-decoration: none;
+}
+.hy-btn-secondary {
+  background: var(--background);
+  border-color: var(--input);
+  color: var(--primary);
+}
+.hy-btn-secondary:hover {
+  background: var(--surface-hover);
+  text-decoration: none;
+}
+.hy-btn-primary:focus-visible,
+.hy-btn-secondary:focus-visible {
+  outline: 3px solid var(--ring);
+  outline-offset: 3px;
+}
+
+/* Hero centrado: eyebrow, h1 61,6864 (peso 500), lead 21 em 60ch, ações. Abaixo de 620 px fica à esquerda. */
+.hy-hero {
+  padding: var(--hy-section) var(--ref-gutter) 64px;
+  text-align: center;
+}
+.hy-hero > * {
+  margin-inline: auto;
+}
+.hy-hero h1 {
+  max-width: 950px;
+  margin-block: 24px 18px;
+  font-family: var(--ref-font);
+  font-size: clamp(2.5rem, 5vw, var(--hy-display-lg));
+  line-height: 1.00525;
+  letter-spacing: -0.03em;
+  font-weight: 500;
+  text-wrap: balance;
+}
+@media (min-width: 1024px) {
+  .hy-hero h1 {
+    line-height: var(--ref-h1-line);
+    letter-spacing: var(--ref-h1-tracking);
+  }
+}
+.hy-hero .hy-lead {
+  max-width: 60ch;
+}
+.hy-lead {
+  font-size: var(--hy-lead-size);
+  line-height: 1.5;
+  letter-spacing: -0.012em;
+  color: var(--muted-foreground);
+  text-wrap: pretty;
+}
+.hy-actions {
+  margin-top: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+@media (max-width: 619.98px) {
+  .hy-hero {
+    padding-top: 64px;
+  }
+  .hy-hero h1 {
+    font-size: 40px;
+  }
+}
+
+/* Container das seções: largura "larga" do Stories (1078,5) ou a do híbrido (1440) para tiles e faixas. */
+.hy-shell,
+.hy-wide {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: var(--ref-gutter);
+}
+.hy-shell > *,
+.hy-wide > * {
+  margin-inline: auto;
+}
+.hy-shell > * {
+  max-width: var(--hy-shell);
+}
+.hy-wide > * {
+  max-width: var(--hy-wide);
+}
+.hy-section {
+  padding-block: var(--hy-section);
+}
+
+/* Introdução de seção: eyebrow, h2 46,8432, parágrafo muted em 60ch. */
+.hy-section-intro {
+  margin-bottom: 40px;
+}
+.hy-section-intro h2 {
+  margin: 0 0 16px;
+  font-size: clamp(1.75rem, 1rem + 3.2vw, var(--hy-display-md));
+  line-height: 1.16;
+  letter-spacing: -0.0295em;
+  font-weight: 500;
+  text-wrap: balance;
+}
+.hy-section-intro .hy-eyebrow {
+  margin-bottom: 12px;
+}
+.hy-section-intro p:not(.hy-eyebrow) {
+  max-width: 60ch;
+  color: var(--muted-foreground);
+}
+
+/* Painel de modelo (feature-media do híbrido): superfície Diagram, título 36, fluxo em células brancas com 3 px. */
+.hy-model {
+  background: var(--surface-model);
+  border-radius: var(--hy-radius);
+  padding: var(--hy-model-pad);
+}
+.hy-model h2,
+.hy-model h3 {
+  margin: 12px 0 24px;
+  font-size: var(--hy-title-size);
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  font-weight: 500;
+  text-wrap: balance;
+}
+.hy-flow {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 3px;
+  margin: 28px 0 20px;
+}
+.hy-flow > * {
+  background: var(--background);
+  padding: 24px;
+}
+.hy-flow strong {
+  display: block;
+  font-size: var(--hy-lead-size);
+  font-weight: 600;
+}
+.hy-flow span {
+  font-size: 14px;
+  color: var(--muted-foreground);
+}
+.hy-note {
+  max-width: 68ch;
+  font-size: 14px;
+  color: var(--muted-foreground-on-gray);
+}
+@media (max-width: 619.98px) {
+  .hy-flow {
+    grid-template-columns: 1fr;
+  }
+  .hy-flow > * {
+    padding: 18px;
+  }
+}
+
+/* Tiles 2×2 (promo do híbrido): Subtle, raio 2, padding 48, à esquerda; o link vai para o pé do tile. */
+.hy-tile-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--hy-gap);
+}
+.hy-tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-height: var(--hy-tile-min);
+  padding: var(--hy-tile-pad);
+  background: var(--surface-subtle);
+  border-radius: var(--hy-radius);
+  text-align: left;
+}
+.hy-tile h2,
+.hy-tile h3 {
+  margin: 14px 0;
+  font-size: var(--hy-title-size);
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+  font-weight: 500;
+  text-wrap: balance;
+}
+.hy-tile p:not(.hy-eyebrow) {
+  margin: 0 0 28px;
+  font-size: 17px;
+  line-height: 1.647;
+  color: var(--muted-foreground-on-gray);
+}
+.hy-tile > :last-child {
+  margin-top: auto;
+}
+.hy-tile .hy-tile-media {
+  width: 100%;
+  margin-bottom: 24px;
+  overflow: hidden;
+  border-radius: var(--hy-radius);
+  background: var(--background);
+}
+@media (max-width: 619.98px) {
+  .hy-tile-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Link de ação do tile/card ("Ler artigo ↗"): cor de ação, sublinha no hover. */
+.hy-more {
+  color: var(--primary);
+  font-weight: 500;
+  text-decoration: none;
+  text-underline-offset: 4px;
+}
+.hy-more:hover {
+  text-decoration: underline;
+}
+
+/* Banda de seleção: fundo Subtle de ponta a ponta com cards brancos (raio 2, padding 32). */
+.hy-band {
+  background: var(--surface-subtle);
+}
+.hy-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+.hy-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--background);
+  border-radius: var(--hy-radius);
+  padding: 32px;
+}
+.hy-card h3 {
+  margin: 16px 0;
+  font-size: var(--hy-card-title);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  font-weight: 500;
+}
+.hy-card p:not(.hy-eyebrow) {
+  color: var(--muted-foreground);
+  font-size: 17px;
+}
+.hy-card > :last-child {
+  margin-top: auto;
+}
+@media (max-width: 899.98px) {
+  .hy-card-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 619.98px) {
+  .hy-card {
+    padding: 24px;
+  }
+}
+
+/* Carrossel de perguntas: cards Subtle de min(82vw, 420px), scroll-snap, barra fina visível. */
+.hy-carousel {
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  padding-bottom: 22px;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+}
+.hy-carousel > * {
+  flex: 0 0 min(82vw, 420px);
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  min-height: 260px;
+  padding: 32px;
+  background: var(--surface-subtle);
+  border-radius: var(--hy-radius);
+}
+.hy-carousel h3 {
+  margin: 0 0 12px;
+  font-size: var(--hy-subhead);
+  line-height: 1.2;
+  font-weight: 500;
+}
+.hy-carousel > * > :last-child {
+  margin-top: auto;
+}
+
+/* Cabeçalho editorial do artigo: centrado em 900 px, eyebrow, título 46,8432 (500), meta mono. */
+.hy-article-header {
+  max-width: 900px;
+  margin: 0 auto 48px;
+  text-align: center;
+}
+.hy-article-header h1 {
+  margin: 16px 0;
+  font-size: clamp(2.125rem, 1rem + 3.2vw, var(--hy-display-md));
+  line-height: 1.159;
+  letter-spacing: -0.0295em;
+  font-weight: 500;
+  text-wrap: balance;
+}
+.hy-article-header .hy-lead {
+  margin-inline: auto;
+  max-width: var(--hy-read);
+}
+@media (max-width: 619.98px) {
+  .hy-article-header {
+    text-align: left;
+  }
+}
+
+/* Corpo do artigo: coluna de 637,5, 17/27,999; h2 com régua de ação; h3 27. Só os filhos diretos do MDX: painéis
+   plain text e diagramas (ADR-05/12) mantêm a tipografia própria. */
+.hy-article {
+  max-width: var(--hy-read);
+  margin-inline: auto;
+}
+.hy-article > p,
+.hy-article > ul > li,
+.hy-article > ol > li {
+  font: 400 var(--ref-body-size) / var(--ref-body-line) var(--ref-font);
+  letter-spacing: var(--ref-body-tracking);
+}
+.hy-article > p {
+  margin: 0 0 24px;
+}
+.hy-article > ul > li,
+.hy-article > ol > li {
+  margin-bottom: 14px;
+}
+.hy-article > ul,
+.hy-article > ol {
+  margin: 0 0 24px;
+  padding-left: 24px;
+}
+.hy-article > ul {
+  list-style: disc;
+}
+.hy-article > ol {
+  list-style: decimal;
+}
+.hy-article > h2 {
+  margin: 2.25em 0 0.72em;
+  font-size: clamp(1.75rem, 1rem + 3.2vw, var(--hy-display-md));
+  line-height: 1.08;
+  letter-spacing: -0.0295em;
+  font-weight: 500;
+  text-wrap: balance;
+}
+.hy-article > h2::before {
+  content: "";
+  display: block;
+  width: 52px;
+  height: 5px;
+  margin-bottom: 20px;
+  background: var(--primary);
+}
+.hy-article > h2:first-child {
+  margin-top: 0;
+}
+.hy-article > h3 {
+  margin: 48px 0 18px;
+  font-size: var(--hy-subhead);
+  line-height: 1.25;
+  letter-spacing: -0.025em;
+  font-weight: 500;
+}
+.hy-article > :is(p, ul, ol) a {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.hy-pullquote {
+  margin: 48px 0;
+  padding: 38px 0;
+  border-block: 1px solid var(--border-default);
+  font-size: 30px;
+  line-height: 1.3;
+  letter-spacing: -0.03em;
+  font-weight: 500;
+}
+.hy-source {
+  background: var(--surface-subtle);
+  padding: 24px;
+  border-radius: var(--hy-radius);
+  font-size: 14px;
+  color: var(--muted-foreground-on-gray);
+}
+.hy-article-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  padding-top: 28px;
+}
+
+/* Faixa de categorias abaixo do cabeçalho: branca, régua inferior, links muted, ativo com 3 px de ação. */
+.hy-category-rail {
+  background: var(--background);
+  border-bottom: 1px solid var(--border-default);
+}
+.hy-category-rail ul {
+  max-width: var(--hy-wide);
+  margin: auto;
+  padding: 12px var(--ref-gutter);
+  display: flex;
+  gap: 32px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  list-style: none;
+}
+.hy-category-rail ul::-webkit-scrollbar {
+  display: none;
+}
+.hy-category-rail a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  white-space: nowrap;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--muted-foreground);
+  text-decoration: none;
+  border-bottom: 3px solid transparent;
+}
+.hy-category-rail a:hover {
+  color: var(--foreground);
+}
+.hy-category-rail a[aria-current] {
+  color: var(--foreground);
+  border-bottom-color: var(--primary);
+}
+@media (max-width: 619.98px) {
+  .hy-category-rail ul {
+    gap: 24px;
+  }
+}
+
+/* Rodapé em 4 colunas sobre Subtle, 14 px muted sobre cinza. */
+.hy-footer {
+  background: var(--surface-subtle);
+  border-top: 1px solid var(--border-default);
+  font-size: 14px;
+  color: var(--muted-foreground-on-gray);
+}
+.hy-footer-cols {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 28px;
+  padding-block: 48px 28px;
+}
+.hy-footer h2 {
+  margin: 0 0 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--foreground);
+}
+.hy-footer a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  color: var(--muted-foreground-on-gray);
+  text-decoration: none;
+}
+.hy-footer a:hover {
+  color: var(--foreground);
+  text-decoration: underline;
+}
+@media (max-width: 899.98px) {
+  .hy-footer-cols {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.hy-tile-grid > * {
+  display: flex;
+}
+.hy-tile-grid > * > .hy-tile {
+  width: 100%;
+}
+/* Tile compacto (listas de fontes, modos do mapa, ferramentas encontradas): mesma superfície, sem altura mínima. */
+.hy-tile--compact {
+  min-height: 0;
+  padding: 32px;
+}
+.hy-tile--compact h2,
+.hy-tile--compact h3 {
+  margin: 8px 0;
+  font-size: var(--hy-card-title);
+}
+.hy-tile--compact p:not(.hy-eyebrow) {
+  margin-bottom: 16px;
+}
+/* Títulos em caixa alta do canônico ("NEUROADAPTATIVOS:") não podem esticar a coluna em 320 px. */
+.hy-tile h2,
+.hy-tile h3,
+.hy-model h2,
+.hy-section-intro h2,
+.hy-article-header h1,
+.hy-article > h2,
+.hy-hero h1 {
+  overflow-wrap: anywhere;
+  hyphens: auto;
+}
+.hy-tile-grid > *,
+.hy-tile {
+  min-width: 0;
 }

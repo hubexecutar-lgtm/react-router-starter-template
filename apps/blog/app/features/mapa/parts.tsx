@@ -117,13 +117,13 @@ export function WhyChain({ id, nodeLink }: { id: string; nodeLink: NodeLink }) {
 	return (
 		<div className="space-y-6" data-why-chain>
 			<div>
-				<h3 className="stories-meta text-muted-foreground">Causas acima</h3>
+				<h3 className="hy-eyebrow">Causas acima</h3>
 				<div className="mt-3">
 					<SentenceList edges={chain.causes} nodeLink={nodeLink} from={id} empty="Nenhuma causa acima deste nó." />
 				</div>
 			</div>
 			<div>
-				<h3 className="stories-meta text-muted-foreground">Compensações abaixo</h3>
+				<h3 className="hy-eyebrow">Compensações abaixo</h3>
 				<div className="mt-3">
 					<SentenceList edges={chain.compensations} nodeLink={nodeLink} from={id} empty="Nenhuma compensação registrada." />
 				</div>
@@ -144,7 +144,7 @@ export function RelationCounts({ id }: { id: string }) {
 		<dl className="flex flex-wrap gap-x-6 gap-y-2" data-relation-counts>
 			{items.map(([k, v]) => (
 				<div key={k} className="flex items-baseline gap-2">
-					<dt className="stories-meta text-muted-foreground">{k}</dt>
+					<dt className="hy-eyebrow">{k}</dt>
 					<dd className="text-foreground font-semibold">{v}</dd>
 				</div>
 			))}

@@ -11,10 +11,9 @@ import { cn } from "@/lib/utils";
 
 const STEPS = ["Focos de trabalho", "Interesses", "Evidências"] as const;
 
-const BTN =
-	"focus-visible:ring-ring/50 inline-flex min-h-11 items-center justify-center rounded-[var(--ref-pill-radius)] px-6 py-2 text-sm font-medium outline-none focus-visible:ring-[3px] disabled:opacity-40";
-const PRIMARY = cn(BTN, "bg-foreground text-background");
-const SECONDARY = cn(BTN, "border border-[var(--border-default)] text-foreground hover:bg-[var(--surface-hover)]");
+const BTN = "disabled:opacity-40";
+const PRIMARY = cn(BTN, "hy-btn-primary");
+const SECONDARY = cn(BTN, "hy-btn-secondary");
 
 const OPTION =
 	"rc-cell rc-surface flex min-h-11 cursor-pointer items-center gap-3 px-4 py-3 has-[:checked]:outline has-[:checked]:outline-2 has-[:checked]:outline-[var(--graph-node-border-selected)] has-[:focus-visible]:ring-[3px] has-[:focus-visible]:ring-ring/50";
@@ -85,8 +84,8 @@ export function Personalize() {
 	return (
 		<div className="stories-container pb-16">
 			<div className="mx-auto max-w-[var(--ref-reading-width)]">
-				<header className="pt-12 lg:pt-[88px]">
-					<p className="stories-meta text-muted-foreground">Mapa causal · Personalizar</p>
+				<header className="pt-[var(--hy-section)]">
+					<p className="hy-eyebrow">Mapa causal · Personalizar</p>
 					<h1 className="stories-h2 mt-3">Personalizar o mapa</h1>
 					<p className="stories-body text-muted-foreground mt-[var(--ref-block-gap)]">
 						Escolha por onde começar. A personalização muda só a ordem e o destaque do mapa, nunca as relações nem as fontes, e fica
@@ -148,7 +147,7 @@ export function Personalize() {
 										<input type="checkbox" name="interesse" value={n.id} checked={prefs.interesses.includes(n.id)} onChange={() => toggle("interesses", n.id)} className="size-6 shrink-0 accent-[var(--primary)]" />
 										<span className="min-w-0">
 											<span className="block font-medium">{n.label}</span>
-											<span className="stories-meta text-muted-foreground">
+											<span className="hy-eyebrow">
 												<span aria-hidden="true">{NODE_TYPES[n.visual].glyph} </span>
 												{NODE_TYPES[n.visual].label}
 											</span>

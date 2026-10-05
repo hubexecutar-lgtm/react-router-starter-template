@@ -32,13 +32,15 @@ test("palette tokens carry the mockup values", async ({ page }) => {
   for (const [token, rgb] of Object.entries(expected)) expect(await color(page, `var(${token})`), token).toBe(rgb);
 });
 
-test("typography: Inter 700 for display, IBM Plex Mono for technical text", async ({ page }) => {
+test("typography: Inter 500 for display (ADR-22), IBM Plex Mono for technical text", async ({ page }) => {
   await page.goto("/admin/rotas/");
   await page.evaluate(() => document.fonts.ready);
   const h1 = await page.locator("h1").evaluate((e) => ({ family: getComputedStyle(e).fontFamily, weight: getComputedStyle(e).fontWeight }));
   expect(h1.family.split(",")[0].replace(/"/g, "").trim()).toBe("Inter");
-  expect(h1.weight).toBe("700");
-  const mono = await page.locator(".rc-eyebrow, .rc-meta").first().evaluate((e) => getComputedStyle(e).fontFamily);
+  expect(h1.weight).toBe("500");
+  // rótulos técnicos: o eyebrow do Editorial Hybrid v4 (ADR-22) na home
+  await page.goto("/");
+  const mono = await page.locator(".hy-eyebrow").first().evaluate((e) => getComputedStyle(e).fontFamily);
   expect(mono.split(",")[0].replace(/"/g, "").trim()).toBe("IBM Plex Mono");
   const body = await page.evaluate(() => getComputedStyle(document.body).fontFamily);
   expect(body.split(",")[0].replace(/"/g, "").trim()).toBe("Inter");
@@ -46,7 +48,7 @@ test("typography: Inter 700 for display, IBM Plex Mono for technical text", asyn
 
 test("secondary text switches to the AA gray inside gray surfaces", async ({ page }) => {
   await page.goto("/");
-  const onCanvas = await page.locator("main .stories-meta").first().evaluate((e) => getComputedStyle(e).color);
+  const onCanvas = await page.locator("main .hy-hero .hy-eyebrow").first().evaluate((e) => getComputedStyle(e).color);
   expect(onCanvas).toBe("rgb(107, 114, 128)");
   // editorial surface (SURFACE) and shadcn card
   await page.goto("/admin/rotas/");

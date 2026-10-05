@@ -1,7 +1,7 @@
 import { expect, test, type Page } from "@playwright/test";
 
-// Tokens do handoff OPENAI-STORIES-DESIGN-001 (valores LITERAIS medidos em 1363×936, DPR 1) nos elementos reais.
-// Só há medida desktop na referência; 390 e 768 só têm o gate de overflow aqui (medidas em docs/audit/aud-web-002).
+// Tokens do handoff OPENAI-STORIES-DESIGN-001 (valores LITERAIS medidos em 1363×936, DPR 1) e a composição do
+// Editorial Hybrid v4 (ADR-22): tiles 2×2 em Subtle, cabeçalho editorial do artigo e coluna de leitura de 637,5 px.
 // Tolerância de 0,75 px para frações de layout; tipografia é comparada em valor exato.
 const DESKTOP = { width: 1363, height: 936 };
 const ARTICLE = "/artigos/risco-cognitivo/";
@@ -64,38 +64,40 @@ test("tokens --ref-* keep the literal handoff values", async ({ page }) => {
 	});
 });
 
-test("home: header, title, toolbar and featured block follow the handoff geometry", async ({ page }) => {
+test("listing: 64 px header, category rail, intro and 2-column tiles (Editorial Hybrid v4)", async ({ page }) => {
 	await page.goto(LIST);
 	const header = await page.locator("body > header").evaluate((el) => el.getBoundingClientRect().height);
-	near(header, 64, 0.5); // a régua inferior é box-shadow: a barra mede 64 px, como na referência
+	near(header, 64, 0.5); // a régua inferior é box-shadow: a barra mede 64 px
+
+	await expect(page.getByRole("navigation", { name: "Pilares", exact: true }).getByRole("link", { name: "Todos os artigos" })).toHaveAttribute("aria-current", "page");
 
 	const h1 = await type(page, "main h1");
 	expect(h1).toMatchObject({ size: "46.8432px", line: "54.2918px", tracking: "-1.38216px", weight: "500" });
 	near(h1.x, 32);
-	near(h1.y, 152, 1);
 
-	const toolbar = await page.locator("[data-stories-toolbar]").evaluate((el) => el.getBoundingClientRect().top + scrollY);
-	near(toolbar, 222, 6); // alinhado ao topo dos botões de 40 px da referência
-
-	const img = await page.locator('[data-story-card="feature"] img').evaluate((el) => {
-		const r = el.parentElement!.getBoundingClientRect();
-		return { x: r.left, y: r.top + scrollY, w: r.width, h: r.height };
-	});
-	near(img.x, 32);
-	near(img.y, 326, 1);
-	near(img.w, 968.25);
-	near(img.h, 544.64, 1);
+	const tiles = await page.locator("[data-story-grid] [data-story-card]").evaluateAll((els) =>
+		els.slice(0, 2).map((el) => {
+			const r = el.getBoundingClientRect();
+			const s = getComputedStyle(el);
+			return { x: r.left, y: r.top, w: r.width, pad: s.paddingLeft, radius: s.borderRadius, bg: s.backgroundColor };
+		}),
+	);
+	expect(tiles).toHaveLength(2);
+	near(tiles[0].y, tiles[1].y); // mesma linha
+	near(tiles[0].w, tiles[1].w);
+	near(tiles[1].x - (tiles[0].x + tiles[0].w), 24); // gap do grid
+	near(tiles[0].x, 32);
+	for (const t of tiles) expect(t).toMatchObject({ pad: "48px", radius: "2px", bg: "rgb(245, 245, 244)" });
 });
 
-test("article: hero, reading column and body follow the handoff tokens", async ({ page }) => {
+test("article: editorial header, reading column and body follow the tokens", async ({ page }) => {
 	await page.goto(ARTICLE);
 	const h1 = await type(page, "[data-article-hero] h1");
-	expect(h1).toMatchObject({ size: "61.6864px", line: "62.0103px", tracking: "-1.85059px", weight: "500" });
-	expect(h1.w).toBeLessThanOrEqual(802.5);
+	expect(h1).toMatchObject({ size: "46.8432px", weight: "500" });
+	expect(h1.w).toBeLessThanOrEqual(900.5);
 
-	const lead = await type(page, "[data-article-lead]"); // o 1º <p> do hero é o eyebrow do pilar (RQ-052)
-	expect(lead).toMatchObject({ size: "17px", line: "27.999px", tracking: "-0.17px", weight: "400" });
-	expect(lead.w).toBeLessThanOrEqual(596.5);
+	const lead = await type(page, "[data-article-lead]");
+	expect(lead).toMatchObject({ size: "21px", weight: "400" });
 
 	const p = await type(page, "[data-article-body] p");
 	expect(p).toMatchObject({ size: "17px", line: "27.999px", tracking: "-0.17px", weight: "400" });
@@ -109,7 +111,13 @@ test("article: hero, reading column and body follow the handoff tokens", async (
 	near(column.x, (1363 - 637.5) / 2, 1); // centrada
 
 	const h2 = await type(page, "[data-article-body] h2");
-	expect(h2).toMatchObject({ size: "46.8432px", line: "54.2918px", tracking: "-1.38216px", weight: "500" });
+	expect(h2).toMatchObject({ size: "46.8432px", weight: "500" });
+	// régua de ação de 52 × 5 px acima de cada h2 do corpo
+	const rule = await page.locator("[data-article-body] h2").first().evaluate((el) => {
+		const s = getComputedStyle(el, "::before");
+		return { w: s.width, h: s.height, bg: s.backgroundColor };
+	});
+	expect(rule).toEqual({ w: "52px", h: "5px", bg: "rgb(37, 99, 235)" });
 
 	const hero = await page.locator("[data-article-hero] img").evaluate((el) => el.getBoundingClientRect().width);
 	near(hero, 1078.5);
@@ -150,20 +158,19 @@ test("article: every plain panel reads as structure, never as monospaced prose (
 	}
 });
 
-test("fixtures: grid of four 306.75 px cards with 24 px gaps, quote and caption tokens", async ({ page }) => {
+test("fixtures: tiles in 2 columns with 24 px gaps, quote and caption tokens", async ({ page }) => {
 	await page.goto(FIXTURES);
-	const cards = await page.locator("[data-story-grid] [data-story-card] img").evaluateAll((els) =>
+	const cards = await page.locator("[data-story-grid] [data-story-card]").evaluateAll((els) =>
 		els.slice(0, 4).map((el) => {
-			const r = el.parentElement!.getBoundingClientRect();
-			return { x: r.left, w: r.width, h: r.height };
+			const r = el.getBoundingClientRect();
+			return { x: r.left, y: r.top, w: r.width };
 		}),
 	);
 	expect(cards).toHaveLength(4);
-	for (const c of cards) {
-		near(c.w, 306.75);
-		near(c.h, 306.75); // imagem quadrada
-	}
-	for (let i = 1; i < 4; i++) near(cards[i].x - (cards[i - 1].x + cards[i - 1].w), 24);
+	near(cards[0].y, cards[1].y);
+	near(cards[2].y, cards[3].y);
+	near(cards[0].x, cards[2].x);
+	near(cards[1].x - (cards[0].x + cards[0].w), 24);
 
 	const quote = await type(page, "blockquote");
 	expect(quote).toMatchObject({ size: "29.5662px", line: "39.0274px", tracking: "-0.739155px", weight: "500" });
@@ -175,11 +182,12 @@ test("fixtures: load more adds a batch without duplicating cards; sort is determ
 	await page.goto(FIXTURES);
 	const titles = () => page.locator("[data-story-card] h2 a, [data-story-card] h3 a").allTextContents();
 	const before = await titles();
-	expect(before).toHaveLength(16);
+	expect(before).toHaveLength(8);
 	const more = page.getByRole("button", { name: "Carregar mais" });
 	const box = await more.boundingBox();
-	near(box!.height, 40, 0.5);
-	expect(await more.evaluate((el) => getComputedStyle(el).borderRadius)).toBe("40px");
+	near(box!.height, 48, 0.5); // botão secundário do híbrido
+	expect(await more.evaluate((el) => getComputedStyle(el).borderRadius)).toBe("8px");
+	await more.click();
 	await more.click();
 	const after = await titles();
 	expect(after).toHaveLength(22);
@@ -188,9 +196,9 @@ test("fixtures: load more adds a batch without duplicating cards; sort is determ
 
 	await page.getByLabel("Classificar").selectOption("title_asc");
 	await expect(page).toHaveURL(/ordem=title_asc/);
-	await expect(page.locator("[data-story-card]")).toHaveCount(16); // lote inicial de novo
+	await expect(page.locator("[data-story-card]")).toHaveCount(8); // lote inicial de novo
 	const sorted = await titles();
-	expect([...sorted].sort((a, b) => a.localeCompare(b, "pt-BR"))).toEqual(sorted.slice(0, 16));
+	expect([...sorted].sort((a, b) => a.localeCompare(b, "pt-BR"))).toEqual(sorted.slice(0, 8));
 	// recarregar com a URL preserva a ordenação
 	await page.reload();
 	await expect(page.getByLabel("Classificar")).toHaveValue("title_asc");
@@ -200,7 +208,7 @@ test("fixtures: category tab filters and returns to Tudo", async ({ page }) => {
 	await page.goto(FIXTURES);
 	await page.getByRole("button", { name: "Categoria B", exact: true }).click();
 	await expect(page).toHaveURL(/categoria=Categoria\+B|categoria=Categoria%20B/);
-	const cats = await page.locator("[data-story-card] .stories-meta").allTextContents();
+	const cats = await page.locator("[data-story-card]").evaluateAll((els) => els.map((e) => e.getAttribute("data-category") ?? ""));
 	expect(cats.length).toBeGreaterThan(0);
 	for (const c of cats) expect(c).toContain("Categoria B");
 	await page.getByRole("button", { name: "Tudo", exact: true }).click();
@@ -209,7 +217,7 @@ test("fixtures: category tab filters and returns to Tudo", async ({ page }) => {
 
 test("keyboard: the card title is a real link with a visible focus state", async ({ page }) => {
 	await page.goto(LIST);
-	const link = page.locator("[data-story-card] h2 a");
+	const link = page.locator("[data-story-card] h2 a").first();
 	await link.focus();
 	await expect(link).toBeFocused();
 	const style = await link.evaluate((el) => getComputedStyle(el).textDecorationLine);

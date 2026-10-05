@@ -29,25 +29,21 @@ export const meta: Route.MetaFunction = ({ location }) =>
 export default function Sobre() {
 	return (
 		<DefaultLayout>
-			<header className="stories-container pt-12 lg:pt-[88px]">
-				<div className="rc-hero-reveal mx-auto flex max-w-[var(--ref-hero-title-w)] flex-col items-center gap-6 text-center">
-					<p className="stories-meta text-muted-foreground">Risco Cognitivo · Sobre</p>
-					<h1 className="stories-h1">Sobre o projeto</h1>
-					<p className="stories-body text-muted-foreground" style={{ maxWidth: "var(--ref-hero-lead-w)" }}>
-						{para(0, 0)}
-					</p>
-					<a
-						href="/artigos/riscos-cognitivos/"
-						data-cta="primary"
-						className="bg-foreground text-background focus-visible:ring-ring/50 inline-flex min-h-11 max-w-full items-center rounded-[var(--ref-pill-radius)] px-6 py-2 text-sm font-medium outline-none focus-visible:ring-[3px]"
-					>
+			<header className="hy-hero rc-hero-reveal">
+				<p className="hy-eyebrow">Risco Cognitivo · Sobre</p>
+				<h1>Sobre o projeto</h1>
+				<p className="hy-lead">{para(0, 0)}</p>
+				<div className="hy-actions">
+					<a href="/artigos/riscos-cognitivos/" data-cta="primary" className="hy-btn-primary">
 						{LANDING.cta}
 					</a>
 				</div>
-				<div className="mx-auto mt-16 max-w-[var(--ref-wide-width)]">
+			</header>
+			<div className="hy-shell">
+				<div>
 					<ArtImage media={RC_IMAGES.cerebroUrbanoMaoB} priority />
 				</div>
-			</header>
+			</div>
 			<section className="stories-container mt-[var(--ref-section-gap)]" aria-labelledby="principios">
 				<div className="mx-auto max-w-[var(--ref-reading-width)]">
 					<h2 id="principios" className="stories-h2">

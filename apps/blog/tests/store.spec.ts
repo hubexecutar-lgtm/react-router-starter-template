@@ -76,7 +76,7 @@ test("hub: categories, featured, skills list and ebook grid", async ({ page }) =
   // plugin/list pattern for skills, connector/grid (cover) pattern for e-books
   await expect(page.locator("section[aria-labelledby=skills] [data-type=skill]")).toHaveCount(4);
   await expect(page.locator("section[aria-labelledby=ebooks] [data-type=ebook]")).toHaveCount(3);
-  await expect(page.locator("section[aria-labelledby=ebooks] [data-slot=card]").first()).toContainText("Capa de exemplo");
+  await expect(page.locator("section[aria-labelledby=ebooks] [data-testid=store-item].hy-tile").first()).toContainText("Capa de exemplo");
 });
 
 test("search filters the mock dataset as the user types", async ({ page }) => {
@@ -133,7 +133,7 @@ test("/ferramentas/ebooks uses the visual grid", async ({ page }) => {
   await page.goto("/ferramentas/ebooks/");
   await page.waitForLoadState("networkidle"); // wait for hydration
   await expect(items(page)).toHaveCount(3);
-  await expect(items(page).first().locator("[data-slot=card]")).toBeVisible();
+  await expect(items(page).first()).toHaveClass(/hy-tile/); // tile do Editorial Hybrid v4 (ADR-22)
 });
 
 test("empty category shows the empty state", async ({ page }) => {
