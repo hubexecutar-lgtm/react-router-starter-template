@@ -41,6 +41,15 @@ As respostas vieram numeradas R1–R9 sem R5; R6–R9 respondem Q5–Q8.
 | DEC-U18 | "Criar 3 nós novos no grafo" (aval do OWNER, ADR-M04) | `COG-MEMORIA-TRABALHO`, `COG-CONTROLE-INIBITORIO`, `COG-FLEXIBILIDADE` (DRAFT, fonte RC-HOME-002) e `REL-056`/`REL-057` (E_INFERRED + PROPOSED) |
 | DEC-U19 | Estatísticas: "Manter com fonte linkada" | IBGE Censo 2022 e Song et al. 2021 (*J Glob Health* 11:04009), conferidas e listadas em `/fontes/` |
 
+### Decisões do RC-PUB-PACK-003 (2026-10-05)
+
+| ID | Decisão do usuário | Efeito |
+|---|---|---|
+| DEC-U20 | Fundador: "Slug novo, P1 intacto" | `/artigos/riscos-cognitivos-guia/`; o RC-ART-P1-001 continua em `/artigos/riscos-cognitivos/` |
+| DEC-U21 | Soluções "Dentro de /ferramentas/" | Tipo `solution` nas Ferramentas cognitivas: `/ferramentas/solucoes/<slug>/` com card 2×2 |
+| DEC-U22 | Fontes: "Canônico RC-SRC-002 + nós EVIDENCE" | 13 fontes conferidas no PubMed/IBGE viram nós EVIDENCE; nenhuma aresta nova |
+| DEC-U23 | Infográficos: "Nenhum agora; card 2×2 em HTML" | Os 6 PNG v2.0 divergem do texto v3 (amarelo de 01/02/04, dores e um PMID extra) e ficam fora até a regeração |
+
 ## 2. Fatos verificados
 
 | ID | Fato |

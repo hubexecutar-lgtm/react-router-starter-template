@@ -15,7 +15,8 @@ export type ItemType =
   | "pdf"
   | "html"
   | "workbook"
-  | "asset";
+  | "asset"
+  | "solution";
 
 /** Provisional contract (DEV-STORE-ROUTES-001); replaced when final schemas exist. */
 export interface StoreItem {

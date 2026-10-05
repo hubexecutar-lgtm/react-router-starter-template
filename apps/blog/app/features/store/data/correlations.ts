@@ -21,4 +21,20 @@ export const TOOL_CORRELATIONS: ToolCorrelation[] = [
 			],
 		},
 	},
+	// Soluções (RC-PUB-PACK-003): só a que cita a compensação no próprio texto. As outras ficam sem ref.
+	{
+		id: "formulario-padrao-do-ciclo",
+		name: "Formulário Padrão do Ciclo",
+		href: "/ferramentas/solucoes/formulario-padrao-do-ciclo/",
+		refs: {
+			compensation_refs: [
+				{
+					ref: "CMP-EXTERNALIZACAO",
+					provenance_class: "D_INTERNAL",
+					via: "content/solucoes/formulario-padrao-do-ciclo.mdx (RC-SOL-004)",
+					quote: "Intake pré-execução + externalização de critérios",
+				},
+			],
+		},
+	},
 ];

@@ -4,6 +4,7 @@ import {
   Code2,
   FileText,
   Image as ImageIcon,
+  LayoutGrid,
   MessageSquareText,
   NotebookPen,
   Sparkles,
@@ -35,6 +36,7 @@ export const ITEM_TYPES: ItemTypeDef[] = [
   { type: "pdf", segment: "pdfs", label: "PDF", plural: "PDFs", description: "Documentos prontos para baixar e imprimir.", icon: FileText, pattern: "grid", defaultArea: "editorial" },
   { type: "html", segment: "html", label: "Ferramenta HTML", plural: "HTML", description: "Ferramentas interativas que rodam no navegador.", icon: Code2, pattern: "grid", defaultArea: "tools" },
   { type: "workbook", segment: "workbooks", label: "Workbook", plural: "Workbooks", description: "Cadernos de trabalho para preencher e aplicar.", icon: NotebookPen, pattern: "grid", defaultArea: "operations" },
+  { type: "solution", segment: "solucoes", label: "Solução", plural: "Soluções", description: "Soluções do método Gestão e Controle de Riscos Cognitivos: da dor ao progresso observável.", icon: LayoutGrid, pattern: "list", defaultArea: "operations" },
   { type: "asset", segment: "assets", label: "Asset visual", plural: "Assets", description: "Recursos visuais e modelos de apoio.", icon: ImageIcon, pattern: "grid", defaultArea: "institutional" },
 ];
 

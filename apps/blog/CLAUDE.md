@@ -635,3 +635,31 @@ to `apps/blog/`.
   - Cor laranja fora da home continua proibida (ADR-03). Para levá-la a outra página, é preciso um ADR novo.
   - `surfaces.spec` trava a camada: hex só no bloco de tokens do `home.css` e nada de `--home-*` no `global.css`.
     `editorial.spec` confere que o `home.css` entra na `/` e não em outra rota.
+
+### ADR-24: Série "Riscos cognitivos", soluções em `/ferramentas/solucoes/` e fontes científicas RC-SRC-002 (RC-PUB-PACK-003)
+
+- **Status:** Aceita — implementada. Emenda o ADR-16 (tipo novo nas Ferramentas), o ADR-18 (fontes) e o ADR-21 (correlação
+  de solução). Intake em `docs/lancamento/LANC-001/intake/RC-PUB-PACK-003/` (`INTAKE-NOTES.md`).
+- **Contexto:** O usuário consolidou o `RC_PUBLICATION_PACK_v3.0.0` (5 artigos, 6 soluções no schema RC-SCHEMA-001,
+  registro de evidências, infográficos v2.0) e decidiu (2026-10-05): o fundador ganha slug próprio sem tocar no P1;
+  as soluções moram nas Ferramentas; as fontes viram canônico com nós no grafo; os infográficos ficam fora até serem
+  regerados na v3.
+- **Decisão:**
+  - **Artigos:** 5 MDX em `content/artigos/` sem reescrita (só slug, comentário de proveniência e, no 04, o infográfico
+    trocado por `SolutionLink`). Metadados em `article-meta.ts` com `contentId` `RC-PUB-003-A00…A04`.
+  - **Soluções:** `ItemType` `solution` (segmento `solucoes`) no catálogo; dados gerados do YAML por
+    `scripts/solutions-from-yaml.mjs` (`app/features/solutions/data.ts`, não editar à mão); texto em
+    `content/solucoes/*.mdx`. A página (`SolutionDetail`) mostra a dor, o **card 2×2** e o MDX. O catálogo das Soluções
+    não leva o selo "de exemplo".
+  - **Cor do card:** amarelo = família attention, vermelho = critical, cinza = Subtle e verde = alias
+    `--solution-progress-*` sobre os primitivos `--green-*` (bloco `SOLUTIONS-CARD` do `global.css`). Sem hex novo; cada
+    quadrante tem número e rótulo em texto.
+  - **Fontes:** canônico `RC-SRC-002` (PMIDs conferidos no PubMed), 13 nós `EVIDENCE` no grafo, sem aresta nova. Listados
+    em `/fontes/#fontes-cientificas` (`app/data/sources-scientific.ts`) e nas referências dos artigos.
+  - **Tabelas Markdown dos artigos** viram a tabela empilhada do site (`ArticleTable`, ADR-12).
+  - **Infográficos:** não publicados nesta versão (v2.0 diverge do texto v3); quando regerados, entram como `<figure>` com
+    o texto equivalente na página.
+- **Consequências:**
+  - `tests/solutions.spec.ts` trava o schema (12 palavras no amarelo, 3 funções, 3 passos, estado da evidência, refs no
+    RC-SRC-002), o card na ordem DOR → … → PROGRESSO, o MDX na página e o axe; `graph.spec` conta as EVIDENCE por canônico.
+  - Mudar uma solução = mudar o YAML no intake e rodar o script.

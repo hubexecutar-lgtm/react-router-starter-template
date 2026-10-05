@@ -2033,3 +2033,146 @@ html {
 .hy-tile {
   min-width: 0;
 }
+
+/* ===== SOLUTIONS-CARD (RC-PUB-PACK-003, ADR-24) ======================================================
+   Card 2×2 do schema RC-SCHEMA-001 nas páginas /ferramentas/solucoes/<slug>/. Os quadrantes usam as famílias que já
+   existem: amarelo = attention, vermelho = critical, cinza = superfície Subtle e verde = alias --solution-progress-*
+   sobre os primitivos --green-* (os mesmos do --area-skills, ADR-08). Sem hex novo. Cada quadrante tem número e rótulo
+   em texto, e o texto corre em --foreground sobre o tom -subtle: a cor nunca é o único indicador. */
+:root {
+  --solution-progress-subtle: var(--green-100);
+  --solution-progress-default: var(--green-600);
+  --solution-progress-strong: var(--green-900);
+}
+.dark {
+  --solution-progress-subtle: var(--green-950);
+  --solution-progress-default: var(--green-400);
+  --solution-progress-strong: var(--green-200);
+}
+.solution-card {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 8px;
+}
+.solution-q {
+  --q-bg: var(--surface-subtle);
+  --q-line: var(--border-strong);
+  --q-ink: var(--foreground);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  padding: 28px;
+  border-left: 4px solid var(--q-line);
+  border-radius: var(--hy-radius);
+  background: var(--q-bg);
+  color: var(--foreground);
+}
+.solution-q[data-quadrant="atencao"] {
+  --q-bg: var(--color-attention-subtle);
+  --q-line: var(--color-attention-default);
+  --q-ink: var(--color-attention-strong);
+}
+.solution-q[data-quadrant="demanda"] {
+  --q-bg: var(--color-critical-subtle);
+  --q-line: var(--color-critical-default);
+  --q-ink: var(--color-critical-strong);
+}
+.solution-q[data-quadrant="progresso"] {
+  --q-bg: var(--solution-progress-subtle);
+  --q-line: var(--solution-progress-default);
+  --q-ink: var(--solution-progress-strong);
+}
+/* No escuro o -strong das famílias é escuro (PROVISIONAL, ADR-03); o rótulo usa o -default, que lá é claro. */
+.dark .solution-q[data-quadrant="atencao"] {
+  --q-ink: var(--color-attention-default);
+}
+.dark .solution-q[data-quadrant="demanda"] {
+  --q-ink: var(--color-critical-default);
+}
+.dark .solution-q[data-quadrant="progresso"] {
+  --q-ink: var(--solution-progress-strong);
+}
+.solution-q-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font: 500 12px/1.5 var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--q-ink);
+}
+.solution-q h3 {
+  font-size: var(--hy-card-title);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  font-weight: 500;
+}
+.solution-yellow {
+  font-size: 21px;
+  line-height: 1.35;
+  font-weight: 600;
+}
+.solution-q ul,
+.solution-q ol {
+  display: grid;
+  gap: 6px;
+  padding-left: 1.2em;
+}
+.solution-q ul {
+  list-style: disc;
+}
+.solution-q ol {
+  list-style: decimal;
+}
+.solution-q dl {
+  display: grid;
+  gap: 8px;
+}
+.solution-q dt {
+  font-weight: 600;
+}
+.solution-metrics {
+  list-style: none !important;
+  padding-left: 0 !important;
+}
+.solution-metrics li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.solution-metrics svg {
+  flex: none;
+  color: var(--q-ink);
+}
+.solution-status strong {
+  font: 600 13px/1.4 var(--font-mono);
+  letter-spacing: 0.06em;
+}
+.solution-refs a {
+  color: var(--q-ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.solution-schema,
+.solution-guardrail {
+  margin-top: 16px;
+  font-size: 14px;
+  color: var(--muted-foreground);
+}
+.solution-schema {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+}
+@media (max-width: 899.98px) {
+  .solution-card {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 619.98px) {
+  .solution-q {
+    padding: 22px 18px;
+  }
+}
