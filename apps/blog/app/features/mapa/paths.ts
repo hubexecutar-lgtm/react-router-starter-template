@@ -4,4 +4,4 @@ import data from "../../data/graph/rc-graph.json";
 import { factorHref, factorIds } from "../../lib/graph/explore";
 import type { CorrelationGraph } from "../../lib/graph/types";
 
-export const MAP_PATHS: string[] = ["/mapas/", "/mapas/explorar/", ...factorIds(data as CorrelationGraph).map(factorHref)];
+export const MAP_PATHS: string[] = ["/mapas/", "/mapas/explorar/", "/mapas/personalizar/", ...factorIds(data as CorrelationGraph).map(factorHref)];

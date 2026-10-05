@@ -6,6 +6,7 @@ export const PAGES = [
 	"/sobre/",
 	"/mapas/",
 	"/mapas/explorar/",
+	"/mapas/personalizar/",
 	"/admin/",
 	"/admin/design-system/",
 	"/admin/handoff/",

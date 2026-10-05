@@ -10,6 +10,7 @@ export default [
 	route("artigos/:slug", "routes/artigos.$slug.tsx"),
 	route("mapas", "routes/mapas._index.tsx"),
 	route("mapas/explorar", "routes/mapas.explorar._index.tsx"),
+	route("mapas/personalizar", "routes/mapas.personalizar.tsx"),
 	route("mapas/explorar/:fatorId", "routes/mapas.explorar.$fatorId.tsx"),
 	route("prisma", "routes/prisma.tsx"),
 	route("ferramentas", "routes/ferramentas._index.tsx"),

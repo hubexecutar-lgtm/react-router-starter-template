@@ -29,7 +29,7 @@ import { cn } from "@/lib/utils";
 
 export type MapMode = { kind: "focus" } | { kind: "why"; causes: EdgeView[]; compensations: EdgeView[] };
 
-type NodeData = { node: MapNode; w: number; focus: boolean; selected: boolean; dim: boolean; onSelect: (id: string) => void };
+type NodeData = { node: MapNode; w: number; focus: boolean; selected: boolean; dim: boolean; preferred: boolean; onSelect: (id: string) => void };
 type EdgeData = { view: EdgeView; active: boolean; dim: boolean; weight: number; targetW: number };
 
 function MapNodeView({ data }: NodeProps<Node<NodeData>>) {
@@ -42,7 +42,8 @@ function MapNodeView({ data }: NodeProps<Node<NodeData>>) {
 				data-map-node={data.node.id}
 				data-node-type={data.node.visual}
 				aria-pressed={data.selected}
-				aria-label={`${data.node.label}, ${t.label}`}
+				aria-label={`${data.node.label}, ${t.label}${data.preferred ? ", seu interesse" : ""}`}
+				data-preferred={data.preferred || undefined}
 				onClick={(e) => {
 					e.stopPropagation();
 					data.onSelect(data.node.id);
@@ -58,7 +59,12 @@ function MapNodeView({ data }: NodeProps<Node<NodeData>>) {
 				<span aria-hidden="true" className="shrink-0 text-base">
 					{t.glyph}
 				</span>
-				<span className="line-clamp-2 min-w-0 break-words">{data.node.label}</span>
+				<span className="line-clamp-2 min-w-0 flex-1 break-words">{data.node.label}</span>
+				{data.preferred && (
+					<span aria-hidden="true" className="text-primary shrink-0" data-preferred-mark>
+						★
+					</span>
+				)}
 			</button>
 			<Handle type="source" position={Position.Bottom} isConnectable={false} className="rc-map-handle" />
 		</>
@@ -132,9 +138,11 @@ type Props = {
 	onSelect: (id: string) => void;
 	onClear: () => void;
 	label: string;
+	/** Interesses do Personalizar (RQ-090): só destaque, nunca filtro. */
+	preferred?: string[];
 };
 
-function Canvas({ focusId, nodes, edges, selectedId, mode, onSelect, onClear, label }: Props) {
+function Canvas({ focusId, nodes, edges, selectedId, mode, onSelect, onClear, label, preferred = [] }: Props) {
 	const wrap = useRef<HTMLDivElement>(null);
 	const [width, setWidth] = useState(0);
 	const flow = useReactFlow();
@@ -155,13 +163,15 @@ function Canvas({ focusId, nodes, edges, selectedId, mode, onSelect, onClear, la
 	const active = selectedId ?? null;
 	const linked = (id: string) => mode.kind === "why" || !active || id === active || edges.some((e) => (e.source.id === active && e.target.id === id) || (e.target.id === active && e.source.id === id));
 
-	const rfNodes: Node<NodeData>[] = (layout?.nodes ?? []).map((p) => {
+	// Ordem do DOM (e do Tab) = ordem do recorte: foco, interesses do Personalizar, resto; a posição vem do layout.
+	const order = (id: string) => nodes.findIndex((n) => n.id === id);
+	const rfNodes: Node<NodeData>[] = [...(layout?.nodes ?? [])].sort((a, b) => order(a.id) - order(b.id)).map((p) => {
 		const node = nodes.find((n) => n.id === p.id)!;
 		return {
 			id: p.id,
 			type: "factor",
 			position: { x: p.x, y: p.y },
-			data: { node, w: p.w, focus: p.id === focusId, selected: p.id === active, dim: !linked(p.id), onSelect },
+			data: { node, w: p.w, focus: p.id === focusId, selected: p.id === active, dim: !linked(p.id), preferred: preferred.includes(p.id), onSelect },
 			draggable: false,
 			selectable: false,
 			focusable: false,

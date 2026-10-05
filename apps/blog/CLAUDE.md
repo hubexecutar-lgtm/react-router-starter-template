@@ -506,3 +506,11 @@ to `apps/blog/`.
   - `tests/mapa.spec.ts` cobre RQ-070…080 (≤ 8 nós, toque, teclado, snaps, Lista = todas as arestas, filtros, escala de cinza,
     320 px, "Por quê?", chunk só na rota, INP ≤ 200 ms, axe); `hig.spec` cobre `/mapas/`, `/mapas/explorar/` e um fator.
   - Novo nó ou relação no grafo aparece no mapa sem mudar código; nó novo ganha página no próximo build.
+- **Emenda (PR-I, RQ-090) — Personalizar:** `/mapas/personalizar/` em 3 passos (focos de trabalho = os 6 problemas de
+  `article-meta.ts`, CF-07; interesses = fatores ao redor dos focos; "Mostrar evidências"). As escolhas ficam só em
+  `localStorage` (`rc.mapa.prefs.v1`, `app/features/mapa/prefs.ts`, validadas na leitura) e mudam só o foco inicial, a
+  ordem (interesses logo após o foco, também no Tab) e o destaque (★ + "seu interesse" no nome acessível); "Mostrar
+  evidências" acrescenta as fontes do foco ao recorte. Nenhuma relação some nem muda. "Restaurar padrão" (no
+  Personalizar e no Explorar) ou limpar os dados do navegador volta ao mapa padrão. `tests/personalizar.spec.ts` cobre
+  o fluxo por toque e por teclado, a rede (só GET, nada com as escolhas), a Lista igual com e sem personalização e
+  preferência inválida.

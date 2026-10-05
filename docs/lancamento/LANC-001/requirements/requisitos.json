@@ -890,12 +890,13 @@
       "titulo": "Personalizar em 3 passos",
       "descricao": "/mapas/personalizar: focos de trabalho, interesses e 'Mostrar evidências'; muda só a ordem e o destaque, nunca os fatos; guardado localmente, sem conta.",
       "prioridade": "P2",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [
         "RQ-070"
       ],
       "fonte": "RC-MOBILE SCR-04; CF-07; CF-07 (ASSUMPTION mantida)",
-      "criterio_aceite": "Limpar dados do navegador volta ao padrão; nenhum dado sai do dispositivo"
+      "criterio_aceite": "Limpar dados do navegador volta ao padrão; nenhum dado sai do dispositivo",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/31"
     },
     {
       "id": "RQ-100",

@@ -7,6 +7,7 @@ import { Link, useSearchParams } from "react-router";
 
 import type { MapMode } from "./CausalMap.client";
 import { FactorSheet, type Snap } from "./FactorSheet";
+import { clearPrefs, loadPrefs, preferredFirst, preferredFocus, type MapPrefs } from "./prefs";
 import { EdgeSentence, TypeBadge, WhyChain, type NodeLink } from "./parts";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -39,7 +40,7 @@ const isMode = (v: string | null): v is ModeId => MODES.some((m) => m.id === v);
 const isType = (v: string): v is VisualType => (VISUAL_TYPES as readonly string[]).includes(v);
 
 /** Recorte inicial em texto (sem JS e antes do canvas): os mesmos nós, como links para as páginas dos fatores. */
-function StaticNodes({ nodes, focusId }: { nodes: MapNode[]; focusId: string }) {
+function StaticNodes({ nodes, focusId, preferred = [] }: { nodes: MapNode[]; focusId: string; preferred?: string[] }) {
 	return (
 		<ul className="flex min-h-[360px] flex-wrap content-start items-start gap-3 py-4" data-map-static>
 			{nodes.map((n) => (
@@ -55,7 +56,15 @@ function StaticNodes({ nodes, focusId }: { nodes: MapNode[]; focusId: string }) 
 					>
 						<span aria-hidden="true">{NODE_TYPES[n.visual].glyph}</span>
 						{n.label}
-						<span className="sr-only">, {NODE_TYPES[n.visual].label}</span>
+						<span className="sr-only">
+							, {NODE_TYPES[n.visual].label}
+							{preferred.includes(n.id) && ", seu interesse"}
+						</span>
+						{preferred.includes(n.id) && (
+							<span aria-hidden="true" className="text-primary">
+								★
+							</span>
+						)}
 					</a>
 				</li>
 			))}
@@ -70,8 +79,13 @@ export function ExploreView() {
 	useEffect(() => setHydrated(true), []);
 	const q = (k: string) => (hydrated ? params.get(k) : null);
 
+	// Personalizar (RQ-090): lido só no navegador; muda o foco inicial, a ordem e o destaque, nunca os fatos.
+	const [prefs, setPrefs] = useState<MapPrefs | null>(null);
+	useEffect(() => setPrefs(loadPrefs()), []);
+	const preferred = prefs?.interesses ?? [];
+
 	const fromUrl = q("foco");
-	const focusId = fromUrl && nodeById(RC_GRAPH, fromUrl) ? fromUrl : DEFAULT_FOCUS;
+	const focusId = fromUrl && nodeById(RC_GRAPH, fromUrl) ? fromUrl : (preferredFocus(prefs) ?? DEFAULT_FOCUS);
 	// Tocar no fundo (ou Esc) limpa a seleção, mas o foco continua no centro.
 	const [cleared, setCleared] = useState(false);
 	const selectedId = fromUrl && nodeById(RC_GRAPH, fromUrl) && !cleared ? fromUrl : null;
@@ -83,7 +97,10 @@ export function ExploreView() {
 	const [why, setWhy] = useState(false);
 	const [tab, setTab] = useState("mapa");
 
-	const view = useMemo(() => visibleGraph(RC_GRAPH, focusId, types), [focusId, types.join(",")]); // eslint-disable-line react-hooks/exhaustive-deps
+	const view = useMemo(() => {
+		const v = visibleGraph(RC_GRAPH, focusId, types, { evidence: prefs?.evidencias });
+		return { ...v, nodes: [v.nodes[0], ...preferredFirst(v.nodes.slice(1), prefs)] };
+	}, [focusId, types.join(","), prefs]); // eslint-disable-line react-hooks/exhaustive-deps
 	const typesHere = useMemo(() => [...new Set(neighborhood(RC_GRAPH, focusId).nodes.map((n) => nodeById(RC_GRAPH, n.id)!.visual))], [focusId]);
 	const chain = useMemo(() => chainFor(RC_GRAPH, focusId), [focusId]);
 	const mapMode: MapMode = useMemo(() => (why ? { kind: "why", ...chain } : { kind: "focus" }), [why, chain]);
@@ -166,6 +183,32 @@ export function ExploreView() {
 					</p>
 				</header>
 
+				<p className="stories-caption text-muted-foreground mt-6 flex flex-wrap items-center gap-x-4 gap-y-1" data-prefs-bar>
+					{prefs ? (
+						<>
+							<span>Mapa personalizado neste navegador.</span>
+							<a href="/mapas/personalizar/" className="text-primary inline-flex min-h-11 items-center font-medium underline underline-offset-4 hover:no-underline">
+								Editar
+							</a>
+							<button
+								type="button"
+								data-reset-prefs
+								onClick={() => {
+									clearPrefs();
+									setPrefs(null);
+								}}
+								className="text-primary focus-visible:ring-ring/50 inline-flex min-h-11 items-center rounded-sm font-medium underline underline-offset-4 outline-none hover:no-underline focus-visible:ring-[3px]"
+							>
+								Restaurar padrão
+							</button>
+						</>
+					) : (
+						<a href="/mapas/personalizar/" className="text-primary inline-flex min-h-11 items-center font-medium underline underline-offset-4 hover:no-underline">
+							Personalizar por onde começar
+						</a>
+					)}
+				</p>
+
 				<nav aria-label="Modos do mapa" className="mt-8 flex flex-wrap gap-2" data-map-modes>
 					<Link to={href({ modo: null, tipo: null })} preventScrollReset replace aria-current={!mode && !typeParam.length ? "true" : undefined} className={chipClass(!mode && !typeParam.length)}>
 						Todos
@@ -212,10 +255,11 @@ export function ExploreView() {
 							</p>
 							<div className="rc-cell rc-surface overflow-hidden">
 								{hydrated ? (
-									<Suspense fallback={<StaticNodes nodes={shown} focusId={focusId} />}>
+									<Suspense fallback={<StaticNodes nodes={shown} focusId={focusId} preferred={preferred} />}>
 										<CausalMap
 											focusId={focusId}
 											nodes={shown}
+											preferred={preferred}
 											edges={shownEdges}
 											selectedId={selectedId}
 											mode={mapMode}
@@ -225,7 +269,7 @@ export function ExploreView() {
 										/>
 									</Suspense>
 								) : (
-									<StaticNodes nodes={shown} focusId={focusId} />
+									<StaticNodes nodes={shown} focusId={focusId} preferred={preferred} />
 								)}
 							</div>
 							{view.hidden > 0 && !why && (
@@ -255,6 +299,7 @@ export function ExploreView() {
 										<li key={n.id} className="flex flex-wrap items-baseline gap-x-3">
 											{pageLink(n, n.label)}
 											<TypeBadge type={n.visual} />
+											{preferred.includes(n.id) && <span className="stories-meta text-primary">★ seu interesse</span>}
 										</li>
 									))}
 								</ul>
