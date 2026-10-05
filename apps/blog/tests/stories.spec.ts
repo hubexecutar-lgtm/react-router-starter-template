@@ -64,10 +64,10 @@ test("tokens --ref-* keep the literal handoff values", async ({ page }) => {
 	});
 });
 
-test("listing: 64 px header, category rail, intro and 2-column tiles (Editorial Hybrid v4)", async ({ page }) => {
+test("listing: 72 px header (cloudflare.com, ADR-25), category rail, intro and 2-column tiles (Editorial Hybrid v4)", async ({ page }) => {
 	await page.goto(LIST);
 	const header = await page.locator("body > header").evaluate((el) => el.getBoundingClientRect().height);
-	near(header, 64, 0.5); // a régua inferior é box-shadow: a barra mede 64 px
+	near(header, 72, 0.5); // cabeçalho da cloudflare.com (ADR-25): 72 px
 
 	await expect(page.getByRole("navigation", { name: "Pilares", exact: true }).getByRole("link", { name: "Todos os artigos" })).toHaveAttribute("aria-current", "page");
 

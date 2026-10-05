@@ -38,9 +38,9 @@ test("typography: Inter 500 for display (ADR-22), IBM Plex Mono for technical te
   const h1 = await page.locator("h1").evaluate((e) => ({ family: getComputedStyle(e).fontFamily, weight: getComputedStyle(e).fontWeight }));
   expect(h1.family.split(",")[0].replace(/"/g, "").trim()).toBe("Inter");
   expect(h1.weight).toBe("500");
-  // rótulos técnicos: o eyebrow do Editorial Hybrid v4 (ADR-22) na home
+  // rótulos técnicos: a numeração dos passos do método na home (ADR-25)
   await page.goto("/");
-  const mono = await page.locator(".hy-eyebrow").first().evaluate((e) => getComputedStyle(e).fontFamily);
+  const mono = await page.locator(".cfh-step-n").first().evaluate((e) => getComputedStyle(e).fontFamily);
   expect(mono.split(",")[0].replace(/"/g, "").trim()).toBe("IBM Plex Mono");
   const body = await page.evaluate(() => getComputedStyle(document.body).fontFamily);
   expect(body.split(",")[0].replace(/"/g, "").trim()).toBe("Inter");

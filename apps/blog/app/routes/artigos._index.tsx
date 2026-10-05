@@ -2,6 +2,7 @@
 // tokens --ref-* do global.css e os artigos de content/artigos. Era a home; desde o LANC-001 PR-E vive em /artigos/.
 import type { Route } from "./+types/artigos._index";
 
+import { CategoryRail } from "@/components/site/CategoryRail";
 import { StoriesHome } from "@/components/stories/StoriesHome";
 import { SITE_DESCRIPTION } from "@/consts";
 import { SHARE_IMAGE } from "@/data/article-media";
@@ -19,6 +20,7 @@ export const meta: Route.MetaFunction = ({ location }) =>
 export default function Page({ loaderData }: Route.ComponentProps) {
 	return (
 		<DefaultLayout>
+			<CategoryRail />
 			<StoriesHome stories={loaderData.stories} title="Artigos" problems />
 		</DefaultLayout>
 	);

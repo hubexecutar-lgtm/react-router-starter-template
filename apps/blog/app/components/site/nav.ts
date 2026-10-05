@@ -37,11 +37,26 @@ export const PILLAR_TRAIL: NavItem[] = [
   { label: "Ferramentas e Soluções", href: "/artigos/compensacao-cognitiva/" },
 ];
 
-/** Rodapé-diretório: o mesmo menu do topo (RQ-050), mais Início, Fontes, os pilares e as ferramentas. */
+/** Rodapé-diretório (ADR-25): o mesmo menu do topo (RQ-050), os pilares, as ferramentas e o projeto, em 4 colunas. */
 export const FOOTER_NAV: { title: string; items: NavItem[] }[] = [
-  { title: "Explorar", items: [{ label: "Início", href: "/" }, { label: "Comece por aqui", href: "/comece/" }, ...PRIMARY_NAV, { label: "Fontes", href: "/fontes/" }] },
+  { title: "Explorar", items: [{ label: "Início", href: "/" }, ...PRIMARY_NAV] },
   { title: "Os 3 pilares", items: PILLAR_TRAIL },
-  { title: "Ferramentas", items: [{ label: "Prisma de execução", href: "/prisma/" }] },
+  {
+    title: "Ferramentas",
+    items: [
+      { label: "Prisma de execução", href: "/prisma/" },
+      { label: "Soluções", href: "/ferramentas/solucoes/" },
+      { label: "Personalizar o mapa", href: "/mapas/personalizar/" },
+    ],
+  },
+  {
+    title: "Projeto",
+    items: [
+      { label: "Comece por aqui", href: "/comece/" },
+      { label: "Guia: riscos cognitivos", href: "/artigos/riscos-cognitivos-guia/" },
+      { label: "Fontes", href: "/fontes/" },
+    ],
+  },
 ];
 
 export const isActive = (pathname: string, href: string) =>

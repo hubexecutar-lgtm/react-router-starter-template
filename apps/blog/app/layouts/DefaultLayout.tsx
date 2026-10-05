@@ -1,7 +1,6 @@
 import type { ReactNode } from "react";
 
 import { BottomBar } from "@/components/site/BottomBar";
-import { CategoryRail } from "@/components/site/CategoryRail";
 import { MobileDrawer } from "@/components/site/MobileDrawer";
 import { ShellProvider, useShell } from "@/components/site/shell";
 import { SiteFooter } from "@/components/site/SiteFooter";
@@ -10,7 +9,8 @@ import { SiteHeader } from "@/components/site/SiteHeader";
 // module load in the browser (no-op on the server).
 import "@/lib/plain/copy";
 
-// Shell (LANC-001 PR-C + Editorial Hybrid v4, ADR-22): cabeçalho, faixa de categorias, drawer e barra inferior no mobile.
+// Shell (LANC-001 PR-C, ADR-25): cabeçalho e rodapé no padrão da cloudflare.com, drawer e barra inferior no mobile. A
+// faixa de categorias (trilha dos pilares, RQ-020) saiu do topo global e fica nas páginas de artigos.
 function Shell({ children }: { children: ReactNode }) {
 	const { drawerOpen } = useShell();
 	// Com o drawer aberto, o resto da página fica inert (RQ-023). Sem wrapper: o cabeçalho continua
@@ -26,7 +26,6 @@ function Shell({ children }: { children: ReactNode }) {
 				Pular para o conteúdo
 			</a>
 			<SiteHeader inert={drawerOpen} />
-			<CategoryRail inert={drawerOpen} />
 			<main id="conteudo" {...inert}>
 				{children}
 			</main>

@@ -663,3 +663,34 @@ to `apps/blog/`.
   - `tests/solutions.spec.ts` trava o schema (12 palavras no amarelo, 3 funções, 3 passos, estado da evidência, refs no
     RC-SRC-002), o card na ordem DOR → … → PROGRESSO, o MDX na página e o axe; `graph.spec` conta as EVIDENCE por canônico.
   - Mudar uma solução = mudar o YAML no intake e rodar o script.
+
+### ADR-25: Home e shell espelhando a cloudflare.com (CF-MIRROR)
+
+- **Status:** Aceita — implementada. Emenda o ADR-22 (cabeçalho de 72 px, trilha dos pilares fora do cabeçalho) e o
+  ADR-23 (laranja e composição da home).
+- **Contexto:** O usuário considerou a home do HOME-BRAIN-001 distante da referência e pediu o espelho da cloudflare.com
+  (2026-10-05). Os valores foram medidos no render real da referência (estilos computados a 1440 e 390 px). Ele decidiu: fonte
+  grotesca aberta mais próxima; o laranja exato com texto pequeno escuro; e home mais cabeçalho e rodapé no site todo.
+- **Decisão:**
+  - **Fonte:** Hanken Grotesk (OFL) no lugar da FT Kunst Grotesk, que é comercial, e IBM Plex Mono para os rótulos técnicos.
+    O corpo das outras páginas continua Inter (ADR-22).
+  - **Shell (todas as páginas):** bloco `CF-MIRROR` do `global.css` com os tokens `--cf-*`: texto #262626, secundário
+    #707070, borda #F0F0F0, fundos #FDFDFC/#F9F7F6, cabeçalho de 72 px, contêiner de 1200 px e botões pílula de 38/50 px.
+    - Cabeçalho: logo, menu central e as pílulas Fontes e Comece por aqui.
+    - Rodapé: marca, 4 colunas (`FOOTER_NAV`), faixa de pontos e barra final.
+    - A trilha dos pilares (`CategoryRail`) sai do cabeçalho e fica só em `/artigos/` e nos artigos.
+  - **Home (`home.css`):** a referência é seguida seção a seção, com o nosso texto (RC-HOME-002 sem reescrita):
+    - hero → hero;
+    - "Region: Earth" → cérebro + trilha 01–03;
+    - prova social → dados Brasil/Mundo em abas;
+    - "Why choose" → o que é risco;
+    - preços → exigências + problemas;
+    - "Tailored" → método + apoio;
+    - CTA com letreiro → Entenda → Estruture → Execute.
+  - **Cor (AA):** `--home-accent` é o #FF5E1F da referência. Branco sobre ele (3,05:1) só em texto grande (h1, h2 do CTA,
+    fecho do painel de risco). Texto pequeno sobre laranja é #262626 (`--home-on-accent-ink`, 4,95:1). Laranja como texto
+    sobre branco usa `--home-accent-text` (#BF4C14).
+- **Consequências:**
+  - `stories.spec` mede o cabeçalho de 72 px; `shell.spec` procura a trilha em `/artigos/`; `editorial.spec` segue a nova
+    ordem das seções (Hero, Mapa, Trilha, Dados, Risco, Exigências, Problemas, Método, Apoio, CTA).
+  - O laranja continua restrito à home (ADR-03); o shell usa só neutros.

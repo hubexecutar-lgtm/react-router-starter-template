@@ -122,13 +122,13 @@ test.describe("E · conteúdo canônico (RQ-040…046)", () => {
       }
     }
     const order = await page.locator("[data-home-section]").evaluateAll((els) => els.map((e) => e.getAttribute("data-home-section")));
-    expect(order).toEqual(["Hero", "Dados", "Risco", "Mapa", "Trilha", "Exigências", "Problemas", "Método", "Apoio", "CTA"]);
+    expect(order).toEqual(["Hero", "Mapa", "Trilha", "Dados", "Risco", "Exigências", "Problemas", "Método", "Apoio", "CTA"]);
     await expect(page.locator("[data-cta=primary]")).toHaveCount(1);
     await expect(page.getByRole("link", { name: "Comece por aqui" }).first()).toHaveAttribute("href", "/comece/");
     // Camada própria da home (ADR-23): o home.css só entra na home.
     const homeCss = () => page.evaluate(() => [...document.querySelectorAll<HTMLLinkElement>("link[rel=stylesheet]")].some((l) => /\/home[-.][^/]*\.css$/.test(l.href)));
     expect(await homeCss()).toBe(true);
-    expect(await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue("--home-accent").trim())).toBe("#ff5b0a");
+    expect(await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue("--home-accent").trim())).toBe("#ff5e1f");
     await page.goto("/comece/");
     expect(await homeCss()).toBe(false);
   });
@@ -136,7 +136,7 @@ test.describe("E · conteúdo canônico (RQ-040…046)", () => {
   test("os números da home citam a fonte primária, também listada em /fontes/", async ({ page }) => {
     await page.goto("/");
     for (const href of ["https://educa.ibge.gov.br/jovens/materias-especiais/22700-censo-2022-contou-2-4-milhoes-de-pessoas-diagnosticadas-com-autismo-no-brasil.html", "https://doi.org/10.7189/jogh.11.04009"]) {
-      await expect(page.locator(`.home-stat a[href="${href}"]`)).toHaveCount(1);
+      await expect(page.locator(`.cfh-quote a[href="${href}"]`)).toHaveCount(1);
       await page.goto("/fontes/");
       await expect(page.locator(`[data-home-sources] a[href="${href}"]`)).toHaveCount(1);
       await page.goto("/");

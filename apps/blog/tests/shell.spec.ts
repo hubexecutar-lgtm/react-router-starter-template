@@ -16,7 +16,8 @@ test.describe("desktop ≥ 900px (RQ-020)", () => {
   test.use({ viewport: DESKTOP });
 
   test("menu links and the pillar trail are visible; no menu button nor drawer", async ({ page }) => {
-    await page.goto("/");
+    // ADR-25: a trilha dos pilares saiu do cabeçalho e vive nas páginas de artigos.
+    await page.goto("/artigos/");
     const nav = page.getByRole("navigation", { name: "Principal", exact: true });
     for (const label of ["Artigos", "Mapa", "Ferramentas", "Sobre"]) await expect(nav.getByRole("link", { name: label, exact: true })).toBeVisible();
     const trail = page.getByRole("navigation", { name: "Pilares", exact: true });
