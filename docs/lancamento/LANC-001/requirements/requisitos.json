@@ -1011,12 +1011,14 @@
       "titulo": "correlation_refs no Quick Framework",
       "descricao": "Adapter adiciona correlation_refs e solution_candidates sem mudar as 12 seções.",
       "prioridade": "P3",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [
         "RQ-060"
       ],
       "fonte": "Teia N2; DEC-U10",
-      "criterio_aceite": "—"
+      "criterio_aceite": "—",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/33",
+      "nota": "Adapter do QF (12 seções intactas, correlation_refs + solution_candidates). build-quick-frameworks.mjs saiu no reset (ADR-13); o fluxo de publicação chama o adapter quando voltar."
     },
     {
       "id": "RQ-121",
@@ -1025,13 +1027,15 @@
       "titulo": "Descoberta em Ferramentas por problema + compensação",
       "descricao": "Ferramentas ganham correlation_refs e filtro por problem + operational_function + compensation + fit (adapter da Teia antes chamado Solution Store).",
       "prioridade": "P3",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [
         "RQ-060",
         "RQ-100"
       ],
       "fonte": "Teia N3/N7; DEC-U10",
-      "criterio_aceite": "—"
+      "criterio_aceite": "—",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/33",
+      "nota": "correlation_refs só para ferramentas publicadas (Prisma); filtro problema + compensação em /ferramentas/. Função operacional e fit pendentes de nós (OWNER)."
     },
     {
       "id": "RQ-122",
@@ -1040,12 +1044,14 @@
       "titulo": "Registries canônicos",
       "descricao": "problems, operational_functions, cognitive_capacities, factors, compensations, controls, capabilities, app_features.",
       "prioridade": "P3",
-      "status": "READY",
+      "status": "DONE",
       "depende_de": [
         "RQ-060"
       ],
       "fonte": "Teia N1; DEC-U10",
-      "criterio_aceite": "—"
+      "criterio_aceite": "—",
+      "entregue_em": "https://github.com/hubexecutar-lgtm/react-router-starter-template/pull/33",
+      "nota": "8 registries como projeções do grafo; operational_functions, capabilities e app_features vazios e pendentes com o OWNER."
     }
   ]
 }

@@ -9,7 +9,7 @@
 | P0 | 0 | 0 | 0 | 0 | 16 |
 | P1 | 0 | 0 | 0 | 0 | 26 |
 | P2 | 0 | 0 | 1 | 0 | 10 |
-| P3 | 3 | 0 | 2 | 1 | 1 |
+| P3 | 0 | 0 | 2 | 1 | 4 |
 
 Total: 60 requisitos em 12 épicos.
 
@@ -129,6 +129,6 @@ Total: 60 requisitos em 12 épicos.
 
 | ID | Tipo | Prio | Status | Requisito | Critério de aceite | Depende | Fonte |
 |---|---|---|---|---|---|---|---|
-| RQ-120 | DATA | P3 | READY | **correlation_refs no Quick Framework.** Adapter adiciona correlation_refs e solution_candidates sem mudar as 12 seções. | — | RQ-060 | Teia N2; DEC-U10 |
-| RQ-121 | DATA | P3 | READY | **Descoberta em Ferramentas por problema + compensação.** Ferramentas ganham correlation_refs e filtro por problem + operational_function + compensation + fit (adapter da Teia antes chamado Solution Store). | — | RQ-060, RQ-100 | Teia N3/N7; DEC-U10 |
-| RQ-122 | DATA | P3 | READY | **Registries canônicos.** problems, operational_functions, cognitive_capacities, factors, compensations, controls, capabilities, app_features. | — | RQ-060 | Teia N1; DEC-U10 |
+| RQ-120 | DATA | P3 | DONE | **correlation_refs no Quick Framework.** Adapter adiciona correlation_refs e solution_candidates sem mudar as 12 seções. | — | RQ-060 | Teia N2; DEC-U10 |
+| RQ-121 | DATA | P3 | DONE | **Descoberta em Ferramentas por problema + compensação.** Ferramentas ganham correlation_refs e filtro por problem + operational_function + compensation + fit (adapter da Teia antes chamado Solution Store). | — | RQ-060, RQ-100 | Teia N3/N7; DEC-U10 |
+| RQ-122 | DATA | P3 | DONE | **Registries canônicos.** problems, operational_functions, cognitive_capacities, factors, compensations, controls, capabilities, app_features. | — | RQ-060 | Teia N1; DEC-U10 |
