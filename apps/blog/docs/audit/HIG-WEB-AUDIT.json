@@ -3612,7 +3612,7 @@
         "SOURCE": "WCAG 2.2 AA",
         "STATUS": "PASS",
         "SEVERITY": "P1",
-        "EVIDENCE": "28 regras ok",
+        "EVIDENCE": "30 regras ok",
         "REMEDIATION": "—",
         "OWNER": "A DEFINIR",
         "VERIFICATION": "tests/hig.spec.ts — reteste (Chromium 1440/390/320)"
