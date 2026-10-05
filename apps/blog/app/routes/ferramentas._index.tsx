@@ -1,6 +1,7 @@
 import type { Route } from "./+types/ferramentas._index";
 
 import { StoreCatalog } from "@/features/store/components/store-catalog";
+import { ToolDiscovery } from "@/features/store/components/tool-discovery";
 import { listItems } from "@/features/store/data/repository";
 import DefaultLayout from "@/layouts/DefaultLayout";
 import { seo } from "@/lib/seo";
@@ -19,6 +20,7 @@ export default function Ferramentas() {
 		<DefaultLayout>
 			<section className="stories-container max-w-[var(--ref-wide-width)] pt-12 pb-16 lg:pt-[88px] lg:pb-24">
 				<StoreCatalog items={listItems()} />
+				<ToolDiscovery />
 			</section>
 		</DefaultLayout>
 	);
