@@ -47,7 +47,7 @@ test("typography: Inter 500 for display (ADR-22), IBM Plex Mono for technical te
 });
 
 test("secondary text switches to the AA gray inside gray surfaces", async ({ page }) => {
-  await page.goto("/");
+  await page.goto("/comece/");
   const onCanvas = await page.locator("main .hy-hero .hy-eyebrow").first().evaluate((e) => getComputedStyle(e).color);
   expect(onCanvas).toBe("rgb(107, 114, 128)");
   // editorial surface (SURFACE) and shadcn card

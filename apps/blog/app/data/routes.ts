@@ -55,7 +55,8 @@ const SRC = "ADR-13 (site do zero)";
 
 export const ROUTES: HubEntry[] = [
   // ---------------------------------------------------------------- Site
-  { id: "home", title: "Página inicial", description: "Texto canônico RC-LP-001 (3 pilares, por onde começar) sobre o Stories (LANC-001 RQ-040).", group: "Site", kind: "route", path: "/", exposure: "public", addedAt: "2026-10-03", source: SRC },
+  { id: "home", title: "Página inicial", description: "Home RC-HOME-002 (HOME-BRAIN-001): hero, dados com fonte, cérebro 3D com as funções executivas ligadas ao mapa, método e CTA.", group: "Site", kind: "route", path: "/", exposure: "public", addedAt: "2026-10-03", source: SRC },
+  { id: "comece", title: "Comece por aqui", description: "Texto canônico RC-LP-001 (3 pilares, por onde começar), sem reescrita; era a home até o HOME-BRAIN-001 (LANC-001 RQ-040).", group: "Site", kind: "route", path: "/comece/", exposure: "public", addedAt: "2026-10-05", source: "HOME-BRAIN-001" },
   { id: "artigos", title: "Artigos", description: "Listagem Stories (destaque, grade, carregar mais) com filtro por problema (?problema=, RQ-054). Era a home até o LANC-001 PR-E.", group: "Site", kind: "route", path: "/artigos/", exposure: "public", addedAt: "2026-10-04", source: "LANC-001 G1" },
   { id: "fontes", title: "Fontes", description: "As fontes do RC-SRC-001 com link e o tema que sustentam (RQ-042); conceitos próprios do projeto rotulados (RQ-043).", group: "Site", kind: "route", path: "/fontes/", exposure: "public", addedAt: "2026-10-04", source: "LANC-001 G1" },
   { id: "sobre", title: "Sobre", description: "O projeto, seus princípios e o que é conceito próprio, com trechos dos textos canônicos (RQ-050).", group: "Site", kind: "route", path: "/sobre/", exposure: "public", addedAt: "2026-10-04", source: "LANC-001 G1" },

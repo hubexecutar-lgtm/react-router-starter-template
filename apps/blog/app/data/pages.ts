@@ -4,6 +4,7 @@ export const PAGES = [
 	"/artigos/",
 	"/fontes/",
 	"/sobre/",
+	"/comece/",
 	"/mapas/",
 	"/mapas/explorar/",
 	"/mapas/personalizar/",

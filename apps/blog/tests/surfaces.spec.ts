@@ -287,6 +287,7 @@ test.describe("visual regression (minimum routes)", () => {
     ["admin", "/admin/"],
     ["artigo", "/artigos/risco-cognitivo/"],
     ["home", "/"],
+    ["comece", "/comece/"],
   ];
   for (const [name, route] of shots) {
     for (const [label, size] of [["desktop", { width: 1280, height: 900 }], ["mobile", { width: 390, height: 844 }]] as const) {

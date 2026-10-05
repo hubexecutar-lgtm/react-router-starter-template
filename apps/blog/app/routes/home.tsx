@@ -1,19 +1,26 @@
-// Home (LANC-001 RQ-040): o texto canônico RC-LP-001 sobre o Stories. A listagem de artigos mudou para /artigos/.
+// Home RC-HOME-002 (HOME-BRAIN-001): a home do esboço com o cérebro 3D ligado ao mapa. O loader projeta as
+// capacidades dos seletores a partir do grafo (relações e link ?foco=) e vai para o HTML pré-renderizado.
+// O RC-LP-001, que era a home (LANC-001 RQ-040), está em /comece/; a listagem de artigos, em /artigos/.
 import type { Route } from "./+types/home";
 
 import { Landing } from "@/components/landing/Landing";
-import { SITE_DESCRIPTION } from "@/consts";
 import { RC_IMAGES } from "@/data/article-media";
+import { HOME_HERO, HOME_MAP } from "@/data/home";
+import { getBrainTopics } from "@/features/home-brain/topics.server";
 import DefaultLayout from "@/layouts/DefaultLayout";
 import { seo } from "@/lib/seo";
 
 export const meta: Route.MetaFunction = ({ location }) =>
-	seo({ title: undefined, description: SITE_DESCRIPTION, image: RC_IMAGES.binoculosMapaCerebral.landscape.src, pathname: location.pathname });
+	seo({ title: undefined, description: HOME_HERO.lead[1], image: RC_IMAGES.binoculosMapaCerebral.landscape.src, pathname: location.pathname });
 
-export default function Page() {
+export function loader() {
+	return { brainTopics: getBrainTopics(HOME_MAP.functions.map((f) => f.id)) };
+}
+
+export default function Page({ loaderData }: Route.ComponentProps) {
 	return (
 		<DefaultLayout>
-			<Landing />
+			<Landing brainTopics={loaderData.brainTopics} />
 		</DefaultLayout>
 	);
 }

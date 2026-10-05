@@ -4,7 +4,7 @@ import { MAX_VISIBLE_NODES, PRIVATE_NODE_TYPES, neighborhood, publicMap } from "
 import type { CorrelationGraph } from "./types";
 
 /** Documentos canônicos que um nó pode citar como origem (RQ-062). */
-export const CANONICAL_SOURCES = ["RC-LP-001", "RC-ART-P1-001", "RC-ART-P2-001", "RC-ART-P3-001", "RC-ART-MASTER-001", "RC-SRC-001"];
+export const CANONICAL_SOURCES = ["RC-LP-001", "RC-ART-P1-001", "RC-ART-P2-001", "RC-ART-P3-001", "RC-ART-MASTER-001", "RC-SRC-001", "RC-HOME-002"];
 
 const NUMBER = /\d|%/;
 
