@@ -123,7 +123,7 @@ export function Personalize() {
 							<div className="mt-6 grid gap-[var(--ref-grid-gap)] sm:grid-cols-2">
 								{PROBLEMS.map((p) => (
 									<label key={p.id} className={OPTION}>
-										<input type="checkbox" name="foco" value={p.id} checked={prefs.focos.includes(p.id)} onChange={() => toggle("focos", p.id)} className="size-5 accent-[var(--primary)]" />
+										<input type="checkbox" name="foco" value={p.id} checked={prefs.focos.includes(p.id)} onChange={() => toggle("focos", p.id)} className="size-6 accent-[var(--primary)]" />
 										<span className="font-medium">{p.label}</span>
 									</label>
 								))}
@@ -145,7 +145,7 @@ export function Personalize() {
 							<div className="mt-6 grid gap-[var(--ref-grid-gap)] sm:grid-cols-2" data-interest-options>
 								{options.map((n) => (
 									<label key={n.id} className={OPTION}>
-										<input type="checkbox" name="interesse" value={n.id} checked={prefs.interesses.includes(n.id)} onChange={() => toggle("interesses", n.id)} className="size-5 shrink-0 accent-[var(--primary)]" />
+										<input type="checkbox" name="interesse" value={n.id} checked={prefs.interesses.includes(n.id)} onChange={() => toggle("interesses", n.id)} className="size-6 shrink-0 accent-[var(--primary)]" />
 										<span className="min-w-0">
 											<span className="block font-medium">{n.label}</span>
 											<span className="stories-meta text-muted-foreground">
@@ -170,7 +170,7 @@ export function Personalize() {
 								Com esta opção, as fontes que sustentam o fator no centro entram no mapa ao lado das relações.
 							</p>
 							<label className={cn(OPTION, "mt-6")}>
-								<input type="checkbox" name="evidencias" checked={prefs.evidencias} onChange={() => setPrefs((p) => ({ ...p, evidencias: !p.evidencias }))} className="size-5 accent-[var(--primary)]" />
+								<input type="checkbox" name="evidencias" checked={prefs.evidencias} onChange={() => setPrefs((p) => ({ ...p, evidencias: !p.evidencias }))} className="size-6 accent-[var(--primary)]" />
 								<span className="font-medium">Mostrar evidências no mapa</span>
 							</label>
 						</fieldset>
