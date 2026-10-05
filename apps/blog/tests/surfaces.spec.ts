@@ -45,11 +45,20 @@ const src = walk(join(ROOT, "app")).filter((f) => /\.(tsx?|astro|mdx?|css)$/.tes
 test.describe("source contract", () => {
   test("neutral hex values live only in the token layer (global.css)", () => {
     const offenders = src
-      .filter((f) => !f.endsWith(join("styles", "global.css")))
+      .filter((f) => !f.endsWith(join("styles", "global.css")) && !f.endsWith(join("styles", "home.css")))
       // + the --illu-* layer (ADR-15 / LANC-001 RQ-011)
       .filter((f) => /#f8f8f8|#ebebeb|#f5f5f4|#eaeae8|#eff6ff|#2563eb|#202124|#6b7280|#18346f|#3155e7|#f28f83|#a9bff4|#f4f6f1/i.test(readFileSync(f, "utf-8")))
       .map((f) => relative(ROOT, f));
-    expect(offenders, "hex da paleta só em app/styles/global.css").toEqual([]);
+    expect(offenders, "hex da paleta só em app/styles/global.css (e na camada da home, ADR-23)").toEqual([]);
+  });
+
+  test("home layer (ADR-23): hex only in the home.css token block, --home-* never in global.css", () => {
+    const home = readFileSync(join(ROOT, "app/styles/home.css"), "utf-8");
+    const [tokens, components] = home.split("/* ---- Componentes");
+    expect(components, "home.css sem bloco de componentes").toBeTruthy();
+    expect(components.match(/#[0-9a-f]{3,8}\b/gi) ?? [], "hex fora do bloco de tokens da home").toEqual([]);
+    expect(tokens).toContain("--home-accent:");
+    expect(readFileSync(join(ROOT, "app/styles/global.css"), "utf-8")).not.toMatch(/--home-|--brain-particle/);
   });
 
   // ADR-15 / LANC-001 RQ-011–012: coral (2.33:1) and light blue (1.83:1) are never text.

@@ -6,7 +6,7 @@ Data: 2026-10-05. Base: `main` @ 5f1cb05 (merge do PR #34).
 |---|---|---|
 | typegen + TypeScript | `npm run typecheck` | PASS |
 | Build de produção, SSR e prerender (inclui `/comece/`) | `npm run build -w apps/blog` | PASS |
-| Suíte do blog (graph, editorial, hig, surfaces, routes, mapa, tokens…) | `npm test -w apps/blog` | 326/326 PASS |
+| Suíte do blog (graph, editorial, hig, surfaces, routes, mapa, tokens…) | `npm test -w apps/blog` | 327/327 PASS |
 | Gate do cérebro 3D (WebGL por software) | `npm run test:brain -w apps/blog` | 10/10 PASS |
 | Auditoria HIG (ADR-M03) | `HIG_AUDIT=1 … hig.spec.ts` + `scripts/hig-audit.mjs` | PASS, 32 rotas, 0 FAIL |
 

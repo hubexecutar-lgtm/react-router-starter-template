@@ -620,8 +620,11 @@ to `apps/blog/`.
   - **Cérebro 3D:** Three.js puro (sem React Three Fiber), importado só depois da hidratação. Os pontos vêm do OpenNeuro
     ds006128 (CC0) por `scripts/prepare-home-brain.mjs`, que é determinístico e confere os hashes. Imagem estática,
     seletores e links funcionam sem JS, sem WebGL ou com falha do asset. Movimento reduzido começa parado.
-  - **Cor:** os tokens `--home-accent` (#FF5B0A), `--home-accent-strong` (#C2410C), `--home-accent-soft`,
-    `--home-accent-line` e `--home-hero-glow` existem só no bloco `HOME-BRAIN-001` do `global.css`. O `--home-accent` serve
+  - **Tokens e CSS próprios:** a home tem a sua camada em `app/styles/home.css`, carregada só pela rota `/` (`links`).
+    O arquivo abre com o bloco de tokens `--home-*` (cor, hero e composição, claro e escuro), o único lugar com hex da
+    home, seguido dos componentes, que só usam `var()`. O `global.css` não tem nada da home.
+  - **Cor:** `--home-accent` (#FF5B0A), `--home-accent-strong` (#C2410C), `--home-accent-soft`, `--home-accent-line` e
+    `--home-hero-glow`, no bloco de tokens do `home.css`. O `--home-accent` serve
     à ilustração (pontos, marcadores, cantos, réguas) e nunca é texto nem indicador único. Só o `--home-accent-strong`
     (5,18:1) pode ser texto: o fundo do hero com texto branco e os números dos passos. O resto do texto segue o ADR-11.
   - **Gate:** `npm run test:brain` (`playwright.brain.config.ts`, WebGL por software) roda à parte, porque o `npm test`
@@ -630,3 +633,5 @@ to `apps/blog/`.
   - `editorial.spec` compara a home com o RC-HOME-002 linha a linha e o `/comece/` com o RC-LP-001. Mudar texto da home
     exige mudar o canônico e o `MANIFEST.sha256` do intake no mesmo PR.
   - Cor laranja fora da home continua proibida (ADR-03). Para levá-la a outra página, é preciso um ADR novo.
+  - `surfaces.spec` trava a camada: hex só no bloco de tokens do `home.css` e nada de `--home-*` no `global.css`.
+    `editorial.spec` confere que o `home.css` entra na `/` e não em outra rota.

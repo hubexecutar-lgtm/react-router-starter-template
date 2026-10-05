@@ -125,6 +125,12 @@ test.describe("E · conteúdo canônico (RQ-040…046)", () => {
     expect(order).toEqual(["Hero", "Dados", "Risco", "Mapa", "Trilha", "Exigências", "Problemas", "Método", "Apoio", "CTA"]);
     await expect(page.locator("[data-cta=primary]")).toHaveCount(1);
     await expect(page.getByRole("link", { name: "Comece por aqui" }).first()).toHaveAttribute("href", "/comece/");
+    // Camada própria da home (ADR-23): o home.css só entra na home.
+    const homeCss = () => page.evaluate(() => [...document.querySelectorAll<HTMLLinkElement>("link[rel=stylesheet]")].some((l) => /\/home[-.][^/]*\.css$/.test(l.href)));
+    expect(await homeCss()).toBe(true);
+    expect(await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue("--home-accent").trim())).toBe("#ff5b0a");
+    await page.goto("/comece/");
+    expect(await homeCss()).toBe(false);
   });
 
   test("os números da home citam a fonte primária, também listada em /fontes/", async ({ page }) => {

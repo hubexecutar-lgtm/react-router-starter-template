@@ -9,6 +9,10 @@ import { HOME_HERO, HOME_MAP } from "@/data/home";
 import { getBrainTopics } from "@/features/home-brain/topics.server";
 import DefaultLayout from "@/layouts/DefaultLayout";
 import { seo } from "@/lib/seo";
+import homeCss from "@/styles/home.css?url";
+
+/** Tokens e CSS próprios da home (ADR-23): só esta rota carrega. */
+export const links: Route.LinksFunction = () => [{ rel: "stylesheet", href: homeCss }];
 
 export const meta: Route.MetaFunction = ({ location }) =>
 	seo({ title: undefined, description: HOME_HERO.lead[1], image: RC_IMAGES.binoculosMapaCerebral.landscape.src, pathname: location.pathname });

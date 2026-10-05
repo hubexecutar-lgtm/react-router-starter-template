@@ -34,7 +34,7 @@ era a home, foi para `/comece/` sem reescrita.
 | Cena | `app/features/home-brain/BrainHero.tsx`, `brain-renderer.client.ts` | Seletores, painel, controles; Three.js só após a hidratação |
 | Dados | `app/features/home-brain/topics.server.ts`, `app/data/graph/rc-graph.json` | Relações do grafo e link `?foco=` |
 | Rota | `app/routes/comece.tsx`, `app/components/landing/CanonicalLanding.tsx` | RC-LP-001 (RQ-040) em `/comece/` |
-| Estilo | `app/styles/global.css`, bloco `HOME-BRAIN-001` | Tokens `--home-*`/`--brain-particle` (claro e escuro) e layout |
+| Estilo | `app/styles/home.css` (só na rota `/`) | Tokens próprios `--home-*`/`--brain-particle` (claro e escuro) e componentes |
 | Asset | `public/models/home-brain/` e `scripts/prepare-home-brain.mjs` | Pontos, poster, manifest e avisos (CC0) |
 | Testes | `tests/home-brain.spec.ts` (`npm run test:brain`), `tests/editorial.spec.ts`, `tests/graph.spec.ts` | Gate da cena, texto e grafo |
 
