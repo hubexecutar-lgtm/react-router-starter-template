@@ -777,19 +777,48 @@
     padding-inline: 12px;
   }
   .brain-stage {
-    aspect-ratio: 3 / 4;
+    aspect-ratio: 1 / 1;
+    min-height: 296px;
+  }
+  .brain-viewport {
+    inset: 5% 0;
   }
   .brain-marker {
-    max-width: 150px;
+    left: 0;
+    right: auto;
+    width: min(30%, 112px);
+    max-width: 112px;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    text-align: center;
   }
+  .brain-marker[data-side="left"] {
+    flex-direction: column;
+    text-align: center;
+  }
+  .brain-marker[data-side="right"] {
+    left: auto;
+    right: 0;
+    text-align: center;
+  }
+  .brain-marker[data-function="COG-PLANEJAMENTO"] { top: 26%; }
+  .brain-marker[data-function="COG-MEMORIA-TRABALHO"] { top: 72%; }
+  .brain-marker[data-function="COG-CONTROLE-INIBITORIO"] { top: 32%; }
+  .brain-marker[data-function="COG-FLEXIBILIDADE"] { top: 78%; }
   .brain-marker-dot {
     --home-marker: 44px;
   }
   .brain-marker-label {
+    width: 100%;
     min-width: 0;
-    max-width: 110px;
-    padding: 6px 8px;
-    font-size: 12px;
+    max-width: none;
+    min-height: 44px;
+    display: grid;
+    place-items: center;
+    padding: 5px 6px;
+    font-size: 13px;
   }
   .brain-marker-label small {
     display: none;
