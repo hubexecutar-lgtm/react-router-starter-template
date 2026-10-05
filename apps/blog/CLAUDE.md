@@ -540,3 +540,34 @@ to `apps/blog/`.
     laboratório de Core Web Vitals (LCP ≤ 2,5 s e CLS ≤ 0,1 em celular emulado nas rotas principais; o INP do mapa já é
     medido no `mapa.spec`).
   - Consulta: SQL API do Analytics Engine sobre `rc_journey_events` (ex.: contagem por `index1` e `blob3`).
+
+### ADR-21: Adapters da Teia — registries, Quick Framework e Ferramentas (LANC-001 PR-L, RQ-120…122)
+
+- **Status:** Aceita — implementada. Fecha a onda 3 do LANC-001.
+- **Contexto:** O pacote EXECUTAR-TEIA-UNICA-CORRELACAO-v0.1.0 (MIGRATION_PLAN N1, N2, N7) pede registries canônicos e
+  adapters que acrescentem `correlation_refs` aos formatos existentes sem mudar o formato nativo. Regra da Teia:
+  `missing_is_null_or_TBD_never_invented`, e mudança de tipo ou relação no grafo passa pelo OWNER (ADR-M04).
+- **Decisão:**
+  - **Registries (RQ-122)** em `app/lib/graph/registries.ts`: projeções do grafo por tipo (problems,
+    operational_functions, cognitive_capacities, factors, compensations, controls, capabilities, app_features). Os
+    problemas são os 6 do índice editorial, cada um no seu nó. `operational_functions`, `capabilities` e `app_features`
+    não têm nó no grafo: ficam vazios e marcados como pendentes com o OWNER.
+  - **Bloco comum** em `app/lib/graph/adapters/correlation-refs.ts`: cada referência traz `ref` (nó existente),
+    `provenance_class`, `via` e, quando explícita, `quote`. `solution_candidates` só lista SOLUTION que já implementam
+    uma compensação referenciada; nada é criado.
+  - **Quick Framework (RQ-120)** em `app/lib/graph/adapters/quick-framework.ts`: lê o markdown das 12 seções do template
+    sem alterá-lo (recusa registro fora do template); nome de nó no texto das seções 1, 4, 5 e 6 vira referência
+    `E_INFERRED`; fonte citada pela URL de um nó EVIDENCE vira `D_INTERNAL` com a linha como trecho. O
+    `build-quick-frameworks.mjs` saiu no reset (ADR-13): quando o fluxo de publicação voltar, ele chama este adapter.
+  - **Ferramentas (RQ-121):** `app/features/store/data/correlations.ts` só tem ferramentas publicadas, com a citação que
+    sustenta a referência (hoje o Prisma → Externalização, pelo texto "Solução · Externalização cognitiva" da própria
+    página). Os itens de exemplo do catálogo não recebem correlação. Em `/ferramentas/`, "Encontrar por problema" filtra
+    por problema e compensação (`?problema=`, `?compensacao=`); o problema sai do grafo a partir da compensação
+    (`app/lib/graph/discovery.ts`) e mostra "(inferido)" quando passa por relação inferida. Função operacional e
+    encaixe (fit) ficam pendentes até existirem nós.
+  - O grafo (`rc-graph.json`) não muda neste PR.
+- **Consequências:**
+  - `tests/teia.spec.ts`: os 8 registries, entradas = nós do tipo certo, pendentes vazios; o adapter do QF com fixture
+    (12 seções, proveniência, candidatas, nenhum ref solto); Ferramentas sem correlação inventada, citação literal,
+    problema derivado e o filtro na página.
+  - Código do grafo vai para `packages/rc-graph` só quando o `apps/workflow` passar a ler o grafo (ADR-M01).

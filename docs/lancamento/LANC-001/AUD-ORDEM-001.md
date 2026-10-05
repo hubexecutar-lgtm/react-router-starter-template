@@ -92,3 +92,4 @@ Já tinham saído no #19, e a `main` só os editava:
 - **PR-I personalizar:** `/mapas/personalizar/` (RQ-090), guardado só no navegador; muda ordem e destaque, nunca os fatos.
 - **PR-K medição:** eventos da jornada no Workers Analytics Engine e gate de Core Web Vitals (ADR-20); beacon do Web
   Analytics pronto, à espera do token do site.
+- **PR-L adapters da Teia:** registries, adapter do Quick Framework e descoberta em Ferramentas (ADR-21). Fecha a onda 3.
