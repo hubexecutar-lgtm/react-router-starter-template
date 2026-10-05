@@ -215,7 +215,14 @@ test.describe("gate UX-GOV-HIG-001", () => {
         if (label === "390") findings.push(finding("tables", route, `tabelas${at}`, d.cut.length > 0, list(d.cut)));
         if (label === "390") {
           await page.setViewportSize({ width: 320, height: 800 });
-          const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+          // Mede o layout estável: componentes medidos por ResizeObserver (gráficos) só se ajustam no frame seguinte
+          // ao resize, e medir antes disso dava um estouro transitório intermitente em /admin/design-system/.
+          const overflow = await page.evaluate(
+            () =>
+              new Promise<number>((resolve) =>
+                requestAnimationFrame(() => requestAnimationFrame(() => resolve(document.documentElement.scrollWidth - window.innerWidth))),
+              ),
+          );
           findings.push(finding("reflow", route, "página@320", overflow > 0, `overflow=${overflow}px`));
         }
       }
