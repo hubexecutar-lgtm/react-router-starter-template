@@ -44,9 +44,10 @@ export async function createBrainRenderer(
     "position",
     new THREE.BufferAttribute(positions, 3),
   );
-  // Pontos opacos e recortados (alphaTest): laranja puro como a retícula da referência; a profundidade vem da neblina.
+  // Pontos opacos e recortados (alphaTest), mais finos que na v1.0.0 para os sulcos não virarem massa laranja no
+  // celular (v1.0.1). Transparência + depthWrite off apagava a nuvem no render; a profundidade vem da neblina.
   const material = new THREE.PointsMaterial({
-    size: 0.03,
+    size: 0.02,
     alphaTest: 0.5,
     sizeAttenuation: true,
   });
@@ -117,8 +118,12 @@ export async function createBrainRenderer(
     );
     renderer.setSize(width, height, false);
     camera.aspect = width / height;
-    // Fit both axes; the specimen retains its silhouette at 320 px and landscape widths.
-    camera.position.z = Math.max(6.1, 4.0 / camera.aspect);
+    // Fit the specimen by its widest dimension. A portrait viewport has much less
+    // horizontal space than vertical space; fitting only the height clips the cortex.
+    const halfWidth = 2.0;
+    const horizontalFill = width < 620 ? 0.62 : 0.88;
+    const horizontalDistance = halfWidth / (Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.aspect * horizontalFill);
+    camera.position.z = Math.max(6.1, horizontalDistance);
     camera.updateProjectionMatrix();
     fog.near = camera.position.z - 1.4;
     fog.far = camera.position.z + 2.6;

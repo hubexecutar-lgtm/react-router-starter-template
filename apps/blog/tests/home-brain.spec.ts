@@ -141,6 +141,19 @@ for (const theme of ["light", "dark"]) {
 			await page.setViewportSize({ width, height: width < 700 ? 844 : 1000 });
 			await ready(page);
 			expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `${theme} ${width}`).toBe(true);
+			if (width < 620) {
+				const boxes = await page.locator(".brain-marker").evaluateAll((elements) => elements.map((el) => {
+					const r = el.getBoundingClientRect();
+					return { left: r.left, right: r.right, top: r.top, bottom: r.bottom };
+				}));
+				for (const box of boxes) {
+					expect(box.left, `marker inside ${width}px`).toBeGreaterThanOrEqual(0);
+					expect(box.right, `marker inside ${width}px`).toBeLessThanOrEqual(width);
+				}
+				for (const [i, j] of [[0, 1], [2, 3]]) {
+					expect(boxes[i].bottom, `markers ${i}/${j} at ${width}px`).toBeLessThan(boxes[j].top);
+				}
+			}
 			const result = await new AxeBuilder({ page }).include("main").withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"]).analyze();
 			expect(result.violations.filter((v) => v.impact === "serious" || v.impact === "critical").map((v) => `${v.id}: ${v.nodes.map((n) => n.target).join(" ")}`)).toEqual([]);
 			if (width !== 320) {
