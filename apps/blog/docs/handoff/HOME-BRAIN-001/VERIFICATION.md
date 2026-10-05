@@ -25,3 +25,21 @@ dois temas sem overflow horizontal e sem violações axe sérias ou críticas (W
   (A DEFINIR). O WebGL dos testes é SwiftShader, então não serve de medida de desempenho.
 - Core Web Vitals de campo: chegam pelo Cloudflare Web Analytics depois da publicação (ADR-20).
 - Fidelidade visual: adaptação de capturas; nada de pixel a pixel com a referência.
+
+## v1.0.1 — correção mobile (2026-10-05)
+
+O patch `HOME_BRAIN_MOBILE_FIX_v1.0.1` (proveniência em `v1.0.1-README.md`) foi aplicado sobre `main` @ 4c17b67:
+- a câmera encaixa pela largura (FOV horizontal);
+- no mobile, o palco é quadrado e os marcadores ficam nas laterais em alturas alternadas, com rótulo de 44 px;
+- o teste de regressão confere que, em 320/390 px, os marcadores ficam dentro da viewport e não se sobrepõem.
+
+**Um ajuste no patch:** o material dele (ponto 0.014 com `transparent`, `opacity` 0.78 e `depthWrite: false`) deixava
+a nuvem invisível no render, tanto no celular quanto no desktop; as capturas do teste mostravam o palco vazio. Fica o
+ponto opaco recortado (`alphaTest`), como na v1.0.0, em 0.02: mais fino que os 0.03 de antes, que era a intenção do
+patch.
+
+| Verificação | Resultado |
+|---|---|
+| `npm run test:brain` (inclui o teste novo de 320/390 px) | 10/10 PASS |
+| `surfaces`, `hig`, `editorial`, `tokens` | 107/107 PASS, snapshots inalterados |
+| Capturas 390/1440, claro e escuro | atualizadas (`*.webp`) |
