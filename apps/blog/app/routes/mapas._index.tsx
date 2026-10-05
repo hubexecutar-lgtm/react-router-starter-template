@@ -77,9 +77,10 @@ export default function Mapas() {
 							</li>
 						))}
 					</ul>
-					<ChevronLink href="/fontes/" className="mt-[var(--ref-block-gap)]">
-						Ver as fontes
-					</ChevronLink>
+					<div className="mt-[var(--ref-block-gap)] flex flex-wrap gap-x-6">
+						<ChevronLink href="/mapas/personalizar/">Personalizar por onde começar</ChevronLink>
+						<ChevronLink href="/fontes/">Ver as fontes</ChevronLink>
+					</div>
 				</div>
 			</section>
 		</DefaultLayout>

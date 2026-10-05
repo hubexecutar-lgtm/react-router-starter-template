@@ -122,15 +122,15 @@ export function chainFor(graph: CorrelationGraph, id: string) {
  * O que o mapa mostra (RQ-070/074/080): o nó focal e seus vizinhos (≤ 8), filtrados por tipo. O foco nunca sai
  * pelo filtro, então o filtro reduz nós sem quebrar o foco.
  */
-export function visibleGraph(graph: CorrelationGraph, focusId: string, types?: readonly VisualType[]) {
+export function visibleGraph(graph: CorrelationGraph, focusId: string, types?: readonly VisualType[], opts: { evidence?: boolean } = {}) {
   const hood = neighborhood(graph, focusId);
   const keep = (n: GraphNode) => n.id === focusId || !types?.length || types.includes(visualType(n)!);
   const nodes = hood.nodes.filter(keep).map((n) => nodeById(graph, n.id)!);
   const ids = new Set(nodes.map((n) => n.id));
   const edges = hood.edges.filter((e) => ids.has(e.source) && ids.has(e.target)).map((e) => edgeView(graph, e));
   // Evidência não é aresta causal (SUPPORTED_BY, §3): no modo Evidências, as fontes do foco entram como nós
-  // ligados por "sustentado por", sem passar do limite de nós.
-  if (types?.includes("evidence")) {
+  // ligados por "sustentado por", sem passar do limite de nós. O Personalizar pode ligar o mesmo para todo modo.
+  if (types?.includes("evidence") || opts.evidence) {
     for (const ev of evidenceFor(graph, focusId)) {
       if (nodes.length >= MAX_VISIBLE_NODES) break;
       const source = nodes[0];
