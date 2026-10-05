@@ -8,7 +8,7 @@
 |---|---|---|---|---|---|
 | P0 | 0 | 0 | 0 | 0 | 16 |
 | P1 | 1 | 0 | 0 | 0 | 25 |
-| P2 | 2 | 0 | 1 | 0 | 8 |
+| P2 | 1 | 0 | 1 | 0 | 9 |
 | P3 | 3 | 0 | 2 | 1 | 1 |
 
 Total: 60 requisitos em 12 épicos.
@@ -107,7 +107,7 @@ Total: 60 requisitos em 12 épicos.
 
 | ID | Tipo | Prio | Status | Requisito | Critério de aceite | Depende | Fonte |
 |---|---|---|---|---|---|---|---|
-| RQ-090 | FR | P2 | READY | **Personalizar em 3 passos.** /mapas/personalizar: focos de trabalho, interesses e 'Mostrar evidências'; muda só a ordem e o destaque, nunca os fatos; guardado localmente, sem conta. | Limpar dados do navegador volta ao padrão; nenhum dado sai do dispositivo | RQ-070 | RC-MOBILE SCR-04; CF-07; CF-07 (ASSUMPTION mantida) |
+| RQ-090 | FR | P2 | DONE | **Personalizar em 3 passos.** /mapas/personalizar: focos de trabalho, interesses e 'Mostrar evidências'; muda só a ordem e o destaque, nunca os fatos; guardado localmente, sem conta. | Limpar dados do navegador volta ao padrão; nenhum dado sai do dispositivo | RQ-070 | RC-MOBILE SCR-04; CF-07; CF-07 (ASSUMPTION mantida) |
 
 ## EP-10 — Ferramentas cognitivas (substitui a Loja) e Resultado (PR-J)
 
