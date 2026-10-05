@@ -7,6 +7,13 @@ export const SITE_TITLE = "Risco Cognitivo";
 export const SITE_DESCRIPTION = "Artigos do projeto Risco Cognitivo.";
 export const SITE_URL = DEFAULT_BASE_URL;
 
+/**
+ * Cloudflare Web Analytics (LANC-001 RQ-110/111, DEC-U11): páginas e Core Web Vitals de campo, sem cookies.
+ * O token do site é público (vai no HTML) e vem do painel da Cloudflare (Web Analytics → Add a site). Vazio = sem
+ * beacon. Os eventos próprios da jornada não dependem dele: vão para o Workers Analytics Engine (/api/eventos).
+ */
+export const CF_WEB_ANALYTICS_TOKEN = "";
+
 export const SITE_METADATA = {
   title: {
     default: SITE_TITLE,

@@ -11,6 +11,9 @@
 		"head_sampling_rate": 1
 	},
 	"upload_source_maps": true,
+	// Eventos da jornada (LANC-001 RQ-111, DEC-U11): POST /api/eventos → Workers Analytics Engine.
+	// O dataset é criado na primeira escrita; sem cookies e sem dado pessoal (app/lib/analytics/events.ts).
+	"analytics_engine_datasets": [{ "binding": "EVENTS", "dataset": "rc_journey_events" }],
 	// Required by `wrangler preview`, the command Workers Builds runs on pull request
 	// branches. Empty: previews use the top-level settings.
 	"previews": {}

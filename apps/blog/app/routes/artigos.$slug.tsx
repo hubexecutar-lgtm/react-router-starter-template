@@ -10,7 +10,8 @@ import { ArticleHero } from "@/components/stories/ArticleHero";
 import { NextStep } from "@/components/stories/NextStep";
 import { References } from "@/components/stories/References";
 import { SITE_METADATA, SITE_NAME, SITE_URL } from "@/consts";
-import { PILLARS } from "@/data/article-meta";
+import { PILLARS, PROBLEMS } from "@/data/article-meta";
+import { useTrackView } from "@/lib/analytics/track";
 import DefaultLayout from "@/layouts/DefaultLayout";
 import { getArticleContent, getStory } from "@/lib/articles";
 import { seo } from "@/lib/seo";
@@ -59,6 +60,9 @@ export default function Article({ loaderData }: Route.ComponentProps) {
 	const { story, related } = loaderData;
 	// O módulo MDX não passa pelo loader (não é serializável): é resolvido pelo slug, no cliente e no servidor.
 	const Content = getArticleContent(story.slug)!;
+	// RQ-111: leitura do artigo, com o problema principal ligado ao grafo (ADR-M04).
+	const event = { stage: "ARTICLE", problem_id: PROBLEMS.find((p) => p.id === story.problems[0])?.node, asset_id: story.slug } as const;
+	useTrackView({ ...event, action: "view" }, story.slug);
 	return (
 		<DefaultLayout>
 			<article>
@@ -66,7 +70,7 @@ export default function Article({ loaderData }: Route.ComponentProps) {
 				<ArticleBody Content={Content} />
 			</article>
 			<References ids={story.sources} />
-			<NextStep next={story.next} related={related} />
+			<NextStep next={story.next} related={related} event={event} />
 		</DefaultLayout>
 	);
 }

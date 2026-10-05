@@ -6,6 +6,8 @@ import { useMemo, useState } from "react";
 
 import { useSearchParams } from "react-router";
 
+import { useTrackView } from "@/lib/analytics/track";
+
 import { FeaturedStories } from "./FeaturedStories";
 import { LoadMore } from "./LoadMore";
 import { StoriesToolbar, type SortKey } from "./StoriesToolbar";
@@ -55,6 +57,8 @@ export function StoriesHome({
 
 	const askedProblem = params.get("problema") ?? "";
 	const problem = (PROBLEMS.some((p) => p.id === askedProblem) ? askedProblem : "") as ProblemId | "";
+	// RQ-111: a listagem (estágio BLOG), com o problema escolhido nos chips. Só na listagem real, não nas fixtures.
+	useTrackView(problems ? { stage: "BLOG", action: "view", problem_id: PROBLEMS.find((p) => p.id === problem)?.node } : null, problem);
 	const problemHref = (id: ProblemId | "") => {
 		const next = new URLSearchParams(params);
 		if (id) next.set("problema", id);

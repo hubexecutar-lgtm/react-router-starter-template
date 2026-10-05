@@ -90,3 +90,5 @@ Já tinham saído no #19, e a `main` só os editava:
 - **PR-H mapa causal:** `/mapas/` e `/mapas/explorar/` recriados sobre o Stories como projeção do grafo da Teia (ADR-19);
   Mapa no topo, no drawer, no rodapé e na barra inferior. **Fecha o RQ-020 e o RQ-050.**
 - **PR-I personalizar:** `/mapas/personalizar/` (RQ-090), guardado só no navegador; muda ordem e destaque, nunca os fatos.
+- **PR-K medição:** eventos da jornada no Workers Analytics Engine e gate de Core Web Vitals (ADR-20); beacon do Web
+  Analytics pronto, à espera do token do site.
