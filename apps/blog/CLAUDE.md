@@ -694,3 +694,76 @@ to `apps/blog/`.
   - `stories.spec` mede o cabeçalho de 72 px; `shell.spec` procura a trilha em `/artigos/`; `editorial.spec` segue a nova
     ordem das seções (Hero, Mapa, Trilha, Dados, Risco, Exigências, Problemas, Método, Apoio, CTA).
   - O laranja continua restrito à home (ADR-03); o shell usa só neutros.
+
+### ADR-26: Jornada por áreas e DS CF transversal — um layout demonstrativo por rota (ADR-BLOG-JORNADA-ROTAS-001)
+
+- **Status:** Aceita (2026-10-06). Adota `docs/adr/ADR-BLOG-JORNADA-ROTAS-001_v1.0.0.md` e responde à
+  `docs/adr/AUDITORIA_IDENTIDADE_VISUAL_v1.0.0.md`. Emenda os ADR-03, 09, 11, 12, 14, 15, 16, 22, 23 e 25 (lista abaixo).
+  Inventário (N1) em `docs/handoff/JORNADA-ROTAS-001/INVENTARIO.md`.
+- **Contexto:** O usuário quer simplificar o site em quatro homes:
+  - `/` apresenta;
+  - `/artigos/` é o Blog;
+  - `/mapas/` é o Mapa Cognitivo com o cérebro;
+  - `/ferramentas/` é o catálogo.
+
+  Cada rota fica com um único layout demonstrativo, todo no DS novo inspirado na cloudflare.com, sem misturar o DS
+  antigo. Ele aplicou a skill Design 1.2.0 (design-system, accessibility-review, design-critique, design-handoff,
+  ux-copy). Decisões de 2026-10-06:
+  - a Home vira hero e prévias, e o RC-HOME-002 completo vai para `/sobre/`;
+  - só `riscos-cognitivos-guia` fica público, e os outros 9 artigos fazem 302 para `/artigos/`;
+  - o admin também migra;
+  - o template de artigo segue a análise da monday.com;
+  - tudo vai num PR só.
+- **Decisão:**
+  - **DS único (RC-DS-CF):**
+    - Tokens `--cf-*` no `global.css`, incluindo o acento #FF5E1F, que agora vale para o site todo.
+    - Componentes `ds-*` em `app/styles/ds.css` e `app/components/ds/`, especificados em `docs/design-system/DS-CF-001.md`.
+      Um componente novo é especificado lá antes de ser usado.
+    - Fonte: Hanken Grotesk; IBM Plex Mono só em rótulos técnicos.
+    - Os aliases do shadcn e dos layers semânticos (`--primary`, `--ring`, `--background`, `--foreground`,
+      `--muted-foreground`, `--border`, `--radius`) apontam para os `--cf-*`.
+    - Saem `--ref-*`, `--hy-*`, `stories-*`, `rc-cell`/`rc-surface`/`rc-band`, `hy-*`, o azul #2563EB e o Inter.
+  - **Contraste (AA):**
+    - branco sobre o acento só em texto grande;
+    - texto pequeno sobre o acento em #262626;
+    - acento como texto sobre branco em #BF4C14;
+    - alvos de toque ≥ 44 px (critério da accessibility-review).
+  - **Composição por rota, mesma identidade:**
+    - Home: hero, cérebro em prévia e prévias das áreas;
+    - Blog: índice editorial com facetas;
+    - artigo: breadcrumb, meta, sumário, corpo, fontes e ponte para o Mapa;
+    - Mapa: cérebro completo;
+    - Ferramentas: catálogo só com itens reais;
+    - institucionais e admin: os mesmos componentes.
+  - **Cérebro compartilhado:** o mesmo `BrainHero`, asset e renderer na Home (`variant="preview"`) e no `/mapas/`
+    (`variant="full"`, `?foco=` nos dois sentidos), com teclado, fallback e movimento reduzido.
+  - **Exceções visuais** (registradas antes da implementação; são camadas semânticas, não identidade):
+    1. Folha A4 do Prisma (cores `--ps-*`): artefato de impressão, sempre claro. A tipografia segue o RC-DS-CF
+       (Hanken Grotesk, corpo em 9,25 pt / 1,3, para caber em uma página).
+    2. Canvas do grafo (`--graph-*`) e cores de tipo de nó: codificam significado.
+    3. Famílias de callout (`brand`/`attention`/`critical`) e quadrantes do card de solução (ADR-24): estados semânticos.
+    4. Séries de gráfico (`--chart-*`, ADR-04).
+    5. As ilustrações azuis (`--illu-*`, `ArtImage`) não aparecem nos layouts novos e ficam só no repositório.
+  - **Preservação:** MDX, canônicos, IDs, grafo e fontes ficam no repositório. Artigos ocultos e itens mock saem do
+    prerender, do sitemap e dos links e respondem 302 (loader e `public/_redirects`).
+- **Emendas:**
+  - ADR-03: o primário do site deixa de ser o #2563EB e passa a ser o acento CF; o laranja não é mais restrito à home.
+  - ADR-09/11: os neutros e o texto passam a ser os `--cf-*`. O card deixa de ser a célula cinza de 2 px e vira o quadro CF
+    com cantos.
+  - ADR-12: a anatomia continua (hero, seções, "Saiba mais ›", rodapé-diretório), agora com componentes `ds-*`; o halftone
+    azul sai.
+  - ADR-14/22: os tokens `--ref-*` e a composição Stories e Hybrid v4 saem.
+  - ADR-15: a cláusula "Interface = Stories" sai; ilustração, grafo e motion ficam.
+  - ADR-16: o shell é o do ADR-25, sem trilha de pilares.
+  - ADR-23/25: o `home.css` sai. A Home usa os mesmos componentes `ds-*` das outras rotas, e o acento passa a ser transversal.
+  - ADR-12/18 (DEC-U7, RQ-032): "todo artigo tem imagem" deixa de valer. As ilustrações azuis ficam no banco (RQ-030) e
+    não entram nos layouts novos; `editorial.spec` confere que nenhuma rota pública as exibe.
+- **Consequências:**
+  - `tests/ds.spec.ts` trava os tokens e componentes e proíbe classes, tokens e imports do DS antigo. `stories.spec` sai,
+    e `tokens.spec`/`surfaces.spec` perdem as partes de cor e raio antigos.
+  - `editorial.spec` confere o RC-HOME-002 em `/sobre/` e o RC-LP-001 em `/comece/`, os MDX ocultos por hash e os 302.
+  - `home-brain.spec` cobre a Home e o `/mapas/`.
+  - Saem com o DS antigo: `app/components/{ui,stories,editorial,layout,design-system}` (shadcn incluído; Radix fica só
+    como comportamento dentro de `components/ds`) e o teste do carrossel do Stories (RQ-026), porque nenhum layout
+    demonstrativo usa carrossel.
+  - Voltar a publicar um artigo = incluir o slug em `PUBLIC_ARTICLES` (`app/data/article-meta.ts`) e tirar o 302.

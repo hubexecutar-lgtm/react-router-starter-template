@@ -1,0 +1,187 @@
+/* ===== DS-CF-001 — extensão: ferramentas (ADR-26) =====
+   Componentes do RC-DS-CF específicos desta família de rotas, especificados em docs/design-system/DS-CF-001-ferramentas.md antes do
+   uso. Só var() dos tokens --cf-* (e das camadas semânticas registradas como exceção no ADR-26); nenhum hex. */
+
+/* 1. CatalogFilters (§1): busca + área numa linha; grupo de tipos abaixo. */
+.ds-filters {
+  display: grid;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.ds-filters-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+  align-items: end;
+}
+@media (min-width: 640px) {
+  .ds-filters-row[data-cols="2"] {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 16rem);
+  }
+}
+.ds-filters-types {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.ds-filters-types button.ds-chip {
+  font-family: var(--cf-font);
+}
+.ds-filters-count {
+  font-size: 14px;
+  color: var(--cf-fg-muted);
+}
+
+/* 2. CatalogSkeleton e CatalogError (§2). */
+.ds-skeleton {
+  display: grid;
+  gap: 12px;
+}
+.ds-skeleton-line {
+  font-size: 15px;
+  color: var(--cf-fg-muted);
+}
+.ds-skeleton-block {
+  height: 96px;
+  border: 1px solid var(--cf-border);
+  border-radius: var(--cf-radius-md);
+  background: var(--cf-bg-300);
+  animation: ds-skeleton-pulse 1.4s ease-in-out infinite;
+}
+@keyframes ds-skeleton-pulse {
+  50% {
+    opacity: 0.55;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ds-skeleton-block {
+    animation: none;
+  }
+}
+.ds-alert {
+  display: grid;
+  justify-items: start;
+  gap: 8px;
+  padding: var(--cf-pad);
+  border: 1px solid var(--color-critical-default);
+  border-radius: var(--cf-radius-md);
+  background: var(--color-critical-subtle);
+  color: var(--cf-fg);
+}
+.ds-alert h3 {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+/* 3. Steps (§3): processo numerado. */
+.ds-steps {
+  display: grid;
+  gap: 8px;
+}
+.ds-steps li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+}
+.ds-steps-n {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--cf-border-strong);
+  border-radius: var(--cf-radius-pill);
+  background: var(--cf-bg-300);
+  font-family: var(--cf-mono);
+  font-size: 13px;
+}
+
+/* 4. ItemFlow (§4): entrada → passos → saída. */
+.ds-flow {
+  display: grid;
+  justify-items: start;
+}
+.ds-flow li {
+  display: grid;
+  justify-items: start;
+}
+.ds-flow-node {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  max-width: var(--cf-measure);
+  padding: 8px 14px;
+  border: 1px solid var(--cf-border-strong);
+  border-radius: var(--cf-radius-md);
+  background: var(--cf-bg);
+  font-size: 15px;
+}
+.ds-flow-node[data-kind="io"] {
+  background: var(--cf-bg-200);
+  font-weight: 500;
+}
+.ds-flow-tag {
+  font-family: var(--cf-mono);
+  font-size: 12px;
+  text-transform: uppercase;
+  color: var(--cf-fg-muted);
+}
+.ds-flow-link {
+  width: 1px;
+  height: 20px;
+  margin-left: 20px;
+  background: var(--cf-border-strong);
+}
+
+/* 5. Disclosure (§5). */
+.ds-disclosure {
+  border: 1px solid var(--cf-border);
+  border-radius: var(--cf-radius-md);
+}
+.ds-disclosure summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 44px;
+  padding: 0 16px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.ds-disclosure summary:focus-visible {
+  outline: 3px solid var(--cf-focus);
+  outline-offset: 2px;
+}
+.ds-disclosure > :not(summary) {
+  padding: 0 16px 16px;
+}
+
+/* 6. Nota de pendência (§6). */
+.ds-tools-note {
+  margin-top: 16px;
+  font-size: 14px;
+  color: var(--cf-fg-muted);
+}
+
+/* Composição do template de item: duas colunas a partir de 900 px. */
+.ds-item-cols {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 48px;
+}
+@media (min-width: 900px) {
+  .ds-item-cols {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.ds-item-cols > div > * + * {
+  margin-top: 40px;
+}
+.ds-item-cols h2 {
+  margin-bottom: 12px;
+  font-size: 22px;
+  font-weight: 500;
+}

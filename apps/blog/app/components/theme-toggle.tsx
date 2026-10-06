@@ -1,10 +1,8 @@
-"use client";
-
+// Alternância de tema do cabeçalho, na pele do RC-DS-CF (`ds-iconbtn`, DS-CF-001-prisma §2.7). O comportamento não
+// muda: lê `localStorage.theme` ou a preferência do sistema e alterna a classe `dark` no <html>.
 import { useEffect, useState } from "react";
 
 import { Moon, Sun } from "lucide-react";
-
-import { Button } from "@/components/ui/button";
 
 const ThemeToggle = () => {
   const [theme, setTheme] = useState<"light" | "dark">("light");
@@ -12,10 +10,7 @@ const ThemeToggle = () => {
   useEffect(() => {
     // Get initial theme from localStorage or system preference
     const savedTheme = localStorage.getItem("theme");
-    const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
-      .matches
-      ? "dark"
-      : "light";
+    const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
     const initialTheme = savedTheme || systemTheme;
 
     setTheme(initialTheme as "light" | "dark");
@@ -30,16 +25,11 @@ const ThemeToggle = () => {
   };
 
   return (
-    <Button
-      variant="ghost"
-      size="icon"
-      className="size-10"
-      onClick={toggleTheme}
-    >
-      <Sun className="size-4 scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
-      <Moon className="absolute size-4 scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
+    <button type="button" className="ds-iconbtn" onClick={toggleTheme}>
+      <Sun className="scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" aria-hidden="true" />
+      <Moon className="absolute scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" aria-hidden="true" />
       <span className="sr-only">Alternar tema claro/escuro</span>
-    </Button>
+    </button>
   );
 };
 

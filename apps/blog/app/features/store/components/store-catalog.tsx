@@ -1,197 +1,149 @@
+// Catálogo das Ferramentas no RC-DS-CF (ADR-26, DS-CF-001-ferramentas §1–2). Uma ilha para /ferramentas/ e
+// /ferramentas/{tipo}/: a rota só decide `lockedType`. Estado na URL, lido depois da hidratação (a página é
+// pré-renderizada): ?q= (busca), ?tipo= (só na home), ?area= e ?estado=carregando|erro (pré-visualização dos estados).
+// Só itens reais (repository.listItems()); tipo sem item aparece como "em preparação", sem botão nem link.
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-
-import { CatalogSection } from "./catalog-section";
 import { CatalogEmpty, CatalogError, CatalogSkeleton } from "./catalog-states";
-import { CategoryCard } from "./category-card";
-import { FeaturedItem } from "./featured-item";
-import { SkillCard } from "./skill-card";
-import { StoreHeader } from "./store-header";
-import { VisualProductCard } from "./visual-product-card";
-import { AREAS } from "../area-tokens";
-import { ITEM_TYPES, typeBySegment, typeDef, typeHref } from "../data/item-types";
+import { AREA_ORDER, AREAS } from "../area-tokens";
+import { ITEM_TYPES, itemHref, typeBySegment, typeDef } from "../data/item-types";
 import { filterItems } from "../lib/filter-items";
 import type { AreaId, CatalogStatus, ItemType, StoreItem } from "../types/store";
 
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card, CardGrid, Field, Input, Select } from "@/components/ds";
 
-const ALL_TAB = "todos";
+/** Card de item: o título é o link (DS-CF-001 §4.3); tipo e ID no eyebrow, funções nas tags. */
+export function StoreItemCard({ item }: { item: StoreItem }) {
+	const def = typeDef(item.type);
+	return (
+		<Card
+			href={itemHref(item)}
+			eyebrow={`${def.label} · ${item.id}`}
+			title={item.name}
+			text={item.description}
+			meta={item.tags.join(" · ")}
+			cta={item.type === "solution" ? "Ver a solução" : "Abrir"}
+			data-testid="store-item"
+			data-type={item.type}
+		/>
+	);
+}
 
-/**
- * Store shell + catalog. One island for /ferramentas and /ferramentas/{type}; the route only decides
- * `lockedType`. `?estado=carregando|erro` previews the LOADING/ERROR states (mock phase).
- */
-export function StoreCatalog({
-  items,
-  lockedType,
-}: {
-  items: StoreItem[];
-  lockedType?: ItemType;
-}) {
-  const [q, setQ] = useState("");
-  const [type, setType] = useState<ItemType | null>(lockedType ?? null);
-  const [area, setArea] = useState<AreaId | null>(null);
-  const [status, setStatus] = useState<CatalogStatus>("ready");
-  const [hydrated, setHydrated] = useState(false);
+export function StoreCatalog({ items, lockedType }: { items: StoreItem[]; lockedType?: ItemType }) {
+	const [q, setQ] = useState("");
+	const [type, setType] = useState<ItemType | null>(lockedType ?? null);
+	const [area, setArea] = useState<AreaId | null>(null);
+	const [status, setStatus] = useState<CatalogStatus>("ready");
+	const [hydrated, setHydrated] = useState(false);
 
-  // Read filters from the URL once on the client.
-  useEffect(() => {
-    const p = new URLSearchParams(window.location.search);
-    setQ(p.get("q") ?? "");
-    const t = p.get("tipo");
-    if (!lockedType && t) setType(typeBySegment(t)?.type ?? null);
-    const a = p.get("area");
-    if (a && a in AREAS) setArea(a as AreaId);
-    const s = p.get("estado");
-    setStatus(s === "carregando" ? "loading" : s === "erro" ? "error" : "ready");
-    setHydrated(true);
-  }, [lockedType]);
+	// Lê os filtros da URL uma vez, no cliente.
+	useEffect(() => {
+		const p = new URLSearchParams(window.location.search);
+		setQ(p.get("q") ?? "");
+		const t = p.get("tipo");
+		if (!lockedType && t) setType(typeBySegment(t)?.type ?? null);
+		const a = p.get("area");
+		if (a && a in AREAS) setArea(a as AreaId);
+		const s = p.get("estado");
+		setStatus(s === "carregando" ? "loading" : s === "erro" ? "error" : "ready");
+		setHydrated(true);
+	}, [lockedType]);
 
-  // Mirror filters to the URL (shareable, back-button safe with replaceState).
-  useEffect(() => {
-    if (!hydrated) return;
-    const p = new URLSearchParams(window.location.search);
-    const set = (k: string, v: string | null) => (v ? p.set(k, v) : p.delete(k));
-    set("q", q.trim() || null);
-    set("tipo", !lockedType && type ? typeDef(type).segment : null);
-    set("area", area);
-    const qs = p.toString();
-    window.history.replaceState(null, "", window.location.pathname + (qs ? `?${qs}` : ""));
-  }, [q, type, area, lockedType, hydrated]);
+	// Espelha os filtros na URL (compartilhável; replaceState não suja o histórico).
+	useEffect(() => {
+		if (!hydrated) return;
+		const p = new URLSearchParams(window.location.search);
+		const set = (k: string, v: string | null) => (v ? p.set(k, v) : p.delete(k));
+		set("q", q.trim() || null);
+		set("tipo", !lockedType && type ? typeDef(type).segment : null);
+		set("area", area);
+		const qs = p.toString();
+		window.history.replaceState(null, "", window.location.pathname + (qs ? `?${qs}` : "") + window.location.hash);
+	}, [q, type, area, lockedType, hydrated]);
 
-  const results = useMemo(() => filterItems(items, { q, type, area }), [items, q, type, area]);
-  const isHub = !q.trim() && !type && !area && !lockedType;
-  const filtered = Boolean(q.trim() || area);
+	const scoped = useMemo(() => (lockedType ? items.filter((i) => i.type === lockedType) : items), [items, lockedType]);
+	const results = useMemo(() => filterItems(scoped, { q, type, area }), [scoped, q, type, area]);
+	const filtered = Boolean(q.trim() || area || (!lockedType && type));
 
-  const clear = useCallback(() => {
-    setQ("");
-    setArea(null);
-    if (!lockedType) setType(null);
-  }, [lockedType]);
+	const clear = useCallback(() => {
+		setQ("");
+		setArea(null);
+		if (!lockedType) setType(null);
+	}, [lockedType]);
 
-  const retry = useCallback(() => {
-    const url = new URL(window.location.href);
-    url.searchParams.delete("estado");
-    window.history.replaceState(null, "", url);
-    setStatus("ready");
-  }, []);
+	const retry = useCallback(() => {
+		const url = new URL(window.location.href);
+		url.searchParams.delete("estado");
+		window.history.replaceState(null, "", url);
+		setStatus("ready");
+	}, []);
 
-  const onTab = (value: string) => {
-    if (lockedType) {
-      window.location.assign(value === ALL_TAB ? "/ferramentas/" : typeHref(value as ItemType));
-      return;
-    }
-    setType(value === ALL_TAB ? null : (value as ItemType));
-  };
+	const def = lockedType ? typeDef(lockedType) : null;
+	const searchLabel = def ? `Buscar em ${def.plural}` : "Buscar ferramentas";
+	const count = (t: ItemType) => items.filter((i) => i.type === t).length;
+	// Só as áreas que têm item: um seletor com uma opção só não ajuda ninguém (?area= continua valendo).
+	const areas = AREA_ORDER.filter((id) => scoped.some((i) => i.area === id));
 
-  const def = lockedType ? typeDef(lockedType) : null;
-  const count = (t: ItemType) => items.filter((i) => i.type === t).length;
-  const featured = items.find((i) => i.featured);
-  const grouped = ITEM_TYPES.map((t) => ({
-    def: t,
-    list: results.filter((i) => i.type === t.type),
-  })).filter((g) => g.list.length > 0);
+	return (
+		<div data-store-catalog>
+			<form role="search" className="ds-filters" onSubmit={(e) => e.preventDefault()}>
+				<div className="ds-filters-row" data-cols={areas.length > 1 ? "2" : "1"}>
+					<Field label={searchLabel}>
+						{({ id, describedBy }) => <Input id={id} aria-describedby={describedBy} type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Nome, função ou tipo" />}
+					</Field>
+					{areas.length > 1 && (
+						<Field label="Filtrar por área">
+							{({ id }) => (
+								<Select id={id} value={area ?? ""} onChange={(e) => setArea((e.target.value || null) as AreaId | null)}>
+									<option value="">Todas as áreas</option>
+									{areas.map((a) => (
+										<option key={a} value={a}>
+											{AREAS[a].label}
+										</option>
+									))}
+								</Select>
+							)}
+						</Field>
+					)}
+				</div>
+				{!lockedType && (
+					<div role="group" aria-label="Tipo de item" className="ds-filters-types" data-store-types>
+						<button type="button" className="ds-chip" aria-pressed={type === null} onClick={() => setType(null)}>
+							Todos <span className="ds-chip-count">{items.length}</span>
+						</button>
+						{ITEM_TYPES.map((t) =>
+							count(t.type) ? (
+								<button key={t.type} type="button" className="ds-chip" aria-pressed={type === t.type} onClick={() => setType(type === t.type ? null : t.type)}>
+									{t.plural} <span className="ds-chip-count">{count(t.type)}</span>
+								</button>
+							) : (
+								<span key={t.type} className="ds-chip" data-state="soon">
+									{t.plural} <span className="ds-chip-count">em preparação</span>
+								</span>
+							),
+						)}
+					</div>
+				)}
+			</form>
 
-  const renderList = (list: StoreItem[], pattern: "list" | "grid") =>
-    pattern === "list" ? (
-      <div className="grid gap-3 md:grid-cols-2">
-        {list.map((i) => (
-          <SkillCard key={i.id} item={i} />
-        ))}
-      </div>
-    ) : (
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {list.map((i) => (
-          <VisualProductCard key={i.id} item={i} />
-        ))}
-      </div>
-    );
-
-  return (
-    <div className="min-w-0">
-      <StoreHeader
-        title={def ? def.plural : "Ferramentas cognitivas"}
-        description={def ? def.description : "Recursos para apoiar a execução do trabalho cognitivo."}
-        query={q}
-        onQuery={setQ}
-        area={area}
-        onArea={setArea}
-        searchLabel={def ? `Buscar em ${def.plural}` : "Buscar ferramentas"}
-        sample={def?.type !== "solution"}
-      />
-
-      <Tabs value={type ?? ALL_TAB} onValueChange={onTab} className="mt-6">
-        <ScrollArea className="w-full">
-          <TabsList aria-label="Tipo de item" className="h-auto w-max justify-start">
-            <TabsTrigger value={ALL_TAB} className="min-h-9 px-3">
-              Todos
-            </TabsTrigger>
-            {ITEM_TYPES.map((t) => (
-              <TabsTrigger key={t.type} value={t.type} className="min-h-9 px-3">
-                {t.plural}
-              </TabsTrigger>
-            ))}
-          </TabsList>
-          <ScrollBar orientation="horizontal" />
-        </ScrollArea>
-
-        <TabsContent value={type ?? ALL_TAB} className="mt-2 rounded-[var(--radius-card)] focus-visible:ring-ring/50 focus-visible:ring-[3px]">
-          {status === "loading" && <CatalogSkeleton />}
-          {status === "error" && <CatalogError onRetry={retry} />}
-          {status === "ready" && (
-            <>
-              <p className="sr-only" role="status" aria-live="polite">
-                {results.length} {results.length === 1 ? "resultado" : "resultados"}
-              </p>
-
-              {isHub ? (
-                <>
-                  <CatalogSection id="categorias" title="Categorias">
-                    <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                      {ITEM_TYPES.filter((t) => count(t.type) > 0).map((t) => (
-                        <CategoryCard key={t.type} type={t.type} count={count(t.type)} />
-                      ))}
-                    </div>
-                  </CatalogSection>
-
-                  {featured && (
-                    <CatalogSection id="destaque" title="Destaque">
-                      <FeaturedItem item={featured} />
-                    </CatalogSection>
-                  )}
-
-                  <CatalogSection
-                    id="skills"
-                    title="Skills"
-                    href={typeHref("skill")}
-                    hrefLabel="Ver todas"
-                  >
-                    {renderList(items.filter((i) => i.type === "skill").slice(0, 4), "list")}
-                  </CatalogSection>
-
-                  <CatalogSection id="ebooks" title="E-books" href={typeHref("ebook")}>
-                    {renderList(items.filter((i) => i.type === "ebook"), "grid")}
-                  </CatalogSection>
-                </>
-              ) : results.length === 0 ? (
-                <CatalogEmpty filtered={filtered} onClear={clear} />
-              ) : (
-                grouped.map((g) => (
-                  <CatalogSection
-                    key={g.def.type}
-                    id={`grupo-${g.def.type}`}
-                    title={g.def.plural}
-                    href={lockedType ? undefined : typeHref(g.def.type)}
-                  >
-                    {renderList(g.list, g.def.pattern)}
-                  </CatalogSection>
-                ))
-              )}
-            </>
-          )}
-        </TabsContent>
-      </Tabs>
-    </div>
-  );
+			{status === "loading" && <CatalogSkeleton />}
+			{status === "error" && <CatalogError onRetry={retry} />}
+			{status === "ready" && (
+				<>
+					<p className="ds-filters-count" role="status" aria-live="polite" style={{ marginBottom: 16 }}>
+						{results.length} {results.length === 1 ? "item publicado" : "itens publicados"}
+					</p>
+					{results.length === 0 ? (
+						<CatalogEmpty filtered={filtered} onClear={clear} />
+					) : (
+						<CardGrid cols={3} label={def ? def.plural : "Itens publicados"} data-tablet="2">
+							{results.map((i) => (
+								<StoreItemCard key={i.id} item={i} />
+							))}
+						</CardGrid>
+					)}
+				</>
+			)}
+		</div>
+	);
 }

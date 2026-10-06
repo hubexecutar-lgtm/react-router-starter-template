@@ -2,114 +2,110 @@
 
 @import "tw-animate-css";
 @plugin "@tailwindcss/typography";
+@import "./ds.css";
+@import "./ds-ferramentas.css";
+@import "./ds-mapa.css";
+@import "./ds-prisma.css";
+@import "./ds-admin.css";
 
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Mockup palette (RC-DESIGN-MOCKUPS-001, ADR-11): exact values of mood board 10. */
-  --background: #ffffff; /* Canvas */
-  --foreground: #202124; /* text primary — >= 13:1 on every surface */
-  --card: var(--surface-default); /* ADR-09: cards use the neutral surface */
-  --card-foreground: var(--foreground);
-  --popover: #ffffff;
-  --popover-foreground: var(--foreground);
-  --primary: #2563eb; /* action, links, focus — 5.17:1 on canvas; never as text on --surface-tabular (4.29:1) */
-  --primary-hover: #1d4ed8;
-  --primary-soft: var(--surface-model);
-  --primary-foreground: #ffffff;
-  --secondary: var(--surface-hover);
-  --secondary-foreground: var(--foreground);
-  --muted: var(--surface-hover);
-  --muted-foreground: #6b7280; /* text secondary on the canvas (4.83:1) */
-  /* AA deviation: #6B7280 is 4.0–4.4:1 on the grays, so gray surfaces swap --muted-foreground
-     for this value (see "Secondary text on gray surfaces" below). */
-  --muted-foreground-on-gray: #5f6670;
-  --accent: var(--surface-hover);
-  --accent-foreground: var(--foreground);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: var(--border-default);
-  --input: #d1d5db; /* control boundary: stronger than the structural border */
-  --ring: var(--primary);
+  /* Infraestrutura (shadcn/Radix e camadas semânticas): só aliases do RC-DS-CF (ADR-26, fim do arquivo).
+     Nenhum valor de identidade aqui; o hex de identidade vive no bloco RC-DS-CF. */
+  --background: var(--cf-bg);
+  --foreground: var(--cf-fg);
+  --card: var(--cf-bg-200);
+  --card-foreground: var(--cf-fg);
+  --popover: var(--cf-bg);
+  --popover-foreground: var(--cf-fg);
+  --primary: var(--cf-accent-text); /* ação como texto/link sobre o canvas (4,9:1) */
+  --primary-hover: var(--cf-fg);
+  --primary-soft: var(--cf-accent-soft);
+  --primary-foreground: var(--cf-bg);
+  --secondary: var(--cf-bg-300);
+  --secondary-foreground: var(--cf-fg);
+  --muted: var(--cf-bg-300);
+  --muted-foreground: var(--cf-fg-muted);
+  --muted-foreground-on-gray: var(--cf-fg-muted);
+  --accent: var(--cf-bg-300);
+  --accent-foreground: var(--cf-fg);
+  --destructive: var(--color-critical-default);
+  --border: var(--cf-border);
+  --input: var(--cf-border-strong);
+  --ring: var(--cf-focus);
 
-  /* Surfaces & Elevation (ADR-09 / DS-SURFACE-UNIFICATION-001): the one neutral contract.
-     Only this block, the --plain-* aliases and the dark overrides hold neutral hex values. */
-  --surface-page: var(--background); /* #FFFFFF */
-  --surface-subtle: #f5f5f4; /* Subtle: blocks, sections, support modules */
-  --surface-default: var(--surface-subtle); /* cards, table cells, panels */
-  --surface-tabular: #eaeae8; /* Tabular: table headers, structured data */
-  --surface-model: #eff6ff; /* Diagram: model panels, principles, flows */
-  --surface-hover: #f0f0ee; /* hover; also --muted / --secondary / --accent — keeps --primary at 4.5:1 */
-  --surface-selected: var(--surface-tabular); /* selected item / row */
-  --border-subtle: #f0f0ee;
-  --border-default: #eaeae8; /* structure only: never text, icon or a state by itself */
-  --border-strong: #d6d6d3;
+  /* Superfícies (ADR-09, emendado pelo ADR-26): aliases dos fundos e bordas CF. */
+  --surface-page: var(--cf-bg);
+  --surface-subtle: var(--cf-bg-200);
+  --surface-default: var(--cf-bg-200);
+  --surface-tabular: var(--cf-bg-300);
+  --surface-model: var(--cf-accent-soft);
+  --surface-hover: var(--cf-bg-300);
+  --surface-selected: var(--cf-bg-300);
+  --border-subtle: var(--cf-border);
+  --border-default: var(--cf-border);
+  --border-strong: var(--cf-border-strong);
   --elevation-flat: none;
-  --elevation-raised: 0 1px 2px rgb(0 0 0 / 0.04); /* controls (xs/sm) */
-  --elevation-overlay: 0 8px 28px rgb(0 0 0 / 0.1); /* popover, dialog, drawer, sheet, hover-card */
-  /* Cards are table cells (ADR-12): same fill, no outline, same 2px radius, separated by gutters. */
-  --surface-radius-card: var(--table-radius);
-  --surface-radius-cell: var(--table-radius);
-  --surface-header: var(--surface-tabular); /* card / panel header strip = table header */
-  /* compatibility with the handoff names */
+  --elevation-raised: 0 1px 2px rgb(0 0 0 / 0.05);
+  --elevation-overlay: 0 12px 32px rgb(0 0 0 / 0.12);
+  --surface-radius-card: var(--cf-radius-md);
+  --surface-radius-cell: var(--cf-radius-sm);
+  --surface-header: var(--cf-bg-300);
   --surface-neutral: var(--surface-default);
   --surface-neutral-border: var(--border-default);
 
-  /* Chart palette (ADR-04): semantic layer over the 3 families + neutral; never new hues. */
+  /* Séries de gráfico (ADR-04): camada semântica, exceção registrada no ADR-26. */
   --chart-1: var(--color-brand-default);
   --chart-2: var(--color-attention-default);
   --chart-3: var(--color-critical-default);
   --chart-4: var(--brand-500);
   --chart-5: var(--muted-foreground);
-  /* Illustration & vector layer (ADR-15 / RC-BRAND-STYLING-001, LANC-001 RQ-011): SVG, illustrations,
-     decorative backgrounds and halftone only. Never interface text, surfaces or actions (those stay ADR-11).
-     --illu-coral (2.33:1) and --illu-blue-soft (1.83:1) are never text nor the only carrier of meaning (RQ-012). */
-  --illu-ink: #18346f; /* main stroke, text embedded in SVG — 11.93:1 */
-  --illu-blue: #3155e7; /* outline, path, scene focus — 5.86:1; never replaces --primary in UI */
-  --illu-coral: #f28f83; /* sparse emphasis (event, focus) */
-  --illu-blue-soft: #a9bff4; /* planes, depth */
-  --illu-canvas: #f4f6f1; /* illustration background; never under long text */
+  /* Ilustração (ADR-15): fica no repositório; os layouts do ADR-26 não a usam em tela. */
+  --illu-ink: #18346f;
+  --illu-blue: #3155e7;
+  --illu-coral: #f28f83;
+  --illu-blue-soft: #a9bff4;
+  --illu-canvas: #f4f6f1;
 
-  /* Causal graph (LANC-001 RQ-012/RQ-076): aliases only, no new hex. Meaningful marks >= 3:1. */
-  --graph-node-bg: var(--surface-model);
-  --graph-node-border: var(--border-default);
-  --graph-node-border-selected: var(--primary);
-  --graph-node-text: var(--foreground);
-  --graph-edge: var(--muted-foreground);
-  --graph-edge-active: var(--primary);
+  /* Grafo causal (ADR-19): camada semântica (exceção 2 do ADR-26); a seleção usa o acento da identidade. */
+  --graph-node-bg: var(--cf-bg);
+  --graph-node-border: var(--cf-border-strong);
+  --graph-node-border-selected: var(--cf-accent-text);
+  --graph-node-text: var(--cf-fg);
+  --graph-edge: var(--cf-fg-muted);
+  --graph-edge-active: var(--cf-accent-text);
   --graph-dim-opacity: 0.35;
-  --graph-accent-event: var(--illu-coral); /* decorative: always with the --graph-accent-event-outline */
+  --graph-accent-event: var(--illu-coral);
   --graph-accent-event-outline: var(--illu-ink);
 
-  /* Motion (v7, LANC-001 RQ-014). Zeroed under prefers-reduced-motion (end of file). */
+  /* Motion (ADR-15). Zerado sob prefers-reduced-motion. */
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --dur-fast: 150ms;
   --dur-base: 250ms;
   --dur-slow: 450ms;
 
-  /* Component geometry (LANC-001 RQ-015). Cards stay table cells (ADR-12). */
-  --radius-card: var(--table-radius); /* 2px */
-  --radius-control: var(--radius); /* 8px */
-  --radius-pill: 40px; /* chips */
-  --radius-node: var(--radius-pill); /* graph node */
-  --radius-sheet: 20px; /* bottom sheet, top corners only */
-  --shadow-overlay: var(--elevation-overlay); /* drawer, sheet */
+  /* Geometria: aliases dos raios CF. */
+  --radius-card: var(--cf-radius-md);
+  --radius-control: var(--cf-radius-md);
+  --radius-pill: var(--cf-radius-pill);
+  --radius-node: var(--cf-radius-pill);
+  --radius-sheet: var(--cf-radius-lg);
+  --shadow-overlay: var(--elevation-overlay);
 
-  /* Extra-gray text (captions, axis ticks, timestamps). AA only on card/background/popover;
-     on muted/secondary surfaces use --muted-foreground. */
   --muted-foreground-subtle: var(--muted-foreground);
 
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --sidebar: var(--cf-bg-200);
+  --sidebar-foreground: var(--cf-fg);
+  --sidebar-primary: var(--cf-fg);
+  --sidebar-primary-foreground: var(--cf-bg);
+  --sidebar-accent: var(--cf-bg-300);
+  --sidebar-accent-foreground: var(--cf-fg);
+  --sidebar-border: var(--cf-border);
+  --sidebar-ring: var(--cf-focus);
 
-  --radius: 8px;
+  --radius: var(--cf-radius-md);
 
-  /* Elevation contract (ADR-09): two levels. xs/sm = raised (controls); md..2xl = overlay. */
   --shadow-2xs: var(--elevation-raised);
   --shadow-xs: var(--elevation-raised);
   --shadow-sm: var(--elevation-raised);
@@ -119,22 +115,17 @@
   --shadow-xl: var(--elevation-overlay);
   --shadow-2xl: var(--elevation-overlay);
 
-  /* Typography (ADR-11): Inter for display and text, IBM Plex Mono for technical text. */
-  --font-inter:
-    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  /* Tipografia (ADR-26): Hanken Grotesk em tudo; IBM Plex Mono só em rótulos técnicos. */
+  --font-sans: var(--cf-font);
   --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
-  --font-mono:
-    "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
-
-  /* StyleGlide provides a better abstraction for fonts */
-  --display-family: var(--font-sans);
-  --text-family: var(--font-inter);
-  --display-weight: 500; /* Editorial Hybrid v4 + Stories (ADR-22): títulos em 500 */
+  --font-mono: var(--cf-mono);
+  --display-family: var(--cf-font);
+  --text-family: var(--cf-font);
+  --display-weight: 500;
   --text-weight: 400;
-
+  --content-max: var(--cf-container);
+  --gutter: var(--cf-px);
+  --measure: var(--cf-measure);
   /* ===== DS-CALLOUT-001 / PAL-ANNEX-01 ===== */
   /* Layer 1 — primitives: the only place with concrete colour values.
      Step 600 of each scale is the handoff hex (#304E83, #8A5A00, #A33A32). */
@@ -201,8 +192,8 @@
   --plain-text: var(--foreground);
   --plain-accent: var(--primary);
   --plain-accent-soft: var(--primary-soft);
-  --plain-radius-desktop: var(--table-radius); /* panels are cells too (ADR-12) */
-  --plain-radius-mobile: var(--table-radius);
+  --plain-radius-desktop: var(--cf-radius-md);
+  --plain-radius-mobile: var(--cf-radius-md);
   --plain-read-size: 1.0625rem; /* reading view of PlainTextPanel (ADR-12) */
   --plain-read-leading: 1.6;
   --plain-font:
@@ -229,7 +220,7 @@
   --table-text: var(--plain-text);
   --table-link: var(--primary);
   --table-cell-padding: 12px 16px;
-  --table-radius: 2px;
+  --table-radius: var(--cf-radius-sm);
   --table-font-size: 1rem;
   --table-head-weight: 500;
   --table-selected: var(--surface-selected);
@@ -298,60 +289,12 @@
 .dark {
   /* PROVISIONAL (ADR-15): --illu-ink is 1.4:1 on the dark canvas; the event outline uses the text colour. */
   --graph-accent-event-outline: var(--foreground);
-  /* PROVISIONAL dark theme: the mockups (ADR-11) define only the light theme. These values
-     derive from DESIGN-HANDOFF-001 v2 (hex -> oklch) until a dark spec exists. */
-  --background: oklch(0.227 0.004 286.09); /* color-bg-canvas #1c1c1e */
-  --foreground: oklch(0.971 0.003 286.35); /* color-text-primary #f5f5f7 */
-  --card: oklch(0.294 0.004 286.18); /* color-bg-elevated #2c2c2e */
-  --card-foreground: oklch(0.971 0.003 286.35);
-  --popover: oklch(0.294 0.004 286.18);
-  --popover-foreground: oklch(0.971 0.003 286.35);
-  --primary: oklch(0.705 0.159 252.35); /* color-accent #4da3ff */
-  --primary-foreground: oklch(0.227 0.004 286.09);
-  --secondary: oklch(0.261 0.004 286.14); /* color-bg-subtle #242426 */
-  --secondary-foreground: oklch(0.971 0.003 286.35);
-  --muted: oklch(0.261 0.004 286.14);
-  --muted-foreground: oklch(0.781 0.008 286.2); /* color-text-secondary #b7b7bd */
-  --accent: oklch(0.261 0.004 286.14);
-  --accent-foreground: oklch(0.971 0.003 286.35);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(0.349 0.003 286.22); /* color-border-subtle #3a3a3c */
-  --input: oklch(0.349 0.003 286.22);
-  --ring: oklch(0.705 0.159 252.35); /* color-focus #64b0ff ≈ accent */
-
   --chart-1: var(--color-brand-default);
   --chart-2: var(--color-attention-default);
   --chart-3: var(--color-critical-default);
   --chart-4: var(--brand-500);
   --chart-5: var(--muted-foreground);
   --muted-foreground-subtle: oklch(0.7 0.008 286.2);
-
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
-
-  /* PROVISIONAL — surface contract on the dark canvas (no dark spec in ADR-09).
-     --plain-* and --table-* follow these through their aliases. */
-  --surface-default: oklch(0.294 0.004 286.18);
-  --surface-subtle: oklch(0.27 0.004 286.15);
-  --surface-hover: oklch(0.261 0.004 286.14);
-  --surface-selected: oklch(0.349 0.003 286.22);
-  --border-default: oklch(0.349 0.003 286.22);
-  --border-subtle: oklch(0.31 0.003 286.2);
-  --border-strong: oklch(0.42 0.003 286.2);
-  --elevation-raised: 0 1px 2px rgb(0 0 0 / 0.4);
-  --elevation-overlay: 0 8px 28px rgb(0 0 0 / 0.5);
-  --primary-hover: oklch(0.78 0.13 252.35);
-  --primary-soft: oklch(0.3 0.05 260);
-  --table-head-surface: var(--surface-selected);
-  --surface-tabular: oklch(0.349 0.003 286.22);
-  --surface-model: oklch(0.3 0.05 260);
-  --muted-foreground-on-gray: var(--muted-foreground);
 
   /* PROVISIONAL — no dark spec in DS-CALLOUT-001; same families, roles inverted
      for a dark canvas. Replace when a dark theme spec exists. */
@@ -592,46 +535,6 @@
   }
 }
 
-/* Editorial drop cap (DESIGN-HANDOFF-001) — applied to .prose, the article
-   body container in app/routes/blog.$slug.tsx, so no markup or
-   component changes are needed. */
-.prose > p:first-of-type::first-letter,
-.prose .lead::first-letter,
-.prose h2 + p::first-letter {
-  float: left;
-  font-family: var(--font-display);
-  font-size: 5.2em;
-  line-height: 0.78;
-  font-weight: 700;
-  padding: 0.03em 0.12em 0 0;
-  color: var(--foreground);
-}
-
-/* Operational reports (ADR-05) read as documents: no editorial drop cap.
-   Articles (.rc-prose, mood board 03) keep it only on the opening paragraph. */
-.prose[data-report] > p:first-of-type::first-letter,
-.prose[data-report] h2 + p::first-letter,
-.rc-prose h2 + p:not(:first-of-type)::first-letter,
-.prose[data-plain-page] > p:first-of-type::first-letter,
-.prose[data-plain-page] h2 + p::first-letter {
-  float: none;
-  font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
-  margin: 0;
-  padding: 0;
-  color: inherit;
-  font-weight: inherit;
-}
-
-@media print {
-  .prose > p:first-of-type::first-letter,
-  .prose .lead::first-letter,
-  .prose h2 + p::first-letter {
-    font-size: 4.2em;
-  }
-}
-
 html,
 body {
   scroll-behavior: smooth;
@@ -721,441 +624,6 @@ body {
   }
 }
 
-/* Canonical table (ADR-05 §15): every Table component and every .prose table. */
-.ds-table,
-.prose table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: var(--table-gap);
-  margin-inline: calc(var(--table-gap) * -1);
-  font-size: var(--table-font-size);
-  color: var(--table-text);
-}
-.ds-table :is(th, td),
-.prose table :is(th, td) {
-  padding: var(--table-cell-padding);
-  border: 0;
-  border-radius: var(--table-radius);
-  text-align: left;
-  vertical-align: top;
-  line-height: 1.35;
-  color: var(--table-text);
-}
-.ds-table th,
-.prose table th {
-  background: var(--table-head-surface);
-  font-family: var(--text-family);
-  font-weight: var(--table-head-weight);
-  text-transform: uppercase;
-  vertical-align: middle;
-}
-.ds-table td,
-.prose table td {
-  background: var(--table-surface);
-}
-/* A table inside a card: cells step up to the page surface so they stay visible. */
-[data-slot="card"] .ds-table td,
-.plain-surface .ds-table td {
-  background: var(--surface-page);
-}
-.ds-table tr[data-state="selected"] td {
-  background: var(--table-selected);
-}
-.ds-table :is(th, td) code,
-.prose table :is(th, td) code {
-  font-family: var(--plain-font);
-  font-size: 0.95em;
-  font-weight: 400;
-  background: none;
-  padding: 0;
-}
-.prose table :is(th, td) code::before,
-.prose table :is(th, td) code::after {
-  content: none;
-}
-.ds-table a,
-.prose table a {
-  color: var(--table-link);
-  text-decoration: none;
-}
-.ds-table a:hover,
-.prose table a:hover {
-  text-decoration: underline;
-}
-.prose thead,
-.prose tbody tr {
-  border: 0;
-}
-
-/* ===== Editorial (HANDOFF-RC-GLOBAL-DESIGN-CONTENT-001) =====================
-   Gramática dos mood boards: título grande e apertado, rótulo mono em caixa alta,
-   lead em cinza. Só tipografia e espaço: cor e superfície vêm dos tokens
-   de ADR-03/ADR-09/ADR-11 (nenhuma matiz ou cinza local). */
-:root {
-  --font-editorial: var(--font-sans);
-  --editorial-display-tracking: -0.03em; /* Inter Bold 56/64 (mood board 10) */
-  --editorial-eyebrow-tracking: 0.12em;
-  --editorial-measure: var(--measure);
-
-  /* Type and rhythm scale (ADR-12): every text role reads one of these tokens. */
-  --text-display: 3.5rem; /* 56 */
-  --leading-display: 1.143; /* 64 */
-  --text-h2: clamp(1.75rem, 1.4rem + 1.2vw, 2.5rem); /* 28 @390 · 32 @768 · 40 @1440 */
-  --text-h3: 1.375rem; /* 22; 25.5 from 48rem */
-  --text-body: 1.125rem; /* 18 */
-  --leading-body: 1.556; /* 28 */
-  --text-small: 0.875rem;
-  --text-mono: 0.875rem; /* 14 */
-  --leading-mono: 1.43; /* 20 */
-  --measure: 68ch; /* longest reading line */
-  --measure-lead: 60ch; /* lead / subhead */
-  /* Anatomy rhythm (AUD-WEB-001): values measured on developer.apple.com/programs at
-     390/768/1440 px and rounded to the rem grid. Sections are bands with --section-pad-y above and
-     below the content, so two consecutive sections sit 2 × --section-pad-y apart. */
-  --content-max: 61.25rem; /* 980 */
-  --gutter: max(1.5rem, 5vw); /* 24 @390 · 38 @768 */
-  --section-pad-y: 3.1875rem; /* 51 */
-  --space-section: calc(2 * var(--section-pad-y));
-  --header-h: 3rem; /* 48: sticky bar */
-  --text-hero: clamp(3rem, 2rem + 4vw, 4.5rem); /* 48 → 72: wordmark display, uppercase */
-  --text-hero-lead: 1.1875rem; /* 19 */
-
-  /* Organic halftone (ADR-12): decorative only, never under running text. */
-  --dot-color: var(--primary);
-  --dot-faint: color-mix(in oklab, var(--primary) 22%, var(--background));
-}
-@media (width >= 48rem) {
-  :root {
-    --section-pad-y: 4.25rem; /* 68 */
-    --text-h3: 1.59375rem; /* 25.5 */
-    --text-hero-lead: 1.3125rem; /* 21 */
-  }
-}
-@media (width >= 64rem) {
-  :root {
-    --header-h: 3.25rem; /* 52 */
-  }
-}
-.rc-dots {
-  fill: var(--dot-color);
-}
-.rc-dots__faint {
-  fill: var(--dot-faint);
-}
-@utility rc-display {
-  font-family: var(--font-editorial);
-  font-weight: 700;
-  letter-spacing: var(--editorial-display-tracking);
-  line-height: 0.98;
-  text-wrap: balance;
-}
-@utility rc-title {
-  font-family: var(--font-editorial);
-  font-weight: 700;
-  letter-spacing: -0.025em;
-  line-height: 1.15;
-  text-wrap: balance;
-}
-@utility rc-eyebrow {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: var(--editorial-eyebrow-tracking);
-  line-height: 1.4;
-  text-transform: uppercase;
-  color: var(--muted-foreground);
-}
-@utility rc-meta {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--muted-foreground);
-}
-@utility rc-lead {
-  font-family: var(--font-editorial);
-  color: var(--muted-foreground);
-  line-height: var(--leading-body); /* Inter Regular 18/28 */
-  max-width: var(--measure-lead);
-  text-wrap: pretty;
-}
-@utility rc-link {
-  color: var(--primary);
-  font-weight: 500;
-  text-underline-offset: 4px;
-  &:hover {
-    text-decoration: underline;
-  }
-}
-
-/* Card = table cell (ADR-12): Subtle fill, no outline, 2px radius. Gutters separate cards. */
-@utility rc-cell {
-  background: var(--table-surface);
-  border-radius: var(--table-radius);
-  border-width: 0;
-}
-
-/* Faixa de seção (AUD-WEB-001-04): fundo Subtle de ponta a ponta, conteúdo no container. Dentro
-   da faixa células, tabelas e painéis plain viram Canvas (como a tabela dentro de card, ADR-09),
-   senão sumiriam no cinza. A seção seguinte encosta na faixa com só o seu próprio respiro. */
-@utility rc-band {
-  background: var(--surface-subtle);
-  margin-top: var(--section-pad-y);
-  padding-block: var(--section-pad-y);
-  --table-surface: var(--surface-page);
-  --plain-surface: var(--surface-page);
-}
-.rc-band + section {
-  margin-top: var(--section-pad-y);
-}
-
-@utility rc-rule {
-  border-color: var(--border-default);
-}
-
-/* Corpo dos artigos: sans editorial, títulos com a mesma gramática do display. */
-.rc-prose {
-  --tw-prose-body: var(--foreground);
-  --tw-prose-headings: var(--foreground);
-  --tw-prose-links: var(--primary);
-  --tw-prose-bold: var(--foreground);
-  font-family: var(--font-editorial);
-}
-.rc-prose :where(h2, h3) {
-  font-family: var(--font-editorial);
-  font-weight: 700;
-  letter-spacing: -0.025em;
-  text-wrap: balance;
-}
-.rc-prose :where(h2) {
-  margin-top: 2.5em;
-}
-.rc-prose :where(p, li) {
-  text-wrap: pretty;
-}
-.rc-prose :where(a) {
-  text-underline-offset: 4px;
-}
-/* Markdown tables scroll inside the column instead of widening the page. */
-.rc-prose :where(table) {
-  display: block;
-  max-width: 100%;
-  overflow-x: auto;
-}
-
-/* Secondary text on gray surfaces (ADR-11, AA deviation): #6B7280 passes only on the canvas,
-   so every gray surface (Subtle, Tabular, Diagram, hover/selected) swaps it for
-   --muted-foreground-on-gray. Markup keeps using text-muted-foreground. */
-:where(
-    [data-slot="card"],
-    .ds-table,
-    .prose table,
-    .plain-surface,
-    .rc-surface,
-    .rc-cell,
-    .rc-band,
-    .hy-tile,
-    .hy-band,
-    .hy-carousel > *,
-    .hy-source,
-    .hy-footer,
-    .hy-model,
-    .bg-card,
-    .bg-muted,
-    .bg-secondary,
-    .bg-accent,
-    .bg-primary-soft,
-    [class*="bg-[var(--surface-default)]"],
-    [class*="bg-[var(--surface-subtle)]"],
-    [class*="bg-[var(--surface-hover)]"],
-    [class*="bg-[var(--surface-selected)]"],
-    [class*="bg-[var(--surface-tabular)]"],
-    [class*="bg-[var(--surface-model)]"]
-  ) {
-  --muted-foreground: var(--muted-foreground-on-gray);
-  /* tokens that alias --muted-foreground resolve on :root, so they are re-pointed here too */
-  --muted-foreground-subtle: var(--muted-foreground-on-gray);
-  --plain-muted: var(--muted-foreground-on-gray);
-  --area-data: var(--muted-foreground-on-gray);
-}
-
-/* Stacked table on phones (ADR-12): every row becomes a pile of labelled cells, so no column is
-   cut off or hidden behind a horizontal scroll. Cells keep the table tokens (gutter, radius, fill). */
-@media (max-width: 639.98px) {
-  .ds-table--stack,
-  .ds-table--stack tbody,
-  .ds-table--stack tr {
-    display: block;
-    margin-inline: 0;
-  }
-  .ds-table--stack thead {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-    white-space: nowrap;
-  }
-  .ds-table--stack tr + tr {
-    margin-top: calc(var(--table-gap) * 4);
-  }
-  .ds-table--stack td {
-    display: grid;
-    grid-template-columns: 6.5rem minmax(0, 1fr);
-    column-gap: 0.75rem;
-    row-gap: 0;
-    margin-top: var(--table-gap);
-    white-space: normal;
-    overflow-wrap: anywhere;
-  }
-  .ds-table--stack td > * {
-    grid-column: 2;
-  }
-  .ds-table--stack td::before {
-    grid-column: 1;
-    grid-row: 1 / span 9; /* label column for every piece of the cell; empty rows have no height */
-    content: attr(data-label);
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    letter-spacing: var(--editorial-eyebrow-tracking);
-    text-transform: uppercase;
-    color: var(--muted-foreground-on-gray);
-  }
-}
-
-/* Reading measure (ADR-12, AUD-HIG-05/06): no running-text line in main is longer than
-   --measure, whatever the column width. Tables, code and diagrams are exempt. */
-:where(main) :where(p, li, dd, blockquote, figcaption):not(:where(table, pre, [data-plain="diagram"]) *) {
-  max-width: var(--measure);
-}
-
-/* Anchors land below the sticky site header. */
-html {
-  scroll-padding-top: 5.5rem;
-}
-
-/* ===== OPENAI-STORIES-DESIGN-001 (RC-FRONT-001) =====================================================
-   Tokens do handoff, valores LITERAIS observados em viewport 1363×936, DPR 1 (design/tokens.desktop.css).
-   Não são o CSS-fonte original e só há medida desktop: 390/768 são medidos à parte (docs/audit/aud-web-002).
-   Divergência registrada: a fonte da referência (OpenAI Sans) não existe aqui; os mesmos tamanhos, pesos,
-   entrelinhas e tracking usam a Inter já carregada (ADR-11), então a quebra de linha pode diferir.
-   Os tokens do PR #18 (--content-max, --section-pad-y…) seguem valendo para o /admin (ADR-14). */
-:root {
-  --ref-font: var(--font-inter);
-  --ref-bg: var(--background);
-  --ref-text: var(--foreground);
-  --ref-gutter: 32px;
-  --ref-grid-gap: 24px;
-  --ref-h1-size: 61.6864px;
-  --ref-h1-line: 62.0103px;
-  --ref-h1-tracking: -1.85059px;
-  --ref-h2-size: 46.8432px;
-  --ref-h2-line: 54.2918px;
-  --ref-h2-tracking: -1.38216px;
-  --ref-body-size: 17px;
-  --ref-body-line: 27.999px;
-  --ref-body-tracking: -0.17px;
-  --ref-quote-size: 29.5662px;
-  --ref-quote-line: 39.0274px;
-  --ref-quote-tracking: -0.739155px;
-  --ref-caption-size: 14px;
-  --ref-caption-line: 22.96px;
-  --ref-meta-size: 14px; /* data do card: 14/19.6, peso 500 */
-  --ref-meta-line: 19.6px;
-  --ref-reading-width: 637.5px;
-  --ref-wide-width: 1078.5px;
-  /* medidas do handoff que não vinham como token (Home e artigo, desktop) */
-  --ref-header-h: 64px;
-  --bottombar-h: 4rem; /* 64: barra inferior do mobile (LANC-001 RQ-021) */
-  --ref-feature-w: 968.25px; /* 3 colunas de card + 2 gaps */
-  --ref-feature-h: 544.64px; /* 16:9 */
-  --ref-card-w: 306.75px; /* imagem quadrada */
-  --ref-hero-h: 694px;
-  --ref-hero-title-w: 802px;
-  --ref-hero-lead-w: 596px;
-  --ref-section-gap: 120px; /* entre blocos do artigo (legenda → h2, texto → mídia) */
-  --ref-block-gap: 24px; /* entre parágrafos e entre h2 e o 1º parágrafo */
-  --ref-card-gap-y: 64px; /* entre cards empilhados e entre linhas da grade */
-  --ref-pill-radius: 40px; /* CTA em cápsula */
-  --ref-control-radius: 4px; /* botões Filtro/Classificar */
-}
-
-/* Espaços verticais abaixo de 1024 px: proposta (ver acima). */
-@media (width < 64rem) {
-  :root {
-    --ref-section-gap: 4.5rem;
-    --ref-card-gap-y: 2.5rem;
-  }
-}
-
-@utility stories-container {
-  margin-inline: auto;
-  padding-inline: var(--ref-gutter);
-  width: 100%;
-}
-/* Abaixo de 1024 px a escala é PROPOSTA minha, não medida: a referência responde 403 ao container (BLOCKED) e o
-   handoff trata o responsivo como hipótese. Entrelinha e tracking ficam proporcionais ao corpo (razões derivadas
-   dos tokens). De 1024 px em diante valem os tokens literais. */
-@utility stories-h1 {
-  font-family: var(--ref-font);
-  font-size: clamp(2.25rem, 1.2rem + 4.2vw, var(--ref-h1-size));
-  line-height: 1.0053;
-  letter-spacing: -0.03em;
-  font-weight: 500;
-  text-wrap: balance;
-  @media (width >= 64rem) {
-    font-size: var(--ref-h1-size);
-    line-height: var(--ref-h1-line);
-    letter-spacing: var(--ref-h1-tracking);
-  }
-}
-@utility stories-h2 {
-  font-family: var(--ref-font);
-  font-size: clamp(1.75rem, 1rem + 3.2vw, var(--ref-h2-size));
-  line-height: 1.159;
-  letter-spacing: -0.0295em;
-  font-weight: 500;
-  text-wrap: balance;
-  @media (width >= 64rem) {
-    font-size: var(--ref-h2-size);
-    line-height: var(--ref-h2-line);
-    letter-spacing: var(--ref-h2-tracking);
-  }
-}
-@utility stories-body {
-  font-family: var(--ref-font);
-  font-size: var(--ref-body-size);
-  line-height: var(--ref-body-line);
-  letter-spacing: var(--ref-body-tracking);
-  font-weight: 400;
-}
-@utility stories-quote {
-  font-family: var(--ref-font);
-  font-size: clamp(1.375rem, 1rem + 1.8vw, var(--ref-quote-size));
-  line-height: 1.32;
-  letter-spacing: -0.025em;
-  font-weight: 500;
-  text-wrap: balance;
-  @media (width >= 64rem) {
-    font-size: var(--ref-quote-size);
-    line-height: var(--ref-quote-line);
-    letter-spacing: var(--ref-quote-tracking);
-  }
-}
-@utility stories-caption {
-  font-family: var(--ref-font);
-  font-size: var(--ref-caption-size);
-  line-height: var(--ref-caption-line);
-  font-weight: 400;
-}
-@utility stories-meta {
-  font-family: var(--ref-font);
-  font-size: var(--ref-meta-size);
-  line-height: var(--ref-meta-line);
-  font-weight: 500;
-  color: var(--muted-foreground);
-}
-
 /* Motion (v7, ADR-15 / LANC-001 RQ-014): hero entrance. */
 @keyframes heroReveal {
   from {
@@ -1216,9 +684,11 @@ html {
   color: var(--ps-ink);
   color-scheme: light;
   border: 1px solid var(--ps-line);
+  /* ADR-26: a tipografia da folha segue o RC-DS-CF (Hanken Grotesk, mais larga que o Inter); corpo em 9,25 pt / 1,3 para
+     os limites por campo continuarem cabendo em uma página. As cores --ps-* ficam (exceção 1). */
   font-family: var(--text-family);
-  font-size: 10pt;
-  line-height: 1.38;
+  font-size: 9.25pt;
+  line-height: 1.3;
   overflow-wrap: anywhere;
 }
 .prisma-sheet p,
@@ -1451,589 +921,6 @@ html {
   cursor: pointer;
 }
 
-/* ===== EDITORIAL-HYBRID-V4 (RC-HYBRID-004) ==========================================================
-   Arquitetura e CSS do "Risco Cognitivo — Editorial Hybrid v4" fundidos com os tokens OPENAI-STORIES-DESIGN-001
-   (ADR-22). Nenhum hex novo: as cores do híbrido são as do ADR-11 (texto, muted, Subtle, Tabular, ação, Diagram,
-   muted sobre cinza) e as medidas são as --ref-* do Stories (header 64, gutter 32, leitura 637,5, larga 1078,5,
-   seção 120, h1 61,6864, h2 46,8432). O híbrido acrescenta só a composição: hero centrado, painel de modelo,
-   tiles 2×2 em Subtle, banda de cards brancos, cabeçalho editorial do artigo, faixa de categorias e rodapé em 4 colunas.
-   Abaixo de 1024 px a seção cai para 72 px e o tile para 36/28 px (breakpoints do híbrido: 1024, 900, 620). */
-:root {
-  --hy-shell: var(--ref-wide-width);
-  --hy-wide: 1440px;
-  --hy-read: var(--ref-reading-width);
-  --hy-section: var(--ref-section-gap);
-  --hy-gap: var(--ref-grid-gap);
-  --hy-radius: 2px; /* card = célula (ADR-12) */
-  --hy-btn-radius: var(--radius-control); /* 8 */
-  --hy-btn-h: 48px;
-  --hy-display-lg: var(--ref-h1-size);
-  --hy-display-md: var(--ref-h2-size);
-  --hy-tile-pad: 48px;
-  --hy-tile-min: 340px;
-  --hy-model-pad: 64px;
-  --hy-lead-size: 21px;
-  --hy-title-size: 36px; /* título de tile e do painel de modelo */
-  --hy-card-title: 26px;
-  --hy-subhead: 27px; /* h3 do artigo e título do card do carrossel */
-}
-@media (max-width: 1023.98px) {
-  :root {
-    --hy-section: 72px;
-    --hy-tile-pad: 36px;
-    --hy-model-pad: 40px;
-  }
-}
-@media (max-width: 619.98px) {
-  :root {
-    --ref-gutter: 24px;
-    --hy-tile-pad: 28px;
-    --hy-tile-min: 300px;
-    --hy-model-pad: 28px;
-    --hy-title-size: 30px;
-    --hy-lead-size: 19px;
-  }
-}
-
-/* Rótulo (eyebrow): mono 12, caixa alta, .12em. Só para rótulos curtos (a regra de mono do ADR-12 vale para prosa). */
-.hy-eyebrow {
-  font: 400 12px/1.6 var(--font-mono);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted-foreground);
-}
-
-/* Botões do híbrido: raio 8, altura 48, corpo 17. Um primário por região (RQ-053). */
-.hy-btn-primary,
-.hy-btn-secondary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: var(--hy-btn-h);
-  max-width: 100%;
-  padding: 0 22px;
-  border-radius: var(--hy-btn-radius);
-  border: 1px solid transparent;
-  font-size: 17px;
-  font-weight: 500;
-  line-height: 1.3;
-  text-align: center;
-  text-decoration: none;
-  transition: background-color var(--dur-fast) var(--ease);
-}
-.hy-btn-primary {
-  background: var(--primary);
-  color: var(--primary-foreground);
-}
-.hy-btn-primary:hover {
-  background: var(--primary-hover);
-  text-decoration: none;
-}
-.hy-btn-secondary {
-  background: var(--background);
-  border-color: var(--input);
-  color: var(--primary);
-}
-.hy-btn-secondary:hover {
-  background: var(--surface-hover);
-  text-decoration: none;
-}
-.hy-btn-primary:focus-visible,
-.hy-btn-secondary:focus-visible {
-  outline: 3px solid var(--ring);
-  outline-offset: 3px;
-}
-
-/* Hero centrado: eyebrow, h1 61,6864 (peso 500), lead 21 em 60ch, ações. Abaixo de 620 px fica à esquerda. */
-.hy-hero {
-  padding: var(--hy-section) var(--ref-gutter) 64px;
-  text-align: center;
-}
-.hy-hero > * {
-  margin-inline: auto;
-}
-.hy-hero h1 {
-  max-width: 950px;
-  margin-block: 24px 18px;
-  font-family: var(--ref-font);
-  font-size: clamp(2.5rem, 5vw, var(--hy-display-lg));
-  line-height: 1.00525;
-  letter-spacing: -0.03em;
-  font-weight: 500;
-  text-wrap: balance;
-}
-@media (min-width: 1024px) {
-  .hy-hero h1 {
-    line-height: var(--ref-h1-line);
-    letter-spacing: var(--ref-h1-tracking);
-  }
-}
-.hy-hero .hy-lead {
-  max-width: 60ch;
-}
-.hy-lead {
-  font-size: var(--hy-lead-size);
-  line-height: 1.5;
-  letter-spacing: -0.012em;
-  color: var(--muted-foreground);
-  text-wrap: pretty;
-}
-.hy-actions {
-  margin-top: 30px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px;
-}
-@media (max-width: 619.98px) {
-  .hy-hero {
-    padding-top: 64px;
-  }
-  .hy-hero h1 {
-    font-size: 40px;
-  }
-}
-
-/* Container das seções: largura "larga" do Stories (1078,5) ou a do híbrido (1440) para tiles e faixas. */
-.hy-shell,
-.hy-wide {
-  width: 100%;
-  margin-inline: auto;
-  padding-inline: var(--ref-gutter);
-}
-.hy-shell > *,
-.hy-wide > * {
-  margin-inline: auto;
-}
-.hy-shell > * {
-  max-width: var(--hy-shell);
-}
-.hy-wide > * {
-  max-width: var(--hy-wide);
-}
-.hy-section {
-  padding-block: var(--hy-section);
-}
-
-/* Introdução de seção: eyebrow, h2 46,8432, parágrafo muted em 60ch. */
-.hy-section-intro {
-  margin-bottom: 40px;
-}
-.hy-section-intro h2 {
-  margin: 0 0 16px;
-  font-size: clamp(1.75rem, 1rem + 3.2vw, var(--hy-display-md));
-  line-height: 1.16;
-  letter-spacing: -0.0295em;
-  font-weight: 500;
-  text-wrap: balance;
-}
-.hy-section-intro .hy-eyebrow {
-  margin-bottom: 12px;
-}
-.hy-section-intro p:not(.hy-eyebrow) {
-  max-width: 60ch;
-  color: var(--muted-foreground);
-}
-
-/* Painel de modelo (feature-media do híbrido): superfície Diagram, título 36, fluxo em células brancas com 3 px. */
-.hy-model {
-  background: var(--surface-model);
-  border-radius: var(--hy-radius);
-  padding: var(--hy-model-pad);
-}
-.hy-model h2,
-.hy-model h3 {
-  margin: 12px 0 24px;
-  font-size: var(--hy-title-size);
-  line-height: 1.15;
-  letter-spacing: -0.025em;
-  font-weight: 500;
-  text-wrap: balance;
-}
-.hy-flow {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 3px;
-  margin: 28px 0 20px;
-}
-.hy-flow > * {
-  background: var(--background);
-  padding: 24px;
-}
-.hy-flow strong {
-  display: block;
-  font-size: var(--hy-lead-size);
-  font-weight: 600;
-}
-.hy-flow span {
-  font-size: 14px;
-  color: var(--muted-foreground);
-}
-.hy-note {
-  max-width: 68ch;
-  font-size: 14px;
-  color: var(--muted-foreground-on-gray);
-}
-@media (max-width: 619.98px) {
-  .hy-flow {
-    grid-template-columns: 1fr;
-  }
-  .hy-flow > * {
-    padding: 18px;
-  }
-}
-
-/* Tiles 2×2 (promo do híbrido): Subtle, raio 2, padding 48, à esquerda; o link vai para o pé do tile. */
-.hy-tile-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--hy-gap);
-}
-.hy-tile {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  min-height: var(--hy-tile-min);
-  padding: var(--hy-tile-pad);
-  background: var(--surface-subtle);
-  border-radius: var(--hy-radius);
-  text-align: left;
-}
-.hy-tile h2,
-.hy-tile h3 {
-  margin: 14px 0;
-  font-size: var(--hy-title-size);
-  line-height: 1.12;
-  letter-spacing: -0.025em;
-  font-weight: 500;
-  text-wrap: balance;
-}
-.hy-tile p:not(.hy-eyebrow) {
-  margin: 0 0 28px;
-  font-size: 17px;
-  line-height: 1.647;
-  color: var(--muted-foreground-on-gray);
-}
-.hy-tile > :last-child {
-  margin-top: auto;
-}
-.hy-tile .hy-tile-media {
-  width: 100%;
-  margin-bottom: 24px;
-  overflow: hidden;
-  border-radius: var(--hy-radius);
-  background: var(--background);
-}
-@media (max-width: 619.98px) {
-  .hy-tile-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* Link de ação do tile/card ("Ler artigo ↗"): cor de ação, sublinha no hover. */
-.hy-more {
-  color: var(--primary);
-  font-weight: 500;
-  text-decoration: none;
-  text-underline-offset: 4px;
-}
-.hy-more:hover {
-  text-decoration: underline;
-}
-
-/* Banda de seleção: fundo Subtle de ponta a ponta com cards brancos (raio 2, padding 32). */
-.hy-band {
-  background: var(--surface-subtle);
-}
-.hy-card-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 20px;
-}
-.hy-card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  background: var(--background);
-  border-radius: var(--hy-radius);
-  padding: 32px;
-}
-.hy-card h3 {
-  margin: 16px 0;
-  font-size: var(--hy-card-title);
-  line-height: 1.15;
-  letter-spacing: -0.02em;
-  font-weight: 500;
-}
-.hy-card p:not(.hy-eyebrow) {
-  color: var(--muted-foreground);
-  font-size: 17px;
-}
-.hy-card > :last-child {
-  margin-top: auto;
-}
-@media (max-width: 899.98px) {
-  .hy-card-grid {
-    grid-template-columns: 1fr;
-  }
-}
-@media (max-width: 619.98px) {
-  .hy-card {
-    padding: 24px;
-  }
-}
-
-/* Carrossel de perguntas: cards Subtle de min(82vw, 420px), scroll-snap, barra fina visível. */
-.hy-carousel {
-  display: flex;
-  gap: 18px;
-  overflow-x: auto;
-  padding-bottom: 22px;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: thin;
-}
-.hy-carousel > * {
-  flex: 0 0 min(82vw, 420px);
-  scroll-snap-align: start;
-  display: flex;
-  flex-direction: column;
-  min-height: 260px;
-  padding: 32px;
-  background: var(--surface-subtle);
-  border-radius: var(--hy-radius);
-}
-.hy-carousel h3 {
-  margin: 0 0 12px;
-  font-size: var(--hy-subhead);
-  line-height: 1.2;
-  font-weight: 500;
-}
-.hy-carousel > * > :last-child {
-  margin-top: auto;
-}
-
-/* Cabeçalho editorial do artigo: centrado em 900 px, eyebrow, título 46,8432 (500), meta mono. */
-.hy-article-header {
-  max-width: 900px;
-  margin: 0 auto 48px;
-  text-align: center;
-}
-.hy-article-header h1 {
-  margin: 16px 0;
-  font-size: clamp(2.125rem, 1rem + 3.2vw, var(--hy-display-md));
-  line-height: 1.159;
-  letter-spacing: -0.0295em;
-  font-weight: 500;
-  text-wrap: balance;
-}
-.hy-article-header .hy-lead {
-  margin-inline: auto;
-  max-width: var(--hy-read);
-}
-@media (max-width: 619.98px) {
-  .hy-article-header {
-    text-align: left;
-  }
-}
-
-/* Corpo do artigo: coluna de 637,5, 17/27,999; h2 com régua de ação; h3 27. Só os filhos diretos do MDX: painéis
-   plain text e diagramas (ADR-05/12) mantêm a tipografia própria. */
-.hy-article {
-  max-width: var(--hy-read);
-  margin-inline: auto;
-}
-.hy-article > p,
-.hy-article > ul > li,
-.hy-article > ol > li {
-  font: 400 var(--ref-body-size) / var(--ref-body-line) var(--ref-font);
-  letter-spacing: var(--ref-body-tracking);
-}
-.hy-article > p {
-  margin: 0 0 24px;
-}
-.hy-article > ul > li,
-.hy-article > ol > li {
-  margin-bottom: 14px;
-}
-.hy-article > ul,
-.hy-article > ol {
-  margin: 0 0 24px;
-  padding-left: 24px;
-}
-.hy-article > ul {
-  list-style: disc;
-}
-.hy-article > ol {
-  list-style: decimal;
-}
-.hy-article > h2 {
-  margin: 2.25em 0 0.72em;
-  font-size: clamp(1.75rem, 1rem + 3.2vw, var(--hy-display-md));
-  line-height: 1.08;
-  letter-spacing: -0.0295em;
-  font-weight: 500;
-  text-wrap: balance;
-}
-.hy-article > h2::before {
-  content: "";
-  display: block;
-  width: 52px;
-  height: 5px;
-  margin-bottom: 20px;
-  background: var(--primary);
-}
-.hy-article > h2:first-child {
-  margin-top: 0;
-}
-.hy-article > h3 {
-  margin: 48px 0 18px;
-  font-size: var(--hy-subhead);
-  line-height: 1.25;
-  letter-spacing: -0.025em;
-  font-weight: 500;
-}
-.hy-article > :is(p, ul, ol) a {
-  color: var(--primary);
-  text-decoration: underline;
-  text-underline-offset: 4px;
-}
-.hy-pullquote {
-  margin: 48px 0;
-  padding: 38px 0;
-  border-block: 1px solid var(--border-default);
-  font-size: 30px;
-  line-height: 1.3;
-  letter-spacing: -0.03em;
-  font-weight: 500;
-}
-.hy-source {
-  background: var(--surface-subtle);
-  padding: 24px;
-  border-radius: var(--hy-radius);
-  font-size: 14px;
-  color: var(--muted-foreground-on-gray);
-}
-.hy-article-nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 24px;
-  padding-top: 28px;
-}
-
-/* Faixa de categorias abaixo do cabeçalho: branca, régua inferior, links muted, ativo com 3 px de ação. */
-.hy-category-rail {
-  background: var(--background);
-  border-bottom: 1px solid var(--border-default);
-}
-.hy-category-rail ul {
-  max-width: var(--hy-wide);
-  margin: auto;
-  padding: 12px var(--ref-gutter);
-  display: flex;
-  gap: 32px;
-  overflow-x: auto;
-  scrollbar-width: none;
-  list-style: none;
-}
-.hy-category-rail ul::-webkit-scrollbar {
-  display: none;
-}
-.hy-category-rail a {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  white-space: nowrap;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  color: var(--muted-foreground);
-  text-decoration: none;
-  border-bottom: 3px solid transparent;
-}
-.hy-category-rail a:hover {
-  color: var(--foreground);
-}
-.hy-category-rail a[aria-current] {
-  color: var(--foreground);
-  border-bottom-color: var(--primary);
-}
-@media (max-width: 619.98px) {
-  .hy-category-rail ul {
-    gap: 24px;
-  }
-}
-
-/* Rodapé em 4 colunas sobre Subtle, 14 px muted sobre cinza. */
-.hy-footer {
-  background: var(--surface-subtle);
-  border-top: 1px solid var(--border-default);
-  font-size: 14px;
-  color: var(--muted-foreground-on-gray);
-}
-.hy-footer-cols {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 28px;
-  padding-block: 48px 28px;
-}
-.hy-footer h2 {
-  margin: 0 0 10px;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--foreground);
-}
-.hy-footer a {
-  display: inline-flex;
-  align-items: center;
-  min-height: 32px;
-  color: var(--muted-foreground-on-gray);
-  text-decoration: none;
-}
-.hy-footer a:hover {
-  color: var(--foreground);
-  text-decoration: underline;
-}
-@media (max-width: 899.98px) {
-  .hy-footer-cols {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-.hy-tile-grid > * {
-  display: flex;
-}
-.hy-tile-grid > * > .hy-tile {
-  width: 100%;
-}
-/* Tile compacto (listas de fontes, modos do mapa, ferramentas encontradas): mesma superfície, sem altura mínima. */
-.hy-tile--compact {
-  min-height: 0;
-  padding: 32px;
-}
-.hy-tile--compact h2,
-.hy-tile--compact h3 {
-  margin: 8px 0;
-  font-size: var(--hy-card-title);
-}
-.hy-tile--compact p:not(.hy-eyebrow) {
-  margin-bottom: 16px;
-}
-/* Títulos em caixa alta do canônico ("NEUROADAPTATIVOS:") não podem esticar a coluna em 320 px. */
-.hy-tile h2,
-.hy-tile h3,
-.hy-model h2,
-.hy-section-intro h2,
-.hy-article-header h1,
-.hy-article > h2,
-.hy-hero h1 {
-  overflow-wrap: anywhere;
-  hyphens: auto;
-}
-.hy-tile-grid > *,
-.hy-tile {
-  min-width: 0;
-}
-
 /* ===== SOLUTIONS-CARD (RC-PUB-PACK-003, ADR-24) ======================================================
    Card 2×2 do schema RC-SCHEMA-001 nas páginas /ferramentas/solucoes/<slug>/. Os quadrantes usam as famílias que já
    existem: amarelo = attention, vermelho = critical, cinza = superfície Subtle e verde = alias --solution-progress-*
@@ -2065,7 +952,7 @@ html {
   min-width: 0;
   padding: 28px;
   border-left: 4px solid var(--q-line);
-  border-radius: var(--hy-radius);
+  border-radius: var(--cf-radius-md);
   background: var(--q-bg);
   color: var(--foreground);
 }
@@ -2104,7 +991,7 @@ html {
   color: var(--q-ink);
 }
 .solution-q h3 {
-  font-size: var(--hy-card-title);
+  font-size: 22px;
   line-height: 1.15;
   letter-spacing: -0.02em;
   font-weight: 500;
@@ -2151,6 +1038,9 @@ html {
   letter-spacing: 0.06em;
 }
 .solution-refs a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
   color: var(--q-ink);
   text-decoration: underline;
   text-underline-offset: 3px;
@@ -2162,9 +1052,8 @@ html {
   color: var(--muted-foreground);
 }
 .solution-schema {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.04em;
+  font-size: 13px;
+  letter-spacing: 0.02em;
 }
 @media (max-width: 899.98px) {
   .solution-card {
@@ -2177,13 +1066,15 @@ html {
   }
 }
 
-/* ===== CF-MIRROR (ADR-25) ===========================================================================
-   Shell (cabeçalho e rodapé, todas as páginas) no padrão medido da cloudflare.com em 2026-10-05 (render real, valores
-   computados). Fonte: Hanken Grotesk (OFL) no lugar da FT Kunst Grotesk, que é comercial; mono: IBM Plex Mono. Os
-   neutros são os da referência: texto #262626, secundário #707070 (4,95:1), borda #F0F0F0, fundos #FDFDFC e #F9F7F6.
-   O laranja da referência fica só na camada da home (home.css, ADR-23/25). */
+/* ===== RC-DS-CF (ADR-26, DS-CF-001) ================================================================
+   Fonte única da identidade do site, no padrão medido da cloudflare.com (ADR-25), transversal desde o ADR-26:
+   todas as rotas, públicas e de admin. O hex de identidade vive só neste bloco; componentes (ds.css) e rotas usam var().
+   AA: branco sobre o acento só em texto grande (3,05:1); texto pequeno sobre o acento em --cf-on-accent-ink (4,95:1);
+   acento como texto sobre branco em --cf-accent-text (4,9:1). Fonte: Hanken Grotesk (OFL) no lugar da FT Kunst Grotesk. */
 :root {
   --cf-font: "Hanken Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --cf-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  /* neutros */
   --cf-fg: #262626;
   --cf-fg-muted: #707070;
   --cf-border: #f0f0f0;
@@ -2191,28 +1082,75 @@ html {
   --cf-bg: #ffffff;
   --cf-bg-200: #fdfdfc;
   --cf-bg-300: #f9f7f6;
-  --cf-header-h: 72px;
-  --cf-container: 1200px;
-  --cf-px: 32px;
-  --cf-section-gap: 80px;
-  --cf-pill: 9999px;
-  --cf-btn-sm: 38px;
-  --cf-btn: 50px;
+  /* acento */
+  --cf-accent: #ff5e1f;
+  --cf-accent-200: #ff7038;
+  --cf-accent-text: #bf4c14;
+  --cf-accent-soft: #fff4ee;
+  --cf-accent-line: #ffd2bf;
+  --cf-on-accent: #ffffff;
+  --cf-on-accent-ink: #262626;
+  --cf-btn-ink: #1f1f1f;
+  --cf-glow: #ffe9a6;
+  --cf-focus: var(--cf-accent-text);
+  --cf-dot: rgb(255 255 255 / 0.55);
+  --cf-dot-grey: #e5e5e5;
+  --cf-pill-line: rgb(255 255 255 / 0.5);
+  --cf-glass: rgb(255 255 255 / 0.16);
+  --brain-particle: var(--cf-accent);
+  /* forma */
+  --cf-radius-sm: 4px;
+  --cf-radius-md: 8px;
+  --cf-radius-lg: 16px;
+  --cf-radius-pill: 9999px;
+  --cf-pill: var(--cf-radius-pill);
   --cf-corner: 10px;
+  /* medidas */
+  --cf-header-h: 72px;
+  --bottombar-h: 4rem; /* 64: barra inferior do mobile (LANC-001 RQ-021) */
+  --cf-container: 1200px;
+  --cf-reading: 720px;
+  --cf-measure: 68ch;
+  --cf-px: 32px;
+  --cf-section: 128px;
+  --cf-section-gap: 80px;
+  --cf-pad: 32px;
+  --cf-pad-lg: 48px;
+  --cf-card-inset: 8px;
+  /* tipo */
+  --cf-h1: 56px;
+  --cf-h2: 48px;
+  --cf-h3: 18px;
+  --cf-sub: 19.2px;
+  --cf-body: 18px;
+  /* controles (alvo ≥ 44 px, accessibility-review) */
+  --cf-btn: 50px;
+  --cf-btn-sm: 44px;
 }
 .dark {
-  --cf-fg: var(--foreground);
-  --cf-fg-muted: var(--muted-foreground);
+  --cf-fg: oklch(0.971 0.003 286.35);
+  --cf-fg-muted: oklch(0.781 0.008 286.2);
   --cf-border: oklch(0.32 0 0);
   --cf-border-strong: oklch(0.4 0 0);
-  --cf-bg: var(--background);
+  --cf-bg: oklch(0.227 0.004 286.09);
   --cf-bg-200: oklch(0.25 0.004 286);
-  --cf-bg-300: oklch(0.27 0.004 286);
+  --cf-bg-300: oklch(0.28 0.004 286);
+  --cf-accent-text: #ff8a5c;
+  --cf-accent-soft: rgb(255 94 31 / 0.12);
+  --cf-accent-line: rgb(255 94 31 / 0.38);
+  --cf-dot-grey: rgb(255 255 255 / 0.14);
 }
 @media (max-width: 767.98px) {
   :root {
     --cf-px: 16px;
+    --cf-section: 64px;
     --cf-section-gap: 64px;
+    --cf-pad: 24px;
+    --cf-pad-lg: 28px;
+    --cf-h1: 34px;
+    --cf-h2: 32px;
+    --cf-sub: 17px;
+    --cf-body: 17px;
   }
 }
 

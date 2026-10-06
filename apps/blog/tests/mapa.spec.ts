@@ -1,12 +1,12 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
 
+import { RC_GRAPH_FOR_TESTS as graph } from "./graph-data";
 import { DEFAULT_FOCUS, allEdgeViews, chainFor, factorHref, nodeById } from "../app/lib/graph/explore";
 import { MAX_VISIBLE_NODES, publicMap } from "../app/lib/graph/project";
-import { RC_GRAPH_FOR_TESTS as graph } from "./graph-data";
 
-// LANC-001 PR-H (RQ-070…080): mapa causal em /mapas/explorar/ sobre o Stories. Os fluxos rodam sem hover
-// (RQ-075): toque (hasTouch + tap) ou teclado.
+// LANC-001 PR-H (RQ-070…080): mapa causal em /mapas/explorar/, no RC-DS-CF desde o ADR-26 (DS-CF-001-mapa). Os fluxos
+// rodam sem hover (RQ-075): toque (hasTouch + tap) ou teclado. O cérebro de /mapas/ é coberto por home-brain.spec.
 const EXPLORE = "/mapas/explorar/";
 const MOBILE = { viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true };
 
@@ -243,6 +243,50 @@ test.describe("Explorar no desktop, só por teclado", () => {
       expect(r.violations.filter((v) => v.impact === "serious" || v.impact === "critical").map((v) => `${v.id}: ${v.nodes[0]?.target}`)).toEqual([]);
     });
   }
+});
+
+test.describe("Mapa Cognitivo no RC-DS-CF (ADR-26)", () => {
+  test.use({ viewport: { width: 1280, height: 900 } });
+
+  test("/mapas/: cabeçalho, cérebro full, modos, legenda, outras capacidades e Personalizar", async ({ page }) => {
+    await page.goto("/mapas/");
+    await expect(page.locator("main h1")).toHaveText("Mapa Cognitivo");
+    await expect(page.locator("main .ds-pagehead [data-demo-notice]")).toBeVisible();
+    await expect(page.locator('#mapa[data-brain-variant="full"]')).toHaveCount(1);
+    const modes = page.locator("[data-map-mode-cards] .ds-card a");
+    await expect(modes).toHaveCount(3);
+    expect(await modes.evaluateAll((els) => els.map((e) => e.getAttribute("href")))).toEqual(["/mapas/explorar/?modo=problemas", "/mapas/explorar/?modo=solucoes", "/mapas/explorar/?modo=evidencias"]);
+    await expect(page.locator("[data-map-legend] li")).toHaveCount(9);
+    const caps = page.locator("[data-map-capacities] a.ds-chip");
+    expect(await caps.count()).toBeGreaterThan(0);
+    for (const href of await caps.evaluateAll((els) => els.map((e) => e.getAttribute("href")!))) {
+      expect(href).toMatch(/^\/mapas\/explorar\/\?foco=COG-/);
+      expect(href).not.toMatch(/COG-(PLANEJAMENTO|MEMORIA-TRABALHO|CONTROLE-INIBITORIO|FLEXIBILIDADE)$/);
+    }
+    await expect(page.locator('main a[href="/mapas/personalizar/"]').first()).toBeVisible();
+    // Nada do DS antigo na família do mapa.
+    expect(await page.locator('main [class*="hy-"], main [class*="stories-"], main .rc-cell, main .rc-surface').count()).toBe(0);
+  });
+
+  test("Explorar e fator: PageHead, trilha que volta ao mapa com o foco, chips e sheet do DS", async ({ page }) => {
+    await page.goto(`${EXPLORE}?foco=COG-FLEXIBILIDADE`);
+    await ready(page);
+    await expect(page.locator("main h1")).toHaveText("Explorar relações");
+    await expect(page.locator('nav[aria-label="Trilha"] a').first()).toHaveAttribute("href", "/mapas/?foco=COG-FLEXIBILIDADE");
+    await expect(page.locator("[data-map-modes] a.ds-chip")).toHaveCount(4);
+    await expect(page.locator('[data-map-modes] a.ds-chip[aria-current="true"]')).toHaveText("Todos");
+    await expect(page.locator("[data-why-toggle]")).toHaveClass(/ds-chip/);
+    await expect(page.locator('[role="tablist"][aria-label="Visualização"] [role="tab"]')).toHaveCount(2);
+    await expect(page.locator("[data-sheet]")).toHaveClass(/ds-sheet/);
+    for (const b of await page.locator("[data-sheet] .ds-icon-btn, [data-sheet-handle]").evaluateAll((els) => els.map((e) => e.getBoundingClientRect().height))) expect(b).toBeGreaterThanOrEqual(44);
+    expect(await page.locator('main [class*="hy-"], main [class*="stories-"], main .rc-cell, main .rc-surface').count()).toBe(0);
+
+    await page.goto(factorHref("FRC-INTERRUPCOES"));
+    const crumbs = page.locator('nav[aria-label="Trilha"] a');
+    expect(await crumbs.evaluateAll((els) => els.map((e) => e.getAttribute("href")))).toEqual(["/mapas/", "/mapas/explorar/?foco=FRC-INTERRUPCOES"]);
+    await expect(page.locator('nav[aria-label="Trilha"] [aria-current="page"]')).toHaveText("Interrupções");
+    await expect(page.locator("[data-back-to-map]")).toHaveAttribute("data-cta", "primary");
+  });
 });
 
 test("Mapa no menu do topo e na barra inferior (RQ-020/050)", async ({ page }) => {

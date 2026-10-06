@@ -2,7 +2,7 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
 
 // LANC-001 PR-I (RQ-090, SCR-04): personalizar em 3 passos. Muda só a ordem e o destaque do mapa, fica no
-// localStorage deste navegador e nunca vai para a rede.
+// localStorage deste navegador e nunca vai para a rede. Pele do RC-DS-CF desde o ADR-26 (DS-CF-001-mapa §8).
 const KEY = "rc.mapa.prefs.v1";
 const MOBILE = { viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true };
 const ready = (page: Page) => page.locator("[data-map-canvas][data-map-ready]").waitFor();
@@ -93,6 +93,18 @@ test("preferência inválida no storage é ignorada", async ({ page }) => {
 
 test.describe("Personalizar no desktop, só por teclado", () => {
   test.use({ viewport: { width: 1280, height: 900 } });
+
+  test("chrome do DS: PageHead com trilha, passos e cartões de opção ≥ 44 px (ADR-26)", async ({ page }) => {
+    await page.goto("/mapas/personalizar/");
+    await expect(page.locator("main h1")).toHaveText("Personalizar o mapa");
+    await expect(page.locator('nav[aria-label="Trilha"] a').first()).toHaveAttribute("href", "/mapas/");
+    await expect(page.locator('[data-steps] [aria-current="step"]')).toContainText("Focos de trabalho");
+    const options = page.locator("[data-personalize] label.ds-option");
+    expect(await options.count()).toBeGreaterThan(0);
+    for (const h of await options.evaluateAll((els) => els.map((e) => e.getBoundingClientRect().height))) expect(h).toBeGreaterThanOrEqual(44);
+    await expect(page.getByRole("button", { name: "Continuar" })).toHaveClass(/ds-btn/);
+    expect(await page.locator('main [class*="hy-"], main [class*="stories-"], main .rc-cell, main .rc-surface').count()).toBe(0);
+  });
 
   test("Espaço marca, Enter avança, o foco vai ao título de cada passo; axe sem violação séria", async ({ page }) => {
     await page.emulateMedia({ reducedMotion: "reduce" });

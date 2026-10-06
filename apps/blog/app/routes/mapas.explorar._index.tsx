@@ -1,4 +1,4 @@
-// /mapas/explorar/ (LANC-001 SCR-02, RQ-070…080): o mapa causal interativo.
+// /mapas/explorar/ (LANC-001 SCR-02, RQ-070…080): o mapa causal interativo, no RC-DS-CF (ADR-26, DS-CF-001-mapa).
 import type { Route } from "./+types/mapas.explorar._index";
 
 import { ExploreView } from "@/features/mapa/ExploreView";

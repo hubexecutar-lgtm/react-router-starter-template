@@ -1,13 +1,12 @@
 import { expect, test, type Page } from "@playwright/test";
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
 
-// LANC-001 PR-C (RQ-020…026) sobre o Stories (AUD-ORDEM-001): nav desktop + trilha, drawer e barra inferior no
-// mobile, chrome que esconde junto no scroll, heroReveal e carrossel com scroll-snap. O menu só tem destinos que
-// existem (nav.ts): Artigos · Mapa · Ferramentas · Sobre desde o PR-H.
+// LANC-001 PR-C (RQ-020…026), no RC-DS-CF (ADR-26): nav desktop, rodapé-diretório com a coluna "Jornada", drawer e barra
+// inferior no mobile, chrome que esconde junto no scroll, heroReveal e carrossel com scroll-snap. O menu só tem destinos
+// que existem (nav.ts): Blog · Mapa · Ferramentas · Sobre. A trilha dos pilares saiu do site (ADR-26).
 const DESKTOP = { width: 1280, height: 900 };
 const MOBILE = { width: 390, height: 844 };
-const LONG = "/artigos/risco-cognitivo/";
+// O único artigo público na reconstrução (ADR-26, PUBLIC_ARTICLES); os outros fazem 302 para /artigos/.
+const LONG = "/artigos/riscos-cognitivos-guia/";
 
 const box = (page: Page, sel: string) => page.locator(sel).evaluateAll((els) => els.map((e) => e.getBoundingClientRect().toJSON() as DOMRect));
 const hidden = (page: Page, sel: string) => page.locator(sel).evaluate((e) => e.hasAttribute("data-hidden"));
@@ -15,18 +14,40 @@ const hidden = (page: Page, sel: string) => page.locator(sel).evaluate((e) => e.
 test.describe("desktop ≥ 900px (RQ-020)", () => {
   test.use({ viewport: DESKTOP });
 
-  test("menu links and the pillar trail are visible; no menu button nor drawer", async ({ page }) => {
-    // ADR-25: a trilha dos pilares saiu do cabeçalho e vive nas páginas de artigos.
+  test("menu links are visible; no menu button nor drawer", async ({ page }) => {
     await page.goto("/artigos/");
     const nav = page.getByRole("navigation", { name: "Principal", exact: true });
-    for (const label of ["Artigos", "Mapa", "Ferramentas", "Sobre"]) await expect(nav.getByRole("link", { name: label, exact: true })).toBeVisible();
-    const trail = page.getByRole("navigation", { name: "Pilares", exact: true });
-    for (const label of ["Riscos Cognitivos", "Processos Neuroadaptativos", "Ferramentas e Soluções"]) {
-      await expect(trail.getByRole("link", { name: label })).toBeVisible();
-    }
+    for (const label of ["Blog", "Mapa", "Ferramentas", "Sobre"]) await expect(nav.getByRole("link", { name: label, exact: true })).toBeVisible();
+    await expect(nav.getByRole("link", { name: "Blog", exact: true })).toHaveAttribute("aria-current", "page");
     await expect(page.locator("[data-menu-toggle]")).toBeHidden();
     await expect(page.locator("[data-bottom-bar]")).toBeHidden();
     await expect(page.getByRole("dialog")).toHaveCount(0);
+  });
+
+  test("the pillar trail is gone; the footer directory has the Jornada column (ADR-26)", async ({ page }) => {
+    for (const path of ["/", "/artigos/", LONG]) {
+      await page.goto(path);
+      await expect(page.getByRole("navigation", { name: "Pilares", exact: true }), path).toHaveCount(0);
+      const journey = page.locator("footer").getByRole("navigation", { name: "Jornada", exact: true });
+      await expect(journey.getByRole("heading", { name: "Jornada" }), path).toBeVisible();
+      await expect(journey.getByRole("link"), path).toHaveText(["Blog", "Mapa Cognitivo", "Ferramentas e Soluções"]);
+      for (const [label, href] of [["Blog", "/artigos/"], ["Mapa Cognitivo", "/mapas/"], ["Ferramentas e Soluções", "/ferramentas/"]]) {
+        await expect(journey.getByRole("link", { name: label, exact: true }), path).toHaveAttribute("href", href);
+      }
+    }
+  });
+
+  test("icon buttons and the skip link use the RC-DS-CF focus ring", async ({ page }) => {
+    await page.goto("/");
+    await page.keyboard.press("Tab");
+    const skip = page.getByRole("link", { name: "Pular para o conteúdo" });
+    await expect(skip).toBeFocused();
+    await expect(skip).toBeVisible();
+    expect(await skip.evaluate((e) => getComputedStyle(e).outlineWidth)).toBe("3px");
+    const toggle = page.getByRole("button", { name: "Alternar tema claro/escuro" });
+    await expect(toggle).toHaveClass(/\bds-iconbtn\b/);
+    const [r] = await box(page, "header .ds-iconbtn");
+    expect(Math.min(r.width, r.height)).toBeGreaterThanOrEqual(44);
   });
 
   test("Ferramentas is current on /ferramentas/", async ({ page }) => {
@@ -56,7 +77,7 @@ test.describe("mobile < 900px (RQ-021, RQ-023, RQ-025)", () => {
     await expect(page.locator("[data-menu-toggle]")).toHaveAttribute("aria-expanded", "true");
     const [panel] = await box(page, "#site-menu");
     expect(Math.round(panel.width)).toBe(Math.round(Math.min(0.84 * MOBILE.width, 360)));
-    for (const label of ["Início", "Artigos", "Mapa", "Ferramentas", "Sobre", "Fontes", "Prisma de execução"]) {
+    for (const label of ["Início", "Blog", "Mapa", "Ferramentas", "Sobre", "Fontes", "Prisma de execução"]) {
       await expect(dialog.getByRole("link", { name: label, exact: true })).toBeVisible();
     }
     for (const r of await box(page, "#site-menu a, #site-menu button")) expect(Math.min(r.width, r.height)).toBeGreaterThanOrEqual(44);
@@ -119,12 +140,13 @@ test.describe("chrome hides together on scroll (RQ-022)", () => {
   });
 });
 
-test.describe("hero and carousel (RQ-024, RQ-026)", () => {
-  test("article hero uses heroReveal and is static and visible with reduced motion", async ({ page }) => {
-    await page.goto(LONG);
+test.describe("hero (RQ-024)", () => {
+  // ADR-26: o heroReveal fica no cartão laranja da Home (o artigo novo abre com breadcrumb e meta, sem hero animado).
+  test("home hero uses heroReveal and is static and visible with reduced motion", async ({ page }) => {
+    await page.goto("/");
     expect(await page.locator(".rc-hero-reveal").first().evaluate((e) => getComputedStyle(e).animationName)).toBe("heroReveal");
     await page.emulateMedia({ reducedMotion: "reduce" });
-    await page.goto(LONG);
+    await page.goto("/");
     const hero = page.locator(".rc-hero-reveal").first();
     expect(await hero.evaluate((e) => getComputedStyle(e).animationName)).toBe("none");
     expect(await hero.evaluate((e) => getComputedStyle(e).opacity)).toBe("1");
@@ -148,38 +170,7 @@ test.describe("hero and carousel (RQ-024, RQ-026)", () => {
     expect(lcp).toBeLessThan(2500);
   });
 
-  test("Stories carousel: scroll-snap, buttons, keyboard focus, no autoplay", async ({ page }) => {
-    await page.goto("/admin/stories-fixtures/");
-    await page.waitForLoadState("networkidle");
-    const track = page.locator('[aria-roledescription="carrossel"] ul').first();
-    expect(await track.evaluate((e) => getComputedStyle(e).scrollSnapType)).toContain("x");
-    expect(await track.locator("li").first().evaluate((e) => getComputedStyle(e).scrollSnapAlign)).toContain("center");
-    await track.scrollIntoViewIfNeeded();
-    const before = await track.evaluate((e) => e.scrollLeft);
-    await page.getByRole("button", { name: "Próximo slide" }).first().click();
-    await expect.poll(() => track.evaluate((e) => e.scrollLeft)).toBeGreaterThan(before);
-    // Teclado: a faixa recebe foco e a seta rola os slides.
-    await track.focus();
-    await expect(track).toBeFocused();
-    const atFocus = await track.evaluate((e) => e.scrollLeft);
-    await page.keyboard.press("ArrowRight");
-    await expect.poll(() => track.evaluate((e) => e.scrollLeft)).toBeGreaterThan(atFocus);
-    // Sem rotação automática: parada a rolagem, a posição não muda sozinha.
-    let still = -1;
-    await expect
-      .poll(async () => {
-        const a = await track.evaluate((e) => e.scrollLeft);
-        await page.waitForTimeout(300);
-        const b = await track.evaluate((e) => e.scrollLeft);
-        still = b;
-        return a === b;
-      })
-      .toBe(true);
-    await page.waitForTimeout(1500);
-    expect(await track.evaluate((e) => e.scrollLeft)).toBe(still);
-    const src = readFileSync(join(process.cwd(), "app/components/stories/MediaCarousel.tsx"), "utf8");
-    expect(src).not.toMatch(/setInterval|setTimeout|autoplay\s*[:=]/i);
-  });
+  // RQ-026 (carrossel do Stories) saiu com o DS antigo (ADR-26): nenhum layout demonstrativo usa carrossel.
 });
 
 // AUD-ORDEM-001: o menu só aponta para destinos que existem (nada de link morto depois do reset do ADR-13).

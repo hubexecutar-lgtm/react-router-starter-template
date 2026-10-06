@@ -7,6 +7,7 @@ import { useCallback, useEffect, useRef, useState, type ReactNode } from "react"
 
 import { Download, Eraser, FileDown, Pencil } from "lucide-react";
 
+import { PRISMA_MAP_HREF } from "./PrismaIntro";
 import { PrismaSheet } from "./PrismaSheet";
 import {
 	EMPTY,
@@ -25,23 +26,9 @@ import {
 	type PrismaData,
 } from "./schema";
 
-import {
-	AlertDialog,
-	AlertDialogAction,
-	AlertDialogCancel,
-	AlertDialogContent,
-	AlertDialogDescription,
-	AlertDialogFooter,
-	AlertDialogHeader,
-	AlertDialogTitle,
-	AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import { Button, Card, CardGrid, Check, ConfirmDialog, Input, SectionHead, Select, Textarea } from "@/components/ds";
+import { TOOL_CORRELATIONS } from "@/features/store/data/correlations";
 import { track } from "@/lib/analytics/track";
-import { cn } from "@/lib/utils";
 
 type View = "intro" | "form" | "preview";
 
@@ -51,6 +38,11 @@ const SHEET_H = 1123; // 297 mm a 96 dpi
 const viewFromHash = (): View => (window.location.hash === "#formulario" ? "form" : window.location.hash === "#prisma" ? "preview" : "intro");
 
 const TITLES: Record<View, string> = { intro: "", form: "Preencha seu Prisma", preview: "Revise seu Prisma" };
+
+// Próxima ação (ADR-BLOG-JORNADA-ROTAS-001 §2.2): só destinos reais, lidos da Teia. As soluções publicadas que
+// compartilham a compensação do Prisma em TOOL_CORRELATIONS (ADR-M04), o nó no Mapa e o guia público.
+const PRISMA_REFS = new Set((TOOL_CORRELATIONS.find((t) => t.id === "prisma")?.refs.compensation_refs ?? []).map((r) => r.ref));
+const RELATED_TOOLS = TOOL_CORRELATIONS.filter((t) => t.id !== "prisma" && (t.refs.compensation_refs ?? []).some((r) => PRISMA_REFS.has(r.ref)));
 
 type BeforeInstallPromptEvent = Event & { prompt: () => Promise<void>; userChoice: Promise<{ outcome: string }> };
 
@@ -165,7 +157,7 @@ export function PrismaApp({ intro }: { intro: ReactNode }) {
 		document.title = view === "intro" ? baseTitle.current : `${TITLES[view]} · ${baseTitle.current}`;
 		if (changed) {
 			window.scrollTo({ top: 0, behavior: "instant" });
-			const h = headingRef.current ?? document.getElementById("prisma-view-title");
+			const h = headingRef.current ?? document.querySelector<HTMLElement>("#introducao h1");
 			if (h && !h.hasAttribute("tabindex")) h.setAttribute("tabindex", "-1");
 			h?.focus({ preventScroll: true });
 		}
@@ -214,35 +206,24 @@ export function PrismaApp({ intro }: { intro: ReactNode }) {
 	};
 
 	const SaveControls = (
-		<div className="flex flex-wrap items-center gap-x-6 gap-y-3">
-			<label className="flex min-h-11 cursor-pointer items-center gap-3 text-sm">
-				<input
-					type="checkbox"
-					className="accent-primary size-5"
-					checked={saveOn}
-					onChange={(e) => toggleSave(e.target.checked)}
-				/>
-				<span>Salvar neste dispositivo</span>
-			</label>
-			<AlertDialog>
-				<AlertDialogTrigger asChild>
-					<Button type="button" variant="ghost" className="min-h-11">
-						<Eraser aria-hidden="true" /> Limpar dados
+		<div className="ds-toolbar" data-split="">
+			<Check label="Salvar neste dispositivo" checked={saveOn} onChange={(e) => toggleSave(e.target.checked)} />
+			<ConfirmDialog
+				trigger={
+					<Button variant="ghost">
+						<Eraser size={18} aria-hidden="true" /> Limpar dados
 					</Button>
-				</AlertDialogTrigger>
-				<AlertDialogContent>
-					<AlertDialogHeader>
-						<AlertDialogTitle>Apagar tudo o que você preencheu?</AlertDialogTitle>
-						<AlertDialogDescription>O formulário volta a ficar vazio e a cópia salva neste dispositivo é removida. Não dá para desfazer.</AlertDialogDescription>
-					</AlertDialogHeader>
-					<AlertDialogFooter>
-						<AlertDialogCancel>Cancelar</AlertDialogCancel>
-						<AlertDialogAction onClick={wipe}>Apagar dados</AlertDialogAction>
-					</AlertDialogFooter>
-				</AlertDialogContent>
-			</AlertDialog>
+				}
+				title="Apagar tudo o que você preencheu?"
+				text="O formulário volta a ficar vazio e a cópia salva neste dispositivo é removida. Não dá para desfazer."
+				confirm="Apagar dados"
+				cancel="Manter dados"
+				onConfirm={wipe}
+			/>
 		</div>
 	);
+
+	const hasErrors = Object.keys(errors).some((k) => errors[k as keyof Errors]);
 
 	return (
 		<>
@@ -253,22 +234,33 @@ export function PrismaApp({ intro }: { intro: ReactNode }) {
 			{view === "intro" && intro}
 
 			{view === "form" && (
-				<section className="container max-w-3xl pt-12 pb-16 lg:pt-16 prisma-noprint" aria-labelledby="prisma-view-title">
-					<p className="rc-eyebrow">Passo 1 de 3 · Preencha</p>
-					<h1 id="prisma-view-title" ref={headingRef} tabIndex={-1} className="rc-display mt-3 text-[length:var(--text-h2)] outline-none">
-						{TITLES.form}
-					</h1>
-					<p className="rc-lead mt-4">Escreva com as suas palavras. Campos opcionais que ficarem vazios aparecem como “A DEFINIR” na folha.</p>
-					<p className="text-muted-foreground mt-3 text-sm">Seus dados ficam neste dispositivo. Nada é enviado para a internet.</p>
+				<section className="ds-page ds-tool prisma-noprint" aria-labelledby="prisma-view-title">
+					<header className="ds-pagehead ds-tool-head">
+						<p className="ds-eyebrow">Passo 1 de 3 · Preencha</p>
+						<h1 id="prisma-view-title" ref={headingRef} tabIndex={-1}>
+							{TITLES.form}
+						</h1>
+						<p className="ds-pagehead-lead">Escreva com as suas palavras. Campos opcionais que ficarem vazios aparecem como “A DEFINIR” na folha.</p>
+						<p className="ds-tool-note" style={{ marginTop: 12 }}>
+							Seus dados ficam neste dispositivo. Nada é enviado para a internet.
+						</p>
+					</header>
 
-					<form noValidate onSubmit={submit} className="mt-10 space-y-12">
-						{Object.keys(errors).some((k) => errors[k as keyof Errors]) && (
-							<div role="alert" className="rc-cell rc-surface border-l-4 p-5" style={{ borderColor: "var(--destructive)" }}>
-								<p className="font-semibold">Falta preencher alguns campos.</p>
-								<ul className="mt-2 list-disc pl-5 text-sm">
+					<form noValidate onSubmit={submit} className="ds-tool-body">
+						{hasErrors && (
+							<div role="alert" className="ds-alert">
+								<p className="ds-alert-title">Falta preencher alguns campos.</p>
+								<p>A folha precisa deles. Use os links para ir a cada campo.</p>
+								<ul>
 									{FIELDS.filter((f) => errors[f.key]).map((f) => (
 										<li key={f.key}>
-											<a className="text-primary underline underline-offset-4" href={`#prisma-${f.key}`} onClick={(ev) => { ev.preventDefault(); document.getElementById(`prisma-${f.key}`)?.focus(); }}>
+											<a
+												href={`#prisma-${f.key}`}
+												onClick={(ev) => {
+													ev.preventDefault();
+													document.getElementById(`prisma-${f.key}`)?.focus();
+												}}
+											>
 												{errors[f.key]}
 											</a>
 										</li>
@@ -278,23 +270,23 @@ export function PrismaApp({ intro }: { intro: ReactNode }) {
 						)}
 
 						{GROUPS.map((g) => (
-							<fieldset key={g.id} className="min-w-0">
-								<legend className="rc-title text-[length:var(--text-h3)]">{g.title}</legend>
-								<p className="text-muted-foreground mt-1 mb-6 text-sm">{g.lead}</p>
-								<div className="grid gap-6">
+							<fieldset key={g.id} className="ds-fieldset">
+								<legend>{g.title}</legend>
+								<p className="ds-fieldset-lead">{g.lead}</p>
+								<div className="ds-fieldset-body">
 									{FIELDS.filter((f) => f.group === g.id).map((f) => (
-										<Field key={f.key} def={f} value={data[f.key]} error={errors[f.key]} onChange={(v) => set(f.key, v)} />
+										<PrismaField key={f.key} def={f} value={data[f.key]} error={errors[f.key]} onChange={(v) => set(f.key, v)} />
 									))}
 								</div>
 							</fieldset>
 						))}
 
-						<div className="flex flex-wrap items-center gap-4">
-							<Button type="submit" size="lg" className="min-h-12 px-8 text-base">
+						<div className="ds-toolbar">
+							<Button type="submit" size="lg" data-cta="primary">
 								Ver meu Prisma
 							</Button>
-							<Button asChild variant="ghost" className="min-h-11">
-								<a href="#introducao">Voltar ao início</a>
+							<Button href="#introducao" variant="ghost">
+								Voltar ao início
 							</Button>
 						</div>
 						{SaveControls}
@@ -303,43 +295,66 @@ export function PrismaApp({ intro }: { intro: ReactNode }) {
 			)}
 
 			{view === "preview" && (
-				<section className="container pt-12 pb-16 lg:pt-16" aria-labelledby="prisma-view-title">
-					<div className="prisma-noprint mx-auto max-w-3xl">
-						<p className="rc-eyebrow">Passos 2 e 3 de 3 · Revise e exporte</p>
-						<h1 id="prisma-view-title" ref={headingRef} tabIndex={-1} className="rc-display mt-3 text-[length:var(--text-h2)] outline-none">
-							{TITLES.preview}
-						</h1>
-						<p className="rc-lead mt-4">Esta é a folha que sai no PDF. Se algo estiver errado, volte e edite: seus dados continuam aqui.</p>
-						<div className="mt-6 flex flex-wrap items-center gap-3">
-							<Button type="button" size="lg" className="min-h-12 px-6" onClick={() => {
-									// RQ-111: resultado gerado; o conteúdo da folha nunca entra no evento.
-									track({ stage: "RESULT", action: "complete", asset_id: "prisma" });
-									window.print();
-								}}>
-								<FileDown aria-hidden="true" /> Exportar PDF
-							</Button>
-							<Button asChild variant="outline" size="lg" className="min-h-12 px-6">
-								<a href="#formulario">
-									<Pencil aria-hidden="true" /> Editar
-								</a>
-							</Button>
-						</div>
-						<p className="text-muted-foreground mt-3 text-sm">No diálogo de impressão, escolha “Salvar como PDF”.</p>
-						<div className="mt-6">{SaveControls}</div>
+				<section className="ds-page ds-tool" data-width="wide" aria-labelledby="prisma-view-title">
+					<div className="prisma-noprint">
+						<header className="ds-pagehead ds-tool-head">
+							<p className="ds-eyebrow">Passos 2 e 3 de 3 · Revise e exporte</p>
+							<h1 id="prisma-view-title" ref={headingRef} tabIndex={-1}>
+								{TITLES.preview}
+							</h1>
+							<p className="ds-pagehead-lead">Esta é a folha que sai no PDF. Se algo estiver errado, volte e edite: seus dados continuam aqui.</p>
+							<div className="ds-toolbar" style={{ marginTop: 24 }}>
+								<Button
+									size="lg"
+									data-cta="primary"
+									onClick={() => {
+										// RQ-111: resultado gerado; o conteúdo da folha nunca entra no evento.
+										track({ stage: "RESULT", action: "complete", asset_id: "prisma" });
+										window.print();
+									}}
+								>
+									<FileDown size={18} aria-hidden="true" /> Exportar PDF
+								</Button>
+								<Button href="#formulario" variant="outline" size="lg">
+									<Pencil size={18} aria-hidden="true" /> Editar
+								</Button>
+							</div>
+							<p className="ds-tool-note" style={{ marginTop: 12 }}>
+								No diálogo de impressão, escolha “Salvar como PDF”.
+							</p>
+							<div style={{ marginTop: 16 }}>{SaveControls}</div>
+						</header>
 					</div>
 
-					<div ref={fit.ref} className="prisma-stage mx-auto mt-10 w-full" style={{ maxWidth: SHEET_W, height: SHEET_H * fit.scale }}>
+					<div ref={fit.ref} className="prisma-stage" style={{ width: "100%", maxWidth: SHEET_W, marginInline: "auto", height: SHEET_H * fit.scale }}>
 						<div className="prisma-fit" style={{ width: SHEET_W, height: SHEET_H, transform: `scale(${fit.scale})`, transformOrigin: "top left" }}>
 							<PrismaSheet data={normalize(data)} generatedAt={generatedAt} />
 						</div>
 					</div>
+
+					<section className="prisma-noprint" style={{ marginTop: "var(--cf-section-gap)" }} aria-labelledby="proxima-acao" data-next-action>
+						<SectionHead
+							id="proxima-acao"
+							label="Depois da folha"
+							heading="Próxima ação"
+							lead="Com a folha pronta, continue por uma ferramenta ou conteúdo ligado à externalização cognitiva."
+							align="left"
+						/>
+						<CardGrid cols={3}>
+							{RELATED_TOOLS.map((t) => (
+								<Card key={t.id} href={t.href} eyebrow="Solução relacionada" title={t.name} text="Usa a mesma compensação do Prisma na Teia." cta="Abrir" />
+							))}
+							<Card href={PRISMA_MAP_HREF} eyebrow="Mapa Cognitivo" title="Externalização no Mapa" text="Veja causas, impactos e soluções ligados a esta compensação." cta="Abrir no Mapa" />
+							<Card href="/artigos/riscos-cognitivos-guia/" eyebrow="Blog" title="Guia: riscos cognitivos" text="Entenda os riscos que o Prisma ajuda a organizar." cta="Ler artigo" />
+						</CardGrid>
+					</section>
 				</section>
 			)}
 
 			{canInstall && view !== "preview" && (
-				<div className="container pb-12 prisma-noprint">
-					<Button type="button" variant="outline" className="min-h-11" onClick={install}>
-						<Download aria-hidden="true" /> Instalar no dispositivo
+				<div className="ds-container prisma-noprint" style={{ paddingBottom: 48 }}>
+					<Button variant="outline" onClick={install}>
+						<Download size={18} aria-hidden="true" /> Instalar no dispositivo
 					</Button>
 				</div>
 			)}
@@ -347,50 +362,42 @@ export function PrismaApp({ intro }: { intro: ReactNode }) {
 	);
 }
 
-function Field({ def, value, error, onChange }: { def: FieldDef; value: string; error?: string; onChange: (v: string) => void }) {
+/** Campo do Prisma: anatomia `ds-field` do DS com IDs estáveis (`prisma-<campo>`), DS-CF-001-prisma §1.1. */
+function PrismaField({ def, value, error, onChange }: { def: FieldDef; value: string; error?: string; onChange: (v: string) => void }) {
 	const id = `prisma-${def.key}`;
 	const describedBy = [def.hint ? `${id}-hint` : "", error ? `${id}-error` : ""].filter(Boolean).join(" ") || undefined;
 	const shared = { id, name: def.key, "aria-invalid": error ? true : undefined, "aria-describedby": describedBy, "aria-required": def.required || undefined } as const;
 	return (
-		<div>
-			<Label htmlFor={id} className="text-base font-semibold">
+		<div className="ds-field">
+			<label htmlFor={id} className="ds-field-label">
 				{def.label}
-				{def.required ? <span className="text-muted-foreground font-normal"> (obrigatório)</span> : null}
-			</Label>
+				{def.required ? <span className="ds-field-req"> (obrigatório)</span> : null}
+			</label>
 			{def.hint && (
-				<p id={`${id}-hint`} className="text-muted-foreground mt-1 text-sm">
+				<p id={`${id}-hint`} className="ds-field-help">
 					{def.hint}
 				</p>
 			)}
-			<div className="mt-2">
-				{def.kind === "textarea" ? (
-					<Textarea {...shared} rows={3} maxLength={def.max} value={value} onChange={(e) => onChange(e.target.value)} className="min-h-24 text-base" />
-				) : def.kind === "select" ? (
-					<select
-						{...shared}
-						value={value}
-						onChange={(e) => onChange(e.target.value)}
-						className={cn(
-							"border-input bg-background focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:border-destructive h-11 w-full rounded-lg border px-3 text-base shadow-xs outline-none focus-visible:ring-[3px]",
-						)}
-					>
-						<option value="">Escolha uma opção</option>
-						{HORIZONTES.map((h) => (
-							<option key={h} value={h}>
-								{h}
-							</option>
-						))}
-					</select>
-				) : (
-					<Input {...shared} type="text" maxLength={def.max} value={value} onChange={(e) => onChange(e.target.value)} className="h-11 text-base" />
-				)}
-			</div>
-			<div className="mt-1 flex justify-between gap-4 text-sm">
-				<p id={`${id}-error`} className="text-destructive font-medium">
+			{def.kind === "textarea" ? (
+				<Textarea {...shared} rows={3} maxLength={def.max} value={value} onChange={(e) => onChange(e.target.value)} />
+			) : def.kind === "select" ? (
+				<Select {...shared} value={value} onChange={(e) => onChange(e.target.value)}>
+					<option value="">Escolha uma opção</option>
+					{HORIZONTES.map((h) => (
+						<option key={h} value={h}>
+							{h}
+						</option>
+					))}
+				</Select>
+			) : (
+				<Input {...shared} type="text" maxLength={def.max} value={value} onChange={(e) => onChange(e.target.value)} />
+			)}
+			<div className="ds-field-foot">
+				<p id={`${id}-error`} className="ds-field-error">
 					{error}
 				</p>
 				{def.kind !== "select" && (
-					<span className="text-muted-foreground ml-auto tabular-nums" aria-hidden="true">
+					<span className="ds-field-count" aria-hidden="true">
 						{value.length}/{def.max}
 					</span>
 				)}

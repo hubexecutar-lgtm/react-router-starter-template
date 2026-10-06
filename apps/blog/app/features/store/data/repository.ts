@@ -38,7 +38,13 @@ const fromSolution = (s: Solution): StoreItem => ({
  * Single access point to catalog data. Swap the body of these functions when the real
  * backend/schemas exist; components and routes must not import mock-items directly.
  */
-export const listItems = (): StoreItem[] => [...MOCK_ITEMS, ...SOLUTIONS.map(fromSolution)];
+export const listItems = (): StoreItem[] => SOLUTIONS.map(fromSolution);
+
+/**
+ * Itens de exemplo (mock-items.ts) ficam no repositório, fora do catálogo (ADR-BLOG-JORNADA-ROTAS-001 §4.2, ADR-26):
+ * nenhum item fictício aparece como disponível. As URLs que já foram publicadas respondem 302 para /ferramentas/.
+ */
+export const RETIRED_ITEM_PATHS: string[] = MOCK_ITEMS.map((item) => `/ferramentas/${typeDef(item.type).segment}/${item.slug}/`);
 
 export const listItemsByType = (type: ItemType): StoreItem[] =>
   listItems().filter((item) => item.type === type);

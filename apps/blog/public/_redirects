@@ -3,3 +3,34 @@
 # ADR-16 (LANC-001 RQ-103, DEC-U9): a Loja deixou de existir; o catálogo vive em /ferramentas.
 /loja    /ferramentas/         301
 /loja/*  /ferramentas/:splat   301
+# Reconstrução por rota (ADR-26, ADR-BLOG-JORNADA-ROTAS-001; inventário em docs/handoff/JORNADA-ROTAS-001/INVENTARIO.md):
+# só o artigo de exemplo fica público; os outros artigos e os itens de exemplo do catálogo respondem 302 (temporário).
+# O MDX e os dados ficam no repositório. tests/editorial.spec.ts confere esta lista contra PUBLIC_ARTICLES e o catálogo.
+/artigos/riscos-cognitivos/                          /artigos/   302
+/artigos/processos-neuroadaptativos/                 /artigos/   302
+/artigos/compensacao-cognitiva/                      /artigos/   302
+/artigos/tres-pilares-riscos-cognitivos/             /artigos/   302
+/artigos/risco-cognitivo/                            /artigos/   302
+/artigos/o-que-sao-riscos-cognitivos/                /artigos/   302
+/artigos/funcoes-executivas-demandas-risco/          /artigos/   302
+/artigos/riscos-cognitivos-rotina-estudos-trabalho/  /artigos/   302
+/artigos/estrategias-reduzir-riscos-cognitivos/      /artigos/   302
+/ferramentas/skills/skill-001/                       /ferramentas/   302
+/ferramentas/skills/skill-002/                       /ferramentas/   302
+/ferramentas/skills/skill-003/                       /ferramentas/   302
+/ferramentas/skills/skill-004/                       /ferramentas/   302
+/ferramentas/skills/skill-005/                       /ferramentas/   302
+/ferramentas/skills/skill-006/                       /ferramentas/   302
+/ferramentas/skills/skill-007/                       /ferramentas/   302
+/ferramentas/skills/skill-008/                       /ferramentas/   302
+/ferramentas/skills/skill-009/                       /ferramentas/   302
+/ferramentas/skills/skill-010/                       /ferramentas/   302
+/ferramentas/ebooks/ebook-011/                       /ferramentas/   302
+/ferramentas/ebooks/ebook-012/                       /ferramentas/   302
+/ferramentas/ebooks/ebook-013/                       /ferramentas/   302
+/ferramentas/prompts/prompt-014/                     /ferramentas/   302
+/ferramentas/prompts/prompt-015/                     /ferramentas/   302
+/ferramentas/prompts/prompt-016/                     /ferramentas/   302
+/ferramentas/workbooks/workbook-017/                 /ferramentas/   302
+/ferramentas/html/html-018/                          /ferramentas/   302
+/ferramentas/assets/asset-019/                       /ferramentas/   302

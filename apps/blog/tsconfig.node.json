@@ -1,6 +1,6 @@
 {
 	"extends": "./tsconfig.json",
-	"include": ["vite.config.ts", "react-router.config.ts", "playwright.config.ts", "app/data/pages.ts", "app/lib/articles-fs.ts", "app/lib/plain/remarkPlain.ts", "app/lib/plain/types.ts", "app/features/store/data/**/*", "app/features/store/types/**/*", "app/features/mapa/paths.ts", "app/features/solutions/data.ts", "app/data/sources-scientific.ts", "app/lib/graph/explore.ts", "app/lib/graph/project.ts", "app/lib/graph/types.ts", "app/lib/graph/adapters/correlation-refs.ts", "app/data/graph/rc-graph.json"],
+	"include": ["vite.config.ts", "react-router.config.ts", "playwright.config.ts", "app/data/pages.ts", "app/data/article-meta.ts", "app/data/article-media.ts", "app/lib/articles-fs.ts", "app/lib/plain/remarkPlain.ts", "app/lib/plain/types.ts", "app/features/store/data/**/*", "app/features/store/types/**/*", "app/features/mapa/paths.ts", "app/features/solutions/data.ts", "app/data/sources-scientific.ts", "app/lib/graph/explore.ts", "app/lib/graph/project.ts", "app/lib/graph/types.ts", "app/lib/graph/adapters/correlation-refs.ts", "app/data/graph/rc-graph.json"],
 	"compilerOptions": {
 		"composite": true,
 		"strict": true,

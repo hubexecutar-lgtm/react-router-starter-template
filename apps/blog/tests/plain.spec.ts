@@ -195,20 +195,20 @@ test("AC-06/07 + annex AC-04: both components share the token-driven surface", a
       return { bg: cs.backgroundColor, borderWidth: cs.borderTopWidth, radius: cs.borderTopLeftRadius, color: cs.color };
     });
   const diagram = await style("#FLOW-OPS-001");
-  const panel = await style("#PANEL-INSTRUCTION-001");
-  // ADR-12: diagrams and panels are table cells — Subtle fill, no outline, 2px radius
-  expect(diagram).toEqual({ bg: "rgb(245, 245, 244)", borderWidth: "0px", radius: "2px", color: "rgb(32, 33, 36)" });
+  const panel = await style("#PANEL-LONG-001");
+  // RC-DS-CF (ADR-26, DS-CF-001 §4.9): painel = quadro CF — fundo --cf-bg-200, borda 1px --cf-border, raio 8px
+  expect(diagram).toEqual({ bg: "rgb(253, 253, 252)", borderWidth: "1px", radius: "8px", color: "rgb(38, 38, 38)" });
   expect(panel).toEqual(diagram);
-  // the header strip is the table header (Tabular)
-  expect(await page.locator("#PANEL-INSTRUCTION-001 .plain-surface__header").evaluate((e) => getComputedStyle(e).backgroundColor)).toBe(
-    "rgb(234, 234, 232)",
+  // o cabeçalho do painel fica em --cf-bg-300
+  expect(await page.locator("#PANEL-LONG-001 .plain-surface__header").evaluate((e) => getComputedStyle(e).backgroundColor)).toBe(
+    "rgb(249, 247, 246)",
   );
   // diagrams keep mono geometry; panels read in the text face (no monospaced prose)
   expect(await page.locator("#FLOW-OPS-001 pre").evaluate((e) => getComputedStyle(e).fontFamily)).toMatch(/monospace/);
-  expect(await page.locator("#PANEL-INSTRUCTION-001 [data-plain-content]").evaluate((e) => getComputedStyle(e).fontFamily)).toMatch(/^"?Inter/);
+  expect(await page.locator("#PANEL-LONG-001 [data-plain-content]").evaluate((e) => getComputedStyle(e).fontFamily)).toMatch(/^"?Hanken Grotesk/);
 
   await page.setViewportSize({ width: 375, height: 800 });
-  expect((await style("#FLOW-OPS-001")).radius).toBe("2px");
+  expect((await style("#FLOW-OPS-001")).radius).toBe("8px");
 });
 
 test("annex AC-06/07: panel text wraps on mobile, diagram keeps geometry", async ({ page }) => {
@@ -287,11 +287,12 @@ for (const width of [375, 1440]) {
   });
 }
 
-test("tables follow the STORE-WIREFRAMES style everywhere", async ({ page }) => {
-  await page.setViewportSize({ width: 375, height: 800 });
+test("tables follow the RC-DS-CF table everywhere (DS-CF-001 §4.8)", async ({ page }) => {
+  // largura de desktop: no celular a tabela empilha em células rotuladas (data-stack)
+  await page.setViewportSize({ width: 1440, height: 900 });
   for (const [url, sel] of [
     [SHOWROOM, "[data-testid=table-reference] table"],
-    [SHOWROOM, "[data-testid=data-table] table"],
+    [SHOWROOM, "[data-testid=table-fixed] table"],
   ] as const) {
     await page.goto(url);
     const t = page.locator(sel).first();
@@ -300,9 +301,9 @@ test("tables follow the STORE-WIREFRAMES style everywhere", async ({ page }) => 
       const th = getComputedStyle(el.querySelector("th")!);
       const td = getComputedStyle(el.querySelector("td")!);
       const cs = getComputedStyle(el);
-      return { collapse: cs.borderCollapse, spacing: cs.borderSpacing.split(" ")[0], th: th.backgroundColor, upper: th.textTransform, td: td.backgroundColor };
+      return { collapse: cs.borderCollapse, th: th.backgroundColor, upper: th.textTransform, line: td.borderBottomColor };
     });
-    expect(s, `${url} ${sel}`).toEqual({ collapse: "separate", spacing: "3px", th: "rgb(234, 234, 232)", upper: "uppercase", td: "rgb(245, 245, 244)" });
+    expect(s, `${url} ${sel}`).toEqual({ collapse: "collapse", th: "rgb(249, 247, 246)", upper: "uppercase", line: "rgb(240, 240, 240)" });
     expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(0);
   }
 });

@@ -1,7 +1,9 @@
 // Canvas do mapa causal (LANC-001 RQ-070/075/076/079). Carregado só no navegador e só em /mapas/explorar/, por
 // React.lazy no ExploreView: React Flow e dagre não entram no bundle das outras rotas.
-// Nó = <button> de 48px com forma + rótulo; aresta = traço (sólido/tracejado) + rótulo em texto. Tocar ou Enter
+// Nó = <button> de 48px com forma + rótulo (pele em ds-mapa.css, camada --graph-*); aresta = traço (sólido/tracejado) + rótulo em texto. Tocar ou Enter
 // seleciona; tocar no fundo limpa. Pan e pinça existem, mas nada depende deles (nem de hover).
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+
 import dagre from "@dagrejs/dagre";
 import {
 	BaseEdge,
@@ -19,13 +21,12 @@ import {
 	type Node,
 	type NodeProps,
 } from "@xyflow/react";
+
 import "@xyflow/react/dist/base.css";
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 
 import { NODE_H, focusLayout, nodeWidth, type Layout } from "./layout";
 
 import { NODE_TYPES, type EdgeView, type MapNode } from "@/lib/graph";
-import { cn } from "@/lib/utils";
 
 export type MapMode = { kind: "focus" } | { kind: "why"; causes: EdgeView[]; compensations: EdgeView[] };
 
@@ -44,24 +45,20 @@ function MapNodeView({ data }: NodeProps<Node<NodeData>>) {
 				aria-pressed={data.selected}
 				aria-label={`${data.node.label}, ${t.label}${data.preferred ? ", seu interesse" : ""}`}
 				data-preferred={data.preferred || undefined}
+				data-focus={data.focus || undefined}
 				onClick={(e) => {
 					e.stopPropagation();
 					data.onSelect(data.node.id);
 				}}
 				style={{ width: data.w, height: NODE_H, opacity: data.dim ? "var(--graph-dim-opacity)" : undefined }}
-				className={cn(
-					"rc-map-node nodrag nopan focus-visible:ring-ring/50 flex items-center gap-2 rounded-[var(--radius-node)] border-2 bg-[var(--graph-node-bg)] px-3 py-1.5 text-left text-[13px] leading-tight font-medium text-[var(--graph-node-text)] outline-none focus-visible:ring-[3px]",
-					"transition-opacity duration-[var(--dur-fast)] ease-[var(--ease)]",
-					data.selected || data.focus ? "border-[var(--graph-node-border-selected)]" : "border-[var(--graph-node-border)]",
-					data.focus && "font-semibold",
-				)}
+				className="rc-map-node nodrag nopan flex items-center gap-2 px-3 py-1.5"
 			>
-				<span aria-hidden="true" className="shrink-0 text-base">
+				<span aria-hidden="true" className="rc-map-glyph shrink-0">
 					{t.glyph}
 				</span>
 				<span className="line-clamp-2 min-w-0 flex-1 break-words">{data.node.label}</span>
 				{data.preferred && (
-					<span aria-hidden="true" className="text-primary shrink-0" data-preferred-mark>
+					<span aria-hidden="true" className="rc-map-star shrink-0" data-preferred-mark>
 						★
 					</span>
 				)}
@@ -95,7 +92,7 @@ function MapEdgeView({ sourceX, sourceY, targetX, targetY, data, markerEnd }: Ed
 					data-edge-label={d.view.id}
 					data-dashed={d.view.dashed || undefined}
 					style={{ transform: `translate(-50%, -50%) translate(${labelX}px, ${labelY}px)`, opacity: d.dim ? "var(--graph-dim-opacity)" : undefined }}
-					className="bg-background text-muted-foreground pointer-events-none absolute rounded-[var(--radius-control)] px-1.5 text-xs leading-5"
+					className="rc-map-edge-label pointer-events-none absolute px-1.5"
 				>
 					{d.view.label}
 					{d.view.inferred && " (inferido)"}

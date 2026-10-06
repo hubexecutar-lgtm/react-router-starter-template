@@ -1,5 +1,5 @@
 // /mapas/personalizar/ (LANC-001 SCR-04, RQ-090): focos de trabalho, interesses e "Mostrar evidências", guardados
-// só neste navegador.
+// só neste navegador. Pele do RC-DS-CF (ADR-26, DS-CF-001-mapa).
 import type { Route } from "./+types/mapas.personalizar";
 
 import { Personalize } from "@/features/mapa/Personalize";

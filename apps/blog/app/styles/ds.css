@@ -1,0 +1,2107 @@
+/* ===== DS-CF-001 — componentes do RC-DS-CF (ADR-26) ===============================================
+   Componentes transversais de todas as rotas. Só var() dos tokens --cf-* (global.css, bloco RC-DS-CF): nenhum hex aqui.
+   Seções 1–3 vêm da home do ADR-25 (as classes da home do ADR-25 viraram ds-*); a seção "Componentes novos" segue o DS-CF-001 §4. */
+:root {
+  --cf-dot-grid: 6px;
+  --ds-hero-min-h: 760px;
+  --brain-stage-max: 980px;
+  --brain-detail-max: 900px;
+  --brain-marker: 48px;
+  --brain-marker-ring: 6px;
+}
+.ds-page {
+  font-family: var(--cf-font);
+  color: var(--cf-fg);
+}
+.ds-page h1,
+.ds-page h2,
+.ds-page h3,
+.ds-page h4 {
+  font-family: var(--cf-font);
+}
+
+/* Cartões laranja (hero e CTA): retícula branca e brilho amarelo embaixo, como na referência. */
+.ds-hero-wrap,
+.ds-cta-wrap {
+  padding: 0 var(--cf-card-inset);
+}
+.ds-hero,
+.ds-cta {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: var(--cf-radius-lg);
+  background: var(--cf-accent);
+  color: var(--cf-on-accent-ink);
+}
+.ds-hero::before,
+.ds-cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.18;
+  background-image: radial-gradient(circle, var(--cf-dot) 0.9px, transparent 1.1px);
+  background-size: var(--cf-dot-grid) var(--cf-dot-grid);
+}
+.ds-hero::after,
+.ds-cta::after {
+  content: "";
+  position: absolute;
+  left: 25%;
+  right: 25%;
+  bottom: -22%;
+  z-index: -1;
+  height: 44%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, var(--cf-glow) 0%, var(--cf-glow) 20%, transparent 70%);
+  filter: blur(24px);
+}
+.ds-hero {
+  display: grid;
+  place-items: center;
+  min-height: min(var(--ds-hero-min-h), calc(100svh - var(--cf-header-h) - 16px));
+  padding: 96px var(--cf-px) 160px;
+}
+.ds-hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 1080px;
+  text-align: center;
+}
+.ds-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 42px;
+  max-width: 100%;
+  padding: 6px 6px 6px 16px;
+  border: 1px solid var(--cf-pill-line);
+  border-radius: var(--cf-pill);
+  color: var(--cf-on-accent-ink);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.2;
+  text-align: left;
+  text-decoration: none;
+  transition: background-color var(--dur-fast) var(--ease);
+}
+.ds-pill:hover {
+  background: var(--cf-glass);
+  text-decoration: none;
+}
+.ds-pill-arrow {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--cf-on-accent);
+  color: var(--cf-accent-text);
+}
+.ds-hero h1 {
+  max-width: 1080px;
+  margin: 24px 0 0;
+  color: var(--cf-on-accent);
+  font-size: var(--cf-h1);
+  line-height: 0.99;
+  letter-spacing: -0.025em;
+  font-weight: 500;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+.ds-hero-lead {
+  max-width: 680px;
+  margin-top: 24px;
+}
+.ds-hero-lead p {
+  font-size: var(--cf-sub);
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+}
+.ds-hero-lead p + p {
+  margin-top: 8px;
+}
+.ds-btn-white,
+.ds-btn-soft {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--cf-btn);
+  padding: 12px 24px;
+  border-radius: var(--cf-pill);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  text-decoration: none;
+  transition: background-color var(--dur-fast) var(--ease);
+}
+.ds-btn-white {
+  background: var(--cf-on-accent);
+  color: var(--cf-btn-ink);
+}
+.ds-hero .ds-btn-white {
+  margin-top: 40px;
+}
+.ds-btn-white:hover {
+  background: var(--cf-accent-soft);
+  text-decoration: none;
+}
+.ds-btn-soft {
+  background: var(--cf-accent-200);
+  color: var(--cf-on-accent-ink);
+}
+.ds-btn-soft:hover {
+  background: var(--cf-glass);
+  text-decoration: none;
+}
+.ds-hero a:focus-visible,
+.ds-cta a:focus-visible {
+  outline: 3px solid var(--cf-on-accent-ink);
+  outline-offset: 3px;
+}
+
+/* Seções: contêiner de 1200 px, 128 px entre seções, cabeçalho centrado. */
+.ds-section {
+  max-width: calc(var(--cf-container) + 2 * var(--cf-px));
+  margin-inline: auto;
+  padding: var(--cf-section) var(--cf-px) 0;
+}
+.ds-head {
+  max-width: 900px;
+  margin: 0 auto 48px;
+  text-align: center;
+}
+.ds-head h2 {
+  margin: 0;
+  font-size: var(--cf-h2);
+  line-height: 1;
+  letter-spacing: -0.025em;
+  font-weight: 500;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+.ds-head[data-size="lg"] h2 {
+  font-size: calc(var(--cf-h2) + 8px);
+}
+.ds-head p:not(.ds-label) {
+  max-width: 720px;
+  margin: 16px auto 0;
+  font-size: var(--cf-sub);
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  color: var(--cf-fg-muted);
+  text-wrap: pretty;
+}
+.ds-label {
+  margin-bottom: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--cf-accent-text);
+}
+
+/* Quadro da referência: borda fina e quadradinhos de 10 px nos cantos. */
+.ds-frame {
+  position: relative;
+  border: 1px solid var(--cf-border);
+  background: var(--cf-bg);
+}
+.ds-corner {
+  position: absolute;
+  z-index: 2;
+  width: var(--cf-corner);
+  height: var(--cf-corner);
+  border: 1px solid var(--cf-border-strong);
+  background: var(--cf-bg);
+  pointer-events: none;
+}
+.ds-corner[data-corner="tl"] {
+  left: -5px;
+  top: -5px;
+}
+.ds-corner[data-corner="tr"] {
+  right: -5px;
+  top: -5px;
+}
+.ds-corner[data-corner="bl"] {
+  left: -5px;
+  bottom: -5px;
+}
+.ds-corner[data-corner="br"] {
+  right: -5px;
+  bottom: -5px;
+}
+
+/* Faixa de pontos entre seções: só no celular, como na referência. */
+.ds-dots {
+  display: none;
+}
+
+/* Trilha 01–03: as 3 colunas abaixo do globo ("Run everywhere…"). */
+.ds-cols {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 48px;
+}
+.ds-col {
+  display: flex;
+  flex-direction: column;
+  padding: var(--cf-pad);
+  color: var(--cf-fg);
+  text-decoration: none;
+  transition: background-color var(--dur-fast) var(--ease);
+}
+.ds-col + .ds-col {
+  border-left: 1px solid var(--cf-border);
+}
+.ds-col:hover {
+  background: var(--cf-bg-300);
+  text-decoration: none;
+}
+.ds-col:focus-visible {
+  outline: 3px solid var(--ring);
+  outline-offset: -3px;
+}
+.ds-col svg {
+  color: var(--cf-fg);
+}
+.ds-col h3 {
+  margin: 24px 0 0;
+  padding: 8px 0 4px;
+  font-size: 18px;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  font-weight: 500;
+}
+.ds-col-n {
+  color: var(--cf-accent-text);
+}
+.ds-col p {
+  font-size: 16px;
+  line-height: 1.2;
+  color: var(--cf-fg-muted);
+}
+
+/* Dados: barra de abas + citação no painel claro (a "prova social" da referência). */
+.ds-tabs-row {
+  display: flex;
+  gap: 4px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--cf-border);
+  overflow-x: auto;
+}
+.ds-tabs-row button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 6px 16px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: none;
+  color: var(--cf-fg-muted);
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.ds-tabs-row button[aria-selected="true"] {
+  border-color: var(--cf-border);
+  color: var(--cf-fg);
+}
+.ds-tabs-row button[aria-selected="true"]::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -13px;
+  height: 2px;
+  background: var(--cf-accent);
+}
+.ds-tabs-row button:focus-visible {
+  outline: 3px solid var(--ring);
+  outline-offset: 2px;
+}
+.ds-quote {
+  max-width: 1040px;
+  margin: var(--cf-pad-lg) auto;
+  padding: 40px var(--cf-pad-lg);
+  border: 1px solid var(--cf-border);
+  border-radius: 4px;
+  background: var(--cf-bg-200);
+}
+.ds-proof .ds-quote {
+  margin-inline: var(--cf-pad-lg);
+}
+@media (min-width: 1200px) {
+  .ds-proof .ds-quote {
+    margin-inline: auto;
+  }
+}
+.ds-quote[hidden] {
+  display: none;
+}
+.ds-quote blockquote p {
+  max-width: 780px;
+  font-size: 32px;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  font-weight: 500;
+  text-wrap: pretty;
+}
+.ds-quote strong {
+  font-weight: 600;
+  color: var(--cf-accent-text);
+}
+.ds-quote figcaption {
+  margin-top: 24px;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--cf-fg-muted);
+}
+.ds-quote figcaption a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.ds-more {
+  max-width: 720px;
+  margin: 32px auto 0;
+  text-align: center;
+  font-size: 16px;
+  line-height: 1.35;
+  color: var(--cf-fg-muted);
+}
+
+/* Risco: "Fighting infra" × "Shipping with" — exemplos em cartões sobre retícula, definição no painel laranja. */
+.ds-compare {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  min-height: 500px;
+}
+.ds-compare-chaos {
+  position: relative;
+  display: grid;
+  align-content: center;
+  gap: 24px;
+  padding: var(--cf-pad-lg) var(--cf-pad);
+  background-image: radial-gradient(circle, var(--cf-accent-line) 1px, transparent 1.2px);
+  background-size: 10px 10px;
+}
+.ds-incident {
+  padding: 16px 20px;
+  border: 1px solid var(--cf-border);
+  border-radius: 8px;
+  background: var(--cf-bg-200);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.04);
+}
+.ds-incident[data-n="1"] {
+  margin-left: 32px;
+}
+.ds-incident h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  font-size: 16px;
+  line-height: 1.25;
+  font-weight: 500;
+}
+.ds-incident h3 svg {
+  flex: none;
+  color: var(--cf-accent-text);
+}
+.ds-chain {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 0;
+}
+.ds-chain li {
+  display: inline-flex;
+  align-items: center;
+  font-size: 14px;
+  line-height: 1.3;
+  color: var(--cf-fg-muted);
+}
+.ds-chain li:not(:last-child)::after {
+  content: "→";
+  margin-inline: 8px;
+  color: var(--cf-accent-text);
+}
+.ds-chain li[data-last] {
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: var(--cf-accent-soft);
+  color: var(--cf-accent-text);
+  font-weight: 500;
+}
+.ds-compare-accent {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--cf-pad-lg) var(--cf-pad-lg) 140px;
+  background: var(--cf-accent);
+  text-align: center;
+}
+.ds-compare-accent::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  border-top: 1px dashed var(--cf-pill-line);
+  z-index: 0;
+}
+.ds-compare-accent p {
+  position: relative;
+  max-width: 440px;
+  color: var(--cf-on-accent);
+  font-size: 40px;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  font-weight: 500;
+  text-wrap: balance;
+}
+.ds-accent-pill {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: calc(100% - 2 * var(--cf-pad));
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border: 1px solid var(--cf-pill-line);
+  border-radius: 8px;
+  background: var(--cf-accent);
+  color: var(--cf-on-accent-ink);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Exigências + problemas: o quadro de preços (diagrama no topo, colunas embaixo, faixa clara no pé). */
+.ds-plan::after {
+  content: "";
+  display: block;
+  height: 40px;
+  border-top: 1px solid var(--cf-border);
+  background: var(--cf-bg-300);
+}
+.ds-plan-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  gap: 40px;
+  align-items: center;
+  padding: var(--cf-pad-lg) var(--cf-pad);
+  border-bottom: 1px solid var(--cf-border);
+}
+.ds-plan-intro h3 {
+  margin-bottom: 8px;
+  font-size: 18px;
+  line-height: 1.2;
+  font-weight: 500;
+}
+.ds-plan-intro p {
+  max-width: 380px;
+  font-size: 16px;
+  line-height: 1.2;
+  color: var(--cf-fg-muted);
+}
+.ds-diagram {
+  padding: 16px;
+  border: 1px solid var(--cf-border);
+  border-radius: 8px;
+  background: var(--cf-bg);
+}
+.ds-diagram-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  font-size: 13px;
+  color: var(--cf-fg-muted);
+}
+.ds-diagram-labels span:last-child {
+  color: var(--cf-accent-text);
+}
+.ds-diagram dl {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+.ds-diagram dl > div {
+  padding: 10px;
+  border: 1px solid var(--cf-border);
+  border-radius: 6px;
+  background: var(--cf-bg-200);
+  text-align: center;
+}
+.ds-diagram dt {
+  font-size: 14px;
+  line-height: 1.2;
+  font-weight: 500;
+}
+.ds-diagram dd {
+  margin-top: 4px;
+  font-size: 12px;
+  line-height: 1.25;
+  color: var(--cf-fg-muted);
+}
+.ds-plan-cols {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.ds-plan-cols-title {
+  grid-column: 1 / -1;
+  padding: 24px var(--cf-pad);
+  border-bottom: 1px solid var(--cf-border);
+  font-size: 18px;
+  line-height: 1.2;
+  font-weight: 500;
+}
+.ds-plan-col {
+  padding: 24px var(--cf-pad) var(--cf-pad);
+}
+.ds-plan-col + .ds-plan-col {
+  border-left: 1px solid var(--cf-border);
+}
+.ds-plan-col svg {
+  color: var(--cf-fg);
+}
+.ds-plan-col h4 {
+  margin: 16px 0;
+  font-size: 18px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  font-weight: 500;
+}
+.ds-plan-col dl {
+  display: grid;
+  gap: 10px;
+}
+.ds-plan-col dt {
+  display: inline-block;
+  margin-bottom: 4px;
+  padding: 2px 8px;
+  border: 1px solid var(--cf-border);
+  border-radius: 4px;
+  background: var(--cf-bg-300);
+  font-size: 13px;
+  font-weight: 500;
+}
+.ds-plan-col dd {
+  font-size: 15px;
+  line-height: 1.35;
+  color: var(--cf-fg-muted);
+}
+
+/* Método + apoio: o bento "Tailored to your team" (cartão laranja à direita, terminal embaixo). */
+.ds-bento {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+.ds-bento-steps {
+  grid-column: span 8;
+  padding: var(--cf-pad);
+  border-bottom: 1px solid var(--cf-border);
+}
+.ds-bento-steps ol {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px 32px;
+}
+.ds-bento-steps li {
+  display: flex;
+  gap: 12px;
+}
+.ds-step-n {
+  flex: none;
+  min-width: 24px;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--cf-accent-text);
+}
+.ds-bento-steps h3 {
+  font-size: 16px;
+  line-height: 1.3;
+  font-weight: 500;
+}
+.ds-bento-steps p {
+  margin-top: 4px;
+  font-size: 14px;
+  line-height: 1.35;
+  color: var(--cf-fg-muted);
+}
+.ds-bento-accent {
+  grid-column: span 4;
+  padding: var(--cf-pad);
+  background: var(--cf-accent);
+  color: var(--cf-on-accent-ink);
+}
+.ds-bento-accent h3 {
+  margin: 16px 0 8px;
+  font-size: 18px;
+  line-height: 1.2;
+  font-weight: 500;
+}
+.ds-bento-accent p {
+  font-size: 15px;
+  line-height: 1.35;
+}
+.ds-bento-note {
+  grid-column: span 4;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: var(--cf-pad);
+  border-right: 1px solid var(--cf-border);
+}
+.ds-bento-note svg {
+  color: var(--cf-fg);
+}
+.ds-bento-note p {
+  font-size: 15px;
+  line-height: 1.35;
+  color: var(--cf-fg-muted);
+}
+.ds-bento-term {
+  grid-column: span 8;
+  padding: var(--cf-pad);
+  background: var(--cf-bg-200);
+}
+.ds-term-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  font-size: 16px;
+  font-weight: 500;
+}
+.ds-term {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px 24px;
+  padding: 16px 20px;
+  border: 1px solid var(--cf-border);
+  border-radius: 8px;
+  background: var(--cf-bg);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.ds-term li::before {
+  content: "→ ";
+  color: var(--cf-accent-text);
+}
+.ds-term-foot {
+  margin-top: 12px;
+  font-size: 14px;
+  line-height: 1.35;
+  color: var(--cf-fg-muted);
+}
+
+/* CTA: cartão laranja, título branco grande, dois botões e o letreiro da cadeia do método. */
+.ds-cta-wrap {
+  margin-top: var(--cf-section);
+}
+.ds-cta-content {
+  max-width: 1000px;
+  margin-inline: auto;
+  padding: 128px var(--cf-px) 112px;
+  text-align: center;
+}
+.ds-cta h2 {
+  color: var(--cf-on-accent);
+  font-size: var(--cf-h1);
+  line-height: 1;
+  letter-spacing: -0.025em;
+  font-weight: 500;
+  text-wrap: balance;
+}
+.ds-cta-content p {
+  max-width: 640px;
+  margin: 24px auto 0;
+  font-size: var(--cf-sub);
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+}
+.ds-cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 32px;
+}
+.ds-ticker {
+  display: flex;
+  overflow: hidden;
+  border-top: 1px solid var(--cf-pill-line);
+}
+.ds-ticker-track {
+  display: flex;
+  flex: none;
+  min-width: 100%;
+  justify-content: space-around;
+  animation: ds-ticker 40s linear infinite;
+}
+.ds-ticker-track li {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 24px;
+  font-size: 16px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.ds-ticker-track li::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+}
+@keyframes ds-ticker {
+  to {
+    transform: translateX(-100%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ds-ticker-track {
+    animation: none;
+  }
+}
+.ds-disclaimer {
+  max-width: 62ch;
+  margin: 24px auto 0;
+  padding-inline: var(--cf-px);
+  text-align: center;
+  font-size: 14px;
+  color: var(--cf-fg-muted);
+}
+
+/* Mapa interativo ("Region: Earth"): cérebro, marcadores e explicação em quadro tracejado laranja. */
+.home-map {
+  overflow-x: clip;
+}
+.brain-stage {
+  position: relative;
+  width: min(100%, var(--brain-stage-max));
+  margin-inline: auto;
+  aspect-ratio: 4 / 3;
+  max-height: 760px;
+}
+.brain-viewport {
+  position: absolute;
+  inset: 0;
+}
+.brain-poster,
+.brain-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.brain-poster {
+  object-fit: contain;
+  transition: opacity var(--dur-base) var(--ease);
+}
+[data-brain-status="ready"] .brain-poster {
+  opacity: 0;
+}
+.brain-canvas {
+  touch-action: pan-y; /* arrasto horizontal gira; vertical continua rolando a página */
+  cursor: grab;
+}
+.brain-canvas:active {
+  cursor: grabbing;
+}
+[data-brain-status="fallback"] .brain-canvas {
+  display: none;
+}
+.brain-markers {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.brain-marker {
+  position: absolute;
+  left: var(--mx);
+  top: var(--my);
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 260px;
+  padding: 0;
+  border: 0;
+  background: none;
+  text-align: left;
+  color: var(--cf-fg);
+  pointer-events: auto;
+  cursor: pointer;
+}
+.brain-marker[data-side="left"] {
+  flex-direction: row-reverse;
+  text-align: right;
+}
+.brain-marker-dot {
+  display: grid;
+  place-items: center;
+  flex: 0 0 var(--brain-marker);
+  width: var(--brain-marker);
+  height: var(--brain-marker);
+  border: 1px solid var(--cf-accent);
+  border-radius: 50%;
+  background: var(--cf-bg);
+  color: var(--cf-accent-text);
+  box-shadow: 0 0 0 var(--brain-marker-ring) var(--cf-accent-soft);
+  transition: background-color var(--dur-fast) var(--ease);
+}
+.brain-marker-label {
+  min-width: 180px;
+  padding: 10px 14px;
+  border: 1px solid var(--cf-border);
+  border-radius: 8px;
+  background: var(--cf-bg);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.05);
+  font-size: 14px;
+  line-height: 1.25;
+}
+.brain-marker-label b {
+  display: block;
+  margin-bottom: 3px;
+  font-weight: 500;
+}
+.brain-marker-label small {
+  display: block;
+  font-size: 12px;
+  line-height: 1.35;
+  color: var(--cf-fg-muted);
+}
+.brain-marker[aria-pressed="true"] .brain-marker-dot {
+  background: var(--cf-accent);
+  color: var(--cf-on-accent-ink);
+}
+.brain-marker[aria-pressed="true"] .brain-marker-label {
+  border-color: var(--cf-accent);
+  box-shadow: inset 0 0 0 1px var(--cf-accent);
+}
+.brain-marker:focus-visible {
+  outline: 3px solid var(--ring);
+  outline-offset: 4px;
+  border-radius: 12px;
+}
+.home-map-note {
+  max-width: 62ch;
+  margin: 12px auto 0;
+  text-align: center;
+  font-size: 14px;
+  color: var(--cf-fg-muted);
+}
+.brain-controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+.brain-controls button,
+.brain-retry {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  min-width: 44px;
+  justify-content: center;
+  padding: 6px 16px;
+  border: 1px solid var(--cf-border);
+  border-radius: var(--cf-pill);
+  background: var(--cf-bg);
+  color: var(--cf-fg);
+  font-size: 15px;
+  font-weight: 500;
+}
+.brain-controls button:hover:not(:disabled),
+.brain-retry:hover {
+  background: var(--cf-bg-300);
+}
+.brain-controls button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.brain-controls button:focus-visible,
+.brain-retry:focus-visible,
+.brain-detail-link:focus-visible {
+  outline: 3px solid var(--ring);
+  outline-offset: 2px;
+}
+.brain-retry {
+  display: flex;
+  margin: 8px auto 0;
+}
+.brain-instruction,
+.brain-load-status {
+  max-width: 62ch;
+  margin: 10px auto 0;
+  text-align: center;
+  font-size: 14px;
+  color: var(--cf-fg-muted);
+}
+.brain-load-status:empty {
+  display: none;
+}
+.brain-detail {
+  position: relative;
+  width: min(100%, var(--brain-detail-max));
+  margin: 40px auto 0;
+  padding: 28px 30px;
+  border: 1px dashed var(--cf-accent);
+  border-radius: 8px;
+  background: var(--cf-bg-200);
+}
+.brain-detail-body h3 {
+  margin: 0 0 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--cf-border);
+  font-size: 24px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  font-weight: 500;
+}
+.brain-detail-body h3 strong {
+  font-weight: 600;
+}
+.brain-detail-body dl {
+  display: grid;
+  gap: 14px;
+}
+.brain-detail-body dl > div {
+  display: grid;
+  grid-template-columns: minmax(0, 13rem) minmax(0, 1fr);
+  gap: 4px 16px;
+}
+.brain-detail-body dt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+}
+.brain-detail-body dt svg {
+  flex: none;
+  color: var(--cf-accent-text);
+}
+.brain-detail-body dd {
+  font-size: 16px;
+  line-height: 1.45;
+  color: var(--cf-fg-muted);
+}
+.brain-relations {
+  margin-top: 20px;
+  font-size: 15px;
+}
+.brain-relations ul {
+  margin-top: 6px;
+  padding-left: 1.2em;
+  list-style: disc;
+  color: var(--cf-fg-muted);
+}
+.brain-detail-link {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  margin-top: 16px;
+  font-weight: 500;
+  color: var(--cf-accent-text);
+}
+.brain-nojs-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 20px;
+  margin-top: 16px;
+}
+.brain-nojs-links a {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+/* ---- Responsivo --------------------------------------------------------------------------------- */
+@media (max-width: 899.98px) {
+  .ds-cols,
+  .ds-compare,
+  .ds-plan-top,
+  .ds-plan-cols {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .ds-col + .ds-col,
+  .ds-plan-col + .ds-plan-col {
+    border-left: 0;
+    border-top: 1px solid var(--cf-border);
+  }
+  .ds-compare-accent {
+    justify-content: center;
+    gap: 24px;
+    min-height: 320px;
+    padding-bottom: var(--cf-pad-lg);
+  }
+  .ds-compare-accent::before {
+    display: none;
+  }
+  .ds-accent-pill {
+    position: static;
+    transform: none;
+    white-space: normal;
+  }
+  .ds-bento-steps,
+  .ds-bento-accent,
+  .ds-bento-note,
+  .ds-bento-term {
+    grid-column: 1 / -1;
+  }
+  .ds-bento-note {
+    border-right: 0;
+    border-bottom: 1px solid var(--cf-border);
+  }
+  .brain-detail-body dl > div {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 767.98px) {
+  .ds-hero {
+    min-height: 0;
+    padding: 64px 16px 112px;
+  }
+  .ds-dots {
+    display: block;
+    height: 88px;
+    margin-top: 48px;
+    background-image: radial-gradient(circle, var(--cf-dot-grey) 1.2px, transparent 1.4px);
+    background-size: 14px 14px;
+    background-position: center;
+  }
+  .ds-dots + .ds-section {
+    padding-top: 48px;
+  }
+  .ds-quote {
+    padding: 24px;
+  }
+  .ds-proof .ds-quote {
+    margin: 24px 16px;
+  }
+  .ds-quote blockquote p {
+    font-size: 24px;
+    line-height: 1.1;
+  }
+  .ds-compare-accent p {
+    font-size: 32px;
+  }
+  .ds-incident[data-n="1"] {
+    margin-left: 0;
+  }
+  .ds-diagram dl,
+  .ds-bento-steps ol,
+  .ds-term {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .ds-cta-content {
+    padding: 80px 16px 64px;
+  }
+}
+@media (max-width: 619.98px) {
+  .ds-hero-wrap,
+  .ds-cta-wrap {
+    padding-inline: 4px;
+  }
+  .ds-pill {
+    font-size: 14px;
+  }
+  .ds-hero .ds-btn-white,
+  .ds-cta-actions a {
+    width: 100%;
+  }
+  .ds-bento-steps ol,
+  .ds-term {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .brain-stage {
+    aspect-ratio: 1 / 1;
+    min-height: 296px;
+  }
+  .brain-viewport {
+    inset: 5% 0;
+  }
+  .brain-marker {
+    left: 0;
+    right: auto;
+    width: min(30%, 112px);
+    max-width: 112px;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    text-align: center;
+  }
+  .brain-marker[data-side="left"] {
+    flex-direction: column;
+    text-align: center;
+  }
+  .brain-marker[data-side="right"] {
+    left: auto;
+    right: 0;
+    text-align: center;
+  }
+  .brain-marker[data-function="COG-PLANEJAMENTO"] { top: 26%; }
+  .brain-marker[data-function="COG-MEMORIA-TRABALHO"] { top: 72%; }
+  .brain-marker[data-function="COG-CONTROLE-INIBITORIO"] { top: 32%; }
+  .brain-marker[data-function="COG-FLEXIBILIDADE"] { top: 78%; }
+  .brain-marker-dot {
+    --brain-marker: 44px;
+  }
+  .brain-marker-label {
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    min-height: 44px;
+    display: grid;
+    place-items: center;
+    padding: 5px 6px;
+    font-size: 13px;
+  }
+  .brain-marker-label small {
+    display: none;
+  }
+  .brain-detail {
+    padding: 22px 18px;
+  }
+}
+
+/* ===== Componentes novos (DS-CF-001 §4, especificados antes do uso) ================================== */
+
+/* Botões: primário (acento com texto escuro), contorno e neutro. Alvo ≥ 44 px. */
+.ds-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: var(--cf-btn-sm);
+  padding: 8px 20px;
+  border: 1px solid transparent;
+  border-radius: var(--cf-pill);
+  font: 500 16px/1.4 var(--cf-font);
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+}
+.ds-btn[data-size="lg"] {
+  min-height: var(--cf-btn);
+  padding: 12px 24px;
+}
+.ds-btn[data-variant="primary"] {
+  background: var(--cf-accent);
+  color: var(--cf-on-accent-ink);
+}
+.ds-btn[data-variant="primary"]:hover {
+  background: var(--cf-accent-200);
+}
+.ds-btn[data-variant="outline"] {
+  border-color: var(--cf-border-strong);
+  background: var(--cf-bg);
+  color: var(--cf-fg);
+}
+.ds-btn[data-variant="outline"]:hover {
+  background: var(--cf-bg-300);
+}
+.ds-btn[data-variant="ghost"] {
+  background: transparent;
+  color: var(--cf-fg);
+}
+.ds-btn[data-variant="ghost"]:hover {
+  background: var(--cf-bg-300);
+}
+.ds-btn:hover {
+  text-decoration: none;
+}
+.ds-btn:disabled,
+.ds-btn[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+:is(.ds-btn, .ds-link, .ds-card-link, .ds-chip, .ds-crumbs a, .ds-toc a, .ds-tab, .ds-field-control, .ds-check input):focus-visible {
+  outline: 3px solid var(--cf-focus);
+  outline-offset: 2px;
+}
+
+/* Link de texto com chevron ("Saiba mais ›", ADR-12/M03). */
+.ds-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 44px;
+  color: var(--cf-accent-text);
+  font-weight: 500;
+  text-decoration: none;
+}
+.ds-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* Contêiner e ritmo. */
+.ds-container {
+  max-width: calc(var(--cf-container) + 2 * var(--cf-px));
+  margin-inline: auto;
+  padding-inline: var(--cf-px);
+}
+.ds-reading {
+  max-width: calc(var(--cf-reading) + 2 * var(--cf-px));
+  margin-inline: auto;
+  padding-inline: var(--cf-px);
+}
+.ds-stack > * + * {
+  margin-top: var(--cf-section-gap);
+}
+
+/* PageHead (§4.1). */
+.ds-pagehead {
+  max-width: calc(var(--cf-container) + 2 * var(--cf-px));
+  margin-inline: auto;
+  padding: 64px var(--cf-px) 48px;
+}
+.ds-pagehead[data-align="center"] {
+  text-align: center;
+}
+.ds-pagehead[data-align="center"] :is(.ds-pagehead-lead, .ds-pagehead-actions) {
+  margin-inline: auto;
+  justify-content: center;
+}
+.ds-eyebrow {
+  margin-bottom: 12px;
+  color: var(--cf-accent-text);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.ds-pagehead h1 {
+  max-width: 960px;
+  font-size: var(--cf-h1);
+  line-height: 1;
+  letter-spacing: -0.025em;
+  font-weight: 500;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+.ds-pagehead[data-align="center"] h1 {
+  margin-inline: auto;
+}
+.ds-pagehead-lead {
+  max-width: 720px;
+  margin-top: 16px;
+  color: var(--cf-fg-muted);
+  font-size: var(--cf-sub);
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  text-wrap: pretty;
+}
+.ds-pagehead-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+/* Aviso de layout demonstrativo (§4.11). */
+.ds-notice {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 10px;
+  margin-bottom: 20px;
+  padding: 6px 12px;
+  border: 1px dashed var(--cf-accent-line);
+  border-radius: var(--cf-radius-md);
+  background: var(--cf-accent-soft);
+  font-size: 14px;
+  line-height: 1.35;
+  text-align: left;
+}
+.ds-notice {
+  max-width: min(100%, var(--cf-measure));
+}
+.ds-notice b {
+  color: var(--cf-accent-text);
+  font-weight: 600;
+}
+
+/* Breadcrumb (§4.2). */
+.ds-crumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 6px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  color: var(--cf-fg-muted);
+}
+.ds-crumbs li + li::before {
+  content: "›";
+  margin-right: 6px;
+  color: var(--cf-fg-muted);
+}
+.ds-crumbs a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--cf-fg);
+  text-decoration: none;
+}
+.ds-crumbs a:hover {
+  text-decoration: underline;
+}
+
+/* Card (§4.3): célula de quadro ou painel; o título é o link e a área clicável cobre o card. */
+.ds-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  padding: var(--cf-pad);
+  background: var(--cf-bg);
+  transition: background-color var(--dur-fast) var(--ease);
+}
+.ds-card[data-variant="panel"] {
+  border: 1px solid var(--cf-border);
+  border-radius: var(--cf-radius-md);
+}
+.ds-card:has(.ds-card-link):hover {
+  background: var(--cf-bg-300);
+}
+.ds-card-icon {
+  color: var(--cf-fg);
+}
+.ds-card-eyebrow {
+  font-family: var(--cf-mono);
+  font-size: 13px;
+  color: var(--cf-fg-muted);
+}
+.ds-card h3 {
+  font-size: var(--cf-h3);
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  font-weight: 500;
+}
+.ds-card[data-size="lg"] h3 {
+  font-size: 28px;
+  line-height: 1.1;
+}
+.ds-card-link {
+  color: inherit;
+  text-decoration: none;
+}
+.ds-card-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+.ds-card p {
+  font-size: 16px;
+  line-height: 1.35;
+  color: var(--cf-fg-muted);
+}
+.ds-card-meta {
+  font-size: 14px;
+  color: var(--cf-fg-muted);
+}
+.ds-card-cta {
+  margin-top: auto;
+  padding-top: 8px;
+  color: var(--cf-accent-text);
+  font-weight: 500;
+}
+.ds-card-media {
+  margin: calc(var(--cf-pad) * -1) calc(var(--cf-pad) * -1) 8px;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-bottom: 1px solid var(--cf-border);
+  background: var(--cf-bg-200);
+}
+.ds-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--ds-cols, 3), minmax(0, 1fr));
+}
+.ds-grid > :not(.ds-corner) ~ :not(.ds-corner) {
+  border-left: 1px solid var(--cf-border);
+}
+.ds-grid[data-gap] {
+  gap: 16px;
+}
+.ds-grid[data-gap] > :not(.ds-corner) ~ :not(.ds-corner) {
+  border-left: 0;
+}
+
+/* Badge (§4.14). */
+.ds-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  padding: 2px 8px;
+  border: 1px solid var(--cf-border);
+  border-radius: var(--cf-radius-sm);
+  background: var(--cf-bg-300);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--cf-fg);
+}
+.ds-badge[data-variant="accent"] {
+  border-color: var(--cf-accent-line);
+  background: var(--cf-accent-soft);
+  color: var(--cf-accent-text);
+}
+.ds-badge[data-variant="demo"] {
+  border-style: dashed;
+  border-color: var(--cf-accent-line);
+  background: var(--cf-bg);
+  color: var(--cf-accent-text);
+}
+
+/* Chips e barra de facetas (§4.4). */
+.ds-facets {
+  display: grid;
+  gap: 16px;
+}
+.ds-facet-group h3 {
+  margin-bottom: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--cf-fg-muted);
+}
+.ds-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.ds-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 6px 16px;
+  border: 1px solid var(--cf-border-strong);
+  border-radius: var(--cf-pill);
+  background: var(--cf-bg);
+  color: var(--cf-fg);
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+}
+a.ds-chip:hover,
+button.ds-chip:hover {
+  background: var(--cf-bg-300);
+  text-decoration: none;
+}
+.ds-chip[aria-current="true"],
+.ds-chip[aria-pressed="true"],
+.ds-chip[aria-checked="true"] {
+  border-color: var(--cf-fg);
+  background: var(--cf-fg);
+  color: var(--cf-bg);
+}
+.ds-chip[data-state="soon"] {
+  border-style: dashed;
+  color: var(--cf-fg-muted);
+  cursor: default;
+}
+.ds-chip-count {
+  font-family: var(--cf-mono);
+  font-size: 12px;
+}
+
+/* Abas (§3, generalizadas). */
+.ds-tabs {
+  display: flex;
+  gap: 4px;
+  padding: 8px;
+  border: 1px solid var(--cf-border);
+  border-radius: var(--cf-radius-pill);
+  width: fit-content;
+  max-width: 100%;
+  overflow-x: auto;
+}
+.ds-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 6px 20px;
+  border: 0;
+  border-radius: var(--cf-radius-pill);
+  background: none;
+  color: var(--cf-fg-muted);
+  font: 500 15px/1.2 var(--cf-font);
+  white-space: nowrap;
+  cursor: pointer;
+}
+.ds-tab[aria-selected="true"],
+.ds-tab[data-state="active"] {
+  background: var(--cf-accent);
+  color: var(--cf-on-accent-ink);
+}
+
+/* Meta do artigo (§4.5), sumário (§4.6), pontos principais e FAQ (§4.7). */
+.ds-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 20px;
+  margin-top: 20px;
+  font-size: 14px;
+  color: var(--cf-fg-muted);
+}
+.ds-meta dt {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+.ds-meta dd[data-mono] {
+  font-family: var(--cf-mono);
+  font-size: 13px;
+}
+.ds-article {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 48px;
+  max-width: calc(var(--cf-container) + 2 * var(--cf-px));
+  margin-inline: auto;
+  padding: 0 var(--cf-px);
+}
+@media (min-width: 1100px) {
+  .ds-article {
+    grid-template-columns: 240px minmax(0, var(--cf-reading));
+    justify-content: center;
+  }
+}
+.ds-toc {
+  font-size: 15px;
+}
+@media (min-width: 1100px) {
+  .ds-toc {
+    position: sticky;
+    top: calc(var(--cf-header-h) + 24px);
+    align-self: start;
+  }
+}
+.ds-toc summary,
+.ds-toc-title {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--cf-fg-muted);
+  cursor: pointer;
+}
+.ds-toc ol {
+  display: grid;
+  gap: 2px;
+  border-left: 1px solid var(--cf-border);
+}
+.ds-toc a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  margin-left: -1px;
+  padding: 4px 0 4px 14px;
+  border-left: 2px solid transparent;
+  color: var(--cf-fg-muted);
+  line-height: 1.3;
+  text-decoration: none;
+}
+.ds-toc a:hover {
+  border-left-color: var(--cf-accent);
+  color: var(--cf-fg);
+}
+.ds-keypoints {
+  margin-bottom: 40px;
+  padding: 24px 28px;
+  border: 1px solid var(--cf-border);
+  border-left: 3px solid var(--cf-accent);
+  border-radius: var(--cf-radius-md);
+  background: var(--cf-bg-200);
+}
+.ds-keypoints h2 {
+  margin-bottom: 12px;
+  font-size: 18px;
+  font-weight: 500;
+}
+.ds-keypoints ul {
+  display: grid;
+  gap: 8px;
+  padding-left: 1.2em;
+  list-style: disc;
+}
+.ds-faq details {
+  border-top: 1px solid var(--cf-border);
+}
+.ds-faq summary {
+  display: flex;
+  align-items: center;
+  min-height: 56px;
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* Prose (§4.8): corpo do artigo. */
+.ds-prose {
+  font-size: var(--cf-body);
+  line-height: 1.6;
+  color: var(--cf-fg);
+}
+.ds-prose > * + * {
+  margin-top: 1.1em;
+}
+.ds-prose :is(p, li, dd) {
+  max-width: var(--cf-measure);
+}
+.ds-prose h2 {
+  margin-top: 2.2em;
+  scroll-margin-top: calc(var(--cf-header-h) + 16px);
+  font-size: 32px;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  font-weight: 500;
+}
+.ds-prose h3 {
+  margin-top: 1.6em;
+  scroll-margin-top: calc(var(--cf-header-h) + 16px);
+  font-size: 22px;
+  line-height: 1.2;
+  font-weight: 500;
+}
+.ds-prose :is(ul, ol) {
+  padding-left: 1.3em;
+}
+.ds-prose ul {
+  list-style: disc;
+}
+.ds-prose ol {
+  list-style: decimal;
+}
+.ds-prose li + li {
+  margin-top: 0.4em;
+}
+.ds-prose strong {
+  font-weight: 600;
+}
+.ds-prose a {
+  color: var(--cf-accent-text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.ds-prose blockquote {
+  padding-left: 20px;
+  border-left: 3px solid var(--cf-accent);
+  font-size: 22px;
+  line-height: 1.35;
+}
+.ds-prose code {
+  font-family: var(--cf-mono);
+  font-size: 0.9em;
+}
+
+/* Tabela (§4.8): cabeçalho em caixa alta, linhas finas; empilha no celular em células rotuladas. */
+.ds-table-wrap {
+  max-width: 100%;
+  overflow-x: auto;
+}
+.ds-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 16px;
+  line-height: 1.4;
+}
+.ds-table :is(th, td) {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--cf-border);
+  text-align: left;
+  vertical-align: top;
+}
+.ds-table th {
+  background: var(--cf-bg-300);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--cf-fg-muted);
+}
+.ds-table a {
+  color: var(--cf-accent-text);
+}
+@media (max-width: 639.98px) {
+  .ds-table[data-stack] thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  .ds-table[data-stack] tr {
+    display: block;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--cf-border);
+  }
+  .ds-table[data-stack] td {
+    display: grid;
+    grid-template-columns: minmax(0, 8rem) minmax(0, 1fr);
+    gap: 12px;
+    padding: 4px 0;
+    border: 0;
+  }
+  .ds-table[data-stack] td::before {
+    content: attr(data-label);
+    font-size: 13px;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: var(--cf-fg-muted);
+  }
+}
+
+/* Painel de texto e diagrama (§4.9): mesmos nomes no MDX (@/components/plain), pele do DS. */
+.ds-panel {
+  margin-block: 32px;
+  border: 1px solid var(--cf-border);
+  border-radius: var(--cf-radius-md);
+  background: var(--cf-bg-200);
+  overflow: hidden;
+}
+.ds-panel-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+  padding: 10px 12px 10px 20px;
+  border-bottom: 1px solid var(--cf-border);
+  background: var(--cf-bg-300);
+}
+.ds-panel-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 10px;
+  font-size: 16px;
+  font-weight: 500;
+}
+.ds-panel-id {
+  font-family: var(--cf-mono);
+  font-size: 12px;
+  color: var(--cf-fg-muted);
+}
+.ds-panel-body {
+  padding: 20px;
+  font-size: 17px;
+  line-height: 1.6;
+}
+.ds-panel-body > * + * {
+  margin-top: 0.9em;
+}
+.ds-panel-body dl {
+  display: grid;
+  gap: 10px;
+}
+.ds-panel-body dl > div {
+  display: grid;
+  grid-template-columns: minmax(0, 12rem) minmax(0, 1fr);
+  gap: 4px 16px;
+}
+.ds-panel-body dt {
+  font-weight: 600;
+}
+.ds-panel-body :is(ul, ol) {
+  padding-left: 1.3em;
+}
+.ds-panel-body ul {
+  list-style: disc;
+}
+.ds-panel-body ol {
+  list-style: decimal;
+}
+.ds-panel-caption {
+  padding: 0 20px 16px;
+  font-size: 14px;
+  color: var(--cf-fg-muted);
+}
+.ds-ascii {
+  margin: 0;
+  padding: 20px;
+  overflow-x: auto;
+  font-family: var(--cf-mono);
+  font-size: 14px;
+  line-height: 1.45;
+  white-space: pre;
+  tab-size: 2;
+}
+.ds-ascii:focus-visible {
+  outline: 3px solid var(--cf-focus);
+  outline-offset: -3px;
+}
+.ds-copy {
+  min-height: 44px;
+  padding: 6px 14px;
+  border: 1px solid var(--cf-border-strong);
+  border-radius: var(--cf-pill);
+  background: var(--cf-bg);
+  color: var(--cf-fg);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.ds-copy:focus-visible {
+  outline: 3px solid var(--cf-focus);
+  outline-offset: 2px;
+}
+@media (max-width: 639.98px) {
+  .ds-panel-body dl > div {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Estado vazio (§4.10). */
+.ds-empty {
+  display: grid;
+  justify-items: start;
+  gap: 8px;
+  padding: var(--cf-pad-lg) var(--cf-pad);
+  border: 1px dashed var(--cf-border-strong);
+  border-radius: var(--cf-radius-md);
+  background: var(--cf-bg-200);
+}
+.ds-empty h2,
+.ds-empty h3 {
+  font-size: 20px;
+  font-weight: 500;
+}
+.ds-empty p {
+  max-width: 60ch;
+  color: var(--cf-fg-muted);
+}
+
+/* Campos (§4.12). */
+.ds-field {
+  display: grid;
+  gap: 6px;
+}
+.ds-field-label {
+  font-size: 15px;
+  font-weight: 500;
+}
+.ds-field-help {
+  font-size: 14px;
+  color: var(--cf-fg-muted);
+}
+.ds-field-error {
+  font-size: 14px;
+  color: var(--color-critical-default);
+}
+.ds-field-control {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 14px;
+  border: 1px solid var(--cf-border-strong);
+  border-radius: var(--cf-radius-md);
+  background: var(--cf-bg);
+  color: var(--cf-fg);
+  font: 400 16px/1.4 var(--cf-font);
+}
+textarea.ds-field-control {
+  min-height: 112px;
+  resize: vertical;
+}
+.ds-field-control[aria-invalid="true"] {
+  border-color: var(--color-critical-default);
+}
+.ds-check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  font-size: 16px;
+  cursor: pointer;
+}
+.ds-check input {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--cf-accent-text);
+}
+
+/* Diálogo (§4.13): Radix só pelo comportamento. */
+.ds-dialog-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: rgb(0 0 0 / 0.4);
+}
+.ds-dialog {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  z-index: 61;
+  display: grid;
+  gap: 16px;
+  width: min(calc(100vw - 32px), 480px);
+  padding: 28px;
+  transform: translate(-50%, -50%);
+  border: 1px solid var(--cf-border);
+  border-radius: var(--cf-radius-lg);
+  background: var(--cf-bg);
+  box-shadow: var(--elevation-overlay);
+}
+.ds-dialog h2 {
+  font-size: 22px;
+  font-weight: 500;
+}
+.ds-dialog p {
+  color: var(--cf-fg-muted);
+}
+.ds-dialog-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+/* Seções de página interna: .ds-section (acima) com cabeçalho alinhado à esquerda. */
+.ds-head[data-align="left"] {
+  text-align: left;
+  margin-inline: 0;
+}
+.ds-head[data-align="left"] p:not(.ds-label) {
+  margin-inline: 0;
+}
+.ds-prose-block {
+  max-width: var(--cf-reading);
+  font-size: var(--cf-body);
+  line-height: 1.6;
+}
+.ds-prose-block > * + * {
+  margin-top: 1em;
+}
+.ds-list {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--cf-border);
+}
+.ds-list > li {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--cf-border);
+}
+.ds-dl {
+  display: grid;
+  gap: 12px;
+}
+.ds-dl > div {
+  display: grid;
+  grid-template-columns: minmax(0, 12rem) minmax(0, 1fr);
+  gap: 4px 16px;
+}
+.ds-dl dt {
+  font-weight: 500;
+}
+.ds-dl dd {
+  color: var(--cf-fg-muted);
+}
+@media (max-width: 899.98px) {
+  .ds-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .ds-grid > :not(.ds-corner) ~ :not(.ds-corner) {
+    border-left: 0;
+    border-top: 1px solid var(--cf-border);
+  }
+  .ds-grid[data-gap] > :not(.ds-corner) ~ :not(.ds-corner) {
+    border-top: 0;
+  }
+  .ds-dl > div {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (min-width: 640px) and (max-width: 899.98px) {
+  .ds-grid[data-tablet="2"] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Cérebro no Mapa Cognitivo (variant="full", DS-CF-001 §5): palco maior; o resto é o mesmo componente da Home. */
+[data-brain-variant="full"] {
+  --brain-stage-max: 1200px;
+}
+
+/* Páginas internas: seções depois do PageHead usam o ritmo de 80/64 px (as homes de área ficam com 128/64 px). */
+.ds-pagehead ~ .ds-section,
+.ds-pagehead ~ * .ds-section {
+  padding-top: var(--cf-section-gap);
+}
+
+/* Medida de leitura (AUD-HIG-06): todo texto corrido das páginas fica em ≤ 68ch. */
+.ds-page :is(p, li, dd),
+.ds-section :is(p, li, dd) {
+  max-width: var(--cf-measure);
+}
+
+/* Link de referência dentro de lista de fontes: link de texto (sublinhado), não controle. */
+.ds-ref-link {
+  color: var(--cf-accent-text);
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.ds-ref-link:focus-visible {
+  outline: 3px solid var(--cf-focus);
+  outline-offset: 2px;
+}
+
+/* Itens de grade/flex dentro do contêiner não alargam a página (AUD-HIG-05, 320 px). */
+.ds-container > * {
+  min-width: 0;
+}
+
+/* Texto e código do prose nunca alargam a página: palavras e URLs longas quebram; código rola dentro do bloco. */
+.ds-prose {
+  overflow-wrap: anywhere;
+}
+.ds-prose pre {
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 16px;
+  border: 1px solid var(--cf-border);
+  border-radius: var(--cf-radius-md);
+  background: var(--cf-bg-200);
+  font-size: 14px;
+}
+@media (max-width: 639.98px) {
+  .ds-btn {
+    max-width: 100%;
+    white-space: normal;
+    text-align: center;
+  }
+}

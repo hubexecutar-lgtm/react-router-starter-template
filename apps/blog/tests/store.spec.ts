@@ -2,8 +2,8 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
 
 const WIDTHS = [320, 375, 768, 1024, 1440];
-const ROUTES = [
-  "/ferramentas/",
+// ADR-26: o catálogo mostra só itens reais (as 6 soluções); os 9 tipos continuam com rota, e tipo sem item tem estado vazio.
+const TYPE_ROUTES = [
   "/ferramentas/skills/",
   "/ferramentas/agentes/",
   "/ferramentas/prompts/",
@@ -11,10 +11,12 @@ const ROUTES = [
   "/ferramentas/pdfs/",
   "/ferramentas/html/",
   "/ferramentas/workbooks/",
+  "/ferramentas/solucoes/",
   "/ferramentas/assets/",
-  "/ferramentas/skills/skill-001/",
-  "/ferramentas/ebooks/ebook-011/",
 ];
+const DETAIL = "/ferramentas/solucoes/status-report/";
+const ROUTES = ["/ferramentas/", ...TYPE_ROUTES, DETAIL];
+const SOLUTIONS_COUNT = 6;
 
 const items = (page: Page) => page.getByTestId("store-item");
 
@@ -42,17 +44,18 @@ async function contrast(page: Page, fg: string, bg: string) {
 
 test.describe("routes render", () => {
   for (const route of ROUTES) {
-    test(`${route} loads with one h1`, async ({ page }) => {
+    test(`${route} loads with one h1 and the demo notice`, async ({ page }) => {
       const res = await page.goto(route);
       expect(res?.status()).toBe(200);
       await expect(page.locator("main h1")).toHaveCount(1);
+      await expect(page.locator("main [data-demo-notice]").first()).toBeVisible();
     });
   }
 });
 
 test.describe("no horizontal overflow", () => {
   for (const width of WIDTHS) {
-    for (const route of ["/ferramentas/", "/ferramentas/skills/", "/ferramentas/ebooks/", "/ferramentas/skills/skill-001/"]) {
+    for (const route of ["/ferramentas/", "/ferramentas/solucoes/", "/ferramentas/ebooks/", DETAIL]) {
       test(`${route} @${width}px`, async ({ page }) => {
         await page.setViewportSize({ width, height: 900 });
         await page.goto(route);
@@ -66,80 +69,101 @@ test.describe("no horizontal overflow", () => {
   }
 });
 
-test("hub: categories, featured, skills list and ebook grid", async ({ page }) => {
+test("hub: real catalog only, types without items are 'em preparação' and never links", async ({ page }) => {
   await page.goto("/ferramentas/");
   await page.waitForLoadState("networkidle"); // wait for hydration
-  await expect(page.getByRole("heading", { level: 2, name: "Categorias" })).toBeVisible();
-  await expect(page.getByRole("heading", { level: 2, name: "Destaque" })).toBeVisible();
-  await expect(page.locator("#skills")).toBeVisible();
-  await expect(page.locator("#ebooks")).toBeVisible();
-  // plugin/list pattern for skills, connector/grid (cover) pattern for e-books
-  await expect(page.locator("section[aria-labelledby=skills] [data-type=skill]")).toHaveCount(4);
-  await expect(page.locator("section[aria-labelledby=ebooks] [data-type=ebook]")).toHaveCount(3);
-  await expect(page.locator("section[aria-labelledby=ebooks] [data-testid=store-item].hy-tile").first()).toContainText("Capa de exemplo");
+  await expect(page.getByRole("heading", { level: 2, name: "Catálogo" })).toBeVisible();
+  await expect(items(page)).toHaveCount(SOLUTIONS_COUNT);
+  await expect(page.locator("[data-store-catalog] .ds-card[data-type=solution]")).toHaveCount(SOLUTIONS_COUNT);
+  await expect(page.getByText("Catálogo de exemplo")).toHaveCount(0);
+  const types = page.locator("[data-store-types]");
+  await expect(types.getByRole("button", { name: /Soluções/ })).toBeVisible();
+  // 8 tipos sem item: texto "em preparação", sem botão nem link
+  await expect(types.locator(".ds-chip[data-state=soon]")).toHaveCount(8);
+  await expect(types.locator("a")).toHaveCount(0);
+  // ferramenta interativa real e um único CTA primário
+  await expect(page.locator("[data-tool-card=prisma] a")).toHaveAttribute("href", "/prisma/");
+  await expect(page.locator("main [data-cta=primary]")).toHaveCount(1);
+  // nenhum link aponta para um item de exemplo retirado
+  const hrefs = await page.locator("main a").evaluateAll((els) => els.map((e) => e.getAttribute("href") ?? ""));
+  expect(hrefs.filter((h) => /\/ferramentas\/(skills|agentes|prompts|ebooks|pdfs|html|workbooks|assets)\/[^/]+\//.test(h))).toEqual([]);
+  expect(hrefs.filter((h) => h === "#")).toEqual([]);
 });
 
-test("search filters the mock dataset as the user types", async ({ page }) => {
+test("search filters the real dataset as the user types and keeps ?q=", async ({ page }) => {
   await page.goto("/ferramentas/");
   await page.waitForLoadState("networkidle"); // wait for hydration
   const search = page.getByRole("searchbox", { name: "Buscar ferramentas" });
-  await search.fill("priorização");
+  await search.fill("status report");
   await expect(items(page)).toHaveCount(1);
-  await search.fill("pesquisa"); // matches by tag (3 skills + 1 prompt)
-  await expect(items(page)).toHaveCount(4);
-  await search.fill("e-book"); // matches by type
-  await expect(items(page)).toHaveCount(3);
-  await search.fill("institucional"); // matches by area
-  await expect(items(page)).toHaveCount(1);
+  await expect(page).toHaveURL(/q=status\+report/);
+  await search.fill("solução"); // matches by type
+  await expect(items(page)).toHaveCount(SOLUTIONS_COUNT);
   await search.fill("zzzz");
   await expect(page.getByTestId("state-empty")).toBeVisible();
   await page.getByRole("button", { name: "Limpar filtros" }).click();
-  await expect(page.getByRole("heading", { level: 2, name: "Categorias" })).toBeVisible();
+  await expect(items(page)).toHaveCount(SOLUTIONS_COUNT);
+  await expect(page).not.toHaveURL(/q=/);
 });
 
-test("type filter (tabs) filters the same dataset in place", async ({ page }) => {
+test("?q= from a function chip opens the catalog filtered", async ({ page }) => {
   await page.goto("/ferramentas/");
-  await page.waitForLoadState("networkidle"); // wait for hydration
-  await page.getByRole("tab", { name: "Prompts" }).click();
-  await expect(items(page)).toHaveCount(3);
-  await expect(page).toHaveURL(/tipo=prompts/);
-  await page.getByRole("tab", { name: "Skills", exact: true }).click();
-  await expect(items(page)).toHaveCount(10);
-  await page.getByRole("tab", { name: "Todos" }).click();
-  await expect(page.getByRole("heading", { level: 2, name: "Categorias" })).toBeVisible();
+  const chip = page.locator("[data-store-facets] a.ds-chip").first();
+  const href = await chip.getAttribute("href");
+  expect(href).toMatch(/^\/ferramentas\/\?q=/);
+  await page.goto(href!);
+  await page.waitForLoadState("networkidle");
+  const q = new URL(page.url()).searchParams.get("q")!;
+  await expect(page.getByRole("searchbox", { name: "Buscar ferramentas" })).toHaveValue(q);
+  expect(await items(page).count()).toBeGreaterThan(0);
 });
 
-test("area filter narrows results and combines with type", async ({ page }) => {
-  await page.goto("/ferramentas/");
+test("type filter (chips) filters the same dataset in place and mirrors ?tipo=", async ({ page }) => {
+  await page.goto("/ferramentas/?tipo=solucoes");
   await page.waitForLoadState("networkidle"); // wait for hydration
-  await page.getByRole("combobox", { name: "Filtrar por área" }).click();
-  await page.getByRole("option", { name: "Artigos" }).click();
-  await expect(items(page)).toHaveCount(3); // e-books
-  await page.getByRole("tab", { name: "Prompts" }).click();
+  const sol = page.locator("[data-store-types]").getByRole("button", { name: /Soluções/ });
+  await expect(sol).toHaveAttribute("aria-pressed", "true");
+  await expect(items(page)).toHaveCount(SOLUTIONS_COUNT);
+  await page.locator("[data-store-types]").getByRole("button", { name: /Todos/ }).click();
+  await expect(page).not.toHaveURL(/tipo=/);
+  await sol.click();
+  await expect(page).toHaveURL(/tipo=solucoes/);
+});
+
+test("?area= still filters (the select only shows up with two or more areas)", async ({ page }) => {
+  await page.goto("/ferramentas/?area=operations");
+  await page.waitForLoadState("networkidle"); // wait for hydration
+  await expect(items(page)).toHaveCount(SOLUTIONS_COUNT);
+  await expect(page.getByRole("combobox", { name: "Filtrar por área" })).toHaveCount(0);
+  await page.goto("/ferramentas/?area=editorial");
+  await page.waitForLoadState("networkidle");
   await expect(page.getByTestId("state-empty")).toBeVisible();
+  await page.getByRole("button", { name: "Limpar filtros" }).click();
+  await expect(items(page)).toHaveCount(SOLUTIONS_COUNT);
+  await expect(page).not.toHaveURL(/area=/);
 });
 
-test("/ferramentas/skills fixes type=skill and shares the store shell", async ({ page }) => {
-  await page.goto("/ferramentas/skills/");
+test("/ferramentas/solucoes/ fixes the type and shares the catalog", async ({ page }) => {
+  await page.goto("/ferramentas/solucoes/");
   await page.waitForLoadState("networkidle"); // wait for hydration
-  await expect(page.locator("main h1")).toHaveText(/Skills/);
-  await expect(items(page)).toHaveCount(10);
-  await expect(page.locator("[data-type=skill]")).toHaveCount(10);
-  await page.getByRole("searchbox").fill("visual");
-  await expect(items(page)).toHaveCount(2);
+  await expect(page.locator("main h1")).toHaveText("Soluções");
+  await expect(page.locator("main nav[aria-label=Trilha] a[href='/ferramentas/']")).toBeVisible();
+  await expect(items(page)).toHaveCount(SOLUTIONS_COUNT);
+  await page.getByRole("searchbox", { name: "Buscar em Soluções" }).fill("plano");
+  expect(await items(page).count()).toBeLessThan(SOLUTIONS_COUNT);
+  await expect(page).toHaveURL(/q=plano/);
 });
 
-test("/ferramentas/ebooks uses the visual grid", async ({ page }) => {
-  await page.goto("/ferramentas/ebooks/");
-  await page.waitForLoadState("networkidle"); // wait for hydration
-  await expect(items(page)).toHaveCount(3);
-  await expect(items(page).first()).toHaveClass(/hy-tile/); // tile do Editorial Hybrid v4 (ADR-22)
-});
-
-test("empty category shows the empty state", async ({ page }) => {
-  await page.goto("/ferramentas/agentes/");
-  await page.waitForLoadState("networkidle"); // wait for hydration
-  await expect(page.getByTestId("state-empty")).toBeVisible();
+test("type without real items shows an honest empty state with a real link", async ({ page }) => {
+  for (const route of TYPE_ROUTES.filter((r) => r !== "/ferramentas/solucoes/")) {
+    await page.goto(route);
+    const empty = page.getByTestId("state-empty");
+    await expect(empty, route).toBeVisible();
+    await expect(empty.locator("h3"), route).toContainText("em preparação");
+    await expect(empty.locator("a"), route).toHaveAttribute("href", "/ferramentas/solucoes/");
+    await expect(items(page), route).toHaveCount(0);
+    await expect(page.getByText("Catálogo de exemplo"), route).toHaveCount(0);
+  }
 });
 
 test("loading and error states", async ({ page }) => {
@@ -149,53 +173,33 @@ test("loading and error states", async ({ page }) => {
   await page.goto("/ferramentas/?estado=erro");
   await page.waitForLoadState("networkidle"); // wait for hydration
   await expect(page.getByTestId("state-error")).toBeVisible();
+  await expect(page.getByTestId("state-error")).toHaveAttribute("role", "alert");
   await page.getByRole("button", { name: "Tentar novamente" }).click();
-  await expect(page.getByRole("heading", { level: 2, name: "Categorias" })).toBeVisible();
+  await expect(items(page)).toHaveCount(SOLUTIONS_COUNT);
+  await expect(page).not.toHaveURL(/estado=/);
 });
 
-test("detail: Problem, Process (3 steps), Progress and a flowchart with the same steps", async ({ page }) => {
-  await page.goto("/ferramentas/skills/");
+test("detail: a card opens the solution page with breadcrumb back to its type", async ({ page }) => {
+  await page.goto("/ferramentas/solucoes/");
   await page.waitForLoadState("networkidle"); // wait for hydration
-  await items(page).first().click();
-  await expect(page).toHaveURL(/\/ferramentas\/skills\/skill-\d{3}\/$/);
-  await page.waitForLoadState("networkidle"); // the detail is a new document: wait for hydration
-  for (const name of ["Problema", "Processo", "Progresso", "Como funciona"]) {
-    await expect(page.getByRole("heading", { level: 2, name })).toBeVisible();
+  await items(page).first().locator("a.ds-card-link").click();
+  await expect(page).toHaveURL(/\/ferramentas\/solucoes\/[a-z0-9-]+\/$/);
+  await expect(page.locator("[data-solution-card]")).toBeVisible();
+  await page.locator("main nav[aria-label=Trilha]").getByRole("link", { name: "Soluções" }).click();
+  await expect(page).toHaveURL(/\/ferramentas\/solucoes\/$/);
+});
+
+test("retired example items answer 302 to /ferramentas/", async ({ request }) => {
+  for (const from of ["/ferramentas/skills/skill-001/", "/ferramentas/ebooks/ebook-011/"]) {
+    const res = await request.get(from, { maxRedirects: 0 });
+    expect(res.status(), from).toBe(302);
+    expect(new URL(res.headers()["location"], "http://x").pathname, from).toBe("/ferramentas/");
   }
-  const steps = page.getByTestId("process-steps").locator("li");
-  await expect(steps).toHaveCount(3);
-  const labels = await steps.locator("div > span:last-child").allTextContents();
-  const flow = page.getByTestId("flowchart").locator("[data-node^=s]");
-  await expect(flow).toHaveCount(3);
-  for (let i = 0; i < 3; i++) await expect(flow.nth(i)).toContainText(labels[i]);
-  // references disclosure is keyboard operable
-  const trigger = page.getByRole("button", { name: "Referências" });
-  await trigger.focus();
-  await page.keyboard.press("Enter");
-  await expect(page.getByText("Referência de exemplo A")).toBeVisible();
-  await page.getByRole("link", { name: /Voltar para Skills/ }).click();
-  await expect(page).toHaveURL(/\/ferramentas\/skills\/$/);
-});
-
-test("detail is a single column on mobile and split on desktop", async ({ page }) => {
-  const cols = () =>
-    page.evaluate(() => {
-      const h = (id: string) => document.getElementById(id)!.getBoundingClientRect();
-      return { left: h("como-funciona").left, right: h("problema").left };
-    });
-  await page.setViewportSize({ width: 375, height: 900 });
-  await page.goto("/ferramentas/skills/skill-001/");
-  await page.waitForLoadState("networkidle"); // wait for hydration
-  const m = await cols();
-  expect(Math.abs(m.left - m.right)).toBeLessThan(2);
-  await page.setViewportSize({ width: 1440, height: 900 });
-  const d = await cols();
-  expect(d.right).toBeGreaterThan(d.left + 200);
 });
 
 test("navigation: Ferramentas is reachable by keyboard from the navbar", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
-  await page.goto("/blog/");
+  await page.goto("/artigos/");
   await page.waitForLoadState("networkidle"); // wait for hydration
   const link = page.locator("header nav a[href^='/ferramentas']").first();
   await link.focus();
@@ -204,7 +208,7 @@ test("navigation: Ferramentas is reachable by keyboard from the navbar", async (
   await expect(page).toHaveURL(/\/ferramentas\/?$/);
 });
 
-test("area markers: blue institutional, yellow articles, green skills, distinct and stable", async ({ page }) => {
+test("area tokens stay distinct and legible (the catalog shows the area as text only, ADR-26)", async ({ page }) => {
   await page.goto("/ferramentas/");
   await page.waitForLoadState("networkidle"); // wait for hydration
   const colours = await page.evaluate(() => {
@@ -220,13 +224,10 @@ test("area markers: blue institutional, yellow articles, green skills, distinct 
   });
   expect(new Set(Object.values(colours)).size).toBe(6);
   for (const c of Object.values(colours)) expect(await contrast(page, c, "rgb(255,255,255)")).toBeGreaterThanOrEqual(4.5);
-  // skill rows carry the green marker on the left border, e-book covers the accent bar
-  const border = await page.locator("[data-type=skill]").first().evaluate((el) => getComputedStyle(el).borderLeftColor);
-  expect(border).toBe(colours.skills);
 });
 
 test("accessibility (axe) on store routes", async ({ page }) => {
-  for (const route of ["/ferramentas/", "/ferramentas/skills/", "/ferramentas/ebooks/", "/ferramentas/skills/skill-001/"]) {
+  for (const route of ["/ferramentas/", "/ferramentas/solucoes/", "/ferramentas/ebooks/", DETAIL]) {
     await page.goto(route);
     await page.waitForLoadState("networkidle");
     const { violations } = await new AxeBuilder({ page }).include("main").analyze();
@@ -266,7 +267,7 @@ test("/loja/* answers 301 to the same path under /ferramentas", async ({ request
   for (const [from, to] of [
     ["/loja/", "/ferramentas/"],
     ["/loja/skills/", "/ferramentas/skills/"],
-    ["/loja/skills/skill-001/", "/ferramentas/skills/skill-001/"],
+    ["/loja/solucoes/status-report/", "/ferramentas/solucoes/status-report/"],
   ]) {
     const res = await request.get(from, { maxRedirects: 0 });
     expect(res.status(), from).toBe(301);

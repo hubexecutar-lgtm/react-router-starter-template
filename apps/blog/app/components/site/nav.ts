@@ -8,7 +8,7 @@ export interface NavItem {
 
 /** Topo (≥ 900px). DEC-U6: Artigos · Mapa · Ferramentas · Sobre. */
 export const PRIMARY_NAV: NavItem[] = [
-  { label: "Artigos", href: "/artigos/" },
+  { label: "Blog", href: "/artigos/" },
   { label: "Mapa", href: "/mapas/" },
   { label: "Ferramentas", href: "/ferramentas/" },
   { label: "Sobre", href: "/sobre/" },
@@ -30,17 +30,18 @@ export const BOTTOM_NAV: NavItem[] = [
   { label: "Ferramentas", href: "/ferramentas/" },
 ];
 
-/** Trilha dos pilares (RQ-020): os 3 pilares do RC-LP-001, cada um no seu artigo canônico. */
-export const PILLAR_TRAIL: NavItem[] = [
-  { label: "Riscos Cognitivos", href: "/artigos/riscos-cognitivos/" },
-  { label: "Processos Neuroadaptativos", href: "/artigos/processos-neuroadaptativos/" },
-  { label: "Ferramentas e Soluções", href: "/artigos/compensacao-cognitiva/" },
-];
-
-/** Rodapé-diretório (ADR-25): o mesmo menu do topo (RQ-050), os pilares, as ferramentas e o projeto, em 4 colunas. */
+/** Rodapé-diretório (ADR-25/26): o menu do topo (RQ-050), as áreas da jornada, as ferramentas e o projeto, em 4 colunas.
+ *  A trilha dos pilares saiu com o DS antigo (ADR-26): os artigos canônicos estão em reconstrução (302). */
 export const FOOTER_NAV: { title: string; items: NavItem[] }[] = [
   { title: "Explorar", items: [{ label: "Início", href: "/" }, ...PRIMARY_NAV] },
-  { title: "Os 3 pilares", items: PILLAR_TRAIL },
+  {
+    title: "Jornada",
+    items: [
+      { label: "Blog", href: "/artigos/" },
+      { label: "Mapa Cognitivo", href: "/mapas/" },
+      { label: "Ferramentas e Soluções", href: "/ferramentas/" },
+    ],
+  },
   {
     title: "Ferramentas",
     items: [

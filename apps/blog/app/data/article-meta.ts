@@ -36,6 +36,14 @@ export const PILLARS: Record<Pillar, { label: string; question: string; article:
 
 export type NextStep = { label: string; href: string };
 
+/**
+ * Artigos públicos durante a reconstrução (ADR-BLOG-JORNADA-ROTAS-001 §2.2, ADR-26): um exemplo do template de artigo.
+ * Os outros MDX ficam no repositório, fora do prerender, do índice, do sitemap e dos links, e respondem 302 para
+ * /artigos/ (loader e public/_redirects). Voltar a publicar = acrescentar o slug aqui e tirar o 302.
+ */
+export const PUBLIC_ARTICLES = ["riscos-cognitivos-guia"] as const;
+export const isPublicArticle = (slug: string) => (PUBLIC_ARTICLES as readonly string[]).includes(slug);
+
 export type ArticleMeta = {
   /** ID do documento canônico (RC-ART-*) ou do conteúdo do autor. */
   contentId: string;
@@ -123,7 +131,8 @@ export const ARTICLE_META: Record<string, ArticleMeta> = {
     graphRefs: ["COG-MEMORIA-TRABALHO", "COG-CONTROLE-INIBITORIO", "COG-FLEXIBILIDADE", "FRC-DEPENDENCIA-MEMORIA", "CMP-EXTERNALIZACAO"],
     sources: ["EVD-DIAMOND-2013", "EVD-BOONSTRA-2005", "EVD-HARKIN-2016", "EVD-KIESEL-2010", "EVD-BURNETT-2026", "EVD-SONG-2021", "EVD-IBGE-2025"],
     published: "2026-10-05",
-    next: { label: 'Leia "O que são riscos cognitivos"', href: "/artigos/o-que-sao-riscos-cognitivos/" },
+    // Ponte para o Mapa (ADR-BLOG-JORNADA-ROTAS-001 §2.1): o próximo artigo da série está fora do ar na reconstrução.
+    next: { label: "Explore a memória de trabalho no Mapa Cognitivo", href: "/mapas/?foco=COG-MEMORIA-TRABALHO" },
   },
   "o-que-sao-riscos-cognitivos": {
     contentId: "RC-PUB-003-A01",

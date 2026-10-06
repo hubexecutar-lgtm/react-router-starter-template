@@ -1,30 +1,28 @@
-// Layout for operational reports (REPORT-GENERATOR-CONTRACT-001): Markdown narrative
-// + PlainTextPanel + AsciiDiagram, with the blog's editorial typography.
-import type { ReactNode } from "react";
-
+// Layout de relatório operacional (REPORT-GENERATOR-CONTRACT-001) no RC-DS-CF (ADR-26, DS-CF-001-admin §1): PageHead com o
+// título e a descrição do frontmatter, e o MDX no corpo de leitura do artigo (ArticleBody: `ds-prose`, tabela empilhada,
+// PlainTextPanel e AsciiDiagram na pele do DS). O `# título` do MDX vira nulo porque o h1 está no PageHead. Só o admin usa.
+import { ArticleBody } from "@/components/article/ArticleBody";
+import { PageHead } from "@/components/ds";
 import DefaultLayout from "@/layouts/DefaultLayout";
+import type { MDXContent } from "@/lib/articles";
 
-export default function ReportLayout({ eyebrow, children }: { eyebrow?: string; children: ReactNode }) {
+export type ReportFrontmatter = { title: string; description: string; eyebrow?: string };
+
+export default function ReportLayout({ fm, Content }: { fm: ReportFrontmatter; Content: MDXContent }) {
 	return (
 		<DefaultLayout>
-			<section className="pt-12 pb-20 lg:pt-20 lg:pb-28">
-				<div className="container max-w-5xl">
-					{eyebrow && (
-						<p className="text-muted-foreground mx-auto max-w-2xl text-sm font-medium">
-							<a href="/admin" className="hover:text-foreground underline-offset-4 hover:underline">
-								Painel
-							</a>{" "}
-							/ {eyebrow}
-						</p>
-					)}
-					<article
-						className="prose prose-lg dark:prose-invert prose-headings:font-medium prose-headings:tracking-tight prose-headings:text-foreground prose-h1:text-4xl md:prose-h1:text-5xl prose-h2:text-primary prose-h2:text-3xl md:prose-h2:text-4xl prose-headings:break-words prose-p:text-muted-foreground prose-p:font-medium prose-li:text-muted-foreground prose-li:font-medium prose-strong:text-foreground prose-a:text-primary prose-table:block prose-table:overflow-x-auto mx-auto mt-4 max-w-2xl"
-						data-report
-					>
-						{children}
-					</article>
+			<div className="ds-page">
+				<PageHead
+					crumbs={[{ label: "Painel", href: "/admin/" }, { label: fm.eyebrow ?? fm.title }]}
+					eyebrow={fm.eyebrow}
+					title={fm.title}
+					lead={fm.description}
+					notice="Relatório interno no design system novo; o texto vem do MDX sem reescrita."
+				/>
+				<div className="ds-reading pb-24" data-report>
+					<ArticleBody Content={Content} />
 				</div>
-			</section>
+			</div>
 		</DefaultLayout>
 	);
 }

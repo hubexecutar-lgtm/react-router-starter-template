@@ -1,5 +1,5 @@
 // Cabeçalho global no padrão da cloudflare.com (ADR-25): 72 px, marca à esquerda (binóculo + wordmark espaçado), menu
-// no centro (Artigos · Mapa · Ferramentas · Sobre, 16/500) e, à direita, tema + pílulas "Fontes" e "Comece por aqui".
+// no centro (Blog · Mapa · Ferramentas · Sobre, 16/500) e, à direita, tema + pílulas "Fontes" e "Comece por aqui".
 // < 900px: marca, tema e o botão do drawer (MobileDrawer). Esconde ao descer e volta ao subir, junto com a barra
 // inferior (estado em shell.tsx). Renderizado no servidor: os links funcionam sem JS.
 import { Menu } from "lucide-react";
@@ -10,10 +10,6 @@ import { useShell } from "./shell";
 
 import { ThemeToggle } from "@/components/theme-toggle";
 import { SITE_NAME } from "@/consts";
-import { cn } from "@/lib/utils";
-
-const iconButton =
-	"inline-flex size-11 items-center justify-center rounded-md transition-colors hover:bg-[var(--cf-bg-300)] focus-visible:ring-ring/50 outline-none focus-visible:ring-[3px]";
 
 export function SiteHeader({ inert = false }: { inert?: boolean }) {
 	const { pathname } = useLocation();
@@ -55,14 +51,14 @@ export function SiteHeader({ inert = false }: { inert?: boolean }) {
 					</a>
 					<button
 						type="button"
-						className={cn(iconButton, "min-[900px]:hidden")}
+						className="ds-iconbtn min-[900px]:hidden"
 						aria-expanded={drawerOpen}
 						aria-controls="site-menu"
 						aria-haspopup="dialog"
 						data-menu-toggle
 						onClick={openDrawer}
 					>
-						<Menu className="size-5" aria-hidden="true" />
+						<Menu aria-hidden="true" />
 						<span className="sr-only">Abrir menu</span>
 					</button>
 				</div>

@@ -78,28 +78,30 @@ async function collect(page: Page) {
 test.describe("eventos da jornada no navegador (RQ-111)", () => {
   test("artigo: leitura e clique no Próximo passo, com o problema ligado ao grafo", async ({ page, context }) => {
     const events = await collect(page);
-    await page.goto("/artigos/riscos-cognitivos/?utm_campaign=lanc-001");
+    // ADR-26: o artigo público da reconstrução; problema principal "memória" → COG-MEMORIA.
+    await page.goto("/artigos/riscos-cognitivos-guia/?utm_campaign=lanc-001");
     await expect.poll(async () => (await events()).length).toBeGreaterThan(0);
-    expect((await events())[0]).toEqual({ stage: "ARTICLE", action: "view", path: "/artigos/riscos-cognitivos/", problem_id: "COG-ATENCAO", asset_id: "riscos-cognitivos", campaign_id: "lanc-001" });
+    expect((await events())[0]).toEqual({ stage: "ARTICLE", action: "view", path: "/artigos/riscos-cognitivos-guia/", problem_id: "COG-MEMORIA", asset_id: "riscos-cognitivos-guia", campaign_id: "lanc-001" });
     // Segura a navegação do CTA (o listener do documento roda depois do React) para ler o evento nesta página.
     await page.evaluate(() => document.addEventListener("click", (e) => e.preventDefault()));
     await page.locator('[data-next-step] [data-cta="primary"]').click();
     await expect.poll(async () => (await events()).find((e) => e.action === "cta")).toEqual({
       stage: "ARTICLE",
       action: "cta",
-      path: "/artigos/riscos-cognitivos/",
-      problem_id: "COG-ATENCAO",
-      asset_id: "riscos-cognitivos",
+      path: "/artigos/riscos-cognitivos-guia/",
+      problem_id: "COG-MEMORIA",
+      asset_id: "riscos-cognitivos-guia",
       campaign_id: "lanc-001",
     });
     for (const e of await events()) expect(Object.keys(e).every((k) => ALLOWED.has(k)), JSON.stringify(e)).toBe(true);
     expect(await context.cookies()).toEqual([]);
   });
 
-  test("listagem com chip de problema e escolha de fator no mapa", async ({ page }) => {
+  test("home do Blog com faceta e escolha de fator no mapa", async ({ page }) => {
     const events = await collect(page);
-    await page.goto("/artigos/?problema=sobrecarga");
-    await expect.poll(async () => (await events()).find((e) => e.stage === "BLOG")?.problem_id).toBe("FRC-SOBRECARGA");
+    // ADR-26: o Blog filtra por faceta (?tema=); o evento BLOG sai sem dado de navegação além do caminho.
+    await page.goto("/artigos/?tema=tdah");
+    await expect.poll(async () => (await events()).find((e) => e.stage === "BLOG")).toEqual({ stage: "BLOG", action: "view", path: "/artigos/" });
     await page.goto("/mapas/explorar/");
     await page.locator("[data-map-canvas][data-map-ready]").waitFor();
     await page.locator('[data-map-canvas] [data-map-node="CMP-PRESERVAR-ESTADO"]').click();
@@ -110,7 +112,7 @@ test.describe("eventos da jornada no navegador (RQ-111)", () => {
     await page.addInitScript(() => Object.defineProperty(navigator, "doNotTrack", { get: () => "1" }));
     const sent: string[] = [];
     page.on("request", (r) => new URL(r.url()).pathname === "/api/eventos" && sent.push(r.url()));
-    await page.goto("/artigos/riscos-cognitivos/");
+    await page.goto("/artigos/riscos-cognitivos-guia/");
     await page.waitForLoadState("networkidle");
     expect(sent).toEqual([]);
   });
@@ -121,7 +123,7 @@ test.describe("eventos da jornada no navegador (RQ-111)", () => {
 test.describe("Core Web Vitals de laboratório (RQ-110)", () => {
   test.use({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
 
-  for (const path of ["/", "/artigos/", "/artigos/riscos-cognitivos/", "/mapas/", "/mapas/explorar/", "/ferramentas/"]) {
+  for (const path of ["/", "/artigos/", "/artigos/riscos-cognitivos-guia/", "/mapas/", "/mapas/explorar/", "/ferramentas/"]) {
     test(`LCP ≤ 2,5 s e CLS ≤ 0,1 em ${path}`, async ({ page }) => {
       await page.goto(path, { waitUntil: "load" });
       const { lcp, cls } = await page.evaluate(

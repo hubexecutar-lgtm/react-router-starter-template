@@ -1,9 +1,9 @@
-// Fontes (LANC-001 RQ-042/043): as fontes do RC-SRC-001 com link, agrupadas pelo tema que sustentam, e a nota de
-// governança literal. Substitui o antigo /evidencias (removido no reset do ADR-13). Os dados da home (RC-HOME-002)
-// têm a própria lista, com as fontes primárias dos números.
+// Fontes (LANC-001 RQ-042/043; ADR-BLOG-JORNADA-ROTAS-001 §2.2): índice de fontes verificáveis no RC-DS-CF (ADR-26,
+// DS-CF-001-prisma §3). As fontes do RC-SRC-001, as científicas do RC-SRC-002 e as da página inicial (RC-HOME-002), cada
+// uma com âncora igual ao seu ID (o SolutionCard linka /fontes/#<id>), e a nota de governança literal.
 import type { Route } from "./+types/fontes";
 
-import { ChevronLink } from "@/components/layout/ChevronLink";
+import { Button, MoreLink, PageHead, SectionHead } from "@/components/ds";
 import { HOME_SOURCES } from "@/data/home";
 import { GOVERNANCE_NOTE, SOURCES } from "@/data/sources";
 import { SCIENTIFIC_SOURCES } from "@/data/sources-scientific";
@@ -13,95 +13,86 @@ import { seo } from "@/lib/seo";
 export const meta: Route.MetaFunction = ({ location }) =>
 	seo({ title: "Fontes", description: GOVERNANCE_NOTE[0], pathname: location.pathname });
 
+/** Item da lista: rótulo (tema, autores ou canônico) e o link para a fonte. */
+function SourceItem({ id, eyebrow, label, url, meta }: { id: string; eyebrow: string; label: string; url: string; meta?: string }) {
+	return (
+		<li id={id}>
+			<p className="ds-card-eyebrow">{eyebrow}</p>
+			<a href={url} rel="noopener" className="ds-link" style={{ minHeight: 44 }}>
+				{label}
+			</a>
+			{meta && <p className="ds-card-meta">{meta}</p>}
+		</li>
+	);
+}
+
 export default function Fontes() {
 	return (
 		<DefaultLayout>
-			<header className="stories-container pt-[var(--hy-section)]">
-				<div className="rc-hero-reveal mx-auto max-w-[var(--ref-wide-width)]">
-					<p className="hy-eyebrow">Risco Cognitivo · Fontes</p>
-					<h1 className="stories-h2 mt-3">Fontes</h1>
-					<p className="hy-lead mt-[var(--ref-block-gap)] max-w-[60ch]">{GOVERNANCE_NOTE[0]}</p>
-					<a
-						href="/artigos/"
-						data-cta="primary"
-						className="hy-btn-primary mt-[var(--ref-block-gap)]"
-					>
-						Ler os artigos
-					</a>
-				</div>
-			</header>
-			<section className="stories-container mt-[var(--ref-card-gap-y)]" aria-labelledby="lista-fontes">
-				<div className="mx-auto max-w-[var(--ref-wide-width)]">
-					<h2 id="lista-fontes" className="sr-only">
-						Lista de fontes
-					</h2>
-					<ul className="grid gap-[var(--ref-grid-gap)] md:grid-cols-2" data-sources>
+			<div className="ds-page">
+				<PageHead
+					eyebrow="Risco Cognitivo · Fontes"
+					title="Fontes"
+					lead={GOVERNANCE_NOTE[0]}
+					notice="Índice no design system novo. Todas as fontes listadas são reais e têm link verificável."
+					actions={
+						<Button href="/artigos/" size="lg" data-cta="primary">
+							Ler os artigos
+						</Button>
+					}
+				/>
+
+				<section className="ds-section" style={{ paddingTop: 0 }} aria-labelledby="lista-fontes">
+					<SectionHead id="lista-fontes" label="RC-SRC-001" heading="Fontes de referência" lead="Referências do RC-SRC-001, cada uma com o tema que sustenta." align="left" />
+					<ul className="ds-list ds-reading" style={{ paddingInline: 0, marginInline: 0 }} data-sources>
 						{SOURCES.map((s) => (
-							<li key={s.id} className="hy-tile hy-tile--compact gap-2">
-								<p className="hy-eyebrow">{s.topic}</p>
-								<a href={s.url} rel="noopener" className="stories-body text-primary font-medium underline underline-offset-4 hover:no-underline">
-									{s.label}
-								</a>
-							</li>
+							<SourceItem key={s.id} id={s.id} eyebrow={s.topic} label={s.label} url={s.url} />
 						))}
 					</ul>
-				</div>
-			</section>
-			<section className="stories-container mt-[var(--ref-section-gap)]" aria-labelledby="fontes-cientificas">
-				<div className="mx-auto max-w-[var(--ref-wide-width)]">
-					<h2 id="fontes-cientificas" className="stories-h2">
-						Fontes científicas
-					</h2>
-					<p className="stories-body mt-[var(--ref-block-gap)] max-w-[60ch] text-muted-foreground">
-						Estudos que sustentam a série sobre riscos cognitivos e as soluções. Sustentam mecanismos e componentes, não
-						validam clinicamente as soluções.
-					</p>
-					<ul className="mt-[var(--ref-block-gap)] grid gap-[var(--ref-grid-gap)] md:grid-cols-2" data-scientific-sources>
+				</section>
+
+				<section className="ds-section" aria-labelledby="fontes-cientificas">
+					<SectionHead
+						id="fontes-cientificas"
+						label="RC-SRC-002"
+						heading="Fontes científicas"
+						lead="Estudos que sustentam a série sobre riscos cognitivos e as soluções. Sustentam mecanismos e componentes, não validam clinicamente as soluções."
+						align="left"
+					/>
+					<ul className="ds-list ds-reading" style={{ paddingInline: 0, marginInline: 0 }} data-scientific-sources>
 						{SCIENTIFIC_SOURCES.map((s) => (
-							<li key={s.id} id={s.id} className="hy-tile hy-tile--compact gap-2">
-								<p className="hy-eyebrow">
-									{s.authors} · {s.year}
-									{s.pmid ? ` · PMID ${s.pmid}` : ""}
-								</p>
-								<a href={s.url} rel="noopener" className="stories-body text-primary font-medium underline underline-offset-4 hover:no-underline">
-									{s.title}
-								</a>
-								<p className="text-[15px] text-muted-foreground">{s.journal}</p>
-							</li>
+							<SourceItem
+								key={s.id}
+								id={s.id}
+								eyebrow={`${s.authors} · ${s.year}${s.pmid ? ` · PMID ${s.pmid}` : ""}`}
+								label={s.title}
+								url={s.url}
+								meta={s.journal}
+							/>
 						))}
 					</ul>
-				</div>
-			</section>
-			<section className="stories-container mt-[var(--ref-section-gap)]" aria-labelledby="fontes-home">
-				<div className="mx-auto max-w-[var(--ref-wide-width)]">
-					<h2 id="fontes-home" className="stories-h2">
-						Dados da página inicial
-					</h2>
-					<ul className="mt-[var(--ref-block-gap)] grid gap-[var(--ref-grid-gap)] md:grid-cols-2" data-home-sources>
+				</section>
+
+				<section className="ds-section" aria-labelledby="fontes-home">
+					<SectionHead id="fontes-home" label="RC-HOME-002" heading="Dados da página inicial" lead="Fontes primárias dos números citados em Sobre." align="left" />
+					<ul className="ds-list ds-reading" style={{ paddingInline: 0, marginInline: 0 }} data-home-sources>
 						{HOME_SOURCES.map((s) => (
-							<li key={s.id} className="hy-tile hy-tile--compact gap-2">
-								<p className="hy-eyebrow">RC-HOME-002</p>
-								<a href={s.url} rel="noopener" className="stories-body text-primary font-medium underline underline-offset-4 hover:no-underline">
-									{s.label}
-								</a>
-							</li>
+							<SourceItem key={s.id} id={s.id} eyebrow="RC-HOME-002" label={s.label} url={s.url} />
 						))}
 					</ul>
-				</div>
-			</section>
-			<section className="stories-container mt-[var(--ref-section-gap)]" aria-labelledby="conceitos">
-				<div className="mx-auto max-w-[var(--ref-reading-width)]">
-					<h2 id="conceitos" className="stories-h2">
-						Conceitos do projeto
-					</h2>
-					<p className="stories-body mt-[var(--ref-block-gap)]" data-governance-note>
-						{GOVERNANCE_NOTE[1]}
+				</section>
+
+				<section className="ds-section" style={{ paddingBottom: "var(--cf-section-gap)" }} aria-labelledby="conceitos">
+					<SectionHead id="conceitos" label="Governança" heading="Conceitos do projeto" align="left" />
+					<div className="ds-prose-block" data-governance-note>
+						<p>{GOVERNANCE_NOTE[1]}</p>
+					</div>
+					<p style={{ marginTop: 16, display: "flex", flexWrap: "wrap", columnGap: 24 }}>
+						<MoreLink href="/sobre/">Sobre o projeto</MoreLink>
+						<MoreLink href="/mapas/">Explorar o Mapa Cognitivo</MoreLink>
 					</p>
-					<ChevronLink href="/sobre/" className="mt-[var(--ref-block-gap)]">
-						Sobre o projeto
-					</ChevronLink>
-				</div>
-			</section>
+				</section>
+			</div>
 		</DefaultLayout>
 	);
 }

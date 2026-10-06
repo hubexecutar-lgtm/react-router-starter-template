@@ -1,13 +1,17 @@
-// Mapa causal (LANC-001 PR-H): porta de entrada do mapa, com os 3 modos (RQ-080). O mapa é uma projeção do grafo
-// canônico da Teia (ADR-M04): não cria evidência, e o que é inferido aparece como inferido.
+// Home do Mapa Cognitivo (ADR-BLOG-JORNADA-ROTAS-001 §2.2, ADR-26): o mesmo cérebro da Home em tamanho principal
+// (`BrainHero variant="full"`), que gira, seleciona funções executivas e abre o card completo, lendo e gravando `?foco=`.
+// Abaixo, os modos de exploração do mapa causal, a legenda dos tipos de nó, as outras capacidades do grafo e o
+// Personalizar. O mapa é projeção do grafo canônico da Teia (ADR-M04): não cria evidência nem localização anatômica.
 import type { Route } from "./+types/mapas._index";
 
-import { ChevronLink } from "@/components/layout/ChevronLink";
-import DefaultLayout from "@/layouts/DefaultLayout";
-import { MODES, NODE_TYPES, RC_GRAPH, allEdgeViews, factorIds } from "@/lib/graph";
-import { seo } from "@/lib/seo";
-
+import { Button, Card, CardGrid, Chips, MoreLink, PageHead, SectionHead } from "@/components/ds";
+import { MAP_BRAIN } from "@/data/mapa-brain";
+import { BrainHero } from "@/features/home-brain/BrainHero";
+import { getBrainTopics } from "@/features/home-brain/topics.server";
 import { MAP_LEAD } from "@/features/mapa/copy";
+import DefaultLayout from "@/layouts/DefaultLayout";
+import { MODES, NODE_TYPES, RC_GRAPH, allEdgeViews, exploreHref, factorIds, nodeById } from "@/lib/graph";
+import { seo } from "@/lib/seo";
 
 const MODE_TEXT: Record<(typeof MODES)[number]["id"], string> = {
 	problemas: "Fatores de demanda, capacidades, eventos e impactos: de onde vem a dificuldade e onde ela aparece.",
@@ -15,74 +19,111 @@ const MODE_TEXT: Record<(typeof MODES)[number]["id"], string> = {
 	evidencias: "As fontes que sustentam cada fator, as mesmas da página Fontes.",
 };
 
-export const meta: Route.MetaFunction = ({ location }) => seo({ title: "Mapa causal", description: MAP_LEAD, pathname: location.pathname });
+export const meta: Route.MetaFunction = ({ location }) => seo({ title: "Mapa Cognitivo", description: MAP_LEAD, pathname: location.pathname });
 
-export default function Mapas() {
+export function loader() {
+	const brainIds = MAP_BRAIN.functions.map((f) => f.id);
+	// Capacidades do grafo fora das 4 do cérebro: entram como atalhos para o Explorar (só as do mapa público).
+	const capacities = factorIds(RC_GRAPH)
+		.map((id) => nodeById(RC_GRAPH, id)!)
+		.filter((n) => n.type === "COGNITIVE_CAPACITY" && !brainIds.includes(n.id))
+		.map((n) => ({ id: n.id, label: n.label }));
 	const edges = allEdgeViews(RC_GRAPH);
-	const inferred = edges.filter((e) => e.inferred).length;
+	return {
+		brainTopics: getBrainTopics(brainIds),
+		capacities,
+		stats: { factors: factorIds(RC_GRAPH).length, edges: edges.length, inferred: edges.filter((e) => e.inferred).length },
+	};
+}
+
+export default function Mapas({ loaderData }: Route.ComponentProps) {
+	const { brainTopics, capacities, stats } = loaderData;
 	return (
 		<DefaultLayout>
-			<header className="stories-container pt-[var(--hy-section)]">
-				<div className="rc-hero-reveal mx-auto max-w-[var(--ref-wide-width)]">
-					<p className="hy-eyebrow">Risco Cognitivo · Mapa causal</p>
-					<h1 className="stories-h2 mt-3">Mapa causal</h1>
-					<p className="hy-lead mt-[var(--ref-block-gap)] max-w-[60ch]">{MAP_LEAD}</p>
-					<a
-						href="/mapas/explorar/"
-						data-cta="primary"
-						className="hy-btn-primary mt-[var(--ref-block-gap)]"
-					>
-						Explorar o mapa
-					</a>
+			<div className="ds-page">
+				<PageHead
+					eyebrow="Risco Cognitivo · Mapa Cognitivo"
+					title="Mapa Cognitivo"
+					lead="Selecione uma função executiva no cérebro para abrir o card dela; as setas do teclado trocam de função. Depois, siga para as relações no mapa causal."
+					notice="O Mapa Cognitivo está em reconstrução no design system novo; o cérebro, o grafo e as fontes são reais."
+					actions={
+						<>
+							<Button href="/mapas/explorar/" size="lg" data-cta="primary">
+								Explorar o mapa causal
+							</Button>
+							<Button href="/mapas/personalizar/" size="lg" variant="outline">
+								Personalizar por onde começar
+							</Button>
+						</>
+					}
+				/>
+
+				{/* O mesmo cérebro da Home (DS-CF-001 §5), em tamanho principal; lê e grava ?foco=. */}
+				<div className="ds-section" style={{ paddingTop: 0 }}>
+					<BrainHero topics={brainTopics} variant="full" copy={MAP_BRAIN} />
 				</div>
-			</header>
-			<section className="stories-container mt-[var(--ref-card-gap-y)]" aria-labelledby="modos">
-				<div className="mx-auto max-w-[var(--ref-wide-width)]">
-					<h2 id="modos" className="stories-h2">
-						Três modos
-					</h2>
-					<ul className="mt-[var(--ref-block-gap)] grid gap-[var(--ref-grid-gap)] md:grid-cols-3" data-map-mode-cards>
+
+				<section className="ds-section" aria-labelledby="modos">
+					<SectionHead id="modos" label="Modos" heading="Três modos de exploração" lead="Cada modo é um filtro sobre o mesmo grafo; o fator no centro não muda." align="left" />
+					<CardGrid cols={3} label="Modos de exploração" data-map-mode-cards="">
 						{MODES.map((m) => (
-							<li key={m.id} className="hy-tile hy-tile--compact gap-3">
-								<p className="hy-eyebrow" aria-hidden="true">
-									{m.types.map((t) => NODE_TYPES[t].glyph).join(" ")}
-								</p>
-								<h3 className="text-xl font-semibold">{m.label}</h3>
-								<p className="stories-body">{MODE_TEXT[m.id]}</p>
-								<ChevronLink href={`/mapas/explorar/?modo=${m.id}`} className="mt-auto">
-									Saiba mais
-								</ChevronLink>
-							</li>
+							<Card
+								key={m.id}
+								href={`/mapas/explorar/?modo=${m.id}`}
+								eyebrow={<span aria-hidden="true">{m.types.map((t) => NODE_TYPES[t].glyph).join(" ")}</span>}
+								title={m.label}
+								text={MODE_TEXT[m.id]}
+								cta="Explorar"
+							/>
 						))}
-					</ul>
-				</div>
-			</section>
-			<section className="stories-container mt-[var(--ref-section-gap)]" aria-labelledby="como-ler">
-				<div className="mx-auto max-w-[var(--ref-reading-width)]">
-					<h2 id="como-ler" className="stories-h2">
-						Como ler o mapa
-					</h2>
-					<p className="stories-body mt-[var(--ref-block-gap)]">
-						São {factorIds(RC_GRAPH).length} fatores e {edges.length} relações. Cada tipo de fator tem uma forma e um nome; cada relação tem um
-						rótulo em texto. Traço tracejado marca relação inferida: {inferred} das {edges.length} ainda são inferidas e aparecem assim em todo
-						o site.
-					</p>
-					<ul className="stories-body mt-[var(--ref-block-gap)] grid gap-2 sm:grid-cols-2" data-map-legend>
+					</CardGrid>
+				</section>
+
+				<section className="ds-section" aria-labelledby="como-ler">
+					<SectionHead
+						id="como-ler"
+						label="Legenda"
+						heading="Como ler o mapa"
+						lead={`São ${stats.factors} fatores e ${stats.edges} relações. Cada tipo de fator tem uma forma e um nome; cada relação tem um rótulo em texto. Traço tracejado marca relação inferida: ${stats.inferred} das ${stats.edges} ainda são inferidas e aparecem assim em todo o site.`}
+						align="left"
+					/>
+					<ul className="ds-mapa-legend" data-map-legend>
 						{Object.entries(NODE_TYPES).map(([k, t]) => (
-							<li key={k} className="flex items-center gap-2">
-								<span aria-hidden="true" className="w-5 text-center">
-									{t.glyph}
-								</span>
+							<li key={k}>
+								<span aria-hidden="true">{t.glyph}</span>
 								{t.label}
 							</li>
 						))}
 					</ul>
-					<div className="mt-[var(--ref-block-gap)] flex flex-wrap gap-x-6">
-						<ChevronLink href="/mapas/personalizar/">Personalizar por onde começar</ChevronLink>
-						<ChevronLink href="/fontes/">Ver as fontes</ChevronLink>
-					</div>
-				</div>
-			</section>
+				</section>
+
+				{capacities.length > 0 && (
+					<section className="ds-section" aria-labelledby="capacidades" data-map-capacities>
+						<SectionHead
+							id="capacidades"
+							label="Capacidades"
+							heading="Outras capacidades cognitivas"
+							lead="O grafo tem outras capacidades além das quatro do cérebro. Abra uma delas no centro do mapa causal."
+							align="left"
+						/>
+						<Chips label="Capacidades cognitivas do grafo" items={capacities.map((c) => ({ label: c.label, href: exploreHref(c.id) }))} />
+					</section>
+				)}
+
+				<section className="ds-section" aria-labelledby="personalizar">
+					<SectionHead
+						id="personalizar"
+						label="Personalizar"
+						heading="Comece pelo que pesa no seu trabalho"
+						lead="Escolha focos e interesses em três passos. Muda só a ordem e o destaque do mapa, nunca as relações, e fica neste navegador."
+						align="left"
+					/>
+					<p className="flex flex-wrap gap-x-6">
+						<MoreLink href="/mapas/personalizar/">Personalizar o mapa</MoreLink>
+						<MoreLink href="/fontes/">Ver as fontes</MoreLink>
+					</p>
+				</section>
+			</div>
 		</DefaultLayout>
 	);
 }

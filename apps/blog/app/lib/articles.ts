@@ -6,7 +6,7 @@ import type { ComponentType } from "react";
 import { z } from "zod";
 
 import { ARTICLE_MEDIA, PILLAR_MEDIA, type ArtDirected, type Media, type Pillar } from "@/data/article-media";
-import { ARTICLE_META, type NextStep, type ProblemId } from "@/data/article-meta";
+import { ARTICLE_META, isPublicArticle, type NextStep, type ProblemId } from "@/data/article-meta";
 
 const schema = z.object({
 	title: z.string().min(1),
@@ -58,7 +58,7 @@ const all = load();
 /** Artigos publicados, na ordem dos arquivos. */
 export function getStories(): StoryView[] {
 	return all
-		.filter((a) => a.data.status === "ready")
+		.filter((a) => a.data.status === "ready" && isPublicArticle(a.data.slug))
 		.map(({ data }) => {
 			const meta = ARTICLE_META[data.slug];
 			if (!meta) throw new Error(`content/artigos/${data.slug}.mdx: sem entrada em app/data/article-meta.ts`);
@@ -86,9 +86,59 @@ export function getStory(slug: string): StoryView | undefined {
 }
 
 export function getArticleContent(slug: string): MDXContent | undefined {
-	return all.find((a) => a.data.slug === slug && a.data.status === "ready")?.Content;
+	return all.find((a) => a.data.slug === slug && a.data.status === "ready" && isPublicArticle(slug))?.Content;
 }
 
 export function publishedSlugs(): string[] {
 	return getStories().map((s) => s.slug);
+}
+
+// Template de artigo (ADR-26, DS-CF-001 §4.5–4.6): tempo de leitura e sumário de H2 saem do próprio MDX, sem texto novo.
+const raw = import.meta.glob<string>("/content/artigos/*.mdx", { eager: true, query: "?raw", import: "default" });
+const rawOf = (slug: string) => raw[`/content/artigos/${slug}.mdx`] ?? "";
+
+/** Mesmo algoritmo do rehype-slug (github-slugger) para os títulos do conteúdo: minúsculas, sem pontuação, espaço → hífen. */
+export function headingId(text: string, seen = new Map<string, number>()): string {
+	const base = text
+		.trim()
+		.toLowerCase()
+		.replace(/[^\p{L}\p{N}\p{M}\s_-]/gu, "")
+		.replace(/ /g, "-");
+	const n = seen.get(base) ?? 0;
+	seen.set(base, n + 1);
+	return n ? `${base}-${n}` : base;
+}
+
+/** Sumário: os `## ` do MDX (fora de blocos de código e de JSX), com o id que o rehype-slug gera. */
+export function articleToc(slug: string): { id: string; label: string }[] {
+	const seen = new Map<string, number>();
+	let fenced = false;
+	return rawOf(slug)
+		.split("\n")
+		.flatMap((line) => {
+			if (/^(```|~~~)/.test(line)) fenced = !fenced;
+			if (fenced) return [];
+			const m = /^(#{1,6})\s+(.+?)\s*$/.exec(line);
+			if (!m) return [];
+			const label = m[2].replace(/[*_`]/g, "");
+			const id = headingId(label, seen);
+			return m[1].length === 2 ? [{ id, label }] : [];
+		});
+}
+
+/** Minutos de leitura: palavras do texto (sem frontmatter, comentários, imports e marcação) ÷ 200, mínimo 1. */
+export function readingMinutes(slug: string): number {
+	const text = rawOf(slug)
+		.replace(/^---[\s\S]*?---/, "")
+		.replace(/\{\/\*[\s\S]*?\*\/\}/g, "")
+		.replace(/^import .*$/gm, "")
+		.replace(/<[^>]+>/g, " ")
+		.replace(/[#>*_`|[\](){}=-]/g, " ");
+	const words = text.split(/\s+/).filter((w) => /\p{L}/u.test(w)).length;
+	return Math.max(1, Math.round(words / 200));
+}
+
+/** Slug de um MDX pronto que não é público na reconstrução: a rota responde 302 para /artigos/ (ADR-26). */
+export function isRetiredArticle(slug: string): boolean {
+	return all.some((a) => a.data.slug === slug && a.data.status === "ready") && !isPublicArticle(slug);
 }

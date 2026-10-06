@@ -118,8 +118,8 @@ export const HOME_MAP = {
 };
 
 export const HOME_PILLARS = [
-	{ n: "01", title: "Entenda", text: "Conheça as funções executivas e como elas influenciam sua execução no dia a dia.", href: "/artigos/riscos-cognitivos/" },
-	{ n: "02", title: "Estruture", text: "Relacione demandas, vulnerabilidades e estratégias de apoio com base em evidências.", href: "/artigos/processos-neuroadaptativos/" },
+	{ n: "01", title: "Entenda", text: "Conheça as funções executivas e como elas influenciam sua execução no dia a dia.", href: "/artigos/riscos-cognitivos-guia/" },
+	{ n: "02", title: "Estruture", text: "Relacione demandas, vulnerabilidades e estratégias de apoio com base em evidências.", href: "/mapas/" },
 	{ n: "03", title: "Execute", text: "Aplique sistemas simples para reduzir o custo cognitivo e aumentar sua consistência.", href: "/ferramentas/" },
 ];
 
