@@ -1,5 +1,5 @@
 // Barra inferior do mobile (< 900px), LANC-001 RQ-021/022/025: Início · Mapa · Ferramentas, alvos ≥ 44px.
-// Esconde e volta junto com o cabeçalho (estado em shell.tsx).
+// Esconde e volta junto com o cabeçalho (estado em shell.tsx). Pele do RC-DS-CF: `ds-bottombar` (DS-CF-001-prisma §2.8).
 import { House, Map, Wrench, type LucideIcon } from "lucide-react";
 import { useLocation } from "react-router";
 
@@ -22,7 +22,7 @@ export function BottomBar({ inert = false }: { inert?: boolean }) {
 			{...(inert ? { inert: true } : {})}
 			data-hidden={chromeHidden || undefined}
 			className={cn(
-				"bg-background/95 supports-[backdrop-filter]:bg-background/80 fixed inset-x-0 bottom-0 z-40 border-t border-[var(--border-default)] pb-[env(safe-area-inset-bottom)] backdrop-blur-[18px] backdrop-saturate-[1.6] min-[900px]:hidden",
+				"ds-bottombar fixed inset-x-0 bottom-0 z-40 pb-[env(safe-area-inset-bottom)] backdrop-blur-[18px] backdrop-saturate-[1.6] min-[900px]:hidden",
 				"transition-transform duration-[var(--dur-base)] ease-[var(--ease)] data-[hidden]:translate-y-full",
 			)}
 		>
@@ -35,10 +35,7 @@ export function BottomBar({ inert = false }: { inert?: boolean }) {
 							<a
 								href={item.href}
 								aria-current={active ? "page" : undefined}
-								className={cn(
-									"flex min-h-11 w-full flex-col items-center justify-center gap-1 text-xs font-semibold outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px] focus-visible:ring-inset",
-									active ? "text-primary" : "text-foreground",
-								)}
+								className="flex min-h-11 w-full flex-col items-center justify-center gap-1"
 							>
 								<Icon className="size-5" aria-hidden="true" />
 								{item.label}

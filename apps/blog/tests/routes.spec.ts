@@ -2,6 +2,7 @@ import { expect, test } from "@playwright/test";
 import jsQR from "jsqr";
 import { PNG } from "pngjs";
 
+import { PUBLIC_ARTICLES } from "../app/data/article-meta";
 import { DEFAULT_BASE_URL, ROUTES, ROUTE_GROUPS, absoluteUrl } from "../app/data/routes";
 import { readyArticleSlugs } from "../app/lib/articles-fs";
 import { GENERATED_ROUTES, scanPages, scanPublicTools } from "../app/lib/routes/scan";
@@ -70,7 +71,8 @@ test.describe("/admin/rotas/", () => {
     await page.goto("/admin/rotas/");
     const cards = page.locator(".route-card");
     const total = await cards.count();
-    expect(total).toBeGreaterThanOrEqual(ROUTES.length + readyArticleSlugs(ROOT).length);
+    // ADR-26: o hub lista só os artigos públicos da reconstrução (os outros respondem 302).
+    expect(total).toBeGreaterThanOrEqual(ROUTES.length + PUBLIC_ARTICLES.length);
     await expect(page.getByTestId("hub-summary").locator("[data-count=total]")).toHaveText(String(total));
     await expect(page.getByTestId("hub-base")).toContainText(DEFAULT_BASE_URL);
 

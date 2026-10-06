@@ -1,11 +1,11 @@
 // Tela INTRO da rota /prisma (RC-PWA-PRISMA-FRD-001 §4): é o HTML pré-renderizado da página.
-// Anatomia ADR-12: hero (eyebrow, h1, lead, CTA), seções com título e parágrafo curto, "Saiba mais ›".
-import { ArrowRight } from "lucide-react";
+// RC-DS-CF (ADR-26, DS-CF-001-prisma §3): PageHead + seções com SectionHead, passos em `ds-steps`, cards do DS e
+// "Saiba mais ›" com destinos reais. O eyebrow "Solução · Externalização cognitiva" é a citação que sustenta a
+// correlação do Prisma na Teia (app/features/store/data/correlations.ts): não reescrever.
+import { Button, Card, CardGrid, Frame, MoreLink, PageHead, SectionHead } from "@/components/ds";
 
-import { PageHero } from "@/components/editorial/PageHero";
-import { ChevronLink } from "@/components/layout/ChevronLink";
-import { Section } from "@/components/layout/Section";
-import { Button } from "@/components/ui/button";
+/** Nó da compensação no Mapa (o mesmo `ref` do Prisma em TOOL_CORRELATIONS). */
+export const PRISMA_MAP_HREF = "/mapas/explorar/cmp-externalizacao/";
 
 const STEPS = [
 	{ n: "01", title: "Preencha", text: "Descreva seu contexto, seu objetivo e o principal atrito." },
@@ -27,94 +27,95 @@ const POINTS = [
 	{ title: "Planejamento e prioridade", text: "Mostrar a sequência e a fila de atenção fora da cabeça transforma obrigações soltas em um caminho." },
 ] as const;
 
+function Steps({ items, cols = 3 }: { items: readonly { n: string; title: string; text: string }[]; cols?: 3 | 5 }) {
+	return (
+		<Frame>
+			<ol className="ds-steps" style={{ ["--ds-steps-cols" as string]: cols }}>
+				{items.map((s) => (
+					<li key={s.n}>
+						<span className="ds-steps-n" aria-hidden="true">
+							{s.n}
+						</span>
+						<h3>{s.title}</h3>
+						<p>{s.text}</p>
+					</li>
+				))}
+			</ol>
+		</Frame>
+	);
+}
+
 export function PrismaIntro() {
 	return (
-		<div id="introducao">
-			<PageHero
+		<div id="introducao" className="ds-page">
+			<PageHead
 				eyebrow="Solução · Externalização cognitiva"
 				title="Organize o que está dificultando sua execução."
 				lead="Preencha o formulário, revise seu Prisma e exporte uma página A4 para usar onde precisar."
-				id="prisma-view-title"
-				seed={11}
-			>
-				<div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
-					<Button asChild size="lg" className="min-h-12 px-8 text-base">
-						<a href="#formulario">
-							Criar meu Prisma <ArrowRight aria-hidden="true" />
-						</a>
-					</Button>
-					<p className="text-muted-foreground text-sm">Seus dados ficam neste dispositivo.</p>
-				</div>
-			</PageHero>
+				notice="Ferramenta real no design system novo. A folha A4 mantém o formato de impressão."
+				actions={
+					<>
+						<Button href="#formulario" size="lg" data-cta="primary">
+							Criar meu Prisma
+						</Button>
+						<p className="ds-tool-note">Seus dados ficam neste dispositivo.</p>
+					</>
+				}
+			/>
 
-			<Section id="como-usar" title="Como usar em 3 passos" lead="Leva alguns minutos e não pede conta.">
-				<ol className="grid gap-4 md:grid-cols-3">
-					{STEPS.map((s) => (
-						<li key={s.n} className="rc-cell rc-surface p-6">
-							<p className="rc-eyebrow">{s.n}</p>
-							<h3 className="rc-title mt-2 text-[length:var(--text-h3)]">{s.title}</h3>
-							<p className="text-muted-foreground mt-3 leading-relaxed">{s.text}</p>
-						</li>
-					))}
-				</ol>
-			</Section>
+			<section className="ds-section" style={{ paddingTop: 0 }} aria-labelledby="como-usar">
+				<SectionHead id="como-usar" label="Passo a passo" heading="Como usar em 3 passos" lead="Leva alguns minutos e não pede conta." align="left" />
+				<Steps items={STEPS} />
+			</section>
 
-			<Section
-				id="o-que-organiza"
-				title="O que o Prisma organiza"
-				lead="Cinco blocos, em ordem, numa folha só."
-				link={{ href: "/blog/controles-cognitivos/", label: "Saiba mais sobre controles cognitivos" }}
-			>
-				<ol className="grid gap-4 md:grid-cols-5">
-					{CHAIN.map((c, i) => (
-						<li key={c.label} className="rc-cell rc-surface p-5">
-							<p className="rc-eyebrow">{String(i + 1).padStart(2, "0")}</p>
-							<h3 className="rc-title mt-2 text-lg">{c.label}</h3>
-							<p className="text-muted-foreground mt-2 text-sm leading-relaxed">{c.text}</p>
-						</li>
-					))}
-				</ol>
-			</Section>
-
-			<Section
-				id="por-que-externalizar"
-				title="Por que tirar da cabeça ajuda"
-				lead="Externalização cognitiva é usar listas, lembretes e mapas para reduzir o que você precisa manter na mente."
-				link={{ href: "/evidencias/", label: "Ver as evidências" }}
-			>
-				<ul className="grid gap-4 md:grid-cols-3">
-					{POINTS.map((p) => (
-						<li key={p.title} className="rc-cell rc-surface p-6">
-							<h3 className="rc-title text-[length:var(--text-h3)]">{p.title}</h3>
-							<p className="text-muted-foreground mt-3 leading-relaxed">{p.text}</p>
-						</li>
-					))}
-				</ul>
-				<p className="text-muted-foreground mt-6 max-w-[var(--measure)] leading-relaxed">
-					O benefício depende de a representação combinar com a tarefa: ferramentas espalhadas podem aumentar a demanda em vez de reduzi-la. E o apoio compensa a tarefa; não
-					treina a função por trás dela.
+			<section className="ds-section" aria-labelledby="o-que-organiza">
+				<SectionHead id="o-que-organiza" label="A folha" heading="O que o Prisma organiza" lead="Cinco blocos, em ordem, numa folha só." align="left" />
+				<Steps items={CHAIN.map((c, i) => ({ n: String(i + 1).padStart(2, "0"), title: c.label, text: c.text }))} cols={5} />
+				<p style={{ marginTop: 16 }}>
+					<MoreLink href={PRISMA_MAP_HREF}>Ver a externalização no Mapa Cognitivo</MoreLink>
 				</p>
-			</Section>
+			</section>
 
-			<Section id="privacidade-e-limites" title="Privacidade e limites" band className="pb-[var(--space-section)]">
-				<div className="grid gap-6 md:grid-cols-2">
-					<div>
-						<h3 className="rc-title text-[length:var(--text-h3)]">Seus dados ficam com você</h3>
-						<p className="text-muted-foreground mt-3 leading-relaxed">
-							O Prisma funciona no seu navegador. O que você escreve não é enviado a nenhum servidor e só é guardado no dispositivo se você pedir. Dá para apagar tudo a qualquer momento.
-						</p>
-					</div>
-					<div>
-						<h3 className="rc-title text-[length:var(--text-h3)]">Não é diagnóstico</h3>
-						<p className="text-muted-foreground mt-3 leading-relaxed">
-							O Prisma organiza o que você informa para ajudar a decidir o próximo passo. Não avalia pessoas nem substitui apoio profissional.
-						</p>
-					</div>
+			<section className="ds-section" aria-labelledby="por-que-externalizar">
+				<SectionHead
+					id="por-que-externalizar"
+					label="Evidência"
+					heading="Por que tirar da cabeça ajuda"
+					lead="Externalização cognitiva é usar listas, lembretes e mapas para reduzir o que você precisa manter na mente."
+					align="left"
+				/>
+				<CardGrid cols={3}>
+					{POINTS.map((p) => (
+						<Card key={p.title} title={p.title} text={p.text} />
+					))}
+				</CardGrid>
+				<div className="ds-prose-block" style={{ marginTop: 24, color: "var(--cf-fg-muted)" }}>
+					<p>
+						O benefício depende de a representação combinar com a tarefa: ferramentas espalhadas podem aumentar a demanda em vez de reduzi-la. E o apoio compensa a tarefa; não
+						treina a função por trás dela.
+					</p>
 				</div>
-				<div className="mt-8">
-					<ChevronLink href="#formulario">Criar meu Prisma</ChevronLink>
-				</div>
-			</Section>
+				<p style={{ marginTop: 8 }}>
+					<MoreLink href="/fontes/#fontes-cientificas">Ver as fontes</MoreLink>
+				</p>
+			</section>
+
+			<section className="ds-section" style={{ paddingBottom: "var(--cf-section-gap)" }} aria-labelledby="privacidade-e-limites">
+				<SectionHead id="privacidade-e-limites" label="Limites" heading="Privacidade e limites" align="left" />
+				<CardGrid cols={2}>
+					<Card
+						title="Seus dados ficam com você"
+						text="O Prisma funciona no seu navegador. O que você escreve não é enviado a nenhum servidor e só é guardado no dispositivo se você pedir. Dá para apagar tudo a qualquer momento."
+					/>
+					<Card
+						title="Não é diagnóstico"
+						text="O Prisma organiza o que você informa para ajudar a decidir o próximo passo. Não avalia pessoas nem substitui apoio profissional."
+					/>
+				</CardGrid>
+				<p style={{ marginTop: 16 }}>
+					<MoreLink href="#formulario">Criar meu Prisma</MoreLink>
+				</p>
+			</section>
 		</div>
 	);
 }

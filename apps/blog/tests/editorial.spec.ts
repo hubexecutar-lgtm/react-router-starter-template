@@ -1,4 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
+import { createHash } from "node:crypto";
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 
@@ -11,8 +12,24 @@ const ARTICLES: Record<string, string> = {
   "compensacao-cognitiva": "01_CANONICO/04_RC_ARTIGO_P3_FERRAMENTAS_SOLUCOES.txt",
   "tres-pilares-riscos-cognitivos": "01_CANONICO/05_RC_ARTIGO_MASTER_3_PILARES_1500.txt",
 };
-const PUBLISHED = readdirSync(join(ROOT, "content/artigos")).map((f) => f.replace(/\.mdx$/, ""));
-const EDITORIAL = ["/", "/fontes/", "/sobre/", "/mapas/", ...PUBLISHED.map((s) => `/artigos/${s}/`)];
+const ALL_MDX = readdirSync(join(ROOT, "content/artigos")).map((f) => f.replace(/\.mdx$/, ""));
+// ADR-26: na reconstrução só PUBLIC_ARTICLES é público; os outros MDX ficam intactos (hash abaixo) e respondem 302.
+const PUBLISHED = ["riscos-cognitivos-guia"];
+const RETIRED = ALL_MDX.filter((s) => !PUBLISHED.includes(s));
+const EDITORIAL = ["/", "/fontes/", "/sobre/", "/mapas/", "/artigos/", "/ferramentas/", "/comece/", ...PUBLISHED.map((s) => `/artigos/${s}/`)];
+/** SHA-256 dos MDX em main @ 42481ac: o conteúdo oculto é preservado byte a byte. */
+const MDX_SHA256: Record<string, string> = {
+  "compensacao-cognitiva": "b275e236373b827d1107dab6204b9c52b1cda85acd1c0c38ceb04c19abf3c5d2",
+  "estrategias-reduzir-riscos-cognitivos": "475fb61203c034f039324ffc0ac7802bfd4be9c0ab667916e7aae39e867234a0",
+  "funcoes-executivas-demandas-risco": "3df66a3150c355953bd48013481bb026798a595754976f9f52f5fc5219e0dbcc",
+  "o-que-sao-riscos-cognitivos": "408c2c0727b9be0c753081bae72c8e405acad840148579e8737ff75e97e6c673",
+  "processos-neuroadaptativos": "bbed8b6367e0fa2e58366d61a59564eb6c60bc219fd744efc1918137eb0b5d0a",
+  "risco-cognitivo": "b8d0a7bc677326e9752370e911074a4f5d8146276edeff3e7a8a4cab6f4cdf2c",
+  "riscos-cognitivos-guia": "79e62f49d61c7afc1033203621f7c9bf91690c24650c681e5f995ed3aa6e2874",
+  "riscos-cognitivos-rotina-estudos-trabalho": "cef492a904a280f95655101445611413c94b26a5145ad7b0676de753373c889d",
+  "riscos-cognitivos": "df35e1c2f80f544b878cc56630c55e7d3517893e764cfff1ab513586e49a4fd1",
+  "tres-pilares-riscos-cognitivos": "49cc2a26347bde7f9d47b05cf2a09e361969f03c7c692f36c314c5f971ac6959",
+};
 
 // Aspas tipográficas (remark-smartypants, tipografia do site) não contam como reescrita.
 const norm = (s: string) => s.replace(/[“”]/g, '"').replace(/[‘’]/g, "'").replace(/\s+/g, " ").trim().toLocaleLowerCase("pt-BR");
@@ -53,33 +70,17 @@ test.describe("D · imagens RC (RQ-030…033)", () => {
     expect(walk(join(ROOT, "public")).filter((n) => /^REF_/i.test(n))).toEqual([]);
   });
 
-  for (const slug of PUBLISHED) {
-    test(`todo artigo tem imagem com art direction: ${slug} (RQ-032)`, async ({ page }) => {
-      await page.goto(`/artigos/${slug}/`);
-      const fig = page.locator("[data-article-image] picture");
-      await expect(fig.locator("source[media]")).toHaveCount(1);
-      const img = fig.locator("img");
-      await expect(img).toHaveAttribute("alt", /.{20,}/);
-      await expect(img).toHaveAttribute("width", /\d+/);
-      await expect(img).toHaveAttribute("fetchpriority", "high");
-      expect(await img.evaluate((e: HTMLImageElement) => e.complete && e.naturalWidth > 0)).toBe(true);
+  // ADR-26: as ilustrações azuis (RC_*) ficam no banco (RQ-030), mas não entram nos layouts do DS novo.
+  for (const path of ["/", "/artigos/", "/artigos/riscos-cognitivos-guia/", "/sobre/", "/comece/"]) {
+    test(`nenhuma ilustração da identidade antiga em ${path} (ADR-26)`, async ({ page }) => {
+      await page.goto(path);
+      const art = await page.locator("main img").evaluateAll((els) => els.map((e) => (e as HTMLImageElement).getAttribute("src") ?? "").filter((src) => /\/images\/(?!logo)/.test(src)));
+      expect(art).toEqual([]);
+      await expect(page.locator("[data-article-image], [data-dot-field]")).toHaveCount(0);
     });
   }
 
-  test("retrato no mobile e 16:9 no desktop (RQ-032)", async ({ page }) => {
-    await page.setViewportSize({ width: 390, height: 844 });
-    await page.goto("/artigos/riscos-cognitivos/");
-    const mobile = page.locator("[data-article-image] img");
-    await expect.poll(() => mobile.evaluate((e: HTMLImageElement) => e.currentSrc)).toContain("retrato");
-    const box = await mobile.boundingBox();
-    expect(box!.height).toBeGreaterThan(box!.width);
-    expect(box!.height).toBeLessThanOrEqual(844 + 1);
-    await page.setViewportSize({ width: 1363, height: 900 });
-    await page.goto("/artigos/riscos-cognitivos/");
-    await expect.poll(() => page.locator("[data-article-image] img").evaluate((e: HTMLImageElement) => e.currentSrc)).toContain("16x9");
-  });
-
-  for (const path of ["/", "/artigos/riscos-cognitivos/", "/sobre/"]) {
+  for (const path of ["/", "/artigos/riscos-cognitivos-guia/", "/sobre/"]) {
     test(`CLS ≤ 0,1 em ${path} (RQ-033)`, async ({ page }) => {
       await page.addInitScript(() => {
         (window as unknown as { __cls: number }).__cls = 0;
@@ -107,10 +108,21 @@ test.describe("E · conteúdo canônico (RQ-040…046)", () => {
     for (const p of ["p1", "p2", "p3"]) await expect(page.locator(`[data-pillar=${p}] a`, { hasText: "Saiba mais" })).toHaveCount(1);
   });
 
-  test("home = RC-HOME-002 sem reescrita, na ordem do esboço (HOME-BRAIN-001)", async ({ page }) => {
-    await page.goto("/");
+  test("RC-HOME-002 sem reescrita: hero e prévias na Home, método completo em /sobre/ (ADR-26)", async ({ page }) => {
     // textContent: as explicações das 4 funções estão no HTML, só a selecionada fica visível.
-    const text = norm((await page.locator("main").textContent()) ?? "");
+    await page.goto("/");
+    const home = norm((await page.locator("main").textContent()) ?? "");
+    const homeOrder = await page.locator("[data-home-section]").evaluateAll((els) => els.map((e) => e.getAttribute("data-home-section")));
+    expect(homeOrder).toEqual(["Hero", "Mapa", "Trilha", "Blog", "Ferramentas", "CTA"]);
+    await expect(page.locator("[data-cta=primary]")).toHaveCount(1);
+    // ADR-26: não há mais camada própria da home; o acento é o do DS transversal.
+    expect(await page.evaluate(() => [...document.querySelectorAll<HTMLLinkElement>("link[rel=stylesheet]")].some((l) => /\/home[-.][^/]*\.css$/.test(l.href)))).toBe(false);
+    expect(await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue("--cf-accent").trim())).toBe("#ff5e1f");
+    await page.goto("/sobre/");
+    const sobre = norm((await page.locator("main").textContent()) ?? "");
+    const sobreOrder = await page.locator("[data-home-section]").evaluateAll((els) => els.map((e) => e.getAttribute("data-home-section")));
+    expect(sobreOrder).toEqual(["Dados", "Risco", "Exigências", "Problemas", "Método", "Apoio"]);
+    const text = `${home} ${sobre}`;
     const lines = readFileSync(join(ROOT, "../../docs/lancamento/LANC-001/intake/HOME-002/RC_HOME_002.txt"), "utf8")
       .split("\n")
       .map((l) => l.trim().replace(/^CTA: /, ""))
@@ -121,40 +133,42 @@ test.describe("E · conteúdo canônico (RQ-040…046)", () => {
         if (part.trim()) expect(text, line).toContain(norm(part.replace(/[.→]+$/, "")));
       }
     }
-    const order = await page.locator("[data-home-section]").evaluateAll((els) => els.map((e) => e.getAttribute("data-home-section")));
-    expect(order).toEqual(["Hero", "Mapa", "Trilha", "Dados", "Risco", "Exigências", "Problemas", "Método", "Apoio", "CTA"]);
-    await expect(page.locator("[data-cta=primary]")).toHaveCount(1);
-    await expect(page.getByRole("link", { name: "Comece por aqui" }).first()).toHaveAttribute("href", "/comece/");
-    // Camada própria da home (ADR-23): o home.css só entra na home.
-    const homeCss = () => page.evaluate(() => [...document.querySelectorAll<HTMLLinkElement>("link[rel=stylesheet]")].some((l) => /\/home[-.][^/]*\.css$/.test(l.href)));
-    expect(await homeCss()).toBe(true);
-    expect(await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue("--home-accent").trim())).toBe("#ff5e1f");
-    await page.goto("/comece/");
-    expect(await homeCss()).toBe(false);
   });
 
-  test("os números da home citam a fonte primária, também listada em /fontes/", async ({ page }) => {
-    await page.goto("/");
+  test("os números do RC-HOME-002 citam a fonte primária, também listada em /fontes/", async ({ page }) => {
+    await page.goto("/sobre/");
     for (const href of ["https://educa.ibge.gov.br/jovens/materias-especiais/22700-censo-2022-contou-2-4-milhoes-de-pessoas-diagnosticadas-com-autismo-no-brasil.html", "https://doi.org/10.7189/jogh.11.04009"]) {
-      await expect(page.locator(`.cfh-quote a[href="${href}"]`)).toHaveCount(1);
+      await expect(page.locator(`.ds-quote a[href="${href}"]`)).toHaveCount(1);
       await page.goto("/fontes/");
       await expect(page.locator(`[data-home-sources] a[href="${href}"]`)).toHaveCount(1);
-      await page.goto("/");
+      await page.goto("/sobre/");
     }
   });
 
+  test("artigos fora do ar na reconstrução: MDX intacto, 302 para /artigos/, fora do prerender e do hub (ADR-26)", async ({ request }) => {
+    for (const slug of ALL_MDX) {
+      const sha = createHash("sha256").update(readFileSync(join(ROOT, "content/artigos", `${slug}.mdx`))).digest("hex");
+      expect(sha, slug).toBe(MDX_SHA256[slug]);
+    }
+    const redirects = readFileSync(join(ROOT, "public/_redirects"), "utf8");
+    for (const slug of RETIRED) {
+      const res = await request.get(`/artigos/${slug}/`, { maxRedirects: 0 });
+      expect(res.status(), slug).toBe(302);
+      expect(res.headers().location, slug).toMatch(/\/artigos\/$/);
+      expect(redirects, slug).toMatch(new RegExp(`^/artigos/${slug}/\\s+/artigos/\\s+302$`, "m"));
+      expect(existsSync(join(ROOT, "build/client/artigos", slug)), slug).toBe(false);
+    }
+    for (const slug of PUBLISHED) expect((await request.get(`/artigos/${slug}/`)).status(), slug).toBe(200);
+    expect((await request.get("/artigos/nao-existe/", { maxRedirects: 0 })).status()).toBe(404);
+  });
+
+  // RQ-041: os 4 canônicos continuam sem reescrita no MDX (fora do ar na reconstrução, ADR-26).
   for (const [slug, file] of Object.entries(ARTICLES)) {
-    test(`artigo canônico sem reescrita: ${slug} (RQ-041)`, async ({ page }) => {
-      const text = await pageText(page, `/artigos/${slug}/`);
-      for (const line of canonicalLines(file)) expect(text, line).toContain(norm(line));
+    test(`artigo canônico preservado no MDX: ${slug} (RQ-041)`, () => {
+      const mdx = norm(readFileSync(join(ROOT, "content/artigos", `${slug}.mdx`), "utf8").replace(/[*_#>`]/g, " "));
+      for (const line of canonicalLines(file)) expect(mdx, line).toContain(norm(line.replace(/[*_#>`]/g, " ")));
     });
   }
-
-  test("os 4 artigos canônicos no hub e no prerender (RQ-041)", async ({ request }) => {
-    for (const slug of Object.keys(ARTICLES)) expect((await request.get(`/artigos/${slug}/`)).status(), slug).toBe(200);
-    const hub = await (await request.get("/admin/rotas/")).text();
-    for (const slug of Object.keys(ARTICLES)) expect(hub, slug).toContain(`/artigos/${slug}/`);
-  });
 
   test("/fontes/ lista as fontes do RC-SRC-001 com link (RQ-042)", async ({ page }) => {
     await page.goto("/fontes/");
@@ -168,7 +182,7 @@ test.describe("E · conteúdo canônico (RQ-040…046)", () => {
 
   test("conceitos próprios rotulados como do projeto (RQ-043)", async ({ page }) => {
     const note = norm('"Processo neuroadaptativo" e a cadeia específica "Risco Cognitivo → Compensação → Solução" permanecem conceitos metodológicos próprios do projeto');
-    for (const path of ["/fontes/", "/sobre/", "/artigos/processos-neuroadaptativos/", "/artigos/tres-pilares-riscos-cognitivos/"]) {
+    for (const path of ["/fontes/", "/sobre/", "/artigos/riscos-cognitivos-guia/"]) {
       expect(await pageText(page, path), path).toContain(note);
     }
   });
@@ -200,7 +214,7 @@ test.describe("E · conteúdo canônico (RQ-040…046)", () => {
     const graph = JSON.parse(readFileSync(join(ROOT, "app/data/graph/rc-graph.json"), "utf8"));
     const ids = new Set(graph.nodes.map((n: { id: string }) => n.id));
     const meta = readFileSync(join(ROOT, "app/data/article-meta.ts"), "utf8");
-    for (const slug of PUBLISHED) {
+    for (const slug of ALL_MDX) {
       const block = meta.slice(meta.indexOf(`"${slug}": {`));
       const entry = block.slice(0, block.indexOf("\n  },") + 4);
       expect(entry, slug).toMatch(/pillar: "p[123]"/);
@@ -217,11 +231,11 @@ test.describe("E · conteúdo canônico (RQ-040…046)", () => {
 });
 
 test.describe("F · jornada (RQ-050…054)", () => {
-  test("menu Artigos · Mapa · Ferramentas · Sobre igual no topo, no drawer e no rodapé (RQ-050)", async ({ page }) => {
+  test("menu Blog · Mapa · Ferramentas · Sobre igual no topo, no drawer e no rodapé (RQ-050, ADR-26)", async ({ page }) => {
     await page.setViewportSize({ width: 1363, height: 900 });
     await page.goto("/");
     const top = await page.locator('header nav[aria-label="Principal"] a').allTextContents();
-    expect(top).toEqual(["Artigos", "Mapa", "Ferramentas", "Sobre"]);
+    expect(top).toEqual(["Blog", "Mapa", "Ferramentas", "Sobre"]);
     const footer = await page.locator("footer a").allTextContents();
     for (const label of top) expect(footer, label).toContain(label);
     await page.setViewportSize({ width: 390, height: 844 });
@@ -257,19 +271,18 @@ test.describe("F · jornada (RQ-050…054)", () => {
     }
   });
 
-  test("chips de problema filtram a lista e são links compartilháveis (RQ-054)", async ({ page }) => {
+  test("facetas do Blog: tema com artigo é link compartilhável; tema sem artigo fica em preparação (ADR §3, ADR-26)", async ({ page }) => {
     await page.setViewportSize({ width: 1363, height: 900 });
     await page.goto("/artigos/");
-    const chips = page.locator("[data-problem-chips] a");
-    await expect(chips).toHaveText(["Atenção", "Memória", "Sobrecarga", "Interrupções", "Decisão", "Organização"]);
-    const all = await page.locator("[data-story-card]").count();
-    await chips.filter({ hasText: "Sobrecarga" }).click();
-    await expect(page).toHaveURL(/\?problema=sobrecarga$/);
-    await expect.poll(() => page.locator("[data-story-card]").count()).toBeLessThan(all);
-    const hrefs = await page.locator("[data-story-card] h2 a, [data-story-card] h3 a").evaluateAll((els) => els.map((e) => e.getAttribute("href")));
-    expect(hrefs.sort()).toEqual(["/artigos/estrategias-reduzir-riscos-cognitivos/", "/artigos/risco-cognitivo/", "/artigos/tres-pilares-riscos-cognitivos/"]);
-    // o link compartilhado abre já filtrado
-    await page.goto("/artigos/?problema=sobrecarga");
-    await expect.poll(() => page.locator("[data-story-card]").count()).toBe(3);
+    const facets = page.locator("[data-blog-facets]");
+    for (const group of ["Neurodivergências e perfis", "Funções cognitivas", "Domínios de conhecimento", "Contextos"]) await expect(facets.getByRole("heading", { name: group })).toBeVisible();
+    await facets.getByRole("link", { name: /TDAH/ }).click();
+    await expect(page).toHaveURL(/\?tema=tdah$/);
+    await expect(page.locator("[data-story-card] h3 a")).toHaveAttribute("href", "/artigos/riscos-cognitivos-guia/");
+    await expect(facets.getByRole("link", { name: /Dislexia/ })).toHaveCount(0);
+    await expect(facets.getByText(/Dislexia/)).toBeVisible();
+    await page.goto("/artigos/?tema=dislexia");
+    await expect(page.locator("[data-empty]")).toBeVisible();
+    await expect(page.locator("[data-empty] a")).toHaveAttribute("href", "/artigos/");
   });
 });

@@ -1,0 +1,445 @@
+/* ===== DS-CF-001 — extensão: mapa (ADR-26) =====
+   Componentes do RC-DS-CF específicos desta família de rotas, especificados em docs/design-system/DS-CF-001-mapa.md antes do
+   uso. Só var() dos tokens --cf-* (e das camadas semânticas registradas como exceção no ADR-26); nenhum hex. */
+:root {
+  /* Distância do sheet até a base no celular: a barra inferior do shell (fallback de 64 px). */
+  --ds-sheet-bottom: var(--bottombar-h, 64px);
+}
+
+/* §1 MapTabs: abas controladas com controle ao lado e painéis montados. */
+.ds-maptabs {
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+}
+.ds-maptabs-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.ds-tabs[data-wrap] {
+  flex-wrap: wrap;
+  overflow-x: visible;
+  border-radius: var(--cf-radius-lg);
+}
+.ds-maptabs > .ds-tab-panel[data-state="inactive"] {
+  display: none;
+}
+.ds-maptabs .ds-tab:hover:not([data-state="active"]) {
+  color: var(--cf-fg);
+}
+
+/* §2 ds-sheet: sheet do fator. Celular = fixo acima da barra inferior; ≥ 900 px = painel ao lado do mapa. */
+.ds-sheet {
+  position: fixed;
+  inset-inline: 0;
+  bottom: var(--ds-sheet-bottom);
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-top: 1px solid var(--cf-border-strong);
+  border-radius: var(--cf-radius-lg) var(--cf-radius-lg) 0 0;
+  background: var(--cf-bg);
+  color: var(--cf-fg);
+  box-shadow: var(--elevation-overlay);
+  transition: max-height var(--dur-base) var(--ease);
+}
+.ds-sheet[data-snap="collapsed"] {
+  max-height: 196px;
+}
+.ds-sheet[data-snap="medium"] {
+  max-height: 50svh;
+}
+.ds-sheet[data-snap="expanded"] {
+  max-height: calc(100svh - var(--ds-sheet-bottom) - var(--cf-header-h) - 16px);
+}
+@media (min-width: 900px) {
+  .ds-sheet,
+  .ds-sheet[data-snap] {
+    position: sticky;
+    top: calc(var(--cf-header-h) + 16px);
+    bottom: auto;
+    z-index: auto;
+    max-height: calc(100svh - var(--cf-header-h) - 32px);
+    border: 1px solid var(--cf-border);
+    border-radius: var(--cf-radius-lg);
+    box-shadow: none;
+  }
+}
+.ds-sheet-grip {
+  display: flex;
+  flex-shrink: 0;
+  justify-content: center;
+}
+.ds-sheet-handle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 44px;
+  border: 0;
+  border-radius: var(--cf-radius-md);
+  background: none;
+  touch-action: none;
+  cursor: grab;
+}
+.ds-sheet-handle span {
+  width: 40px;
+  height: 4px;
+  border-radius: var(--cf-radius-pill);
+  background: var(--cf-border-strong);
+}
+.ds-sheet-head {
+  display: flex;
+  flex-shrink: 0;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 0 16px 8px;
+}
+.ds-sheet-head h2 {
+  margin-top: 4px;
+  font-size: 20px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  font-weight: 500;
+}
+.ds-sheet-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 0 16px 16px;
+}
+.ds-sheet-body > * + * {
+  margin-top: 24px;
+}
+
+/* §3 Botão só de ícone (44 × 44). */
+.ds-icon-btn {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: var(--cf-radius-md);
+  background: none;
+  color: var(--cf-fg);
+  cursor: pointer;
+}
+.ds-icon-btn:hover:not(:disabled) {
+  background: var(--cf-bg-300);
+}
+.ds-icon-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* §4 Link ou botão dentro de frase. */
+.ds-inline-link {
+  display: inline;
+  padding: 0;
+  border: 0;
+  border-radius: var(--cf-radius-sm);
+  background: none;
+  color: var(--cf-accent-text);
+  font: inherit;
+  font-weight: 500;
+  text-align: inherit;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  cursor: pointer;
+}
+.ds-inline-link:hover {
+  text-decoration: none;
+}
+:is(.ds-sheet-handle, .ds-icon-btn, .ds-inline-link, .rc-map-static-node):focus-visible,
+.ds-option:has(input:focus-visible) {
+  outline: 3px solid var(--cf-focus);
+  outline-offset: 2px;
+}
+.ds-option input:focus-visible {
+  outline: 3px solid var(--cf-focus);
+  outline-offset: 2px;
+}
+
+/* §5 Peças do grafo em texto. */
+.ds-nodetype {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--cf-fg-muted);
+}
+.ds-nodetype > span[aria-hidden] {
+  color: var(--cf-fg);
+}
+.ds-mapa-quote blockquote {
+  max-width: var(--cf-measure);
+  padding-left: 16px;
+  border-left: 3px solid var(--cf-accent-line);
+  color: var(--cf-fg-muted);
+  font-size: 17px;
+  line-height: 1.5;
+}
+.ds-mapa-quote figcaption {
+  margin-top: 6px;
+  padding-left: 19px;
+  font-family: var(--cf-mono);
+  font-size: 13px;
+  color: var(--cf-fg-muted);
+}
+.ds-counts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+}
+.ds-counts > div {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.ds-counts dt {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--cf-fg-muted);
+}
+.ds-counts dd {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--cf-fg);
+}
+.ds-sentences {
+  display: grid;
+  gap: 12px;
+  max-width: var(--cf-measure);
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--cf-fg);
+}
+.ds-sentences-empty {
+  max-width: var(--cf-measure);
+  color: var(--cf-fg-muted);
+}
+.ds-muted {
+  color: var(--cf-fg-muted);
+}
+.ds-mapa-subhead {
+  font-size: 22px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  font-weight: 500;
+}
+.ds-mapa-why > * + * {
+  margin-top: 24px;
+}
+.ds-mapa-why .ds-label {
+  margin-bottom: 8px;
+}
+
+/* §6 Canvas em quadro e recorte estático (camada do grafo, exceção 2 do ADR-26). */
+.ds-mapa-canvas {
+  overflow: hidden;
+  background: var(--graph-node-bg);
+}
+.rc-map-static {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  align-items: flex-start;
+  gap: 12px;
+  min-height: 360px;
+  padding: 16px;
+}
+.rc-map-static-node,
+.rc-map .rc-map-node {
+  border: 2px solid var(--graph-node-border);
+  border-radius: var(--cf-radius-pill);
+  background: var(--graph-node-bg);
+  color: var(--graph-node-text);
+  font-family: var(--cf-font);
+  font-weight: 500;
+}
+.rc-map-static-node {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 0 14px;
+  font-size: 14px;
+  text-decoration: none;
+}
+.rc-map-static-node[aria-current="true"],
+.rc-map .rc-map-node[aria-pressed="true"],
+.rc-map .rc-map-node[data-focus] {
+  border-color: var(--graph-node-border-selected);
+  font-weight: 600;
+}
+.rc-map .rc-map-node {
+  font-size: 13px;
+  line-height: 1.25;
+  text-align: left;
+  transition: opacity var(--dur-fast) var(--ease);
+}
+.rc-map-glyph {
+  font-size: 16px;
+}
+.rc-map .rc-map-node:focus-visible {
+  outline: 3px solid var(--cf-focus);
+  outline-offset: 2px;
+}
+.rc-map-star {
+  color: var(--cf-accent-text);
+}
+.rc-map-edge-label {
+  font-size: 12px;
+  line-height: 20px;
+  border-radius: var(--cf-radius-sm);
+  background: var(--graph-node-bg);
+  color: var(--cf-fg-muted);
+  font-family: var(--cf-font);
+}
+
+/* §7 Legenda dos tipos de nó. */
+.ds-mapa-legend {
+  display: grid;
+  gap: 8px 24px;
+  max-width: var(--cf-reading);
+  font-size: 17px;
+}
+@media (min-width: 640px) {
+  .ds-mapa-legend {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.ds-mapa-legend li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 32px;
+}
+.ds-mapa-legend span[aria-hidden] {
+  display: inline-grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--cf-border-strong);
+  border-radius: var(--cf-radius-sm);
+  font-size: 13px;
+}
+
+/* §8 Passos e cartões de opção do Personalizar. */
+.ds-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  font-size: 15px;
+  color: var(--cf-fg-muted);
+}
+.ds-steps [aria-current="step"] {
+  color: var(--cf-fg);
+  font-weight: 600;
+}
+.ds-steps-n {
+  font-family: var(--cf-mono);
+  font-size: 13px;
+}
+.ds-option-grid {
+  display: grid;
+  gap: 12px;
+}
+@media (min-width: 640px) {
+  .ds-option-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.ds-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  padding: 12px 16px;
+  border: 1px solid var(--cf-border-strong);
+  border-radius: var(--cf-radius-md);
+  background: var(--cf-bg);
+  color: var(--cf-fg);
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease);
+}
+.ds-option:hover {
+  background: var(--cf-bg-300);
+}
+.ds-option:has(input:checked) {
+  border-color: var(--cf-accent-text);
+  box-shadow: inset 0 0 0 1px var(--cf-accent-text);
+  background: var(--cf-accent-soft);
+}
+.ds-option input {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  accent-color: var(--cf-accent-text);
+}
+.ds-option-meta {
+  display: block;
+  margin-top: 2px;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--cf-fg-muted);
+}
+.ds-fieldset legend h2 {
+  font-size: calc(var(--cf-h2) - 12px);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  font-weight: 500;
+  outline: none;
+}
+.ds-fieldset > p {
+  max-width: var(--cf-measure);
+  margin-top: 12px;
+  color: var(--cf-fg-muted);
+}
+
+/* §9 Barra de preferências, status e notas. */
+.ds-mapa-prefs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 16px;
+  font-size: 15px;
+  color: var(--cf-fg-muted);
+}
+.ds-mapa-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  font-size: 15px;
+  color: var(--cf-fg-muted);
+}
+.ds-mapa-note {
+  margin-top: 12px;
+  max-width: var(--cf-measure);
+  font-size: 14px;
+  color: var(--cf-fg-muted);
+}
+.ds-mapa-nodes {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--cf-border);
+}
+.ds-mapa-nodes > li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--cf-border);
+}

@@ -1,6 +1,7 @@
-// Mapa interativo da home (HOME-BRAIN-001), no lugar do "Region: Earth" da cloudflare.com (ADR-25): cérebro 3D pontilhado (Three.js, só depois da hidratação) com os 4
-// seletores do esboço RC-HOME-002 sobre a figura e a explicação da função em HTML, fora do canvas.
-// Sem JS, sem WebGL ou com falha do asset: a imagem estática, os seletores e os links do mapa continuam.
+// Cérebro compartilhado (HOME-BRAIN-001, ADR-26): o mesmo componente, asset e renderer na Home (`variant="preview"`) e no
+// Mapa Cognitivo (`variant="full"`, /mapas/). Cérebro 3D pontilhado (Three.js, só depois da hidratação) com os 4 seletores
+// do RC-HOME-002 sobre a figura e a explicação da função em HTML, fora do canvas. No `full`, `?foco=` abre a função e a
+// seleção grava `?foco=` (replaceState). Sem JS, sem WebGL ou com falha do asset: imagem estática, seletores e links continuam.
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 
 import { Ban, ClipboardList, Database, Lightbulb, Pause, Play, RefreshCcw, RotateCcw, RotateCw, Target, TriangleAlert, type LucideIcon } from "lucide-react";
@@ -22,8 +23,18 @@ const ARROWS: Record<string, number> = { ArrowRight: 1, ArrowDown: 1, ArrowLeft:
 type Status = "loading" | "ready" | "fallback";
 export type BrainFunction = HomeFunction & { topic?: BrainTopic };
 
-export function BrainHero({ topics }: { topics: BrainTopic[] }) {
-	const functions: BrainFunction[] = HOME_MAP.functions.map((f) => ({ ...f, topic: topics.find((t) => t.id === f.id) }));
+export type BrainCopy = { eyebrow: string; heading: string; lead: string; note: string; defaultId: string; functions: HomeFunction[] };
+
+export function BrainHero({
+	topics,
+	variant = "preview",
+	copy = HOME_MAP,
+}: {
+	topics: BrainTopic[];
+	variant?: "preview" | "full";
+	copy?: BrainCopy;
+}) {
+	const functions: BrainFunction[] = copy.functions.map((f) => ({ ...f, topic: topics.find((t) => t.id === f.id) }));
 	const canvasRef = useRef<HTMLCanvasElement>(null);
 	const controller = useRef<BrainController | null>(null);
 	const selectors = useRef<(HTMLButtonElement | null)[]>([]);
@@ -31,7 +42,7 @@ export function BrainHero({ topics }: { topics: BrainTopic[] }) {
 	const [paused, setPaused] = useState(true);
 	const [status, setStatus] = useState<Status>("loading");
 	const [attempt, setAttempt] = useState(0);
-	const [selectedId, setSelectedId] = useState(HOME_MAP.defaultId);
+	const [selectedId, setSelectedId] = useState(copy.defaultId);
 
 	const updatePaused = (value: boolean) => {
 		pausedRef.current = value;
@@ -85,9 +96,21 @@ export function BrainHero({ topics }: { topics: BrainTopic[] }) {
 		};
 	}, [attempt]);
 
+	// Mapa (full): ?foco= abre a função pedida, depois da hidratação (o HTML pré-renderizado sai com a padrão).
+	useEffect(() => {
+		if (variant !== "full") return;
+		const foco = new URLSearchParams(window.location.search).get("foco");
+		if (foco && copy.functions.some((f) => f.id === foco)) setSelectedId(foco);
+	}, [variant, copy.functions]);
+
 	const select = (id: string) => {
 		setSelectedId(id);
 		updatePaused(true);
+		if (variant === "full") {
+			const url = new URL(window.location.href);
+			url.searchParams.set("foco", id);
+			window.history.replaceState(window.history.state, "", url);
+		}
 		track({ stage: "TOOL", action: "select", capability_id: id, asset_id: ASSET_ID });
 	};
 	// Setas percorrem os seletores e selecionam (como no esboço); Tab sai do grupo.
@@ -105,11 +128,18 @@ export function BrainHero({ topics }: { topics: BrainTopic[] }) {
 	};
 
 	return (
-		<section id="mapa" className="home-map" aria-labelledby="mapa-titulo" data-home-section="Mapa" data-brain-status={status}>
-			<header className="cfh-head">
-				<p className="cfh-label">{HOME_MAP.eyebrow}</p>
-				<h2 id="mapa-titulo">{HOME_MAP.heading}</h2>
-				<p>{HOME_MAP.lead}</p>
+		<section
+			id="mapa"
+			className="home-map"
+			aria-labelledby="mapa-titulo"
+			data-home-section="Mapa"
+			data-brain-status={status}
+			data-brain-variant={variant}
+		>
+			<header className="ds-head">
+				<p className="ds-label">{copy.eyebrow}</p>
+				<h2 id="mapa-titulo">{copy.heading}</h2>
+				<p>{copy.lead}</p>
 			</header>
 
 			<div className="brain-stage">
@@ -157,7 +187,7 @@ export function BrainHero({ topics }: { topics: BrainTopic[] }) {
 					})}
 				</div>
 			</div>
-			<p className="home-map-note">{HOME_MAP.note}</p>
+			<p className="home-map-note">{copy.note}</p>
 
 			<div className="brain-controls" role="group" aria-label="Controles do cérebro 3D">
 				<button type="button" disabled={status !== "ready"} onClick={() => updatePaused(!paused)} aria-pressed={!paused}>
@@ -193,7 +223,7 @@ export function BrainHero({ topics }: { topics: BrainTopic[] }) {
 
 			<div id="brain-detail" className="brain-detail" aria-live="polite">
 				{functions.map((f) => (
-					<FunctionDetail key={f.id} fn={f} hidden={f.id !== selectedId} />
+					<FunctionDetail key={f.id} fn={f} hidden={f.id !== selectedId} variant={variant} />
 				))}
 			</div>
 			<noscript>
@@ -209,13 +239,19 @@ export function BrainHero({ topics }: { topics: BrainTopic[] }) {
 	);
 }
 
-function FunctionDetail({ fn, hidden }: { fn: BrainFunction; hidden: boolean }) {
+function FunctionDetail({ fn, hidden, variant }: { fn: BrainFunction; hidden: boolean; variant: "preview" | "full" }) {
 	const rows: [LucideIcon, string, string][] = [
 		[Target, "Demanda", fn.demand],
 		[TriangleAlert, "Dificuldade possível", fn.difficulty],
 		[Lightbulb, "Estratégia de apoio", fn.strategy],
 	];
-	const relations = fn.topic?.relations.slice(0, 3) ?? [];
+	const relations = fn.topic?.relations.slice(0, variant === "full" ? 8 : 3) ?? [];
+	const sources = variant === "full" ? (fn.topic?.sources ?? []) : [];
+	// Prévia (Home) leva ao Mapa com o foco; o Mapa leva às relações do grafo.
+	const next =
+		variant === "preview"
+			? { href: `/mapas/?foco=${fn.id}`, label: `Abrir ${fn.label.toLocaleLowerCase("pt-BR")} no Mapa Cognitivo` }
+			: { href: fn.topic?.href ?? "/mapas/explorar/", label: `Explorar as relações de ${fn.label.toLocaleLowerCase("pt-BR")}` };
 	return (
 		<article className="brain-detail-body" data-detail={fn.id} hidden={hidden}>
 			<h3>
@@ -242,12 +278,18 @@ function FunctionDetail({ fn, hidden }: { fn: BrainFunction; hidden: boolean }) 
 					</ul>
 				</div>
 			)}
-			<a
-				href={fn.topic?.href ?? "/mapas/"}
-				className="brain-detail-link"
-				onClick={() => track({ stage: "TOOL", action: "cta", capability_id: fn.id, asset_id: ASSET_ID })}
-			>
-				Explorar {fn.label.toLocaleLowerCase("pt-BR")} no mapa <span aria-hidden="true">›</span>
+			{sources.length > 0 && (
+				<div className="brain-relations" data-brain-sources>
+					<p>Fontes no grafo:</p>
+					<ul>
+						{sources.map((s) => (
+							<li key={s.id}>{s.label}</li>
+						))}
+					</ul>
+				</div>
+			)}
+			<a href={next.href} className="brain-detail-link" onClick={() => track({ stage: "TOOL", action: "cta", capability_id: fn.id, asset_id: ASSET_ID })}>
+				{next.label} <span aria-hidden="true">›</span>
 			</a>
 		</article>
 	);

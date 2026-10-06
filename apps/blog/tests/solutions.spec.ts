@@ -74,9 +74,18 @@ test.describe("páginas /ferramentas/solucoes/", () => {
 		});
 	}
 
-	test("o artigo 04 linka as 6 soluções no lugar dos infográficos", async ({ page }) => {
-		await page.goto("/artigos/estrategias-reduzir-riscos-cognitivos/");
-		for (const s of SOLUTIONS) await expect(page.locator(`[data-solution-link="${s.slug}"] a`)).toHaveAttribute("href", `/ferramentas/solucoes/${s.slug}/`);
+	// O artigo 04 está fora do ar durante a reconstrução (302, ADR-26); o MDX continua no repositório com os 6 links.
+	test("o MDX do artigo 04 linka as 6 soluções no lugar dos infográficos", () => {
+		const mdx = readFileSync(join(process.cwd(), "content/artigos/estrategias-reduzir-riscos-cognitivos.mdx"), "utf8");
+		for (const s of SOLUTIONS) expect(mdx, s.slug).toContain(`<SolutionLink slug="${s.slug}" />`);
+	});
+
+	test("a página da solução leva à série pelo guia público, com trilha e um único CTA primário", async ({ page }) => {
+		await page.goto(`/ferramentas/solucoes/${SOLUTIONS[0].slug}/`);
+		await expect(page.locator("main [data-cta=primary]")).toHaveAttribute("href", "/artigos/riscos-cognitivos-guia/");
+		await expect(page.locator("main nav[aria-label=Trilha] a")).toHaveCount(2);
+		await expect(page.locator("main [data-demo-notice]").first()).toBeVisible();
+		await expect(page.locator("main a[href='/artigos/estrategias-reduzir-riscos-cognitivos/']")).toHaveCount(0);
 	});
 
 	test("a correlação da solução cita o próprio texto (RQ-121)", () => {

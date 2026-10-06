@@ -5,10 +5,12 @@ import { mkdirSync, readFileSync } from "node:fs";
 
 // HOME-BRAIN-001: cérebro 3D da home (WebGL). Roda com `npm run test:brain` (playwright.brain.config.ts, WebGL por
 // software no Chromium de teste); o `npm test` cobre o resto da home sem depender de GPU.
+// ADR-26: o mesmo BrainHero está na Home (variant="preview", o card leva a /mapas/?foco=) e no Mapa Cognitivo
+// (/mapas/, variant="full", lê e grava ?foco= e o card leva às relações em /mapas/explorar/?foco=).
 const FUNCTIONS = ["COG-PLANEJAMENTO", "COG-MEMORIA-TRABALHO", "COG-CONTROLE-INIBITORIO", "COG-FLEXIBILIDADE"];
 
-async function ready(page: Page) {
-	await page.goto("/");
+async function ready(page: Page, path = "/") {
+	await page.goto(path);
 	await page.locator("#mapa").scrollIntoViewIfNeeded();
 	await expect(page.locator("#mapa[data-brain-status=ready]")).toBeVisible({ timeout: 60_000 });
 	await expect.poll(() => page.locator(".brain-canvas").getAttribute("data-frames")).not.toBeNull();
@@ -63,11 +65,13 @@ test("selecting a function pauses, explains it and opens the map on the same can
 	await expect(detail.locator("h3")).toHaveText("Função selecionada: Controle inibitório");
 	await expect(detail).toContainText("proteger a prioridade diante de estímulos concorrentes.");
 	await expect(detail).toContainText("Interrupções aumenta Controle inibitório (inferido)");
-	const link = detail.getByRole("link", { name: /no mapa/ });
-	await expect(link).toHaveAttribute("href", "/mapas/explorar/?foco=COG-CONTROLE-INIBITORIO");
+	const link = detail.getByRole("link", { name: /no Mapa Cognitivo/ });
+	await expect(link).toHaveAttribute("href", "/mapas/?foco=COG-CONTROLE-INIBITORIO");
 	await link.click();
-	await expect(page).toHaveURL(/foco=COG-CONTROLE-INIBITORIO/);
-	await expect(page.locator("main")).toContainText("Controle inibitório");
+	await expect(page).toHaveURL(/\/mapas\/\?foco=COG-CONTROLE-INIBITORIO/);
+	// O Mapa Cognitivo abre o mesmo cérebro já na função escolhida.
+	await expect(page.locator("#mapa[data-brain-variant=full]")).toBeVisible();
+	await expect(page.locator("#brain-detail article:visible h3")).toHaveText("Função selecionada: Controle inibitório");
 });
 
 test("every selector opens a map page that knows its node", async ({ page }) => {
@@ -123,7 +127,9 @@ test("server HTML works without JS", async ({ browser, baseURL }) => {
 	await expect(page.getByRole("heading", { level: 1 })).toHaveText(/transformar intenção em execução\?/);
 	await expect(page.locator(".brain-poster")).toBeVisible();
 	await expect(page.locator(".brain-nojs-links a")).toHaveCount(4);
-	await expect(page.locator("#brain-detail article:visible .brain-detail-link")).toHaveAttribute("href", "/mapas/explorar/?foco=COG-PLANEJAMENTO");
+	await expect(page.locator("#brain-detail article:visible .brain-detail-link")).toHaveAttribute("href", "/mapas/?foco=COG-PLANEJAMENTO");
+	// Sem JS, os links do noscript continuam levando às relações de cada função no mapa causal.
+	await expect(page.locator(".brain-nojs-links a").first()).toHaveAttribute("href", "/mapas/explorar/?foco=COG-PLANEJAMENTO");
 	await context.close();
 });
 
@@ -162,3 +168,79 @@ for (const theme of ["light", "dark"]) {
 		}
 	});
 }
+
+// Mapa Cognitivo (/mapas/, ADR-26): o mesmo cérebro em tamanho principal, com ?foco= nos dois sentidos.
+test.describe("Mapa Cognitivo: cérebro full em /mapas/", () => {
+	const detail = (page: Page) => page.locator("#brain-detail article:visible");
+	const foco = (page: Page) => new URL(page.url()).searchParams.get("foco");
+
+	test("carrega o cérebro full e a seleção por clique troca o card e grava ?foco=", async ({ page }) => {
+		const errors: string[] = [];
+		page.on("pageerror", (e) => errors.push(e.message));
+		await page.setViewportSize({ width: 1440, height: 1000 });
+		await ready(page, "/mapas/");
+		await expect(page.locator("#mapa")).toHaveAttribute("data-brain-variant", "full");
+		await expect(page.getByRole("heading", { level: 1 })).toHaveText("Mapa Cognitivo");
+		await expect(detail(page).locator("h3")).toHaveText("Função selecionada: Planejamento");
+		await marker(page, "Flexibilidade cognitiva").click();
+		await expect(marker(page, "Flexibilidade cognitiva")).toHaveAttribute("aria-pressed", "true");
+		await expect(detail(page).locator("h3")).toHaveText("Função selecionada: Flexibilidade cognitiva");
+		await expect.poll(() => foco(page)).toBe("COG-FLEXIBILIDADE");
+		// O card completo leva às relações do grafo no Explorar, com o mesmo foco.
+		await expect(detail(page).locator(".brain-detail-link")).toHaveAttribute("href", "/mapas/explorar/?foco=COG-FLEXIBILIDADE");
+		expect(errors).toEqual([]);
+	});
+
+	test("as setas trocam a função, o card e o ?foco=", async ({ page }) => {
+		await ready(page, "/mapas/");
+		await marker(page, "Planejamento").focus();
+		await page.keyboard.press("ArrowDown");
+		await expect(marker(page, "Memória de trabalho")).toBeFocused();
+		await expect(marker(page, "Memória de trabalho")).toHaveAttribute("aria-pressed", "true");
+		await expect(detail(page).locator("h3")).toHaveText("Função selecionada: Memória de trabalho");
+		await expect.poll(() => foco(page)).toBe("COG-MEMORIA-TRABALHO");
+		await page.keyboard.press("ArrowUp");
+		await page.keyboard.press("ArrowUp");
+		await expect(marker(page, "Flexibilidade cognitiva")).toHaveAttribute("aria-pressed", "true");
+		await expect(detail(page).locator("h3")).toHaveText("Função selecionada: Flexibilidade cognitiva");
+		await expect.poll(() => foco(page)).toBe("COG-FLEXIBILIDADE");
+	});
+
+	test("?foco= na URL abre a função pedida", async ({ page }) => {
+		await ready(page, "/mapas/?foco=COG-FLEXIBILIDADE");
+		await expect(marker(page, "Flexibilidade cognitiva")).toHaveAttribute("aria-pressed", "true");
+		await expect(detail(page).locator("h3")).toHaveText("Função selecionada: Flexibilidade cognitiva");
+		await expect(page.locator("#brain-detail article:visible")).toHaveCount(1);
+	});
+
+	test("movimento reduzido começa parado", async ({ page }) => {
+		await page.emulateMedia({ reducedMotion: "reduce" });
+		await ready(page, "/mapas/");
+		const canvas = page.locator(".brain-canvas");
+		await expect(canvas).toHaveAttribute("data-motion", "paused");
+		const angle = await canvas.getAttribute("data-angle");
+		await page.waitForTimeout(180);
+		expect(await canvas.getAttribute("data-angle")).toBe(angle);
+	});
+
+	test("em 390 px os marcadores ficam dentro da viewport, sem rolagem horizontal", async ({ page }) => {
+		await page.emulateMedia({ reducedMotion: "reduce" });
+		await page.setViewportSize({ width: 390, height: 844 });
+		await ready(page, "/mapas/");
+		expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+		const boxes = await page.locator(".brain-marker").evaluateAll((elements) =>
+			elements.map((el) => {
+				const r = el.getBoundingClientRect();
+				return { left: r.left, right: r.right, height: r.height };
+			}),
+		);
+		expect(boxes).toHaveLength(4);
+		for (const box of boxes) {
+			expect(box.left, "marker inside 390px").toBeGreaterThanOrEqual(0);
+			expect(box.right, "marker inside 390px").toBeLessThanOrEqual(390);
+			expect(box.height, "marker target ≥ 44px").toBeGreaterThanOrEqual(44);
+		}
+		const result = await new AxeBuilder({ page }).include("main").withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"]).analyze();
+		expect(result.violations.filter((v) => v.impact === "serious" || v.impact === "critical").map((v) => `${v.id}: ${v.nodes.map((n) => n.target).join(" ")}`)).toEqual([]);
+	});
+});

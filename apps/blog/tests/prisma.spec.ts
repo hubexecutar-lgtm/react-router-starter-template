@@ -43,6 +43,16 @@ test.describe("fluxo /prisma", () => {
     await expect(page.getByText("Seus dados ficam neste dispositivo.").first()).toBeVisible();
     await expect(page.getByText("Não é diagnóstico")).toBeVisible();
     await expect(page.getByRole("link", { name: /Criar meu Prisma/ }).first()).toHaveAttribute("href", "#formulario");
+    // RC-DS-CF (ADR-26): PageHead com o aviso de layout, passos em ds-steps e nada do DS antigo
+    await expect(page.locator("main .ds-pagehead h1")).toHaveCount(1);
+    await expect(page.locator("main [data-demo-notice]")).toHaveCount(1);
+    await expect(page.locator('section[aria-labelledby="como-usar"] ol.ds-steps')).toHaveCount(1);
+    await expect(page.locator('main :is([class*="rc-cell"], [class*="rc-surface"], [class*="rc-eyebrow"], [class*="hy-"], [class*="stories-"])')).toHaveCount(0);
+    // "Saiba mais ›" só para destinos reais
+    for (const href of await page.locator("main a.ds-link").evaluateAll((els) => els.map((e) => e.getAttribute("href")!))) {
+      if (href.startsWith("#")) continue;
+      expect((await page.request.get(href)).status(), href).toBe(200);
+    }
   });
 
   test("campos obrigatórios: erro textual, foco no primeiro inválido, sem preview", async ({ page }) => {
@@ -75,6 +85,21 @@ test.describe("fluxo /prisma", () => {
     await expect(page.locator("#prisma-objetivo")).toHaveValue(FILLED.objetivo);
     await page.goBack();
     await expect(page.locator(".prisma-sheet")).toBeVisible();
+  });
+
+  test("depois do resultado, a próxima ação leva a destinos reais (ADR-BLOG-JORNADA-ROTAS-001 §2.2)", async ({ page, request }) => {
+    await page.goto("/prisma/#formulario");
+    await fill(page);
+    await page.getByRole("button", { name: "Ver meu Prisma" }).click();
+    const next = page.locator("[data-next-action]");
+    await expect(next.getByRole("heading", { level: 2, name: "Próxima ação" })).toBeVisible();
+    await expect(next).toHaveClass(/prisma-noprint/);
+    const hrefs = await next.locator("a").evaluateAll((els) => els.map((e) => e.getAttribute("href")!));
+    expect(hrefs).toEqual(expect.arrayContaining(["/ferramentas/solucoes/formulario-padrao-do-ciclo/", "/mapas/explorar/cmp-externalizacao/", "/artigos/riscos-cognitivos-guia/"]));
+    for (const href of hrefs) {
+      expect(href, "nada de CTA #").not.toBe("#");
+      expect((await request.get(href)).status(), href).toBe(200);
+    }
   });
 
   test("campo opcional vazio aparece como A DEFINIR; nada é inventado", async ({ page }) => {
@@ -142,6 +167,12 @@ test.describe("privacidade e armazenamento", () => {
     await page.reload();
     await expect(page.locator("#prisma-objetivo")).toHaveValue(FILLED.objetivo);
 
+    // diálogo do DS (ConfirmDialog): botões rotulados pela ação; "Manter dados" não apaga nada
+    await page.getByRole("button", { name: "Limpar dados" }).click();
+    await expect(page.getByRole("alertdialog")).toContainText("Apagar tudo o que você preencheu?");
+    await page.getByRole("button", { name: "Manter dados" }).click();
+    await expect(page.getByRole("alertdialog")).toHaveCount(0);
+    await expect(page.locator("#prisma-objetivo")).toHaveValue(FILLED.objetivo);
     await page.getByRole("button", { name: "Limpar dados" }).click();
     await page.getByRole("button", { name: "Apagar dados" }).click();
     await expect(page.locator("#prisma-objetivo")).toHaveValue("");
@@ -263,7 +294,7 @@ test.describe("PWA", () => {
     const res = await request.get("/prisma/manifest.webmanifest");
     expect(res.ok()).toBe(true);
     const m = await res.json();
-    expect(m).toMatchObject({ start_url: "/prisma/", scope: "/prisma/", display: "standalone", background_color: "#FFFFFF", theme_color: "#2563EB", lang: "pt-BR" });
+    expect(m).toMatchObject({ start_url: "/prisma/", scope: "/prisma/", display: "standalone", background_color: "#FFFFFF", theme_color: "#FF5E1F", lang: "pt-BR" });
     expect(m.name).toBeTruthy();
     expect(m.short_name).toBeTruthy();
     const sizes = m.icons.map((i: { sizes: string }) => i.sizes);
@@ -320,5 +351,8 @@ test.describe("acessibilidade do formulário", () => {
       if (f.kind !== "select") await expect(el).toHaveAttribute("maxlength", String(f.max));
     }
     await expect(page.locator("form fieldset")).toHaveCount(3);
+    // campos do RC-DS-CF: anatomia ds-field com alvo ≥ 44 px
+    await expect(page.locator("form .ds-field")).toHaveCount(FIELDS.length);
+    for (const h of await page.locator("form .ds-field-control").evaluateAll((els) => els.map((e) => e.getBoundingClientRect().height))) expect(h).toBeGreaterThanOrEqual(44);
   });
 });

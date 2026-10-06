@@ -1,9 +1,10 @@
-// Sobre (LANC-001 RQ-050): o projeto contado só com trechos dos textos canônicos (RC-LP-001, RC-ART-P1-001,
-// RC-SRC-001), sem texto novo de posicionamento. Os conceitos próprios ficam rotulados como tal (RQ-043).
+// Sobre (ADR-BLOG-JORNADA-ROTAS-001 §2.2, ADR-26): autor, projeto, princípios e limites, e o método completo do
+// RC-HOME-002 (dados, risco, exigências, problemas, método, apoio), que saiu da Home por decisão do usuário (2026-10-06).
+// Os princípios são trechos literais dos canônicos (RC-LP-001, RC-ART-P1-001, RC-SRC-001), cada um com a origem (RQ-043).
 import type { Route } from "./+types/sobre";
 
-import { ChevronLink } from "@/components/layout/ChevronLink";
-import { ArtImage } from "@/components/stories/ArtImage";
+import { Button, Dots, MoreLink, PageHead, SectionHead } from "@/components/ds";
+import { MethodSections } from "@/components/landing/MethodSections";
 import { RC_IMAGES } from "@/data/article-media";
 import { LANDING } from "@/data/landing";
 import { GOVERNANCE_NOTE } from "@/data/sources";
@@ -29,53 +30,47 @@ export const meta: Route.MetaFunction = ({ location }) =>
 export default function Sobre() {
 	return (
 		<DefaultLayout>
-			<header className="hy-hero rc-hero-reveal">
-				<p className="hy-eyebrow">Risco Cognitivo · Sobre</p>
-				<h1>Sobre o projeto</h1>
-				<p className="hy-lead">{para(0, 0)}</p>
-				<div className="hy-actions">
-					<a href="/artigos/riscos-cognitivos/" data-cta="primary" className="hy-btn-primary">
-						{LANDING.cta}
-					</a>
-				</div>
-			</header>
-			<div className="hy-shell">
-				<div>
-					<ArtImage media={RC_IMAGES.cerebroUrbanoMaoB} priority />
-				</div>
-			</div>
-			<section className="stories-container mt-[var(--ref-section-gap)]" aria-labelledby="principios">
-				<div className="mx-auto max-w-[var(--ref-reading-width)]">
-					<h2 id="principios" className="stories-h2">
-						Princípios
-					</h2>
-					<ul className="mt-[var(--ref-block-gap)] space-y-[var(--ref-block-gap)]">
+			<div className="ds-page">
+				<PageHead
+					eyebrow="Risco Cognitivo · Sobre"
+					title="Sobre o projeto"
+					lead={para(0, 0)}
+					notice="Página institucional no design system novo; o método completo da Home está logo abaixo."
+					actions={
+						<Button href="/artigos/riscos-cognitivos-guia/" size="lg" data-cta="primary">
+							Ler o guia de riscos cognitivos
+						</Button>
+					}
+				/>
+
+				<section className="ds-section" style={{ paddingTop: 0 }} aria-labelledby="principios" data-sobre="principios">
+					<SectionHead id="principios" label="Princípios" heading="Princípios" align="left" />
+					<ul className="ds-list ds-reading" style={{ paddingInline: 0, marginInline: 0 }}>
 						{PRINCIPLES.map((p) => (
 							<li key={p.text}>
-								<p className="stories-body">{p.text}</p>
-								<p className="stories-caption text-muted-foreground">{p.source}</p>
+								<p style={{ fontSize: 18 }}>{p.text}</p>
+								<p className="ds-card-eyebrow">{p.source}</p>
 							</li>
 						))}
 					</ul>
-				</div>
-			</section>
-			<section className="stories-container mt-[var(--ref-section-gap)]" aria-labelledby="conceitos-proprios">
-				<div className="mx-auto max-w-[var(--ref-reading-width)]">
-					<h2 id="conceitos-proprios" className="stories-h2">
-						Conceitos do projeto
-					</h2>
-					<div className="mt-[var(--ref-block-gap)] space-y-[var(--ref-block-gap)]" data-governance-note>
+				</section>
+
+				<section className="ds-section" aria-labelledby="conceitos-proprios" data-sobre="limites">
+					<SectionHead id="conceitos-proprios" label="Limites" heading="Conceitos do projeto" align="left" />
+					<div className="ds-prose-block" data-governance-note>
 						{GOVERNANCE_NOTE.map((l) => (
-							<p key={l} className="stories-body">
-								{l}
-							</p>
+							<p key={l}>{l}</p>
 						))}
 					</div>
-					<ChevronLink href="/fontes/" className="mt-[var(--ref-block-gap)]">
-						Ver todas as fontes
-					</ChevronLink>
-				</div>
-			</section>
+					<p className="ds-more">
+						<MoreLink href="/fontes/">Ver todas as fontes</MoreLink>
+					</p>
+				</section>
+
+				<Dots />
+				{/* O método (RC-HOME-002 completo, fora da Home). */}
+				<MethodSections />
+			</div>
 		</DefaultLayout>
 	);
 }

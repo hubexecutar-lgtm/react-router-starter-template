@@ -1,3 +1,6 @@
+> **SUBSTITUÍDO (2026-10-06):** os valores e a geometria deste contrato foram substituídos pelo RC-DS-CF (ADR-26,
+> `DS-CF-001.md`). As camadas de superfície continuam como aliases dos tokens `--cf-*`.
+
 # DS-SURFACE-UNIFICATION-001 — Superfícies, bordas e elevação
 
 | Campo | Valor |

@@ -9,8 +9,9 @@ import { SiteHeader } from "@/components/site/SiteHeader";
 // module load in the browser (no-op on the server).
 import "@/lib/plain/copy";
 
-// Shell (LANC-001 PR-C, ADR-25): cabeçalho e rodapé no padrão da cloudflare.com, drawer e barra inferior no mobile. A
-// faixa de categorias (trilha dos pilares, RQ-020) saiu do topo global e fica nas páginas de artigos.
+// Shell (LANC-001 PR-C, ADR-25/26): cabeçalho e rodapé no padrão da cloudflare.com, drawer e barra inferior no mobile, todos
+// no RC-DS-CF. A trilha dos pilares saiu do site (ADR-26); o rodapé-diretório tem a coluna "Jornada". O skip link usa
+// `ds-skip` (DS-CF-001-prisma §2.8).
 function Shell({ children }: { children: ReactNode }) {
 	const { drawerOpen } = useShell();
 	// Com o drawer aberto, o resto da página fica inert (RQ-023). Sem wrapper: o cabeçalho continua
@@ -20,7 +21,7 @@ function Shell({ children }: { children: ReactNode }) {
 		<>
 			<a
 				href="#conteudo"
-				className="bg-primary text-primary-foreground sr-only z-[60] rounded-md px-4 py-2 focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
+				className="ds-skip sr-only"
 				{...inert}
 			>
 				Pular para o conteúdo

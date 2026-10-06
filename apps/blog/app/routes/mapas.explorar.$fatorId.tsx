@@ -1,10 +1,10 @@
-// /mapas/explorar/:fatorId/ (LANC-001 SCR-03, RQ-072): o detalhe do fator como página compartilhável.
-// "Voltar ao mapa" leva ao Explorar com ?foco=, então a seleção é preservada.
-import { ArrowLeft } from "lucide-react";
+// /mapas/explorar/:fatorId/ (LANC-001 SCR-03, RQ-072): o detalhe do fator como página compartilhável, no RC-DS-CF
+// (ADR-26, DS-CF-001-mapa). A trilha e "Voltar ao mapa" levam ao Explorar com ?foco=, então a seleção é preservada.
 import { data } from "react-router";
 
 import type { Route } from "./+types/mapas.explorar.$fatorId";
 
+import { Button, PageHead, SectionHead } from "@/components/ds";
 import { RelationCounts, RelationTabs, SourceQuote, TypeBadge, WhyChain, type NodeLink } from "@/features/mapa/parts";
 import DefaultLayout from "@/layouts/DefaultLayout";
 import { NODE_TYPES, RC_GRAPH, exploreHref, factorHref, factorIds, idFromParam, nodeById } from "@/lib/graph";
@@ -30,57 +30,44 @@ export const meta: Route.MetaFunction = ({ params, location }) => {
 };
 
 const pageLink: NodeLink = (n, children) => (
-	<a href={factorHref(n.id)} className="text-primary underline underline-offset-4 hover:no-underline">
+	<a href={factorHref(n.id)} className="ds-inline-link">
 		{children}
 	</a>
 );
 
 export default function Fator({ params }: Route.ComponentProps) {
 	const node = factor(params.fatorId)!;
+	const back = exploreHref(node.id);
 	return (
 		<DefaultLayout>
-			<article className="stories-container pb-16">
-				<div className="mx-auto max-w-[var(--ref-reading-width)]">
-					<header className="pt-[var(--hy-section)]">
-						<a
-							href={exploreHref(node.id)}
-							data-back-to-map
-							className="text-primary focus-visible:ring-ring/50 inline-flex min-h-11 items-center gap-2 rounded-[var(--radius-control)] text-sm font-semibold outline-none focus-visible:ring-[3px]"
-						>
-							<ArrowLeft className="size-4" aria-hidden="true" />
+			<article className="ds-page pb-16">
+				<PageHead
+					crumbs={[{ label: "Mapa Cognitivo", href: "/mapas/" }, { label: "Explorar", href: back }, { label: node.label }]}
+					eyebrow={`Mapa causal · ${NODE_TYPES[node.visual].label}`}
+					title={node.label}
+					lead="Causas, impactos, soluções e evidências registradas no grafo para este fator. Relação inferida aparece como inferida."
+					notice="Template de detalhe do fator no design system novo; as relações e as fontes vêm do grafo real."
+					actions={
+						<Button href={back} size="lg" data-cta="primary" data-back-to-map="">
 							Voltar ao mapa
-						</a>
-						<TypeBadge type={node.visual} className="mt-6 flex" />
-						<h1 className="stories-h2 mt-3">{node.label}</h1>
-						<SourceQuote node={node} className="mt-[var(--ref-block-gap)]" />
-						<div className="mt-[var(--ref-block-gap)]">
-							<RelationCounts id={node.id} />
-						</div>
-						<a
-							href={exploreHref(node.id)}
-							data-cta="primary"
-							className="hy-btn-primary mt-[var(--ref-block-gap)]"
-						>
-							Ver no mapa
-						</a>
-					</header>
-					<section aria-labelledby="relacoes" className="mt-[var(--ref-card-gap-y)]">
-						<h2 id="relacoes" className="stories-h2">
-							Relações
-						</h2>
-						<div className="mt-[var(--ref-block-gap)]">
-							<RelationTabs id={node.id} nodeLink={pageLink} />
-						</div>
-					</section>
-					<section aria-labelledby="porque" className="mt-[var(--ref-card-gap-y)]">
-						<h2 id="porque" className="stories-h2">
-							Por quê?
-						</h2>
-						<div className="mt-[var(--ref-block-gap)]">
-							<WhyChain id={node.id} nodeLink={pageLink} />
-						</div>
-					</section>
-				</div>
+						</Button>
+					}
+				>
+					<div className="mt-8 grid gap-4">
+						<TypeBadge type={node.visual} />
+						<SourceQuote node={node} />
+						<RelationCounts id={node.id} />
+					</div>
+				</PageHead>
+
+				<section className="ds-section" style={{ paddingTop: 0 }} aria-labelledby="relacoes">
+					<SectionHead id="relacoes" label="Grafo" heading="Relações" align="left" />
+					<RelationTabs id={node.id} nodeLink={pageLink} />
+				</section>
+				<section className="ds-section" aria-labelledby="porque">
+					<SectionHead id="porque" label="Cadeia" heading="Por quê?" lead="O que leva a este fator e o que pode compensá-lo." align="left" />
+					<WhyChain id={node.id} nodeLink={pageLink} />
+				</section>
 			</article>
 		</DefaultLayout>
 	);

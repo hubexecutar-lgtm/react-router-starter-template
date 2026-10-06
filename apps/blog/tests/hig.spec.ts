@@ -4,8 +4,8 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
 import { useTheme } from "./theme";
+import { PUBLIC_ARTICLES } from "../app/data/article-meta";
 import { STORE_PATHS } from "../app/features/store/data/paths";
-import { readyArticleSlugs } from "../app/lib/articles-fs";
 import { scanPages } from "../app/lib/routes/scan";
 
 // Gate UX-GOV-HIG-001 (ADR-M03 do monorepo, ADR-12 do blog): Apple HIG + WCAG 2.2 AA + HTML
@@ -29,7 +29,7 @@ type Finding = {
 const PAGES = scanPages().filter((p) => p.endsWith("/"));
 // Ferramentas (ADR-16): o índice, os catálogos por tipo e um detalhe.
 const TOOLS = STORE_PATHS.filter((p) => p.split("/").filter(Boolean).length <= 2).concat(STORE_PATHS.find((p) => p.split("/").filter(Boolean).length === 3)!);
-export const HIG_ROUTES = [...new Set([...PAGES, ...TOOLS, ...readyArticleSlugs().map((s) => `/artigos/${s}/`), "/mapas/explorar/frc-interrupcoes/", "/rota-inexistente-hig/"])];
+export const HIG_ROUTES = [...new Set([...PAGES, ...TOOLS, ...PUBLIC_ARTICLES.map((s) => `/artigos/${s}/`), "/mapas/explorar/frc-interrupcoes/", "/rota-inexistente-hig/"])];
 
 const RULES = {
   axe: ["AUD-HIG-07", "Sem violação séria ou crítica do axe (WCAG 2.0/2.1/2.2 A e AA)", "WCAG 2.2 AA"],

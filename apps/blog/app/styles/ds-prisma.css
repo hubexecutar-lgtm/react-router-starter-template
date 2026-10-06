@@ -1,0 +1,282 @@
+/* ===== DS-CF-001 — extensão: prisma (ADR-26) =====
+   Componentes do RC-DS-CF específicos desta família de rotas, especificados em docs/design-system/DS-CF-001-prisma.md antes do
+   uso. Só var() dos tokens --cf-* (e das camadas semânticas registradas como exceção no ADR-26); nenhum hex. */
+
+/* ---- §2.1 ds-steps: lista numerada de passos (estática, sem hover) ------------------------------- */
+.ds-steps {
+  display: grid;
+  grid-template-columns: repeat(var(--ds-steps-cols, 3), minmax(0, 1fr));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.ds-steps > li {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  padding: var(--cf-pad);
+}
+.ds-steps > li + li {
+  border-left: 1px solid var(--cf-border);
+}
+.ds-steps-n {
+  font-family: var(--cf-mono);
+  font-size: 14px;
+  color: var(--cf-accent-text);
+}
+.ds-steps h3 {
+  margin: 8px 0 0;
+  font-size: var(--cf-h3);
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  font-weight: 500;
+}
+.ds-steps p {
+  font-size: 16px;
+  line-height: 1.4;
+  color: var(--cf-fg-muted);
+}
+
+/* ---- §2.2 ds-tool: moldura de ferramenta interativa ------------------------------------------------ */
+.ds-tool {
+  max-width: calc(var(--cf-reading) + 2 * var(--cf-px));
+  margin-inline: auto;
+  padding: 0 var(--cf-px) var(--cf-section-gap);
+}
+.ds-tool[data-width="wide"] {
+  max-width: calc(var(--cf-container) + 2 * var(--cf-px));
+}
+.ds-tool > .ds-pagehead,
+.ds-tool .ds-tool-head {
+  padding-inline: 0;
+}
+.ds-tool[data-width="wide"] .ds-tool-head {
+  max-width: var(--cf-reading);
+  margin-inline: auto;
+}
+.ds-tool .ds-pagehead h1 {
+  font-size: var(--cf-h2);
+}
+.ds-tool .ds-pagehead h1:focus {
+  outline: none;
+}
+.ds-tool-note {
+  font-size: 15px;
+  color: var(--cf-fg-muted);
+}
+.ds-tool-body > * + * {
+  margin-top: 48px;
+}
+
+/* ---- §2.3 ds-fieldset ----------------------------------------------------------------------------- */
+.ds-fieldset {
+  min-width: 0;
+  margin: 0;
+  padding: 32px 0 0;
+  border: 0;
+  border-top: 1px solid var(--cf-border);
+}
+.ds-fieldset > legend {
+  float: left;
+  width: 100%;
+  padding: 0;
+  font-size: 22px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  font-weight: 500;
+}
+.ds-fieldset-lead {
+  clear: both;
+  padding-top: 4px;
+  font-size: 15px;
+  color: var(--cf-fg-muted);
+}
+.ds-fieldset-body {
+  display: grid;
+  gap: 24px;
+  margin-top: 24px;
+}
+.ds-field-req {
+  font-weight: 400;
+  color: var(--cf-fg-muted);
+}
+
+/* ---- §2.4 ds-alert: resumo de erros (família critical, exceção 3 do ADR-26) ------------------------ */
+.ds-alert {
+  display: grid;
+  gap: 8px;
+  padding: 20px 24px;
+  border: 1px solid var(--cf-border);
+  border-left: 4px solid var(--color-critical-default);
+  border-radius: var(--cf-radius-md);
+  background: var(--cf-bg-200);
+  color: var(--cf-fg);
+}
+.ds-alert-title {
+  font-weight: 600;
+}
+.ds-alert ul {
+  display: grid;
+  padding-left: 20px;
+  list-style: disc;
+}
+.ds-alert a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--cf-accent-text);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.ds-alert a:focus-visible {
+  outline: 3px solid var(--cf-focus);
+  outline-offset: 2px;
+}
+
+/* ---- §2.5 ds-field-foot: erro + contador ---------------------------------------------------------- */
+.ds-field-foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+.ds-field-foot .ds-field-error:empty {
+  min-height: 0;
+}
+.ds-field-count {
+  margin-left: auto;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+  color: var(--cf-fg-muted);
+}
+
+/* ---- §2.6 ds-toolbar ------------------------------------------------------------------------------ */
+.ds-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+.ds-toolbar[data-split] {
+  column-gap: 24px;
+}
+
+/* ---- §2.7 ds-iconbtn: botão só de ícone ----------------------------------------------------------- */
+/* Em @layer components: utilitários de visibilidade do Tailwind (ex.: min-[900px]:hidden) prevalecem sobre o display. */
+@layer components {
+  .ds-iconbtn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    width: var(--cf-btn-sm);
+    height: var(--cf-btn-sm);
+    border: 0;
+    border-radius: var(--cf-radius-md);
+    background: transparent;
+    color: var(--cf-fg);
+    cursor: pointer;
+    transition: background-color var(--dur-fast) var(--ease);
+  }
+  .ds-iconbtn:hover {
+    background: var(--cf-bg-300);
+  }
+  .ds-iconbtn:focus-visible {
+    outline: 3px solid var(--cf-focus);
+    outline-offset: 2px;
+  }
+  .ds-iconbtn svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* ---- §2.8 shell móvel: drawer, barra inferior e skip link ---------------------------------------- */
+.ds-drawer-backdrop {
+  background: rgb(0 0 0 / 0.4);
+}
+.ds-drawer-panel {
+  background: var(--cf-bg);
+  color: var(--cf-fg);
+  box-shadow: var(--elevation-overlay);
+}
+.ds-drawer-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--cf-header-h);
+  flex: none;
+  padding: 0 8px 0 20px;
+  border-bottom: 1px solid var(--cf-border);
+}
+.ds-drawer-head .ds-eyebrow {
+  margin: 0;
+}
+.ds-drawer-nav li + li {
+  border-top: 1px solid var(--cf-border);
+}
+.ds-drawer-nav a {
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+  color: var(--cf-fg);
+  font-size: 18px;
+  font-weight: 500;
+  text-decoration: none;
+}
+.ds-drawer-nav a[aria-current="page"] {
+  color: var(--cf-accent-text);
+}
+.ds-drawer-nav a:focus-visible {
+  outline: 3px solid var(--cf-focus);
+  outline-offset: 2px;
+}
+.ds-bottombar {
+  border-top: 1px solid var(--cf-border);
+  background: color-mix(in oklab, var(--cf-bg) 92%, transparent);
+  color: var(--cf-fg);
+}
+.ds-bottombar a {
+  color: var(--cf-fg);
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+}
+.ds-bottombar a[aria-current="page"] {
+  color: var(--cf-accent-text);
+}
+.ds-bottombar a:focus-visible {
+  outline: 3px solid var(--cf-focus);
+  outline-offset: -3px;
+}
+.ds-skip:focus {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 80;
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: 10px 16px;
+  overflow: visible;
+  clip: auto;
+  clip-path: none;
+  white-space: normal;
+  border-radius: var(--cf-radius-md);
+  background: var(--cf-fg);
+  color: var(--cf-bg);
+  font-weight: 500;
+  outline: 3px solid var(--cf-focus);
+  outline-offset: 2px;
+}
+
+@media (max-width: 899.98px) {
+  .ds-steps {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .ds-steps > li + li {
+    border-left: 0;
+    border-top: 1px solid var(--cf-border);
+  }
+}

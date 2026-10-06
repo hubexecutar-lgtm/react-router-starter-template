@@ -1,98 +1,156 @@
-import { ArrowRight, ChevronRight, CircleDot, Eye, FileText } from 'lucide-react';
+// Showroom do RC-DS-CF (ADR-26; DS-CF-001 §3/§4 e DS-CF-001-admin §3): cada componente de @/components/ds e cada
+// classe ds-* com exemplo vivo, variantes, estados, notas de acessibilidade e do/don't. Os valores dos tokens e o
+// contraste são calculados no navegador, no tema atual. Camadas semânticas (ADR-26, exceções 1–4) aparecem só como
+// amostra de token ou por link para a rota que as usa. Interna e noindex.
+import { useState, type ReactNode } from "react";
 
-import type { Route } from './+types/admin.design-system';
+import { ArrowRight, BookOpen, Brain, Wrench } from "lucide-react";
 
-import { ComponentGallery } from '@/components/design-system/component-gallery';
-import { DataGallery } from '@/components/design-system/data-gallery';
-import { AsciiDiagram, PlainTextPanel, renderTree } from '@/components/plain';
-import { buttonVariants } from '@/components/ui/button';
-import { Callout } from '@/components/ui/callout';
-import { CALLOUT_VARIANTS, CALLOUT_VARIANT_NAMES } from '@/components/ui/callout-registry';
-import DefaultLayout from '@/layouts/DefaultLayout';
-import { css } from '@/lib/css';
-import { seo } from '@/lib/seo';
-import { tokenValue } from '@/lib/tokens.server';
-import { cn } from '@/lib/utils';
+import type { Route } from "./+types/admin.design-system";
 
-const sections = [
-  { id: 'gramatica', label: 'Gramática visual' },
-  { id: 'moodboard', label: 'Mood board' },
-  { id: 'storyboard', label: 'Storyboard' },
-  { id: 'tokens', label: 'Tokens' },
-  { id: 'callouts', label: 'Callouts' },
-  { id: 'dados', label: 'Dados e charts' },
-  { id: 'plain', label: 'Plain text' },
-  { id: 'componentes', label: 'Componentes' },
+import { ContrastTable, Specimen, Stage, Swatch, TokenProvider, TokenValue, Variant, type ContrastPair } from "@/components/admin/showroom";
+import {
+	ArticleMeta,
+	Badge,
+	Breadcrumb,
+	Button,
+	Card,
+	CardGrid,
+	Check,
+	Chips,
+	ConfirmDialog,
+	DemoNotice,
+	Dots,
+	EmptyState,
+	Faq,
+	Field,
+	Frame,
+	Input,
+	KeyPoints,
+	MoreLink,
+	PageHead,
+	SectionHead,
+	Select,
+	Table,
+	Tabs,
+	Textarea,
+	Toc,
+} from "@/components/ds";
+import { AsciiDiagram, PlainTextPanel, renderTree } from "@/components/plain";
+import { SOLUTIONS } from "@/features/solutions/data";
+import DefaultLayout from "@/layouts/DefaultLayout";
+import { seo } from "@/lib/seo";
+
+export const meta: Route.MetaFunction = ({ location }) =>
+	seo({
+		title: "Design System",
+		description: "Showroom do design system RC-DS-CF: tokens, componentes, estados, acessibilidade e do/don't.",
+		pathname: location.pathname,
+		noindex: true,
+	});
+
+/* ------------------------------------------------------------------ índice */
+
+const SECTIONS = [
+	{ id: "tokens", label: "Tokens" },
+	{ id: "camadas", label: "Camadas semânticas" },
+	{ id: "botoes", label: "Botões e links" },
+	{ id: "cards", label: "Cards e quadros" },
+	{ id: "navegacao", label: "Navegação" },
+	{ id: "cabecalhos", label: "Cabeçalhos e avisos" },
+	{ id: "laranja", label: "Cartão laranja" },
+	{ id: "conteudo", label: "Conteúdo de leitura" },
+	{ id: "formularios", label: "Formulários" },
+	{ id: "estados", label: "Estados e selos" },
+	{ id: "dados", label: "Tabelas e dados" },
+	{ id: "plain", label: "Plain text e diagramas" },
 ];
-const families = ['brand', 'attention', 'critical'] as const;
-const steps = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
-const roles = ['subtle', 'soft', 'default', 'strong', 'on-strong'];
-const neutrals = [
-  ['background', '--background'],
-  ['card', '--card'],
-  ['muted', '--muted'],
-  ['border', '--border'],
-  ['muted-foreground', '--muted-foreground'],
-  ['foreground', '--foreground'],
-  ['primary (site)', '--primary'],
+
+/* ------------------------------------------------------------------ tokens (só nomes; valores lidos no navegador) */
+
+const COLORS: [string, string, string?][] = [
+	["--cf-fg", "Texto", "--cf-bg"],
+	["--cf-fg-muted", "Texto secundário", "--cf-bg"],
+	["--cf-bg", "Página"],
+	["--cf-bg-200", "Painel, estado vazio"],
+	["--cf-bg-300", "Hover, cabeçalho de tabela"],
+	["--cf-border", "Quadros e divisões"],
+	["--cf-border-strong", "Campos, botão de contorno"],
+	["--cf-accent", "Cartão laranja, botão primário, marcadores"],
+	["--cf-accent-200", "Hover do primário, botão suave"],
+	["--cf-accent-text", "Acento como texto e links", "--cf-bg"],
+	["--cf-accent-soft", "Fundo de destaque"],
+	["--cf-accent-line", "Linha de destaque"],
+	["--cf-on-accent", "Só título grande sobre o acento"],
+	["--cf-on-accent-ink", "Texto pequeno sobre o acento"],
+	["--cf-glow", "Brilho do cartão laranja"],
+	["--cf-focus", "Anel de foco (3 px)", "--cf-bg"],
 ];
-const surfaces = [
-  { name: 'background', v: '--background', extra: true },
-  { name: 'card', v: '--card', extra: true },
-  { name: 'popover', v: '--popover', extra: true },
-  { name: 'muted', v: '--muted', extra: false },
-  { name: 'secondary', v: '--secondary', extra: false },
-  { name: 'accent', v: '--accent', extra: false },
+
+const PAIRS: ContrastPair[] = [
+	{ fg: "--cf-fg", bg: "--cf-bg", min: 4.5, use: "Texto" },
+	{ fg: "--cf-fg", bg: "--cf-bg-300", min: 4.5, use: "Texto sobre hover e cabeçalho" },
+	{ fg: "--cf-fg-muted", bg: "--cf-bg", min: 4.5, use: "Texto secundário" },
+	{ fg: "--cf-fg-muted", bg: "--cf-bg-300", min: 4.5, use: "Rótulo de tabela" },
+	{ fg: "--cf-accent-text", bg: "--cf-bg", min: 4.5, use: "Links e eyebrow" },
+	{ fg: "--cf-accent-text", bg: "--cf-accent-soft", min: 4.5, use: "Aviso demonstrativo, badge accent" },
+	{ fg: "--cf-on-accent-ink", bg: "--cf-accent", min: 4.5, use: "Botão primário, texto pequeno no laranja" },
+	{ fg: "--cf-on-accent", bg: "--cf-accent", min: 3, use: "Só título grande (≥ 24 px) no laranja" },
+	{ fg: "--cf-focus", bg: "--cf-bg", min: 3, use: "Anel de foco (não texto)" },
 ];
-const textLadder = [
-  ['foreground', '--foreground', 'títulos, valores, texto principal'],
-  ['muted-foreground', '--muted-foreground', 'descrições, corpo secundário, eixos'],
-  ['muted-foreground-subtle', '--muted-foreground-subtle', 'legendas, notas, carimbos de data — só sobre card/background/popover'],
+
+const RADII: [string, string][] = [
+	["--cf-radius-sm", "Chip, badge, célula"],
+	["--cf-radius-md", "Painel, campo, card panel"],
+	["--cf-radius-lg", "Cartão laranja, sheet"],
+	["--cf-radius-pill", "Botão, pílula"],
 ];
-const chartPalette = [
-  ['chart-1', 'brand.default', 'série principal'],
-  ['chart-2', 'attention.default', 'segunda série'],
-  ['chart-3', 'critical.default', 'terceira série / risco'],
-  ['chart-4', 'brand.500 (primitivo)', 'série única clara (radar, áreas)'],
-  ['chart-5', 'muted-foreground', 'meta e referência (traço tracejado)'],
+
+const SIZES: [string, string][] = [
+	["--cf-px", "Gutter (16 px < 768)"],
+	["--cf-pad", "Padding de card"],
+	["--cf-pad-lg", "Padding grande"],
+	["--cf-section-gap", "Ritmo de seção interna"],
+	["--cf-section", "Ritmo entre seções"],
+	["--cf-header-h", "Cabeçalho"],
+	["--cf-btn", "Botão grande (50 px)"],
+	["--cf-btn-sm", "Botão (44 px, alvo mínimo)"],
+	["--cf-corner", "Quadradinho de canto"],
+	["--cf-reading", "Coluna de leitura"],
+	["--cf-container", "Largura de seção"],
 ];
-// ---- Illustration layer, causal graph and motion (ADR-15 / LANC-001 RQ-011…015)
-const illuLayer = [
-  ['illu-ink', 'traço principal, texto embutido em SVG'],
-  ['illu-blue', 'contorno, via, foco da cena'],
-  ['illu-coral', 'ênfase pontual; nunca texto'],
-  ['illu-blue-soft', 'planos e profundidade; nunca texto'],
-  ['illu-canvas', 'fundo de ilustração'],
+
+const TYPE: [string, string][] = [
+	["--cf-h1", "Título de página (h1)"],
+	["--cf-h2", "Título de seção (h2)"],
+	["--cf-h3", "Título de card (h3)"],
+	["--cf-sub", "Lead"],
+	["--cf-body", "Corpo de leitura"],
 ];
-const graphTokens = [
-  ['graph-node-bg', 'surface-model', 'fundo do nó'],
-  ['graph-node-border-selected', 'primary', 'contorno do nó selecionado'],
-  ['graph-edge', 'muted-foreground', 'aresta padrão (≥ 3:1)'],
-  ['graph-edge-active', 'primary', 'aresta destacada'],
-  ['graph-accent-event', 'illu-coral + contorno illu-ink', 'ênfase de evento (decorativa)'],
+
+const FAMILIES = ["brand", "attention", "critical"] as const;
+const ROLES = ["subtle", "soft", "default", "strong"] as const;
+const FAMILY_LABEL = { brand: "Informação", attention: "Atenção", critical: "Crítico" } as const;
+const CHARTS = [1, 2, 3, 4, 5].map((n) => `--chart-${n}`);
+const GRAPH: [string, string][] = [
+	["--graph-node-bg", "Fundo do nó"],
+	["--graph-node-border", "Contorno do nó"],
+	["--graph-node-border-selected", "Nó selecionado"],
+	["--graph-node-text", "Rótulo do nó"],
+	["--graph-edge", "Aresta"],
+	["--graph-edge-active", "Aresta destacada"],
 ];
-const motionTokens = ['--ease', '--dur-fast', '--dur-base', '--dur-slow', '--radius-pill', '--radius-sheet'];
-// ---- Plain text system (ADR-05 / ADR-BLOG-ASCII-001 + annex A)
-const storeRows = [
-  ['STORE_HEADER', 'StoreHeader (h1 + descrição + selo "Catálogo de exemplo")', 'components/store-header.tsx', 'texto fixo', 'READY'],
-  ['SEARCH + FILTER', 'Input[type=search] + Select', 'store-header.tsx', 'q, area', 'READY'],
-  ['TABS', 'Tabs em ScrollArea horizontal', 'components/store-catalog.tsx', 'ITEM_TYPES', 'READY'],
-  ['CATEGORIAS', 'CategoryCard × tipos com itens', 'components/category-card.tsx', 'contagem por tipo', 'READY'],
-  ['DESTAQUE', 'FeaturedItem', 'components/featured-item.tsx', 'item.featured', 'READY'],
-  ['SKILLS + "Ver todas"', 'CatalogSection + SkillCard × 4', 'catalog-section.tsx, skill-card.tsx', 'type=skill', 'READY'],
-  ['E-BOOKS + "Ver todos"', 'CatalogSection + VisualProductCard × 3', 'visual-product-card.tsx', 'type=ebook', 'READY'],
-  ['(estados)', 'CatalogSkeleton / CatalogEmpty / CatalogError', 'catalog-states.tsx', 'status, resultados', 'LOADING/EMPTY/ERROR'],
+
+const COLOR_TOKENS = [
+	...COLORS.map(([t]) => t),
+	...FAMILIES.flatMap((f) => ROLES.map((r) => `--color-${f}-${r}`)),
+	...CHARTS,
+	...GRAPH.map(([t]) => t),
 ];
-const plainTokens = [
-  ['--plain-surface', 'alias de --surface-default'],
-  ['--plain-border', 'alias de --border-default'],
-  ['--plain-text', 'alias de --foreground'],
-  ['--plain-accent', 'var(--primary)'],
-  ['--plain-accent-soft', 'var(--primary-soft)'],
-  ['--plain-radius-desktop / mobile', '28px / 22px'],
-  ['--plain-font', 'ui-monospace, SFMono-Regular, Menlo…'],
-  ['--plain-font-size', 'clamp(0.875rem, 1.6vw, 1.125rem)'],
-];
+const OTHER_TOKENS = [...RADII, ...SIZES, ...TYPE].map(([t]) => t).concat(["--cf-font", "--cf-mono", "--cf-measure"]);
+
+/* ------------------------------------------------------------------ plain text (ADR-05; IDs usados em tests/plain.spec.ts) */
+
 const orgchart = `FASE 01
 │
 ├── 01. ENTRADA / PLANEJAMENTO
@@ -129,642 +187,882 @@ A4
     executar
     verificar
     evidenciar`;
-const treeJson = {
-  label: 'RELATÓRIO',
-  children: [
-    { label: 'MARKDOWN NORMAL', children: [{ label: 'títulos' }, { label: 'parágrafos' }, { label: 'listas' }, { label: 'tabelas' }] },
-    { label: 'PLAIN TEXT PANEL', children: [{ label: 'instrução' }, { label: 'procedimento' }, { label: 'definição' }, { label: 'evidência' }] },
-    { label: 'ASCII DIAGRAM', children: [{ label: 'flowchart' }, { label: 'organograma' }, { label: 'arquitetura' }] },
-  ],
-};
-const treeFromJson = renderTree(treeJson);
-const directory = `src/
-│
-├── components/
-│   └── plain/
-│       ├── PlainSurface.tsx
-│       ├── PlainTextPanel.tsx
-│       ├── AsciiDiagram.tsx
-│       ├── CopyButton.tsx
-│       ├── plain.types.ts
-│       ├── PlainSurface.css
-│       ├── PlainTextPanel.css
-│       ├── AsciiDiagram.css
-│       └── index.ts
-│
-└── lib/
-    └── plain/
-        ├── normalizeText.ts
-        ├── normalizeDiagram.ts
-        ├── renderTree.ts
-        ├── remarkPlain.ts
-        ├── copy.ts
-        └── types.ts`;
-const mindmap = `                 ┌── definir problema
-                 ├── decompor fatores
-   RISCO ────────┤
-   COGNITIVO     ├── medir exposição
-                 └── registrar evidência
-                 │
-                 ▼
-          PROCESSO NEUROADAPTATIVO`;
+const treeFromJson = renderTree({
+	label: "RELATÓRIO",
+	children: [
+		{ label: "MARKDOWN NORMAL", children: [{ label: "títulos" }, { label: "parágrafos" }, { label: "listas" }, { label: "tabelas" }] },
+		{ label: "PLAIN TEXT PANEL", children: [{ label: "instrução" }, { label: "procedimento" }, { label: "definição" }, { label: "evidência" }] },
+		{ label: "ASCII DIAGRAM", children: [{ label: "flowchart" }, { label: "organograma" }, { label: "arquitetura" }] },
+	],
+});
 const wide = `ENTRADA ──► TRIAGEM ──► PESQUISA ──► ESTRUTURA ──► REDAÇÃO ──► REVISÃO TÉCNICA ──► REVISÃO EDITORIAL ──► PUBLICAÇÃO ──► MEDIÇÃO ──► APRENDIZADO`;
-const panels = [
-  { kind: 'instruction', title: 'Instrução', source: `Não iniciar workflows novos diretamente em A3 ou A4.
+const PANELS = [
+	{
+		kind: "instruction",
+		title: "Instrução",
+		source: `Não iniciar workflows novos diretamente em A3 ou A4.
 Sequência inicial:
 1. definir escopo;
 2. identificar ferramentas;
 3. mapear permissões;
 4. executar em A1/A2;
-5. ampliar autonomia somente após validação.` },
-  { kind: 'procedure', title: 'Procedimento', source: `01  abrir o briefing
-02  listar insumos e fontes
-03  validar critérios de conclusão
-04  produzir o rascunho
-05  registrar evidências da revisão` },
-  { kind: 'definition', title: 'Definição', source: `A0  ORIENTAR
+5. ampliar autonomia somente após validação.`,
+	},
+	{
+		kind: "definition",
+		title: "Definição",
+		source: `A0  ORIENTAR
     nenhuma ação externa
 A1  PREPARAR
     gera plano ou artefato
 A2  HUMAN-IN-THE-LOOP
-    humano autoriza execução` },
-  { kind: 'decision', title: 'Decisão', source: `DECISÃO   ADOTADA
-DATA      2026-09-30
-ESCOPO    diagramas e textos operacionais do blog
-MOTIVO    conteúdo copiável, pesquisável e acessível` },
-  { kind: 'status', title: 'Estado', source: `STATUS              IMPLEMENTED
-responsividade      OK
-acessibilidade      OK
-clipboard           OK
-design tokens       OK` },
-  { kind: 'evidence', title: 'Evidência', source: `teste     tests/plain.spec.ts
-resultado aprovado
-build     npm run build — sem erros
-link      /admin/relatorio-exemplo` },
-];
+    humano autoriza execução`,
+	},
+	{
+		kind: "status",
+		title: "Estado",
+		source: `ID        STAGE      STATUS
+HKW-01    Bootstrap  VERIFIED
+HKW-02    Inventory  VERIFIED
+HKW-03    Mapping    BLOCKED`,
+	},
+	{
+		kind: "decision",
+		title: "Decisão",
+		source: `DECISÃO   ADOTADA
+DATA      2026-10-06
+ESCOPO    painéis e diagramas na pele do RC-DS-CF
+MOTIVO    conteúdo copiável, pesquisável e acessível`,
+	},
+] as const;
 const longText = `Este painel demonstra a regra do anexo A, seção 6: o texto operacional usa a mesma superfície dos diagramas, mas quebra a linha automaticamente para que a leitura no celular não dependa de rolagem horizontal. Identificadores longos como REPORT-GENERATOR-CONTRACT-001/REGRA-06/texto-longo-sem-espacos-para-testar-quebra também quebram sem estourar o layout.
 
 As quebras de linha e os espaços do autor continuam preservados:
     - item recuado
     - outro item recuado`;
-const storyboard = [
-  { n: '01', title: 'Blog — início', route: '/blog/', removed: true, image: '/images/binoculo.webp', uses: 'Hero, Button, cards de território, filtros' },
-  { n: '02', title: 'Territórios', route: '/blog/#territorios-title', removed: true, image: '/images/equipe-tablet.webp', uses: 'Filtro (Button outline sm), cards' },
-  { n: '03', title: 'Artigo', route: '/blog/<slug>/', removed: true, image: '/images/binoculo.webp', uses: 'Prose, capitular, Callout (decision, question, quote, example, note)' },
-  { n: '04', title: 'Painel', route: '/admin', image: '/images/mao-chaves.webp', uses: 'Cards de acesso, Design System' },
-  { n: '05', title: 'Hub e catálogos', route: '/hub-editorial/', removed: true, image: '/images/equipe-tablet.webp', uses: 'Ferramentas autônomas (Hub, Skills, Catálogo offline)' },
-];
-const spacing = [4, 8, 12, 16, 20, 24, 32, 48, 64];
-const radii = [
-  ['radius-sm (botões)', 'var(--radius-sm)'],
-  ['radius-lg (base)', 'var(--radius-lg)'],
-  ['radius-xl (cards)', 'var(--radius-xl)'],
-  ['callout-sm (= radius-md)', 'var(--callout-radius-sm)'],
-  ['callout-md (= radius-lg)', 'var(--callout-radius-md)'],
-  ['callout-lg (= radius-xl)', 'var(--callout-radius-lg)'],
-];
-const elevations = [
-  ['elevation-flat', 'cards, painéis, células de tabela', 'var(--elevation-flat)'],
-  ['elevation-raised', 'controles (escala xs e sm)', 'var(--elevation-raised)'],
-  ['elevation-overlay', 'popover, dialog, drawer, sheet, hover-card', 'var(--elevation-overlay)'],
-];
-const surfaceScale = [
-  ['surface-page', 'fundo da página'],
-  ['surface-subtle', 'áreas secundárias'],
-  ['surface-default', 'cards, células, painéis, diagramas'],
-  ['surface-hover', 'hover (= --muted / --accent)'],
-  ['surface-selected', 'item ou linha selecionada'],
-  ['border-subtle', 'divisões leves'],
-  ['border-default', 'borda padrão (só estrutura)'],
-  ['border-strong', 'ênfase estrutural'],
+
+/* ------------------------------------------------------------------ dados de exemplo (rotulados) */
+
+const TABLE_HEAD = ["Componente", "Classe", "Variantes", "Estado"];
+const TABLE_ROWS = [
+	["Botão", <code key="c">ds-btn</code>, "primary, outline, ghost; lg", "Pronto"],
+	["Card", <code key="c">ds-card</code>, "cell, panel; lg", "Pronto"],
+	["Chips", <code key="c">ds-chips</code>, "atual, contagem, em preparação", "Pronto"],
+	["Painel plain text", <code key="c">ds-panel</code>, "definição, instrução, estado", "Pronto"],
 ];
 
-// Hex values shown in this page are read from the token source, never duplicated here.
-export function loader() {
-  return {
-    tokens: Object.fromEntries(
-      [...surfaceScale.map(([n]) => n), ...illuLayer.map(([n]) => n), ...motionTokens.map((t) => t.slice(2))].map((n) => [n, tokenValue(`--${n}`)]),
-    ),
-    grammar: Object.fromEntries(
-      [...grammarSurfaces.map((g) => g.token), '--foreground', '--muted-foreground', '--primary'].map((t) => [t, tokenValue(t)]),
-    ),
-  };
+const SOLUTION = SOLUTIONS[0];
+
+/* ------------------------------------------------------------------ página */
+
+function Section({ id, label, heading, lead, children }: { id: string; label: string; heading: string; lead: string; children: ReactNode }) {
+	return (
+		<section id={id} className="ds-showroom-section" aria-labelledby={`${id}-titulo`} data-showroom-section={id}>
+			<SectionHead id={`${id}-titulo`} label={label} heading={heading} lead={lead} align="left" />
+			{children}
+		</section>
+	);
 }
-// ---- Visual grammar (mood board 10, ADR-11): four surfaces, type, actions, table, card, model.
-const grammarSurfaces = [
-  { n: '1', name: 'Canvas', role: 'Superfície principal', token: '--background', use: 'Canvas limpo para leitura e foco no conteúdo.' },
-  { n: '2', name: 'Subtle', role: 'Superfície secundária', token: '--surface-subtle', use: 'Blocos, seções e módulos de apoio.' },
-  { n: '3', name: 'Tabular', role: 'Células e tabelas', token: '--surface-tabular', use: 'Tabelas, listas e dados estruturados.' },
-  { n: '4', name: 'Diagram', role: 'Painel de modelo', token: '--surface-model', use: 'Destaque para modelos, fluxos e esquemas.' },
-];
-const grammarTable = [
-  ['Artigo', 'Texto', 'Canvas', 'Conteúdo principal'],
-  ['Guia', 'Passo a passo', 'Subtle', 'Aprendizado prático'],
-  ['Referência', 'Tabela', 'Tabular', 'Dados estruturados'],
-  ['Modelo', 'Diagrama', 'Diagram', 'Explicação visual'],
-];
-const grammarSteps = [
-  { icon: Eye, title: '1. Observar', text: 'Contexto e sinais' },
-  { icon: FileText, title: '2. Analisar', text: 'Modelos e evidências' },
-  { icon: CircleDot, title: '3. Decidir', text: 'Ação no mundo real' },
-];
-const h2 = 'text-primary scroll-mt-28 text-4xl font-medium';
-const lead = 'text-muted-foreground mt-3 max-w-2xl text-lg font-medium';
 
-export const meta: Route.MetaFunction = ({ location }) =>
-  seo({
-    title: 'Design System',
-    description: 'Mood board, storyboard, tokens e componentes do Risco Cognitivo.',
-    pathname: location.pathname,
-  });
+export default function DesignSystem() {
+	const [confirmed, setConfirmed] = useState<string | null>(null);
+	const [name, setName] = useState("");
+	const nameError = name.length > 0 && name.trim().length < 3 ? "O nome está curto demais. Ele aparece no cabeçalho do relatório. Use ao menos 3 letras." : undefined;
 
-export default function DesignSystem({ loaderData }: Route.ComponentProps) {
-  const { tokens, grammar } = loaderData;
-  return (
-    <DefaultLayout>
-      <div className="container max-w-5xl pt-12 pb-24 lg:pt-20">
-        <p className="text-muted-foreground text-sm font-medium"><a href="/admin" className="hover:underline">Painel</a> / Design System</p>
-        <h1 className="mt-2 text-3xl tracking-tight sm:text-4xl md:text-5xl lg:text-6xl">Design System</h1>
-        <p className={lead}>
-          Fonte de verdade visual do blog: referências, fluxo, tokens e todos os componentes. Callouts seguem
-          DS-CALLOUT-001 e o anexo de paleta DS-CALLOUT-001-PAL-ANNEX-01.
-        </p>
-        <nav aria-label="Seções" className="mt-8 flex flex-wrap gap-2">
-          {sections.map((s, i) => <a key={i} href={`#${s.id}`} className={buttonVariants({ variant: 'outline', size: 'sm' })}>{s.label}</a>)}
-        </nav>
+	return (
+		<DefaultLayout>
+			<div className="ds-page" data-showroom>
+				<PageHead
+					crumbs={[{ label: "Painel", href: "/admin/" }, { label: "Design System" }]}
+					eyebrow="Painel · RC-DS-CF"
+					title="Design System"
+					lead="Tokens, componentes, variantes e estados do design system do site, com notas de acessibilidade e do/don't. Os valores e o contraste são calculados no tema atual."
+					notice="Showroom vivo do design system novo (DS-CF-001): todo exemplo usa os componentes reais."
+					actions={
+						<Button href="/admin/rotas/" variant="outline">
+							Ver as rotas do site
+						</Button>
+					}
+				/>
 
-        {/* Visual grammar — mood board 10 */}
-        <section id="gramatica" className="mt-20" aria-labelledby="gramatica-title" data-testid="visual-grammar">
-          <p className="rc-eyebrow">Mood board 10 · ADR-11</p>
-          <h2 id="gramatica-title" className="rc-display mt-3 text-5xl">Gramática visual</h2>
-          <p className="rc-lead mt-3 max-w-2xl text-lg">
-            Uma linguagem, três camadas: clareza editorial, estrutura de informação e elementos de modelo. Valores lidos de{' '}
-            <code>app/styles/global.css</code>.
-          </p>
+				<TokenProvider names={OTHER_TOKENS} colors={COLOR_TOKENS}>
+					<div className="ds-container grid gap-10 pb-24 min-[1100px]:grid-cols-[220px_minmax(0,1fr)]">
+						<Toc items={SECTIONS} />
+						<div className="min-w-0">
+							{/* ------------------------------------------------------------ tokens */}
+							<Section id="tokens" label="Fundação" heading="Tokens" lead="Fonte única no bloco RC-DS-CF do global.css. Valores lidos do navegador; troque o tema para ver o escuro.">
+								<Specimen
+									id="tokens-cor"
+									name="Cores"
+									api="--cf-*"
+									a11y={["Texto de leitura ≥ 4,5:1; texto grande e não texto ≥ 3:1.", "A borda é estrutural (≈ 1,1:1): nunca carrega estado sozinha."]}
+									dos={["Usar var(--cf-*) em componentes e rotas.", "Usar --cf-accent-text para o acento como texto."]}
+									donts={["Escrever hex em TSX ou em ds-*.css.", "Pôr texto pequeno branco sobre o laranja."]}
+								>
+									<div className="ds-swatches" data-testid="cf-colors">
+										{COLORS.map(([t, role, on]) => (
+											<Swatch key={t} token={t} role={role} contrastOn={on} />
+										))}
+									</div>
+								</Specimen>
 
-          <div className="mt-8 grid grid-cols-2 gap-3 lg:grid-cols-4">
-            {grammarSurfaces.map((g) => (
-              <div key={g.name} className="rc-surface rc-cell flex flex-col gap-3 p-4" data-grammar-surface={g.name}>
-                <p className="rc-title text-base">{g.n}. {g.name}</p>
-                <p className="text-muted-foreground -mt-2 text-xs">{g.role}</p>
-                <span className="h-20 rounded-lg border border-[var(--border-default)]" style={css(`background: var(${g.token})`)} data-swatch={g.token}></span>
-                <p className="font-mono text-xs">{grammar[g.token]}</p>
-                <p className="text-muted-foreground text-xs">{g.use}</p>
-              </div>
-            ))}
-          </div>
+								<Specimen
+									id="tokens-contraste"
+									name="Pares de contraste"
+									api="WCAG 2.2 AA · calculado no tema atual"
+									lead="Cada par é resolvido para sRGB no navegador (inclusive oklch no escuro) e comparado com o mínimo do uso."
+									a11y={["O resultado é texto (AA ou Abaixo do mínimo), não só cor.", "A tabela empilha no celular em células rotuladas."]}
+									dos={["Conferir aqui um par novo antes de usá-lo."]}
+									donts={["Usar branco sobre o acento em texto menor que 24 px."]}
+								>
+									<div data-testid="contrast-pairs">
+										<ContrastTable pairs={PAIRS} />
+									</div>
+								</Specimen>
 
-          <div className="mt-4 grid gap-4 lg:grid-cols-2 [&>*]:min-w-0">
-            <div className="rc-cell p-5" data-testid="grammar-type">
-              <p className="rc-eyebrow">Hierarquia tipográfica</p>
-              <p className="rc-meta mt-5 normal-case">H1 / Título · Inter Bold 56/64 · {grammar['--foreground']}</p>
-              <p className="rc-display mt-2 text-[2.25rem] leading-[1.14] sm:text-[3rem]">Conhecimento para decisões melhores.</p>
-              <p className="rc-meta mt-6 normal-case">Corpo / Texto · Inter Regular 18/28 · {grammar['--foreground']} / {grammar['--muted-foreground']}</p>
-              <p className="mt-2 text-lg leading-7">Artigos, guias e relatos sobre como pensamos, decidimos e lidamos com incertezas no mundo real.</p>
-              <p className="rc-meta mt-6 normal-case">Mono / Técnico · IBM Plex Mono 14/20 · {grammar['--muted-foreground']}</p>
-              <p className="mt-2 inline-block rounded-lg border border-[var(--border-default)] px-3 py-2 font-mono text-sm">rc_blog_001  v1.0.0  2026-10-02</p>
-            </div>
-            <div className="flex flex-col gap-4">
-              <div className="rc-cell p-5" data-testid="grammar-actions">
-                <p className="rc-eyebrow">Botões e ações</p>
-                <div className="mt-4 flex flex-wrap items-center gap-3">
-                  <a href="#gramatica" className={cn(buttonVariants({ size: 'lg' }), 'gap-2')}>Ler artigo <ArrowRight className="size-4" aria-hidden="true" /></a>
-                  <a href="#gramatica" className={buttonVariants({ variant: 'outline', size: 'lg' })}>Ver todos</a>
-                  <a href="#gramatica" className="rc-link inline-flex items-center gap-1.5">Saiba mais <ChevronRight className="size-4" aria-hidden="true" /></a>
-                </div>
-              </div>
-              <div className="rc-cell p-5">
-                <p className="rc-eyebrow">Tabela com gutters</p>
-                <div className="mt-3 overflow-x-auto" role="region" aria-label="Tabela com gutters" tabIndex={0}>
-                  <table className="ds-table ds-table--stack w-full text-left [--table-cell-padding:0.5rem_0.75rem] [--table-font-size:0.875rem] sm:min-w-[22rem]">
-                    <thead><tr><th scope="col">Tópico</th><th scope="col">Formato</th><th scope="col">Camada</th><th scope="col">Uso</th></tr></thead>
-                    <tbody>{grammarTable.map((row) => <tr key={row[0]}>{row.map((c, j) => <td key={c} data-label={['Tópico', 'Formato', 'Camada', 'Uso'][j]}><div>{c}</div></td>)}</tr>)}</tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-            <div className="grid gap-4 lg:col-span-2 lg:grid-cols-2 [&>*]:min-w-0">
-              <div className="rc-cell p-5">
-                <p className="rc-eyebrow">Card editorial</p>
-                <article className="mt-3 grid grid-cols-[1fr_6rem] gap-4 rc-cell p-4">
-                  <div>
-                    <p className="rc-eyebrow">Artigo</p>
-                    <h3 className="rc-title mt-1.5 text-lg">Como lidar com incerteza sem paralisar</h3>
-                    <p className="text-muted-foreground mt-1.5 text-sm">Estratégias práticas para decidir quando o futuro não é claro.</p>
-                    <p className="rc-meta mt-3">8 min de leitura</p>
-                  </div>
-                  <img src="/images/equipe-tablet.webp" alt="" className="aspect-square w-full rounded-[var(--table-radius)] object-contain" loading="lazy" />
-                </article>
-              </div>
-              <div className="rc-surface rounded-[var(--table-radius)] bg-[var(--surface-model)] p-5" data-testid="grammar-model">
-                <p className="rc-eyebrow">Painel de modelo</p>
-                <ol className="mt-3 grid grid-cols-3 gap-2">
-                  {grammarSteps.map(({ icon: Icon, title, text }) => (
-                    <li key={title} className="bg-background flex flex-col items-center gap-1.5 rounded-[var(--table-radius)] p-3 text-center">
-                      <Icon className="text-primary size-5" aria-hidden="true" />
-                      <span className="text-xs font-semibold">{title}</span>
-                      <span className="text-muted-foreground text-[0.6875rem] leading-tight">{text}</span>
-                    </li>
-                  ))}
-                </ol>
-              </div>
-            </div>
-          </div>
-        </section>
+								<Specimen
+									id="tokens-forma"
+									name="Raios"
+									api="--cf-radius-sm · md · lg · pill"
+									a11y={["Raio não comunica estado."]}
+									dos={["Pílula só em botão e pílula; md em painel e campo."]}
+									donts={["Misturar raios diferentes no mesmo grupo de cards."]}
+								>
+									<div className="ds-swatches" data-testid="cf-radii">
+										{RADII.map(([t, role]) => (
+											<Swatch key={t} token={t} role={role} kind="radius" />
+										))}
+									</div>
+								</Specimen>
 
-        {/* Mood board */}
-        <section id="moodboard" className="mt-20" aria-labelledby="moodboard-title">
-          <h2 id="moodboard-title" className={h2}>Mood board</h2>
-          <p className={lead}>Imagens em uso, cores e tipografia que definem o tom editorial.</p>
-          <div className="mt-8 grid grid-cols-6 grid-rows-2 gap-3">
-            <img src="/images/binoculo.webp" alt="Ilustração de uma mulher observando com um binóculo azul" className="col-span-3 row-span-2 aspect-[4/5] w-full rounded-[var(--table-radius)] object-contain sm:col-span-2" />
-            <img src="/images/equipe-tablet.webp" alt="" className="col-span-3 h-full w-full rounded-[var(--table-radius)] object-contain sm:col-span-2" />
-            <div className="col-span-3 flex flex-col justify-between rounded-2xl p-5 sm:col-span-2" style={css("background: var(--color-brand-strong); color: var(--color-brand-on-strong)")}>
-              <span className="text-sm font-medium opacity-80">Display · Inter 700</span>
-              <span className="text-4xl font-medium tracking-tight">Aa</span>
-            </div>
-            <div className="col-span-3 grid grid-cols-3 overflow-hidden rounded-2xl sm:col-span-2">
-              <span style={css("background: var(--color-brand-default)")}></span>
-              <span style={css("background: var(--color-attention-default)")}></span>
-              <span style={css("background: var(--color-critical-default)")}></span>
-            </div>
-            <img src="/images/mao-chaves.webp" alt="" className="col-span-3 h-full w-full rounded-[var(--table-radius)] object-contain sm:col-span-2" />
-          </div>
-        </section>
+								<Specimen
+									id="tokens-tipo"
+									name="Tipografia"
+									api="--cf-font (Hanken Grotesk) · --cf-mono (IBM Plex Mono)"
+									a11y={["Linhas de leitura até 68ch (--cf-measure).", "Mono só em rótulos técnicos e IDs, nunca em prosa."]}
+									dos={["Usar a escala --cf-h1…--cf-body; ela encolhe abaixo de 768 px."]}
+									donts={["Escrever parágrafo em fonte mono."]}
+								>
+									<div data-testid="cf-type">
+										{TYPE.map(([t, role]) => (
+											<div key={t} className="ds-type-sample" data-type-token={t}>
+												<span style={{ fontSize: `var(${t})` }}>{role}</span>
+												<span className="ds-swatch-name">
+													{t} · <TokenValue name={t} />
+												</span>
+											</div>
+										))}
+										<div className="ds-type-sample" data-type-token="--cf-mono">
+											<span style={{ fontFamily: "var(--cf-mono)", fontSize: 14, fontWeight: 400 }} data-mono-sample>
+												RC-DS-CF-001 · 2026-10-06
+											</span>
+											<span className="ds-swatch-name">
+												--cf-mono · <TokenValue name="--cf-mono" />
+											</span>
+										</div>
+									</div>
+								</Specimen>
 
-        {/* Storyboard */}
-        <section id="storyboard" className="mt-20" aria-labelledby="storyboard-title">
-          <h2 id="storyboard-title" className={h2}>Storyboard</h2>
-          <p className={lead}>A jornada do leitor, quadro a quadro, com os componentes de cada etapa.</p>
-          <ol className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {storyboard.map((f, i) => (
-              <li key={i} className="rc-cell overflow-hidden">
-                <img src={f.image} alt="" loading="lazy" className="aspect-video w-full object-contain" />
-                <div className="p-5">
-                  <p className="text-primary text-sm font-medium">{f.n}</p>
-                  <h3 className="mt-1 text-lg font-medium">{f.title}</h3>
-                  <p className="text-muted-foreground mt-1 text-sm">{f.uses}</p>
-                  {f.removed ? (
-                    <p className="text-muted-foreground mt-4 text-sm">Rota removida no site do zero (ADR-13).</p>
-                  ) : (
-                    <a href={f.route} className={cn(buttonVariants({ variant: 'outline', size: 'sm' }), 'mt-4')}>Abrir</a>
-                  )}
-                  <p className="text-muted-foreground mt-2 font-mono text-xs break-all">{f.route}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </section>
+								<Specimen
+									id="tokens-espaco"
+									name="Espaçamento e medidas"
+									api="--cf-px · --cf-pad · --cf-section · --cf-btn …"
+									a11y={["--cf-btn-sm (44 px) é o alvo de toque mínimo (accessibility-review)."]}
+									dos={["Usar o ritmo --cf-section entre seções e --cf-section-gap dentro de páginas internas."]}
+									donts={["Criar espaçamento de seção novo em px literal."]}
+								>
+									<div className="ds-swatches" data-testid="cf-sizes">
+										{SIZES.map(([t, role]) => (
+											<Swatch key={t} token={t} role={role} kind="size" />
+										))}
+									</div>
+								</Specimen>
+							</Section>
 
-        {/* Tokens */}
-        <section id="tokens" className="mt-20" aria-labelledby="tokens-title">
-          <h2 id="tokens-title" className={h2}>Tokens</h2>
-          <p className={lead}>Quatro camadas: primitivo → semântico → componente → variante. Valores concretos só existem na camada primitiva.</p>
+							{/* ------------------------------------------------------------ camadas semânticas */}
+							<Section
+								id="camadas"
+								label="Exceções do ADR-26"
+								heading="Camadas semânticas"
+								lead="Cores que codificam significado, não identidade. Aqui aparecem só como amostra de token; os componentes vivem nas rotas que as usam."
+							>
+								<Specimen
+									id="camadas-callout"
+									name="Famílias de estado"
+									api="--color-{brand,attention,critical}-{subtle,soft,default,strong}"
+									lead="Estados de informação, atenção e erro (ex.: mensagem de erro de campo em --color-critical-default)."
+									a11y={["Estado sempre com texto ou ícone rotulado, nunca só cor."]}
+									dos={["Usar a família critical para erro e attention para aviso."]}
+									donts={["Usar uma família de estado como cor de marca ou de destaque."]}
+								>
+									{FAMILIES.map((f) => (
+										<div key={f} className="mb-6" data-layer-family={f}>
+											<p className="ds-label" style={{ marginBottom: 8 }}>
+												{FAMILY_LABEL[f]} · {f}
+											</p>
+											<div className="ds-layer-family">
+												{ROLES.map((r) => (
+													<Swatch key={r} token={`--color-${f}-${r}`} role={r} />
+												))}
+											</div>
+										</div>
+									))}
+								</Specimen>
 
-          <h3 className="mt-10 text-xl font-medium">Primitivos (3 famílias × 11 passos)</h3>
-          <div className="mt-4 flex flex-col gap-3">
-            {families.map((f, i) => (
-              <div key={i}>
-                <p className="text-muted-foreground mb-2 font-mono text-xs">{f}</p>
-                <div className="grid grid-cols-11 overflow-hidden rounded-[var(--table-radius)] border">
-                  {steps.map((st, i) => (
-                    <div key={i} className="flex h-14 items-end p-1" style={css(`background: var(--${f}-${st}); color: ${st >= 600 ? 'white' : 'black'}`)}>
-                      <span className="font-mono text-[10px]">{st}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
+								<Specimen
+									id="camadas-graficos"
+									name="Séries de gráfico"
+									api="--chart-1 … --chart-5 (ADR-04)"
+									a11y={["Cada série ≥ 3:1 sobre o fundo; séries também se distinguem por legenda e traço."]}
+									dos={["Usar var(--chart-N) em gráficos."]}
+									donts={["Distinguir séries só por cor."]}
+								>
+									<div className="ds-swatches" data-testid="chart-palette">
+										{CHARTS.map((t, i) => (
+											<Swatch key={t} token={t} role={["Série principal", "Segunda série", "Terceira série / risco", "Série única clara", "Meta e referência"][i]} contrastOn="--cf-bg" />
+										))}
+									</div>
+								</Specimen>
 
-          <h3 className="mt-10 text-xl font-medium">Papéis semânticos</h3>
-          <p className="text-muted-foreground mt-1 text-sm">Alterne o tema no menu para ver os valores provisórios do modo escuro.</p>
-          <div className="mt-4 grid gap-4 md:grid-cols-3">
-            {families.map((f, i) => (
-              <div key={i} className="overflow-hidden rounded-[var(--table-radius)] border">
-                {roles.map((r, i) => (
-                  <div key={i} className="flex items-center gap-3 border-b p-3 last:border-b-0">
-                    <span className="size-8 shrink-0 rounded-md border" style={css(`background: var(--color-${f}-${r})`)}></span>
-                    <span className="font-mono text-xs">--color-{f}-{r}</span>
-                  </div>
-                ))}
-              </div>
-            ))}
-          </div>
+								<Specimen
+									id="camadas-grafo"
+									name="Grafo causal"
+									api="--graph-* (ADR-19)"
+									a11y={["Nó e aresta têm rótulo em texto; seleção não depende só da cor."]}
+									dos={["Usar --graph-* só no canvas do mapa."]}
+									donts={["Reaproveitar --graph-* fora do mapa."]}
+								>
+									<div className="ds-swatches" data-testid="graph-tokens">
+										{GRAPH.map(([t, role]) => (
+											<Swatch key={t} token={t} role={role} />
+										))}
+									</div>
+									<p className="ds-more" style={{ marginTop: 0 }}>
+										<MoreLink href="/mapas/">Ver o grafo no Mapa</MoreLink>
+									</p>
+								</Specimen>
 
-          <h3 className="mt-10 text-xl font-medium">Neutros (infraestrutura)</h3>
-          <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
-            {neutrals.map(([name, v], i) => (
-              <div key={i} className="flex items-center gap-3">
-                <span className="size-10 shrink-0 rounded-lg border" style={css(`background: var(${v})`)}></span>
-                <span className="font-mono text-xs">{name}</span>
-              </div>
-            ))}
-          </div>
+								<Specimen
+									id="camadas-artefatos"
+									name="Folha A4 e card de solução"
+									api="prisma-sheet* / --ps-* · solution-*"
+									lead="Artefatos com pele própria: a folha A4 é sempre clara (impressão) e o card 2×2 usa os quadrantes semânticos do ADR-24."
+									a11y={["Cada quadrante do card tem número e rótulo em texto.", "A folha A4 mantém contraste no tema escuro porque não muda de tema."]}
+									dos={["Ver e testar esses artefatos nas rotas reais."]}
+									donts={["Copiar a pele da folha ou do card para outros componentes."]}
+								>
+									<CardGrid cols={2} label="Artefatos com pele própria" gap>
+										<Card href="/prisma/" variant="panel" eyebrow="Folha A4" title="Prisma" text="Formulário guiado que gera a folha A4 para imprimir ou salvar em PDF." cta="Abrir o Prisma" />
+										{SOLUTION && (
+											<Card
+												href={`/ferramentas/solucoes/${SOLUTION.slug}/`}
+												variant="panel"
+												eyebrow="Card de solução"
+												title={SOLUTION.name}
+												text="Card 2×2 com dor, solução, passos e progresso."
+												cta="Abrir a solução"
+											/>
+										)}
+									</CardGrid>
+								</Specimen>
+							</Section>
 
-          <h3 className="mt-10 text-xl font-medium">Superfícies, bordas e elevação</h3>
-          <p className="text-muted-foreground mt-2 max-w-2xl text-base font-medium">
-            Um único contrato neutro (ADR-09): cards, células, painéis e diagramas usam <code>surface-default</code> + <code>border-default</code> e
-            nenhuma sombra. Sombra indica elevação real (overlays). O <code>--plain-*</code> é só alias.
-          </p>
-          <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4" data-testid="surface-scale">
-            {surfaceScale.map(([n, use]) => (
-              <div key={n} className="flex min-w-0 flex-col gap-2">
-                <span className="h-14 rounded-lg border" data-surface-token={n} style={css(`background: var(--${n})`)}></span>
-                <span className="font-mono text-xs">--{n}</span>
-                <span className="text-muted-foreground text-xs">claro: {n === 'surface-page' ? 'branco' : tokens[n]} · {use}</span>
-              </div>
-            ))}
-          </div>
+							{/* ------------------------------------------------------------ botões */}
+							<Section id="botoes" label="Ação" heading="Botões e links" lead="Pílula de 44 px (50 px no tamanho lg). O rótulo começa com verbo.">
+								<Specimen
+									id="botoes-button"
+									name="Button"
+									api='<Button variant="primary | outline | ghost" size="lg" href? />'
+									a11y={[
+										"Com href vira <a>; sem href, <button type=button>.",
+										"Alvo ≥ 44 px; foco com anel --cf-focus de 3 px.",
+										"Primário: texto --cf-on-accent-ink sobre o acento (4,95:1).",
+									]}
+									dos={["Um único primário por grupo de ações.", "Rótulo com verbo: “Abrir o Mapa”."]}
+									donts={["Usar Button para navegação de texto corrido (use MoreLink).", "Rótulos genéricos como “Clique aqui”."]}
+								>
+									<Stage>
+										<Variant label="primary · padrão">
+											<Button>Salvar alterações</Button>
+										</Variant>
+										<Variant label="primary · hover">
+											<Button data-force="hover">Salvar alterações</Button>
+										</Variant>
+										<Variant label="primary · foco">
+											<Button data-force="focus">Salvar alterações</Button>
+										</Variant>
+										<Variant label="primary · disabled">
+											<Button disabled>Salvar alterações</Button>
+										</Variant>
+										<Variant label="outline">
+											<Button variant="outline">Ver detalhes</Button>
+											<Button variant="outline" data-force="hover">
+												Ver detalhes
+											</Button>
+										</Variant>
+										<Variant label="ghost">
+											<Button variant="ghost">Cancelar</Button>
+										</Variant>
+										<Variant label="lg · link (href)">
+											<Button href="#botoes" size="lg">
+												Abrir o showroom <ArrowRight size={18} aria-hidden="true" />
+											</Button>
+										</Variant>
+									</Stage>
+								</Specimen>
 
-          <h3 className="mt-10 text-xl font-medium">Superfícies e texto cinza</h3>
-          <p className="text-muted-foreground mt-2 max-w-2xl text-base font-medium">
-            Paleta de cards do sistema com a escada de texto cinza. O secundário do mockup
-            (<code>--muted-foreground</code>) é AA só no canvas; dentro de superfícies cinza (<code>rc-surface</code>,
-            cards, tabelas, plain) ele vira <code>--muted-foreground-on-gray</code> automaticamente (ADR-11).
-          </p>
-          <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3" data-testid="surfaces">
-            {surfaces.map((sf, i) => (
-              <div key={i} data-surface={sf.name} className={cn('flex min-w-0 flex-col gap-1 rc-cell p-4', !['background', 'popover'].includes(sf.name) && 'rc-surface')} style={css(`background: var(${sf.v})`)}>
-                <p className="text-foreground font-medium">{sf.name}</p>
-                <p className="text-muted-foreground text-sm" data-text="secondary">Texto secundário sobre {sf.name}.</p>
-                {sf.extra ? (
-                  <p className="text-muted-foreground-subtle text-sm" data-text="extra">Texto extra cinza: legenda ou nota.</p>
-                ) : (
-                  <p className="text-muted-foreground text-sm" data-text="no-extra">Sem cinza extra nesta superfície.</p>
-                )}
-                <p className={cn('mt-1 font-mono text-xs', sf.extra ? 'text-muted-foreground-subtle' : 'text-muted-foreground')}>{sf.v}</p>
-              </div>
-            ))}
-          </div>
-          <div className="mt-4 grid gap-3 rc-cell p-5 md:grid-cols-3" data-testid="text-ladder">
-            {textLadder.map(([n, v, use], i) => (
-              <div key={i} className="flex min-w-0 flex-col gap-1">
-                <p className="text-lg font-medium" style={css(`color: var(${v})`)}>Aa — {n}</p>
-                <p className="text-muted-foreground text-sm">{use}</p>
-              </div>
-            ))}
-          </div>
+								<Specimen
+									id="botoes-morelink"
+									name="MoreLink"
+									api='<MoreLink href /> · .ds-link ("Saiba mais ›")'
+									a11y={["Texto do link diz o destino; o chevron é decorativo.", "Altura mínima de 44 px."]}
+									dos={["Fechar seção com um “Saiba mais ›” para a página completa."]}
+									donts={["Usar MoreLink como ação primária."]}
+								>
+									<Stage>
+										<Variant label="padrão">
+											<MoreLink href="#botoes">Ver todas as ferramentas</MoreLink>
+										</Variant>
+									</Stage>
+								</Specimen>
+							</Section>
 
-          <h3 className="mt-10 text-xl font-medium">Paleta de gráficos</h3>
-          <p className="text-muted-foreground mt-2 max-w-2xl text-base font-medium">
-            Derivada das 3 famílias e do neutro (ADR-04): nenhuma matiz nova. Séries também se
-            distinguem por traço e legenda, não só por cor.
-          </p>
-          <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5" data-testid="chart-palette">
-            {chartPalette.map(([n, from, use], i) => (
-              <div key={i} className="flex min-w-0 flex-col gap-2 rc-cell p-3">
-                <span className="h-12 rounded-lg border" data-chart-swatch={n} style={css(`background: var(--${n})`)}></span>
-                <span className="font-mono text-xs">--{n}</span>
-                <span className="text-muted-foreground text-xs">{from}</span>
-                <span className="text-muted-foreground-subtle text-xs">{use}</span>
-              </div>
-            ))}
-          </div>
+							{/* ------------------------------------------------------------ cards */}
+							<Section id="cards" label="Conteúdo" heading="Cards e quadros" lead="Um card para artigo, ferramenta, função e prévia. O título é o link e a área clicável cobre o card.">
+								<Specimen
+									id="cards-card"
+									name="Card e CardGrid"
+									api='<CardGrid cols={2|3|4} gap?><Card variant="cell | panel" size="lg" … /></CardGrid>'
+									a11y={[
+										"Título em h3 com o link; um só alvo por card.",
+										"O selo “Demonstração” é texto, não só cor.",
+										"CTA visual (“Ler artigo ›”) é aria-hidden: o nome acessível é o título.",
+									]}
+									dos={["Usar cell dentro de CardGrid e panel em card solto.", "Rotular item fictício com Badge demo."]}
+									donts={["Pôr botões ou links extras dentro do card (o link do título cobre a área).", "Card com CTA para #."]}
+								>
+									<CardGrid cols={3} label="Variantes de card">
+										<Card href="#cards" eyebrow="cell · padrão" title="Card em célula de quadro" text="Sem borda própria; separado por linha do quadro." cta="Abrir" icon={<BookOpen size={24} strokeWidth={1.6} />} />
+										<Card
+											href="#cards"
+											eyebrow="cell · com meta"
+											title="Card com meta e selo"
+											text="Meta em texto secundário e selo de demonstração."
+											meta="6 min de leitura"
+											badge={<Badge variant="demo">Demonstração</Badge>}
+											cta="Ler artigo"
+											icon={<Brain size={24} strokeWidth={1.6} />}
+										/>
+										<Card eyebrow="cell · sem link" title="Card sem link" text="Sem href não há hover nem CTA: é só conteúdo." icon={<Wrench size={24} strokeWidth={1.6} />} />
+									</CardGrid>
+									<CardGrid cols={2} label="Card grande e painel" gap>
+										<Card href="#cards" variant="panel" size="lg" eyebrow="panel · lg" title="Card grande para o destaque" text="Usado no primeiro item de uma lista editorial." cta="Ler artigo" />
+										<Card href="#cards" variant="panel" eyebrow="panel" title="Card painel" text="Borda --cf-border, raio md; hover em --cf-bg-300." cta="Abrir" />
+									</CardGrid>
+								</Specimen>
 
-          <h3 className="mt-10 text-xl font-medium">Camada de ilustração e vetor</h3>
-          <p className="text-muted-foreground mt-2 max-w-2xl text-base font-medium">
-            RC-BRAND-STYLING-001 vale só para SVG, ilustrações e fundos decorativos (ADR-15). Azul orienta e conecta;
-            coral marca evento com moderação; azul claro dá profundidade. Coral e azul claro nunca são texto.
-          </p>
-          <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5" data-testid="illu-layer">
-            {illuLayer.map(([n, use]) => (
-              <div key={n} className="flex min-w-0 flex-col gap-2 rc-cell p-3">
-                <span className="h-12 rounded-lg" data-illu-swatch={n} style={css(`background: var(--${n}); box-shadow: inset 0 0 0 1px var(--illu-ink)`)}></span>
-                <span className="font-mono text-xs">--{n}</span>
-                <span className="text-muted-foreground text-xs">{tokens[n]} · {use}</span>
-              </div>
-            ))}
-          </div>
+								<Specimen
+									id="cards-frame"
+									name="Frame e colunas"
+									api="<Frame> · .ds-corner · .ds-cols / .ds-col"
+									a11y={["Cantos são decorativos (aria-hidden).", "Cada coluna tem h3."]}
+									dos={["Usar Frame para agrupar conteúdo relacionado com a moldura da referência."]}
+									donts={["Aninhar quadros dentro de quadros."]}
+								>
+									<Frame>
+										<div className="ds-cols" style={{ marginTop: 0 }}>
+											{["Entenda", "Estruture", "Execute"].map((t, i) => (
+												<a key={t} href="#cards" className="ds-col">
+													<h3>
+														<span className="ds-col-n">0{i + 1}</span> {t}
+													</h3>
+													<p>Coluna de exemplo com título e texto curto.</p>
+												</a>
+											))}
+										</div>
+									</Frame>
+								</Specimen>
+							</Section>
 
-          <h3 className="mt-10 text-xl font-medium">Grafo causal</h3>
-          <p className="text-muted-foreground mt-2 max-w-2xl text-base font-medium">
-            Aliases sobre a interface e a ilustração, sem cor nova. Toda marca com significado tem contraste de 3:1 ou mais;
-            o tipo do nó vem da forma e do rótulo, não só da cor.
-          </p>
-          <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5" data-testid="graph-tokens">
-            {graphTokens.map(([n, from, use]) => (
-              <div key={n} className="flex min-w-0 flex-col gap-2 rc-cell p-3">
-                <span
-                  className="h-12 rounded-[var(--radius-node)]"
-                  data-graph-swatch={n}
-                  style={css(n === 'graph-accent-event' ? `background: var(--${n}); box-shadow: inset 0 0 0 2px var(--graph-accent-event-outline)` : `background: var(--${n})`)}
-                ></span>
-                <span className="font-mono text-xs">--{n}</span>
-                <span className="text-muted-foreground text-xs">{from}</span>
-                <span className="text-muted-foreground-subtle text-xs">{use}</span>
-              </div>
-            ))}
-          </div>
+							{/* ------------------------------------------------------------ navegação */}
+							<Section id="navegacao" label="Orientação" heading="Navegação" lead="Trilha, facetas, abas e sumário.">
+								<Specimen
+									id="navegacao-breadcrumb"
+									name="Breadcrumb"
+									api="<Breadcrumb items={[{label, href?}]} />"
+									a11y={['nav[aria-label="Trilha"] + ol; o último item tem aria-current="page".', "Separador › decorativo."]}
+									dos={["Pôr a trilha antes do h1."]}
+									donts={["Repetir a trilha no rodapé."]}
+								>
+									<Stage cols={1}>
+										<Variant label="três níveis">
+											<Breadcrumb items={[{ label: "Início", href: "/" }, { label: "Blog", href: "/artigos/" }, { label: "Artigo atual" }]} />
+										</Variant>
+									</Stage>
+								</Specimen>
 
-          <h3 className="mt-10 text-xl font-medium">Motion</h3>
-          <p className="text-muted-foreground mt-2 max-w-2xl text-base font-medium">
-            Curva e entrada do v7. Com redução de movimento ativada no sistema, nada se move.
-          </p>
-          <div className="mt-4 grid gap-4 md:grid-cols-2" data-testid="motion">
-            <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 rc-cell p-5 text-sm">
-              {motionTokens.map((t) => (
-                <div key={t} className="contents">
-                  <dt className="font-mono text-xs">{t}</dt>
-                  <dd className="text-muted-foreground font-mono text-xs">{tokens[t.slice(2)].toLowerCase()}</dd>
-                </div>
-              ))}
-            </dl>
-            <div className="rc-cell rc-hero-reveal p-5" data-testid="hero-reveal">
-              <p className="text-lg font-medium">heroReveal</p>
-              <p className="text-muted-foreground text-sm">Opacidade de 0 a 1 e subida de 18px, em --dur-slow com --ease.</p>
-            </div>
-          </div>
+								<Specimen
+									id="navegacao-chips"
+									name="Chips"
+									api="<Chips label items={[{label, href?, count?, current?, soon?}]} />"
+									a11y={['Atual com aria-current="true" (texto, não só cor).', "“Em preparação” não é link nem aria-disabled.", "Alvo ≥ 44 px."]}
+									dos={["Mostrar a contagem quando houver itens."]}
+									donts={["Criar link para faceta sem conteúdo."]}
+								>
+									<Stage cols={1}>
+										<Variant label="atual · contagem · em preparação">
+											<Chips
+												label="Temas de exemplo"
+												items={[
+													{ label: "Todos", href: "#navegacao", current: true },
+													{ label: "Memória de trabalho", href: "#navegacao", count: 1 },
+													{ label: "Flexibilidade", soon: true },
+												]}
+											/>
+										</Variant>
+									</Stage>
+								</Specimen>
 
-          <h3 className="mt-10 text-xl font-medium">Tipografia</h3>
-          <div className="mt-4 flex flex-col gap-6 rc-cell p-6">
-            <div><p className="text-muted-foreground font-mono text-xs">h1 · display</p><p className="text-3xl tracking-tight sm:text-4xl md:text-5xl lg:text-6xl" style={css("font-family: var(--font-display); font-weight: var(--display-weight)")}>Do risco à execução</p></div>
-            <div><p className="text-muted-foreground font-mono text-xs">h2 · seção</p><p className="text-primary text-4xl font-medium" style={css("font-family: var(--font-display)")}>Territórios</p></div>
-            <div><p className="text-muted-foreground font-mono text-xs">corpo · text-lg 500</p><p className="text-muted-foreground max-w-xl text-lg font-medium">Compreender o problema. Redesenhar o trabalho. Criar condições para executar.</p></div>
-            <div><p className="text-muted-foreground font-mono text-xs">callout · 700 / 400</p><p className="text-lg"><strong className="font-bold">Plano</strong> Aprovado</p></div>
-          </div>
+								<Specimen
+									id="navegacao-tabs"
+									name="Tabs"
+									api="<Tabs label items={[{value, label, content}]} /> (Radix só pelo comportamento)"
+									a11y={["role=tablist com setas, Home/End e aria-controls.", "Só a aba selecionada fica no Tab."]}
+									dos={["Usar abas para recortes do mesmo conteúdo."]}
+									donts={["Esconder em aba o que o leitor precisa comparar lado a lado."]}
+								>
+									<Stage cols={1}>
+										<div data-testid="tabs-demo">
+											<Tabs
+												label="Recorte de exemplo"
+												items={[
+													{ value: "brasil", label: "Brasil", content: <p>Conteúdo da aba Brasil.</p> },
+													{ value: "mundo", label: "Mundo", content: <p>Conteúdo da aba Mundo.</p> },
+													{ value: "metodo", label: "Método", content: <p>Conteúdo da aba Método.</p> },
+												]}
+											/>
+										</div>
+									</Stage>
+								</Specimen>
 
-          <h3 className="mt-10 text-xl font-medium">Espaçamento, raios, sombras, movimento</h3>
-          <div className="mt-4 grid gap-6 md:grid-cols-2">
-            <div className="flex flex-col gap-2 rc-cell p-5">
-              {spacing.map((px, i) => (
-                <div key={i} className="flex items-center gap-3"><span className="font-mono text-xs w-10">{px}px</span><span className="bg-primary h-3 rounded-sm" style={css(`width: ${px * 3}px`)}></span></div>
-              ))}
-            </div>
-            <div className="grid grid-cols-3 gap-3 rc-cell p-5">
-              {radii.map(([n, v], i) => (
-                <div key={i} className="flex flex-col items-center gap-2"><span className="bg-muted size-14 border" style={css(`border-radius: ${v}`)}></span><span className="text-center font-mono text-[10px]">{n}</span></div>
-              ))}
-            </div>
-            <div className="flex flex-wrap gap-4 rc-cell p-5">
-              {elevations.map(([n, use, v]) => (
-                <div key={n} className="flex w-40 flex-col gap-2">
-                  <span className="bg-background grid h-20 place-items-center rounded-xl border font-mono text-[10px]" style={css(`box-shadow: ${v}`)} data-elevation={n}>{n}</span>
-                  <span className="text-muted-foreground text-xs">{use}</span>
-                </div>
-              ))}
-            </div>
-            <div className="flex flex-col gap-2 rc-cell p-5 font-mono text-xs">
-              <span>--callout-motion-fast: 120ms</span>
-              <span>--callout-motion-default: 180ms</span>
-              <span>--callout-easing: cubic-bezier(0.2, 0, 0, 1)</span>
-              <span>--ease: cubic-bezier(.22, 1, .36, 1) (v7, ADR-15)</span>
-              <span>prefers-reduced-motion: transições removidas</span>
-            </div>
-          </div>
-        </section>
+								<Specimen
+									id="navegacao-toc"
+									name="Toc"
+									api="<Toc items={[{id, label}]} />"
+									lead="O sumário desta página (ao lado no desktop, recolhido no celular) é o próprio componente."
+									a11y={['nav[aria-label="Nesta página"] com details/summary nativos.', "Links de 44 px."]}
+									dos={["Gerar os itens dos h2 do conteúdo."]}
+									donts={["Usar mais de um Toc por página."]}
+								>
+									<p className="ds-more" style={{ marginTop: 0 }}>
+										<MoreLink href="#tokens">Ir para o início do sumário</MoreLink>
+									</p>
+								</Specimen>
+							</Section>
 
-        {/* Callouts */}
-        <section id="callouts" className="mt-20" aria-labelledby="callouts-title">
-          <h2 id="callouts-title" className={h2}>Callouts</h2>
-          <p className={lead}>Um único primitive, 26 variantes, 3 famílias cromáticas, 3 tamanhos, 2 tons e 2 layouts (compacto e anatomia completa).</p>
+							{/* ------------------------------------------------------------ cabeçalhos */}
+							<Section id="cabecalhos" label="Estrutura" heading="Cabeçalhos e avisos" lead="Um h1 por página (PageHead), h2 por seção (SectionHead).">
+								<Specimen
+									id="cabecalhos-pagehead"
+									name="PageHead"
+									api="<PageHead eyebrow title lead actions crumbs notice align />"
+									lead="O cabeçalho no topo desta página é o PageHead: trilha, aviso, eyebrow, h1, lead e ações."
+									a11y={["Um único h1 por página.", "Trilha antes do aviso e do título."]}
+									dos={["Usar em toda página interna (admin incluído)."]}
+									donts={["Usar o cartão laranja como cabeçalho de página interna."]}
+								>
+									<p className="ds-more" style={{ marginTop: 0 }}>
+										<MoreLink href="#leitura">Ver o topo desta página como exemplo</MoreLink>
+									</p>
+								</Specimen>
 
-          <h3 className="mt-10 text-xl font-medium">Referência — approved · md</h3>
-          <p className="text-muted-foreground mt-2 text-base font-medium">
-            Mesma altura do CTA (Button lg, 40px), raio de <code>--radius</code>, glifo Lucide sem
-            contêiner, assunto em sans 700 e mensagem em <code>--font-mono</code> 400. As medidas do
-            handoff (56/32/32px) vieram de um raster 3× e equivalem a ~18/11/11px.
-          </p>
-          <div className="mt-4 flex flex-col gap-4 sm:flex-row sm:items-center" data-testid="callout-proportion">
-            <div className="min-w-0 flex-1" data-testid="callout-reference">
-              <Callout variant="approved" subject="Plano" message="Aprovado" />
-            </div>
-            <a href="#callouts" className={buttonVariants({ size: 'lg' })} data-testid="cta-reference">CTA · Button lg</a>
-          </div>
+								<Specimen
+									id="cabecalhos-sectionhead"
+									name="SectionHead"
+									api='<SectionHead id label? heading lead? size="md | lg" align="center | left" />'
+									a11y={["h2 com id para aria-labelledby da seção.", "Rótulo (ds-label) é texto antes do h2."]}
+									dos={["Alinhar à esquerda em páginas internas."]}
+									donts={["Pular de h1 para h3."]}
+								>
+									<Stage cols={1}>
+										<Variant label="md · left (o desta seção)">
+											<p className="ds-label">Rótulo</p>
+										</Variant>
+										<Variant label="eyebrow">
+											<p className="ds-eyebrow" style={{ marginBottom: 0 }}>
+												Painel · Exemplo
+											</p>
+										</Variant>
+									</Stage>
+								</Specimen>
 
-          <h3 className="mt-10 text-xl font-medium">Anatomia completa · outline × tinted</h3>
-          <p className="text-muted-foreground mt-2 text-base font-medium">
-            Com descrição ou ações, o callout ganha faixa superior (rótulo + fechar), corpo (emblema
-            no outline, título em <code>--font-mono</code> e descrição) e rodapé com ações à direita.
-            Sem descrição, fica na barra compacta acima.
-          </p>
-          <div className="mt-4 grid gap-6 md:grid-cols-2" data-testid="callout-anatomy">
-            <Callout variant="tip" subject="Dica do dia" message="Um procedimento por vez" description="Registre critérios de conclusão antes de automatizar: o agente só apoia o que está explícito." action={{ label: 'Ação principal', href: '#callouts' }} secondaryAction={{ label: 'Secundária', href: '#callouts' }} dismissible />
-            <Callout variant="tip" tone="tinted" subject="Dica do dia" message="Um procedimento por vez" description="Registre critérios de conclusão antes de automatizar: o agente só apoia o que está explícito." action={{ label: 'Entendi', href: '#callouts' }} dismissible />
-            <Callout variant="warning" subject="Aviso" message="Revise antes de publicar" description="Há fontes sem data de acesso. Confira a seção de referências antes de enviar para revisão." action={{ label: 'Revisar', href: '#callouts' }} secondaryAction={{ label: 'Depois', href: '#callouts' }} dismissible />
-            <Callout variant="warning" tone="tinted" subject="Aviso" message="Revise antes de publicar" description="Há fontes sem data de acesso. Confira a seção de referências antes de enviar para revisão." action={{ label: 'Revisar', href: '#callouts' }} secondaryAction={{ label: 'Depois', href: '#callouts' }} dismissible />
-            <Callout variant="error" subject="Erro" message="Há dados não salvos" description="Sair agora descarta as alterações feitas neste rascunho." action={{ label: 'Descartar', href: '#callouts' }} secondaryAction={{ label: 'Salvar', href: '#callouts' }} dismissible />
-            <Callout variant="error" tone="tinted" subject="Erro" message="Há dados não salvos" description="Sair agora descarta as alterações feitas neste rascunho." action={{ label: 'Descartar', href: '#callouts' }} secondaryAction={{ label: 'Salvar', href: '#callouts' }} dismissible />
-            <Callout variant="action" subject="Ação necessária" message="Agende a revisão" description="Marque 30 minutos com quem executa o processo para validar o redesenho." action={{ label: 'Agendar', href: '#callouts' }} secondaryAction={{ label: 'Pular', href: '#callouts' }} dismissible />
-            <Callout variant="action" tone="tinted" subject="Ação necessária" message="Agende a revisão" description="Marque 30 minutos com quem executa o processo para validar o redesenho." action={{ label: 'Agendar', href: '#callouts' }} secondaryAction={{ label: 'Pular', href: '#callouts' }} dismissible />
-          </div>
+								<Specimen
+									id="cabecalhos-notice"
+									name="DemoNotice"
+									api="<DemoNotice>frase curta</DemoNotice> · .ds-notice"
+									a11y={['role="note"; o rótulo “Layout demonstrativo” é texto.']}
+									dos={["Dizer em uma frase o que é demonstração e o que é real."]}
+									donts={["Usar o aviso para mensagens de erro."]}
+								>
+									<Stage cols={1}>
+										<Variant label="padrão">
+											<DemoNotice>Esta seção mostra o aviso fora do cabeçalho.</DemoNotice>
+										</Variant>
+									</Stage>
+								</Specimen>
+							</Section>
 
-          <h3 className="mt-10 text-xl font-medium">26 variantes · md · compacto</h3>
-          <div className="mt-4 grid gap-3 md:grid-cols-2" data-testid="callout-variants">
-            {CALLOUT_VARIANT_NAMES.map((v, i) => (
-              <Callout key={i} variant={v} subject={CALLOUT_VARIANTS[v].label} message={`${v} · ${CALLOUT_VARIANTS[v].family}`} />
-            ))}
-          </div>
+							{/* ------------------------------------------------------------ laranja */}
+							<Section id="laranja" label="Identidade" heading="Cartão laranja" lead="Reservado às homes (hero) e ao CTA final. Branco só em título grande; o resto em --cf-on-accent-ink.">
+								<Specimen
+									id="laranja-cta"
+									name="CTA, pílula, botões brancos e letreiro"
+									api=".ds-cta · .ds-pill · .ds-btn-white · .ds-btn-soft · .ds-ticker · .ds-disclaimer"
+									lead="O hero (.ds-hero) tem a mesma pele e o h1 da Home; veja na página inicial."
+									a11y={[
+										"Título branco ≥ 24 px (3,05:1, texto grande).",
+										"Foco no laranja com anel --cf-on-accent-ink.",
+										"O letreiro para com prefers-reduced-motion; a 2ª faixa é aria-hidden.",
+									]}
+									dos={["Um CTA laranja por página, no fim."]}
+									donts={["Lead ou botão com texto branco sobre o laranja.", "Usar o laranja como fundo de página interna."]}
+								>
+									<div className="ds-cta" data-testid="orange-cta">
+										<div className="ds-cta-content" style={{ paddingBlock: 64 }}>
+											<a href="#laranja" className="ds-pill">
+												<span>Pílula sobre o laranja</span>
+												<span className="ds-pill-arrow" aria-hidden="true">
+													<ArrowRight size={18} />
+												</span>
+											</a>
+											<h4 style={{ marginTop: 24, color: "var(--cf-on-accent)", fontSize: "var(--cf-h2)", lineHeight: 1, fontWeight: 500, letterSpacing: "-0.025em" }} data-large-white>
+												Título grande em branco
+											</h4>
+											<p>Texto pequeno em --cf-on-accent-ink sobre o acento.</p>
+											<div className="ds-cta-actions">
+												<a href="#laranja" className="ds-btn-white">
+													Abrir o Mapa
+												</a>
+												<a href="#laranja" className="ds-btn-soft">
+													Conhecer o método
+												</a>
+											</div>
+										</div>
+										<div className="ds-ticker" aria-label="Exemplo de letreiro">
+											<ol className="ds-ticker-track">
+												{["Entenda", "Estruture", "Execute"].map((s) => (
+													<li key={s}>{s}</li>
+												))}
+											</ol>
+											<ol className="ds-ticker-track" aria-hidden="true">
+												{["Entenda", "Estruture", "Execute"].map((s) => (
+													<li key={s}>{s}</li>
+												))}
+											</ol>
+										</div>
+									</div>
+									<p className="ds-disclaimer">Nota curta abaixo do cartão (.ds-disclaimer).</p>
+									<p className="ds-more" style={{ marginTop: 0 }}>
+										<MoreLink href="/">Ver o hero na Home</MoreLink>
+									</p>
+								</Specimen>
+							</Section>
 
-          <h3 className="mt-10 text-xl font-medium">Tamanhos</h3>
-          <div className="mt-4 flex flex-col gap-3">
-            <Callout variant="info" size="sm" subject="sm" message="cards e barras laterais" />
-            <Callout variant="info" size="md" subject="md" message="padrão editorial" />
-            <Callout variant="info" size="lg" subject="lg" message="display" />
-          </div>
+							{/* ------------------------------------------------------------ conteúdo */}
+							<Section id="leitura" label="Leitura" heading="Conteúdo de leitura" lead="Corpo de artigo, citação, listas, meta, pontos principais e perguntas frequentes.">
+								<Specimen
+									id="conteudo-prose"
+									name="Prose"
+									api=".ds-prose (artigo) · .ds-prose-block (texto institucional)"
+									a11y={["Medida de 68ch.", "Links sublinhados em --cf-accent-text.", "Citação com régua de acento e fonte em texto."]}
+									dos={["Envolver o MDX em ArticleBody."]}
+									donts={["Pôr prosa em fonte mono ou em caixa alta."]}
+								>
+									<div className="ds-prose" data-testid="prose-sample">
+										<h4 style={{ fontSize: 22, fontWeight: 500 }}>Subtítulo do corpo (h3 no artigo)</h4>
+										<p>
+											Parágrafo de 18 px com <strong>destaque</strong> e um <a href="#leitura">link no texto</a>. A linha não passa de 68 caracteres
+											para manter a leitura confortável.
+										</p>
+										<ul>
+											<li>Item de lista com marcador.</li>
+											<li>Segundo item de lista.</li>
+										</ul>
+										<blockquote>
+											<p>Citação de exemplo com a régua de acento à esquerda.</p>
+										</blockquote>
+									</div>
+								</Specimen>
 
-          <h3 className="mt-10 text-xl font-medium">Tons · outline × tinted por família</h3>
-          <div className="mt-4 grid gap-3 md:grid-cols-2">
-            <Callout variant="decision" tone="outline" subject="Decisão" message="registrada" description="Superfície neutra, acento brand." />
-            <Callout variant="decision" tone="tinted" subject="Decisão" message="registrada" description="Header brand.strong, corpo brand.subtle." />
-            <Callout variant="warning" tone="outline" subject="Aviso" message="revise antes de publicar" description="Família attention." />
-            <Callout variant="warning" tone="tinted" subject="Aviso" message="revise antes de publicar" description="Família attention." />
-            <Callout variant="error" tone="outline" subject="Erro" message="falha na importação" description="Família critical." />
-            <Callout variant="error" tone="tinted" subject="Erro" message="falha na importação" description="Família critical." />
-          </div>
+								<Specimen
+									id="conteudo-quote"
+									name="Citação com fonte"
+									api=".ds-quote (figure + blockquote + figcaption)"
+									a11y={["A fonte é link em figcaption.", "Aspas decorativas são aria-hidden."]}
+									dos={["Citar dado com fonte primária."]}
+									donts={["Citação sem fonte."]}
+								>
+									<figure className="ds-quote" style={{ marginBlock: 0 }}>
+										<blockquote>
+											<p>
+												<span aria-hidden="true">“ </span>
+												<strong>Dado em destaque</strong> e o resto da frase da citação de exemplo.
+												<span aria-hidden="true"> ”</span>
+											</p>
+										</blockquote>
+										<figcaption>
+											<a href="/fontes/">Fonte de exemplo (ver /fontes/)</a>
+										</figcaption>
+									</figure>
+									<p className="ds-more" style={{ marginTop: 0 }}>
+										<MoreLink href="/sobre/">Ver ds-compare, ds-diagram e ds-bento em Sobre</MoreLink>
+									</p>
+								</Specimen>
 
-          <h3 className="mt-10 text-xl font-medium">Estados</h3>
-          <div className="mt-4 grid gap-3 md:grid-cols-2" data-testid="callout-states">
-            <Callout variant="next-step" subject="Próximo passo" message="Publicar o artigo" description="Com ações (máximo 2)." action={{ label: 'Publicar', href: '#callouts' }} secondaryAction={{ label: 'Rever', href: '#callouts' }} />
-            <Callout variant="pending" subject="Pendente" message="aguardando revisão" description="Ações desabilitadas." action={{ label: 'Publicar' }} disabled />
-            <Callout variant="data" subject="Dados" message="carregando" loading />
-            <Callout variant="attention" subject="Atenção" message="pode ser fechado" description="dismissible: remove o callout do fluxo." dismissible />
-            <Callout variant="research" subject="Pesquisa" message="Texto longo que quebra naturalmente em várias linhas sem reticências, mantendo o símbolo alinhado ao início do conteúdo quando passa de uma linha." />
-            <Callout variant="evidence" subject="Evidência" message="Confirmada" />
-          </div>
-        </section>
+								<Specimen
+									id="conteudo-meta"
+									name="ArticleMeta, lista e definições"
+									api="<ArticleMeta publisher date minutes id /> · .ds-list · .ds-dl"
+									a11y={["Meta em dl; tempo como “N min de leitura”.", "ID em mono (rótulo técnico)."]}
+									dos={["Calcular o tempo de leitura (palavras ÷ 200)."]}
+									donts={["Inventar autor ou data."]}
+								>
+									<Stage>
+										<Variant label="ArticleMeta">
+											<ArticleMeta publisher="Risco Cognitivo" date="2026-10-06" minutes={6} id="RC-EXEMPLO-001" />
+										</Variant>
+										<Variant label="ds-dl">
+											<dl className="ds-dl">
+												<div>
+													<dt>Termo</dt>
+													<dd>Definição curta do termo.</dd>
+												</div>
+												<div>
+													<dt>Outro termo</dt>
+													<dd>Outra definição.</dd>
+												</div>
+											</dl>
+										</Variant>
+										<Variant label="ds-list">
+											<ul className="ds-list" style={{ width: "100%" }}>
+												<li>Primeiro item da lista com divisória.</li>
+												<li>Segundo item.</li>
+											</ul>
+										</Variant>
+									</Stage>
+								</Specimen>
 
-        {/* Dados e charts */}
-        <section id="dados" className="mt-20" aria-labelledby="dados-title">
-          <h2 id="dados-title" className={h2}>Dados e charts</h2>
-          <p className={lead}>Indicadores, seis tipos de gráfico, tabela de dados e estados de carregamento, vazio e erro, todos nos tokens do sistema.</p>
-          <div className="mt-8 min-w-0">
-            <DataGallery />
-          </div>
-        </section>
+								<Specimen
+									id="conteudo-keypoints"
+									name="KeyPoints e Faq"
+									api="<KeyPoints items /> · <Faq items={[{q, a}]} />"
+									lead="Só aparecem quando o conteúdo existe no texto; aqui com texto de exemplo rotulado."
+									a11y={["KeyPoints é aside com h2.", "Faq usa details/summary nativos (teclado sem JS)."]}
+									dos={["Tirar os pontos do próprio texto."]}
+									donts={["Inventar perguntas que o texto não responde."]}
+								>
+									<KeyPoints items={["Exemplo: primeiro ponto principal.", "Exemplo: segundo ponto principal."]} />
+									<Faq items={[{ q: "Pergunta de exemplo?", a: <p>Resposta de exemplo, aberta e fechada pelo teclado.</p> }]} />
+								</Specimen>
+							</Section>
 
-        {/* Plain text & diagramas */}
-        <section id="plain" className="mt-20" aria-labelledby="plain-title">
-          <h2 id="plain-title" className={h2}>Plain text e diagramas</h2>
-          <p className={lead}>
-            Diagramas e textos operacionais como texto UTF-8 com caracteres de desenho de caixa: copiáveis,
-            pesquisáveis e acessíveis, sem SVG, Mermaid ou imagem (ADR-05). Veja o
-            <a href="/admin/relatorio-exemplo/" className="text-primary underline underline-offset-4">relatório de exemplo</a>.
-          </p>
+							{/* ------------------------------------------------------------ formulários */}
+							<Section id="formularios" label="Entrada" heading="Formulários" lead="Rótulo explícito, ajuda e erro ligados por aria-describedby; 44 px; erro na família critical.">
+								<Specimen
+									id="formularios-field"
+									name="Field, Input, Textarea, Select e Check"
+									api="<Field label help? error?>{({id, describedBy, invalid}) => <Input … />}</Field>"
+									a11y={["label for explícito.", "Ajuda e erro em aria-describedby; aria-invalid no erro.", "Erro diz o quê, por quê e como resolver."]}
+									dos={["Validar ao sair do campo e explicar a correção."]}
+									donts={["Usar placeholder como rótulo.", "Mostrar erro só com borda vermelha."]}
+								>
+									<Stage>
+										<Variant label="padrão · com ajuda">
+											<Field label="Nome do relatório" help="Aparece no cabeçalho. Digite menos de 3 letras para ver o erro." error={nameError}>
+												{({ id, describedBy, invalid }) => (
+													<Input id={id} aria-describedby={describedBy} aria-invalid={invalid || undefined} value={name} onChange={(e) => setName(e.target.value)} data-field="nome" />
+												)}
+											</Field>
+										</Variant>
+										<Variant label="erro">
+											<Field label="E-mail" error="O e-mail está sem @. Ele é usado para enviar o relatório. Confira o endereço.">
+												{({ id, describedBy, invalid }) => <Input id={id} type="email" aria-describedby={describedBy} aria-invalid={invalid} defaultValue="nome.exemplo" data-field="erro" />}
+											</Field>
+										</Variant>
+										<Variant label="disabled">
+											<Field label="Código (gerado)">
+												{({ id }) => <Input id={id} defaultValue="RC-0001" disabled />}
+											</Field>
+										</Variant>
+										<Variant label="Textarea">
+											<Field label="Observações">
+												{({ id }) => <Textarea id={id} defaultValue="" />}
+											</Field>
+										</Variant>
+										<Variant label="Select">
+											<Field label="Tema">
+												{({ id }) => (
+													<Select id={id} defaultValue="memoria">
+														<option value="memoria">Memória de trabalho</option>
+														<option value="inibicao">Controle inibitório</option>
+													</Select>
+												)}
+											</Field>
+										</Variant>
+										<Variant label="Check">
+											<Check label="Salvar neste dispositivo" />
+										</Variant>
+									</Stage>
+								</Specimen>
 
-          <h3 className="mt-10 text-xl font-medium">Tokens</h3>
-          <div className="mt-4 overflow-x-auto">
-            <table className="ds-table" data-testid="plain-tokens">
-              <thead><tr><th scope="col">Token</th><th scope="col">Valor</th></tr></thead>
-              <tbody>
-                {plainTokens.map(([t, v], i) => (
-                  <tr key={i}><td><code>{t}</code></td><td>{v}</td></tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+								<Specimen
+									id="formularios-dialog"
+									name="ConfirmDialog"
+									api="<ConfirmDialog trigger title text confirm cancel onConfirm />"
+									a11y={["Foco preso no diálogo; Esc fecha e devolve o foco ao gatilho.", "Botões rotulados pela ação, não “OK/Cancelar”."]}
+									dos={["Pedir confirmação só para ação destrutiva."]}
+									donts={["Abrir diálogo sem ação do usuário."]}
+								>
+									<Stage cols={1}>
+										<Variant label="gatilho · resultado">
+											<ConfirmDialog
+												trigger={<Button variant="outline">Limpar dados de exemplo</Button>}
+												title="Limpar os dados de exemplo?"
+												text="Os campos desta seção voltam ao estado inicial. Nada fora do showroom muda."
+												confirm="Limpar dados"
+												cancel="Manter dados"
+												onConfirm={() => {
+													setName("");
+													setConfirmed("Dados de exemplo limpos.");
+												}}
+											/>
+											<span role="status" aria-live="polite" data-dialog-result>
+												{confirmed}
+											</span>
+										</Variant>
+									</Stage>
+								</Specimen>
+							</Section>
 
-          <h3 className="mt-10 text-xl font-medium">Tabelas</h3>
-          <p className="text-muted-foreground mt-2 text-base font-medium">Todas as tabelas (componente <code>Table</code> e tabelas Markdown) usam células cinza separadas, cabeçalho em caixa alta e valores técnicos em mono.</p>
-          <div className="mt-4 overflow-x-auto" data-testid="table-reference" data-wide-table role="region" aria-label="Tabela de referência (rolagem horizontal intencional)" tabIndex={0}>
-            <table className="ds-table">
-              <caption className="sr-only">Store Hub — wireframe para código</caption>
-              <thead><tr><th scope="col">Wireframe_node</th><th scope="col">Component</th><th scope="col">Source_file</th><th scope="col">Data</th><th scope="col">State</th></tr></thead>
-              <tbody>
-                {storeRows.map(([n, c, f, d, st], i) => (
-                  <tr key={i}><td>{n}</td><td><code>{c}</code></td><td>{f.startsWith('components/') ? <a href="#plain">{f}</a> : <code>{f}</code>}</td><td>{d.includes(' ') ? d : <code>{d}</code>}</td><td>{st}</td></tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+							{/* ------------------------------------------------------------ estados */}
+							<Section id="estados" label="Feedback" heading="Estados e selos" lead="Estado vazio com caminho real, selos com texto e a faixa de pontos.">
+								<Specimen
+									id="estados-empty"
+									name="EmptyState"
+									api="<EmptyState title text action={{label, href}} level />"
+									a11y={["Título em h2/h3; ação é link real."]}
+									dos={["Dizer o quê, por quê e como começar."]}
+									donts={["Estado vazio sem saída ou com CTA #."]}
+								>
+									<EmptyState
+										level={3}
+										title="Nenhum e-book publicado"
+										text="Esta categoria ainda não tem material pronto. Comece pelas soluções publicadas."
+										action={{ label: "Ver as soluções publicadas", href: "/ferramentas/solucoes/" }}
+									/>
+								</Specimen>
 
-          <h3 className="mt-10 text-xl font-medium">AsciiDiagram · preserva a geometria</h3>
-          <div className="mt-4 grid gap-6 lg:grid-cols-2" data-testid="plain-diagrams">
-            <AsciiDiagram id="FLOW-OPS-001" kind="orgchart" title="Organograma OPS / CAVORK" source={orgchart} />
-            <div className="flex min-w-0 flex-col">
-              <AsciiDiagram id="FLOW-AUTONOMY-001" kind="flowchart" title="Progressão de autonomia" source={flowchart} className="mt-0" />
-              <AsciiDiagram id="TREE-REPORT-001" kind="tree" title="Gerado por renderTree(JSON)" source={treeFromJson} caption="Entrada JSON hierárquica; o componente desenha ├── └── │ de forma determinística." />
-            </div>
-            <AsciiDiagram id="DIR-PLAIN-001" kind="directory" title="Estrutura de código" source={directory} density="compact" />
-            <AsciiDiagram id="MAP-RISK-001" kind="mindmap" title="Mapa mental" source={mindmap} />
-          </div>
-          <AsciiDiagram id="FLOW-WIDE-001" kind="workflow" title="Diagrama largo · rolagem horizontal" source={wide} caption="Linhas largas rolam dentro do bloco; a página não ganha rolagem lateral." />
+								<Specimen
+									id="estados-badge"
+									name="Badge e Dots"
+									api='<Badge variant="neutral | accent | demo" /> · <Dots />'
+									a11y={["Selo sempre com texto.", "Dots é decorativo (aria-hidden) e só aparece no celular."]}
+									dos={["Usar demo para marcar item fictício."]}
+									donts={["Usar badge como botão."]}
+								>
+									<Stage>
+										<Variant label="neutral">
+											<Badge>Rascunho</Badge>
+										</Variant>
+										<Variant label="accent">
+											<Badge variant="accent">Novo</Badge>
+										</Variant>
+										<Variant label="demo">
+											<Badge variant="demo">Demonstração</Badge>
+										</Variant>
+									</Stage>
+									<Dots />
+								</Specimen>
+							</Section>
 
-          <h3 className="mt-10 text-xl font-medium">PlainTextPanel · quebra texto longo</h3>
-          <div className="mt-4 grid gap-6 lg:grid-cols-2" data-testid="plain-panels">
-            {panels.map((p, i) => (
-              <PlainTextPanel key={i} id={`PANEL-${p.kind.toUpperCase()}-001`} kind={p.kind as any} title={p.title} source={p.source} className="my-0" />
-            ))}
-          </div>
-          <PlainTextPanel id="PANEL-LONG-001" kind="example" title="Texto longo" source={longText} />
+							{/* ------------------------------------------------------------ dados */}
+							<Section id="dados" label="Dados" heading="Tabelas e dados" lead="Tabela com cabeçalho em caixa alta e linhas finas; no celular, células rotuladas.">
+								<Specimen
+									id="dados-table"
+									name="Table"
+									api='<Table head rows caption stack? /> · .ds-table[data-stack]'
+									a11y={["caption (sr-only) e th scope=col.", "Empilhada abaixo de 640 px com data-label; sem rolagem lateral."]}
+									dos={["Usar stack em tabela de leitura."]}
+									donts={["Tabela larga que rola a página."]}
+								>
+									<div data-testid="table-reference">
+										<Table caption="Componentes do DS (exemplo)" head={TABLE_HEAD} rows={TABLE_ROWS} />
+									</div>
+									<div className="mt-6" data-testid="table-fixed">
+										<Table caption="Tabela sem empilhar (exemplo)" head={["Token", "Uso"]} rows={[[<code key="t">--cf-radius-md</code>, "Painel e campo"]]} stack={false} />
+									</div>
+								</Specimen>
+							</Section>
 
-          <h3 className="mt-10 text-xl font-medium">Variantes</h3>
-          <div className="mt-4 grid gap-6 lg:grid-cols-3" data-testid="plain-variants">
-            <PlainTextPanel id="PANEL-COLLAPSIBLE-001" kind="data" title="collapsible" source={`Conteúdo em <details> nativo:\nabre e fecha sem JavaScript.`} collapsible className="my-0" />
-            <AsciiDiagram id="FLOW-SM-001" kind="generic" title="fontSize sm · comfortable" source={flowchart.split('\n').slice(0, 7).join('\n')} fontSize="sm" density="comfortable" className="my-0" />
-            <PlainTextPanel id="PANEL-NOCOPY-001" kind="generic" title="copyable={false}" source={`Sem botão de copiar.\nO texto continua selecionável.`} copyable={false} className="my-0" />
-          </div>
-        </section>
+							{/* ------------------------------------------------------------ plain */}
+							<Section
+								id="plain"
+								label="ADR-05"
+								heading="Plain text e diagramas"
+								lead="PlainTextPanel e AsciiDiagram (@/components/plain) na pele do DS: texto copiável, pesquisável e acessível."
+							>
+								<Specimen
+									id="plain-diagram"
+									name="AsciiDiagram"
+									api='<AsciiDiagram id kind title source caption? density? fontSize? />'
+									a11y={["Região focável com rótulo (tipo + título); rola dentro do bloco.", "Copiar confirma por aria-live."]}
+									dos={["Preservar a geometria (white-space: pre)."]}
+									donts={["Desenhar diagrama em imagem, SVG ou Mermaid."]}
+								>
+									<div className="grid gap-6 lg:grid-cols-2" data-testid="plain-diagrams">
+										<AsciiDiagram id="FLOW-OPS-001" kind="orgchart" title="Organograma OPS / CAVORK" source={orgchart} className="my-0" />
+										<div className="flex min-w-0 flex-col gap-6">
+											<AsciiDiagram id="FLOW-AUTONOMY-001" kind="flowchart" title="Progressão de autonomia" source={flowchart} className="my-0" />
+											<AsciiDiagram
+												id="TREE-REPORT-001"
+												kind="tree"
+												title="Gerado por renderTree(JSON)"
+												source={treeFromJson}
+												caption="Entrada JSON hierárquica; o componente desenha ├── └── │ de forma determinística."
+												className="my-0"
+											/>
+										</div>
+									</div>
+									<AsciiDiagram id="FLOW-WIDE-001" kind="workflow" title="Diagrama largo · rolagem horizontal" source={wide} caption="Linhas largas rolam dentro do bloco; a página não ganha rolagem lateral." />
+								</Specimen>
 
-        {/* Componentes */}
-        <section id="componentes" className="mt-20" aria-labelledby="componentes-title">
-          <h2 id="componentes-title" className={h2}>Componentes</h2>
-          <p className={lead}>Todos os primitivos de <code>src/components/ui</code>, agrupados por família.</p>
-          <div className="mt-8">
-            <ComponentGallery />
-          </div>
-        </section>
-      </div>
-    </DefaultLayout>
-  );
+								<Specimen
+									id="plain-panel"
+									name="PlainTextPanel"
+									api='<PlainTextPanel id kind title source collapsible? copyable? />'
+									a11y={["Visão estruturada (dl, listas, tabela) na fonte de texto; o original fica em [data-plain-source].", "Sem rolagem lateral no celular."]}
+									dos={["Usar kind para dizer o tipo do texto operacional."]}
+									donts={["Prosa corrida em mono."]}
+								>
+									<div className="grid gap-6 lg:grid-cols-2" data-testid="plain-panels">
+										{PANELS.map((p) => (
+											<PlainTextPanel key={p.kind} id={`PANEL-${p.kind.toUpperCase()}-001`} kind={p.kind} title={p.title} source={p.source} className="my-0" />
+										))}
+									</div>
+									<PlainTextPanel id="PANEL-LONG-001" kind="example" title="Texto longo" source={longText} />
+									<div className="grid gap-6 lg:grid-cols-2" data-testid="plain-variants">
+										<PlainTextPanel id="PANEL-COLLAPSIBLE-001" kind="data" title="collapsible" source={`Conteúdo em <details> nativo:\nabre e fecha sem JavaScript.`} collapsible className="my-0" />
+										<PlainTextPanel id="PANEL-NOCOPY-001" kind="generic" title="copyable={false}" source={`Sem botão de copiar.\nO texto continua selecionável.`} copyable={false} className="my-0" />
+									</div>
+									<p className="ds-more">
+										<MoreLink href="/admin/relatorio-exemplo/">Ver o relatório de exemplo</MoreLink>
+									</p>
+								</Specimen>
+							</Section>
+						</div>
+					</div>
+				</TokenProvider>
+			</div>
+		</DefaultLayout>
+	);
 }
