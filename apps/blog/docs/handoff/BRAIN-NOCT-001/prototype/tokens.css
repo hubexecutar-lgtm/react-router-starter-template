@@ -1,0 +1,87 @@
+/* BRAIN-NOCT-001 · tokens dos mockups. Estrutura do Nocturne (Claude Design 02c4ffae…: Inter 500, raio 8, densidade
+   0,7×, botão com contorno, regra que esmaece nas pontas, layout à esquerda) com a PALETA DO COLISEU (decisão do usuário,
+   2026-10-07: "Coliseu manda"). Os nomes são os do Nocturne (--color-*, ramps 100–900, --space-*, --radius-*), para o
+   ADR-27 trocar o RC-DS-CF sem inventar vocabulário. Valores do Coliseu: amostrados da referência e do protótipo do
+   cérebro (fonte-design/tokens.css). Único lugar com hex nos mockups. */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
+
+:root {
+	/* Papéis (Nocturne) com valores do Coliseu */
+	--color-bg: #ffffff; /* fundo da referência */
+	--color-surface: #f5f5f5; /* --raw-bg-subtle do protótipo */
+	--color-text: #212121; /* botão preto da referência = texto */
+	--color-accent: #6e72f0; /* índigo da gravura: traço, marca, foco (3,9:1 sobre branco: não é texto pequeno) */
+	--color-accent-text: #4f53d9; /* índigo forte: texto e rótulo em acento (5,9:1) */
+	--color-divider: color-mix(in srgb, #212121 12%, transparent);
+
+	/* Ramps (mesma lógica do Nocturne: 500 = base; no claro, 600 = pressionado, 100–200 = tinta) */
+	--color-neutral-100: #f5f5f5;
+	--color-neutral-200: #e6e6ea;
+	--color-neutral-300: #cbcbcb; /* traço de gravura claro */
+	--color-neutral-400: #a8a9b0;
+	--color-neutral-500: #8a8b93;
+	--color-neutral-600: #5f6068; /* texto secundário (6,3:1) */
+	--color-neutral-700: #45464c;
+	--color-neutral-800: #303034;
+	--color-neutral-900: #212121;
+
+	--color-accent-100: #f3f4ff;
+	--color-accent-200: #e4e6ff;
+	--color-accent-300: #c7caf9;
+	--color-accent-400: #a3a8f5; /* ponto claro do cérebro */
+	--color-accent-500: #6e72f0;
+	--color-accent-600: #4f53d9;
+	--color-accent-700: #3d40b3;
+	--color-accent-800: #2c2e85;
+	--color-accent-900: #1d1f57;
+
+	/* Cérebro (camadas da cena; valores do brain-hollow.js do protótipo) */
+	--brain-wire-front: #c4c5ce;
+	--brain-wire-back: #dcdde3;
+	--brain-point-light: #bfc2f8;
+	--brain-point-deep: #5a5fe8;
+	--brain-grid-dot: #dcdce1; /* retícula do fundo (Coliseu) */
+
+	/* Tipo (Nocturne) */
+	--font-heading: "Inter", system-ui, sans-serif;
+	--font-heading-weight: 500;
+	--font-body: "Inter", system-ui, sans-serif;
+	--type-display: clamp(40px, 6vw, 72px);
+	--type-h1: 42px;
+	--type-h2: 32px;
+	--type-h3: 20px;
+	--type-body: 16px; /* Nocturne usa 15px; 16px é o piso de leitura do gate HIG (ver A11Y.md) */
+	--type-small: 14px;
+	--type-label: 12px;
+
+	/* Espaço (Nocturne, densidade 0,7×) + passos de layout derivados (×4, ×8) */
+	--space-1: 2.8px;
+	--space-2: 5.6px;
+	--space-3: 8.4px;
+	--space-4: 11.2px;
+	--space-6: 16.8px;
+	--space-8: 22.4px;
+	--space-12: 33.6px;
+	--space-16: 44.8px;
+	--space-24: 67.2px;
+
+	--radius-sm: 4px;
+	--radius-md: 8px;
+	--radius-lg: 14px;
+
+	/* Elevação no claro (Nocturne: "soft ink-tinted shadows on a light theme") */
+	--shadow-sm: 0 0 0 1px var(--color-neutral-200);
+	--shadow-md: 0 0 0 1px var(--color-neutral-200), 0 6px 18px rgb(33 33 33 / 0.06);
+
+	/* Alvos (accessibility-review: ≥ 44 px) e motion */
+	--target: 44px;
+	--t-fast: 180ms;
+	--layout-max: 1280px;
+	--gutter: 24px;
+}
+@media (max-width: 699.98px) {
+	:root { --gutter: 16px; --type-h1: 32px; --type-h2: 26px; }
+}
+@media (prefers-reduced-motion: reduce) {
+	:root { --t-fast: 0ms; }
+}
