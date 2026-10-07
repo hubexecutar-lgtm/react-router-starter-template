@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Risco Cognitivo — Landing (mockup BRAIN-NOCT-001)</title>
+<script type="importmap">{ "imports": { "three": "./vendor/three.module.js" } }</script>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="ui.css">
+</head>
+<body>
+<a class="sr" href="#conteudo">Pular para o conteúdo</a>
+<header class="wrap">
+  <nav class="nav" aria-label="Principal">
+    <a class="nav-brand" href="landing.html"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M20 6v28M20 9c-2-3-7-3-8.5 0-3.5 0-5.5 3.5-4 6.5-3 2-3 6.5 0 8.5-1.5 3 1 6.5 4.5 6.5 1.5 3 6 3.5 8 .5M20 9c2-3 7-3 8.5 0 3.5 0 5.5 3.5 4 6.5 3 2 3 6.5 0 8.5 1.5 3-1 6.5-4.5 6.5-1.5 3-6 3.5-8 .5"/></svg><span>Risco<br>Cognitivo</span></a>
+    <div class="nav-links"><a href="landing.html" aria-current="page">Início</a><a href="mapa.html">Mapa</a></div>
+  </nav>
+</header>
+<div class="hr"></div>
+
+<main id="conteudo">
+  <section class="grid-dots" aria-labelledby="hero-titulo">
+    <div class="wrap hero">
+      <p class="eyebrow">Mapa interativo</p>
+      <h1 id="hero-titulo"><span class="tone">Entenda</span> sua execução.</h1>
+      <p class="lead">Explore as relações entre funções executivas, demandas e estratégias.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="mapa.html">Explorar o mapa <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="btn btn-secondary" href="#como">Como funciona</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" aria-labelledby="cerebro-titulo">
+    <h2 id="cerebro-titulo" class="sr">Cérebro interativo</h2>
+    <div class="map">
+      <div class="stage grid-dots" tabindex="0" data-status="loading" aria-label="Cérebro 3D. Arraste na horizontal para girar. Setas giram, espaço pausa.">
+        <div class="loading">Carregando o cérebro…</div>
+        <div class="fallback" role="status"><p>A visualização 3D não está disponível neste navegador. As quatro funções continuam na lista ao lado.</p></div>
+        <div class="layer" data-callouts></div>
+        <div class="layer" data-markers></div>
+      </div>
+      <aside class="panel" aria-live="polite" aria-label="Função selecionada"></aside>
+    </div>
+    <div class="ctrl" data-controls>
+      <button class="btn btn-primary" type="button" data-pause></button>
+      <button class="btn btn-secondary" type="button" data-reset><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5"/></svg>Restaurar vista</button>
+      <span class="hint">Arraste para explorar · Toque em um marcador para ler</span>
+      <label class="rmt">Movimento reduzido <button class="sw" type="button" role="switch" aria-checked="false" data-rm></button></label>
+    </div>
+  </section>
+
+  <section class="wrap" id="como" aria-labelledby="como-titulo">
+    <h2 id="como-titulo" class="sr">Como funciona</h2>
+    <div class="steps">
+      <a class="step" href="mapa.html"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 5.5c3-1.5 6-1.5 10 1v13c-4-2.5-7-2.5-10-1zM22 5.5c-3-1.5-6-1.5-10 1v13c4-2.5 7-2.5 10-1z"/></svg></span>
+        <span><small>01</small><h3>Entenda</h3><p>Conheça as funções executivas e como elas influenciam sua execução no dia a dia.</p></span></a>
+      <a class="step" href="mapa.html"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="11" width="10" height="10" rx="1"/><rect x="11" y="3" width="10" height="10" rx="1"/></svg></span>
+        <span><small>02</small><h3>Estruture</h3><p>Relacione demandas, vulnerabilidades e estratégias de apoio com base em evidências.</p></span></a>
+      <a class="step" href="mapa.html"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20V14M9 20V10M14 20V6M19 20V3"/></svg></span>
+        <span><small>03</small><h3>Execute</h3><p>Aplique sistemas simples para reduzir o custo cognitivo e aumentar sua consistência.</p></span></a>
+    </div>
+  </section>
+</main>
+
+<div class="hr"></div>
+<footer class="wrap foot">
+  <span>Risco Cognitivo</span><span class="spacer"></span>
+  <a href="landing.html">Início</a><a href="mapa.html">Mapa</a>
+  <span>Representação de redes distribuídas, não de regiões isoladas.</span>
+</footer>
+
+<script type="module">
+import { mountBrain } from './brain-stage.js';
+mountBrain({ stage: document.querySelector('.stage'), panel: document.querySelector('.panel'), controls: document.querySelector('[data-controls]'), variant: 'preview', assetBase: 'assets/' });
+</script>
+</body>
+</html>
