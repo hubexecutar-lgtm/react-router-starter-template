@@ -63,6 +63,7 @@ test("exemplo embutido carrega como demonstração e baixa o JSON pronto", async
   expect(downloaded.actions).toHaveLength(4);
 
   await page.getByRole("button", { name: "Ver exemplo preenchido" }).click();
+  await page.getByRole("button", { name: "Prisma", exact: true }).click();
   await expect(page.locator(".miniapp-sheet header small")).toHaveText("EXECUTAR · DEMONSTRAÇÃO");
   await expect(page.locator(".miniapp-sheet")).toContainText("Concluir e revisar a primeira entrega do projeto nesta semana.");
   await expect(page.locator(".miniapp-sheet img[alt='QR gerado localmente']")).toBeVisible();
