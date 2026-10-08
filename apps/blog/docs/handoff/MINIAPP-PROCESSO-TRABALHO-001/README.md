@@ -6,7 +6,7 @@ A rota independente `/ferramentas/processo-de-trabalho/` implementa intake progr
 
 O formulário coleta tipo e título de trabalho, nome opcional, janela do dia, horário personalizado, dias, duração, preferência/contexto, objetivo, ações e URL de QR. O Prisma projeta três faces de 99 mm. Nenhum dado do plano é enviado a serviços externos; o QR é criado no navegador. Manifest e service worker têm escopo exclusivo da rota.
 
-O modo vazio não abre o intake e inicia sem dados pessoais. Importações aceitam o contrato v1 e o formato legado reconhecido; erros são mostrados sem substituir silenciosamente o plano atual. A aplicação anterior em `/prisma/` e o preview HTML original permanecem preservados.
+A tela inicial permite iniciar um plano, carregar a demonstração embutida ou abrir o template vazio sem intake. O exemplo fictício está versionado em `app/features/miniapp/demoPlan.ts` e disponível para baixar em `public/ferramentas/processo-de-trabalho/exemplo-miniapp-plan-v1.json`; ambos usam `mode: demo` e `source_kind: demo_fixture`. Importações aceitam o contrato v1 e o formato legado reconhecido; erros são mostrados sem substituir silenciosamente o plano atual. A aplicação anterior em `/prisma/` e o preview HTML original permanecem preservados.
 
 ## Verificação
 
