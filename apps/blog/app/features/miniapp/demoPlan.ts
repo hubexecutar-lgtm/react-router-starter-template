@@ -1,0 +1,71 @@
+import type { Plan } from "./ProcessWorkApp";
+
+/** Fixture fictícia e versionada para demonstrar os fluxos do Mini App. */
+export const demoPlan: Plan = {
+  "schema_version": "1.0.0",
+  "mode": "demo",
+  "user": {
+    "display_name": "Alex"
+  },
+  "work": {
+    "type": "project",
+    "other_label": "",
+    "title": "Implantar rotina semanal do projeto"
+  },
+  "routine": {
+    "window": "custom",
+    "exact_start": "09:00",
+    "exact_end": "10:30",
+    "days": [
+      "mon",
+      "wed",
+      "fri"
+    ],
+    "duration_minutes": 90,
+    "preference": "Blocos de foco de 45 minutos, com uma pausa curta entre eles."
+  },
+  "goal": "Concluir e revisar a primeira entrega do projeto nesta semana.",
+  "actions": [
+    {
+      "id": "ACT-01",
+      "order": 1,
+      "verb": "Revisar",
+      "text": "Revisar o escopo atual e confirmar o resultado esperado.",
+      "state": "accepted",
+      "origin": "template"
+    },
+    {
+      "id": "ACT-02",
+      "order": 2,
+      "verb": "Separar",
+      "text": "Separar a entrega em próximas ações que caibam em blocos de foco.",
+      "state": "suggested",
+      "origin": "template"
+    },
+    {
+      "id": "ACT-03",
+      "order": 3,
+      "verb": "Reservar",
+      "text": "Reservar três blocos de foco na agenda para avançar no projeto.",
+      "state": "accepted",
+      "origin": "user"
+    },
+    {
+      "id": "ACT-04",
+      "order": 4,
+      "verb": "Registrar",
+      "text": "Registrar evidências e revisar o resultado ao fim da semana.",
+      "state": "suggested",
+      "origin": "template"
+    }
+  ],
+  "qr": {
+    "url": "https://example.com/?source=miniapp-demo"
+  },
+  "metadata": {
+    "source_kind": "demo_fixture",
+    "app_id": "EXEC-MINIAPP-001",
+    "created_at": "2026-10-08T12:00:00.000Z",
+    "original_source_id": null
+  }
+};

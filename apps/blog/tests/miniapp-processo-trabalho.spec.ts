@@ -46,3 +46,25 @@ test("intake salva campos do contrato e gera Prisma e QR local", async ({ page }
   await expect(page.locator(".miniapp-sheet.prisma")).toBeVisible();
   await expect(page.locator("[data-print] > .miniapp-panel")).toBeHidden();
 });
+
+
+test("exemplo embutido carrega como demonstração e baixa o JSON pronto", async ({ page }) => {
+  await page.goto("/ferramentas/processo-de-trabalho/");
+
+  const downloadPromise = page.waitForEvent("download");
+  await page.getByRole("link", { name: "Baixar JSON do exemplo" }).click();
+  const download = await downloadPromise;
+  expect(download.suggestedFilename()).toBe("exemplo-miniapp-plan-v1.json");
+  const downloadPath = await download.path();
+  const downloaded = JSON.parse(await readFile(downloadPath!, "utf8"));
+  expect(downloaded.mode).toBe("demo");
+  expect(downloaded.metadata.source_kind).toBe("demo_fixture");
+  expect(downloaded.work.title).toBe("Implantar rotina semanal do projeto");
+  expect(downloaded.actions).toHaveLength(4);
+
+  await page.getByRole("button", { name: "Ver exemplo preenchido" }).click();
+  await page.getByRole("button", { name: "Prisma", exact: true }).click();
+  await expect(page.locator(".miniapp-sheet header small")).toHaveText("EXECUTAR · DEMONSTRAÇÃO");
+  await expect(page.locator(".miniapp-sheet")).toContainText("Concluir e revisar a primeira entrega do projeto nesta semana.");
+  await expect(page.locator(".miniapp-sheet img[alt='QR gerado localmente']")).toBeVisible();
+});
