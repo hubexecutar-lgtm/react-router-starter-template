@@ -67,6 +67,7 @@ export const ROUTES: HubEntry[] = [
 
   // ---------------------------------------------------------------- Ferramentas públicas
   { id: "prisma", title: "Prisma de execução", description: "Primeira solução das Ferramentas cognitivas (externalização cognitiva): formulário, folha A4 e PDF, local-first e instalável (PWA). Manifest e service worker em /prisma/.", group: "Ferramentas públicas", kind: "route", path: "/prisma/", exposure: "public", addedAt: "2026-10-04", source: "RC-PWA-PRISMA-SPECS v1.0.0 (ADR-17)" },
+  { id: "processo-de-trabalho-prisma", title: "Processo de Trabalho + Prisma", description: "Mini App interativo com intake, ações editáveis, visualização A4, QR local e exportação JSON.", group: "Ferramentas públicas", kind: "route", path: "/ferramentas/processo-de-trabalho/", exposure: "public", addedAt: "2026-10-08", source: "EXECUTAR-MINIAPP-PRISMA-HANDOFF v1.0.0" },
 
   // ---------------------------------------------------------------- Interno (admin)
   { id: "admin", title: "Painel", group: "Interno (admin)", kind: "route", path: "/admin/", description: "Painel de acesso às ferramentas.", exposure: "internal", addedAt: "2026-09-30", source: SRC },
