@@ -1,37 +1,15 @@
-# Mini App EXECUTAR — Processo de Trabalho + Prisma
+# EXECUTAR Mini App — Processo de Trabalho + Prisma
 
-**ID:** EXEC-MINIAPP-001  
-**Version:** 1.0.0  
-**Area:** Ferramentas  
-**Workflow:** Importação de handoff e preview  
-**Owner:** A DEFINIR  
-**Status:** PREVIEW DEMONSTRATIVO IMPORTADO; implementação PWA pendente  
-**Automation level:** A2 (integração no código preparada; validação de produção bloqueada pelo Cloudflare Access)
+**ID:** EXEC-MINIAPP-001 · **Version:** 1.0.0 · **Area:** Ferramentas · **Owner:** A DEFINIR
 
-## Contexto e escopo
+**Status:** IMPLEMENTAÇÃO INTEGRADA NA BRANCH; verificação e preview de deploy pendentes. **Automation:** A2.
 
-A rota integra o preview interativo fornecido e mantém separado o Prisma já existente. Inclui entrada no catálogo de Ferramentas e uma tela com aviso de limites do protótipo.
+A nova rota `/ferramentas/processo-de-trabalho/` tem intake por etapas, prévia Processo/Prisma, ações editáveis com aceite explícito, geração de QR local, impressão A4, JSON versionado de importação/exportação, persistência opt-in e limpeza confirmada. Manifest e service worker são limitados à rota.
 
-Fontes recebidas: `EXECUTAR-MINIAPP-PRISMA-01-DOCUMENTOS-v1.0.0(1).zip`, `EXECUTAR-MINIAPP-PRISMA-02-UX-E-DADOS-v1.0.0(1).zip`, `EXECUTAR-MINIAPP-PRISMA-03-HANDOFF-E-PREVIEW-v1.0.0(1).zip`, `EXECUTAR-MINIAPP-PRISMA-04-ORIGINAIS-v1.0.0(1).zip` e `preview-app.html`.
+O payload simplificado ainda precisa ser comparado e alinhado ao schema canônico entregue em `miniapp-plan.schema.json`; o HTML original de preview foi preservado separadamente como referência em `/miniapp-prisma/preview-app.html`.
 
-## Localização
+## Verificação e gates
 
-- Rota: `/ferramentas/processo-de-trabalho/`
-- Preview independente: `/miniapp-prisma/preview-app.html`
-- Catálogo: `apps/blog/app/routes/ferramentas._index.tsx`
-- Rota: `apps/blog/app/routes/ferramentas.processo-de-trabalho.tsx`
+Integridade dos ZIPs, sintaxe JSON/CSV e JavaScript do preview original verificados. Este ambiente não tem checkout nem dependências do repo, então build, typecheck, Playwright, QR scan, impressão, acessibilidade e QA de dispositivos continuam pendentes. A publicação da rota no hostname atual também herda Cloudflare Access; não alterei essa política.
 
-## Limites verificados
-
-O preview executa em iframe e não carrega scripts, fontes ou recursos remotos. Nesta versão, o estado do formulário não persiste após sair/recarregar; há download do JSON atual, mas não importação de JSON. Não há QR real nem modo offline/PWA completo. Não apresentar este preview como versão final ou como implementação dos critérios pendentes dos pacotes.
-
-## Aceite desta importação
-
-- A rota está declarada no roteador e ligada ao catálogo.
-- A página identifica o conteúdo como protótipo demonstrativo.
-- O HTML original do preview foi preservado sem alterações.
-- Build, testes e visualização da rota em produção: pendentes de execução no ambiente do repositório. A rota hospedada redireciona para Cloudflare Access neste momento.
-
-## Dependências e handoff
-
-Depende do workspace `apps/blog` e dos componentes de design system existentes. Próxima etapa: implementar os requisitos P0/P1 do PRD/FRD, comparar o modelo de dados recebido com `apps/blog/app/features/prisma/schema.ts` e validar localmente antes de liberar a rota.
+Deploy de produção não será considerado concluído sem build verde, teste de fluxo/QR/print/offline e validação de um Worker de preview isolado.
