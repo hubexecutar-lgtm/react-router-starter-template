@@ -1,0 +1,33 @@
+name: Blog app verification
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "apps/blog/**"
+      - "package.json"
+      - "package-lock.json"
+      - "workspaces/**"
+      - ".github/workflows/blog-app-ci.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - name: Install monorepo dependencies
+        run: npm ci
+      - name: TypeScript, build and Worker dry run
+        run: npm run check -w apps/blog
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Route registry and browser smoke tests
+        run: npm run routes:check -w apps/blog
