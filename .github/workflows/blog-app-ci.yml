@@ -25,7 +25,9 @@ jobs:
           cache: npm
       - name: Install monorepo dependencies
         run: npm ci
-      - name: TypeScript, build and Worker dry run
+      - name: Generate route types and typecheck
+        run: npm run typecheck -w apps/blog
+      - name: Production build and Worker dry run
         run: npm run check -w apps/blog
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
