@@ -19,7 +19,7 @@ test("intake salva campos do contrato e gera Prisma e QR local", async ({ page }
   await page.getByLabel("O que você quer concluir?").fill("Concluir o módulo inicial");
   await page.getByLabel("Link para QR (opcional)").fill("https://example.com/plan");
   await page.getByRole("button", { name: "Continuar" }).click();
-  await page.getByLabel("Ação 1").fill("Ler o material");
+  await page.getByRole("textbox", { name: "Ação 1" }).fill("Ler o material");
   await page.getByLabel("Estado da ação 1").selectOption("accepted");
   await page.getByRole("button", { name: "Ver plano" }).click();
   await expect(page.getByRole("heading", { name: "Revise seu plano" })).toBeVisible();
