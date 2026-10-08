@@ -23,7 +23,7 @@ Fontes recebidas: `EXECUTAR-MINIAPP-PRISMA-01-DOCUMENTOS-v1.0.0(1).zip`, `EXECUT
 
 ## Limites verificados
 
-O preview executa em iframe e não carrega scripts, fontes ou recursos remotos. Nesta versão, o estado do formulário não persiste após sair/recarregar; não há QR real, importação/exportação de JSON nem modo offline/PWA completo. Não apresentar este preview como versão final ou como implementação dos critérios pendentes dos pacotes.
+O preview executa em iframe e não carrega scripts, fontes ou recursos remotos. Nesta versão, o estado do formulário não persiste após sair/recarregar; há download do JSON atual, mas não importação de JSON. Não há QR real nem modo offline/PWA completo. Não apresentar este preview como versão final ou como implementação dos critérios pendentes dos pacotes.
 
 ## Aceite desta importação
 
