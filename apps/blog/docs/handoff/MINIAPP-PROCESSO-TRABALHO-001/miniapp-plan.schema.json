@@ -1,0 +1,237 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.executar.invalid/miniapp/v1.json",
+  "title": "MiniAppPlan v1 — contrato proposto, não infraestrutura publicada",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "mode",
+    "user",
+    "work",
+    "routine",
+    "goal",
+    "actions",
+    "qr",
+    "metadata"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "mode": {
+      "enum": [
+        "personal",
+        "blank",
+        "demo"
+      ]
+    },
+    "user": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "display_name"
+      ],
+      "properties": {
+        "display_name": {
+          "type": "string",
+          "maxLength": 80
+        }
+      }
+    },
+    "work": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "other_label",
+        "title"
+      ],
+      "properties": {
+        "type": {
+          "enum": [
+            "project",
+            "study",
+            "service",
+            "other",
+            "unspecified"
+          ]
+        },
+        "other_label": {
+          "type": "string",
+          "maxLength": 120
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 120
+        }
+      }
+    },
+    "routine": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "window",
+        "exact_start",
+        "exact_end",
+        "days",
+        "duration_minutes",
+        "preference"
+      ],
+      "properties": {
+        "window": {
+          "enum": [
+            "morning",
+            "afternoon",
+            "evening",
+            "custom",
+            "unspecified"
+          ]
+        },
+        "exact_start": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+        },
+        "exact_end": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+        },
+        "days": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "mon",
+              "tue",
+              "wed",
+              "thu",
+              "fri",
+              "sat",
+              "sun"
+            ]
+          }
+        },
+        "duration_minutes": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1,
+          "maximum": 1440
+        },
+        "preference": {
+          "type": "string",
+          "maxLength": 160
+        }
+      }
+    },
+    "goal": {
+      "type": "string",
+      "maxLength": 500
+    },
+    "actions": {
+      "type": "array",
+      "maxItems": 30,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "order",
+          "verb",
+          "text",
+          "state",
+          "origin"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^ACT-[0-9]{2,3}$"
+          },
+          "order": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "verb": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 50
+          },
+          "text": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 240
+          },
+          "state": {
+            "enum": [
+              "suggested",
+              "accepted",
+              "blocked",
+              "completed"
+            ]
+          },
+          "origin": {
+            "enum": [
+              "template",
+              "user",
+              "imported"
+            ]
+          }
+        }
+      }
+    },
+    "qr": {
+      "type": "object",
+      "required": [
+        "url"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "url": {
+          "type": "string",
+          "maxLength": 2048
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_kind",
+        "app_id"
+      ],
+      "properties": {
+        "app_id": {
+          "const": "EXEC-MINIAPP-001"
+        },
+        "source_kind": {
+          "enum": [
+            "user_input",
+            "demo_fixture",
+            "imported",
+            "blank_template"
+          ]
+        },
+        "created_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "original_source_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    }
+  }
+}
