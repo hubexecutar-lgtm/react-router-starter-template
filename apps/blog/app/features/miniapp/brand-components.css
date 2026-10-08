@@ -1,0 +1,50 @@
+/* Risco Cognitivo — primitivos sem framework (extraídos do CSS compilado do site por build_tokens.py).
+   Carregue tokens.css antes. Classes: container-page, page-block, stack-section, stack-items, btn, btn-md, btn-primary, btn-secondary, btn-icon, meta, eyebrow, eyebrow-bars, chip, chip-gap, chip-soon, chip-tag, panel, panel-subtle, panel-compact, panel-interactive, callout, bracket, highlight, brand-strong, segmented, fx-edge-01 */
+.miniapp-brand .container-page { width:100%;max-width:calc(var(--container) + 2*var(--gutter));padding-inline:var(--gutter);margin-inline:auto }
+.miniapp-brand .page-block { padding-block:var(--block-y) }
+.miniapp-brand .stack-section { margin-top:var(--stack-section) }
+.miniapp-brand .btn { font-family:var(--font-body),system-ui,sans-serif;height:40px;padding:0 var(--space-4);border-radius:var(--radius-md);white-space:nowrap;border:1px solid transparent;justify-content:center;align-items:center;gap:.5rem;font-size:18px;font-weight:500;line-height:24px;transition:background-color .15s,border-color .15s,transform .15s;display:inline-flex;position:relative }
+.miniapp-brand .btn:before { content:"";position:absolute;inset:-2px 0 }
+.miniapp-brand .btn:active:not([aria-disabled=true]):not(:disabled) { transform:scale(.98) }
+.miniapp-brand .btn:disabled, .miniapp-brand .btn[aria-disabled=true] { opacity:.4;cursor:not-allowed;transform:none }
+.miniapp-brand .btn[aria-busy=true] { cursor:progress }
+.miniapp-brand .btn-md { height:36px;font-size:16px }
+.miniapp-brand .btn-md:before { inset:-4px 0 }
+.miniapp-brand .btn-primary { background:var(--brand-action-blue);color:var(--text-on-dark) }
+.miniapp-brand .btn-primary:hover:not(:disabled):not([aria-disabled=true]) { background:var(--brand-action-blue-strong) }
+.miniapp-brand .btn-secondary { background:var(--surface-raised);border-color:var(--border-control);color:var(--text-primary) }
+.miniapp-brand .btn-secondary:hover:not(:disabled):not([aria-disabled=true]) { background:var(--surface-subtle) }
+.miniapp-brand .btn-icon { border-radius:var(--radius-lg);border:1px solid var(--border-control);width:40px;height:40px;color:var(--text-primary);background:0 0;place-items:center;display:inline-grid;position:relative }
+.miniapp-brand .btn-icon:before { content:"";position:absolute;inset:-2px }
+.miniapp-brand .btn-icon:hover:not(:disabled) { background:var(--surface-subtle) }
+.miniapp-brand .btn-icon:disabled { opacity:.4;cursor:not-allowed }
+.miniapp-brand .meta { font-family:var(--font-body),system-ui,sans-serif;color:var(--text-secondary);font-size:14px;line-height:20px }
+.miniapp-brand .eyebrow { font-family:var(--font-mono),ui-monospace,monospace;text-transform:uppercase;letter-spacing:.05em;color:var(--action-text);font-size:.75rem;font-weight:500;line-height:1rem;display:inline-block }
+.miniapp-brand .eyebrow-bars { font-family:var(--font-body),system-ui,sans-serif;text-transform:uppercase;letter-spacing:.28em;color:var(--text-secondary);align-items:center;gap:18px;font-size:13px;font-weight:500;display:inline-flex }
+.miniapp-brand .eyebrow-bars:before, .miniapp-brand .eyebrow-bars:after { content:"";background:var(--brain-accent);width:3px;height:30px }
+.miniapp-brand .chip { white-space:nowrap;font-family:var(--font-mono),ui-monospace,monospace;padding:2px var(--space-2);border-radius:var(--radius-sm);flex-shrink:0;align-items:center;font-size:.75rem;font-weight:500;line-height:1rem;display:inline-flex }
+.miniapp-brand .chip-gap { background:var(--attention-surface);color:var(--on-attention) }
+.miniapp-brand .chip-soon { background:var(--surface-subtle);color:var(--text-secondary);font-family:var(--font-body) }
+.miniapp-brand .chip-tag { border:1px solid var(--border-control);color:var(--text-primary) }
+.miniapp-brand .chip-tag[aria-pressed=true], .miniapp-brand .chip-tag[aria-current] { border-color:var(--action-text);color:var(--action-text) }
+.miniapp-brand .panel { background:var(--surface-raised);border:1px solid var(--border-subtle);border-radius:var(--radius-xs);padding:var(--space-6);position:relative }
+.miniapp-brand .panel-subtle { background:var(--surface-subtle) }
+.miniapp-brand .panel-compact { padding:var(--space-3)var(--space-4) }
+.miniapp-brand .panel-interactive { transition:border-color .15s,box-shadow .15s,transform .15s }
+.miniapp-brand .panel-interactive:hover, .miniapp-brand .panel-interactive:focus-within { border-color:var(--action-text);box-shadow:var(--shadow-card-raised) }
+.miniapp-brand .callout { background:color-mix(in srgb,var(--surface-raised)90%,transparent);border:1px dashed var(--action-line);border-radius:var(--radius-xs);padding:var(--space-4)var(--space-6);position:relative }
+.miniapp-brand .callout>.bracket { border:0 solid var(--action-text);pointer-events:none;width:12px;height:12px;position:absolute }
+.miniapp-brand .callout>.bracket:first-of-type { border-top-width:2px;border-left-width:2px;top:-1px;left:-1px }
+.miniapp-brand .callout>.bracket:nth-of-type(2) { border-top-width:2px;border-right-width:2px;top:-1px;right:-1px }
+.miniapp-brand .callout>.bracket:nth-of-type(3) { border-bottom-width:2px;border-left-width:2px;bottom:-1px;left:-1px }
+.miniapp-brand .callout>.bracket:nth-of-type(4) { border-bottom-width:2px;border-right-width:2px;bottom:-1px;right:-1px }
+.miniapp-brand .highlight { padding-block:var(--space-6);border-block:1px solid var(--border-strong);font-family:var(--font-display);letter-spacing:-.01em;color:var(--text-primary);text-wrap:balance;font-size:clamp(1.25rem,1rem + 1vw,1.625rem);font-weight:700;line-height:1.3;position:relative }
+.miniapp-brand .highlight:before, .miniapp-brand .highlight:after { content:"";background:var(--action-text);width:48px;height:4px;position:absolute;left:50%;transform:translate(-50%,-50%) }
+.miniapp-brand .highlight:before { top:-.5px }
+.miniapp-brand .highlight:after { top:calc(100% + .5px) }
+.miniapp-brand .highlight cite { font-family:var(--font-body),system-ui,sans-serif;color:var(--text-secondary);margin-top:.75rem;font-size:.875rem;font-style:normal;font-weight:400;line-height:1.25rem;display:block }
+.miniapp-brand .brand-strong { color:var(--action-text);font-weight:700 }
+.miniapp-brand .segmented { border:1px solid var(--border-control);border-radius:var(--radius-md);display:inline-flex;overflow:hidden }
+.miniapp-brand .segmented button { min-height:44px;padding:0 var(--space-4);color:var(--text-secondary);background:var(--surface-raised);font-size:14px }
+.miniapp-brand .segmented button+button { border-left:1px solid var(--border-subtle) }
+.miniapp-brand .segmented button[aria-pressed=true] { color:var(--action-text);background:var(--surface-subtle);font-weight:600 }

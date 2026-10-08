@@ -1,0 +1,142 @@
+/* Risco Cognitivo — tokens. Gerado por scripts/build_tokens.py a partir de src/app/globals.css (D-01…D-36). Não editar à mão. */
+.miniapp-brand {
+  --brand-canvas: #fffdfa;
+  --brand-dark-gray: #545454;
+  --brand-light-gray: #ececec;
+  --brand-light-blue: #cbd4ff;
+  --brand-light-blue-soft: rgb(203 212 255 / 48%);
+  --brand-dark-indigo: #0e025d;
+  --brand-action-blue: #2d5ce6;
+  --brand-action-blue-strong: #1f46bf;
+  --semantic-risk: #ff0000;
+  --semantic-solution: #00bf63;
+  --attention-surface: #ffe659;
+  --attention-ink: #8a5a00;
+  --on-attention: #000000;
+  --brain-accent: #6e72f0;
+  --brain-accent-strong: #4f53d9;
+  --brain-accent-soft: #e4e6ff;
+  --brain-accent-line: #a3a8f5;
+  --brain-accent-text: #4f53d9;
+  --brain-border-strong: #cbcbcb;
+  --text-primary: #000000;
+  --text-secondary: #545454;
+  --text-on-dark: #ffffff;
+  --surface-page: var(--brand-canvas);
+  --surface-subtle: #f4f3f0;
+  --surface-raised: #ffffff;
+  --line-subtle: var(--brand-light-gray);
+  --border-subtle: var(--brand-light-gray);
+  --border-control: #85847f;
+  --border-strong: #cbcbcb;
+  --action-text: var(--brand-action-blue);
+  --action-line: rgb(45 92 230 / 45%);
+  --dot-grid: #d9d9de;
+  --selection: var(--brand-light-blue);
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-24: 96px;
+  --block-y: var(--space-8);
+  --stack-section: var(--space-8);
+  --stack-items: var(--space-8);
+  --stack-inner: var(--space-6);
+  --gutter: 32px;
+  --container: 1120px;
+  --header-h: 72px;
+  --subnav-h: 52px;
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --shadow-sm: 0 0 0 1px var(--border-subtle);
+  --shadow-md: 0 0 0 1px var(--border-subtle), 0 6px 18px rgb(0 0 0 / 6%);
+  --shadow-card-raised: 0 4px 16px rgb(20 20 19 / 8%);
+  --scrim: rgb(20 20 19 / 20%);
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --dur-menu: 320ms;
+  --ed-paper: var(--surface-page);
+  --ed-ink: var(--text-primary);
+  --ed-heading: var(--text-primary);
+  --ed-label: var(--text-secondary);
+  --ed-link: var(--action-text);
+  --ed-strong: var(--action-text);
+  --ed-callout-head: var(--brand-dark-indigo);
+  --ed-callout-head-text: var(--text-on-dark);
+  --ed-callout-bg: var(--brand-light-blue-soft);
+  --ed-callout-text: var(--text-primary);
+  --ed-rule: var(--line-subtle);
+  --ed-fs-body: 1.0625rem;
+  --ed-lh-body: 1.6;
+  --ed-fs-h3: 1.2rem;
+  --ed-fs-h2: clamp(1.4rem, 1.1rem + 1.2vw, 1.75rem);
+  --ed-fs-title: clamp(2.25rem, 1.2rem + 4.5vw, 3.75rem);
+  --ed-lh: calc(var(--ed-fs-body) * var(--ed-lh-body));
+  --ed-measure: 68ch;
+  --ed-sp-title-to-body: calc(var(--ed-lh) * 2.5);
+  --ed-sp-h-before: calc(var(--ed-lh) * 2);
+  --ed-sp-h2-after: calc(var(--ed-lh) * 0.75);
+  --ed-sp-h3-after: calc(var(--ed-lh) * 0.5);
+  --ed-sp-paragraph: calc(var(--ed-lh) * 0.75);
+  --ed-sp-callout-before: var(--ed-lh);
+  --ed-sp-callout-after: calc(var(--ed-lh) * 1.5);
+}
+.miniapp-brand[data-theme="claro"] {
+  --text-primary: #171717;
+  --text-secondary: #333333;
+  --surface-page: #ffffff;
+  --surface-subtle: #fafafa;
+  --surface-raised: #ffffff;
+  --line-subtle: #eaeaea;
+  --border-subtle: #eaeaea;
+  --border-strong: #cccccc;
+  --dot-grid: #e5e5e5;
+}
+:is(.dark .miniapp-brand, .miniapp-brand[data-theme="noite"]) {
+  --text-primary: #ededed;
+  --text-secondary: #94a3b8;
+  --surface-page: #0f172a;
+  --surface-subtle: #1e293b;
+  --surface-raised: #1e293b;
+  --line-subtle: #334155;
+  --border-subtle: #334155;
+  --border-control: #94a3b8;
+  --border-strong: #475569;
+  --action-text: #8fa9ff;
+  --action-line: rgb(143 169 255 / 50%);
+  --dot-grid: #263248;
+  --selection: #1f46bf;
+  --brain-accent-soft: #272a5c;
+  --brain-accent-text: #a3a8f5;
+  --brain-border-strong: #475569;
+  --shadow-card-raised: 0 4px 16px rgb(0 0 0 / 40%);
+  --scrim: rgb(0 0 0 / 50%);
+  --ed-callout-bg: rgb(45 92 230 / 18%);
+}
+@media (min-width: 640px) {
+  .miniapp-brand {
+    --gutter: 48px;
+    --stack-section: var(--space-12);
+    --ed-fs-body: 1.125rem;
+    --ed-lh-body: 1.65;
+    --ed-sp-title-to-body: calc(var(--ed-lh) * 3.5);
+    --ed-sp-h-before: calc(var(--ed-lh) * 2.4);
+  }
+}
+@media (min-width: 768px) {
+  .miniapp-brand {
+    --block-y: var(--space-12);
+  }
+}
+@media (min-width: 1024px) {
+  .miniapp-brand {
+    --ed-sp-title-to-body: calc(var(--ed-lh) * 4.8);
+    --ed-sp-h-before: calc(var(--ed-lh) * 2.6);
+  }
+}

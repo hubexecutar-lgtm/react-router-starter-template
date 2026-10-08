@@ -68,3 +68,34 @@ test("exemplo embutido carrega como demonstração e baixa o JSON pronto", async
   await expect(page.locator(".miniapp-sheet")).toContainText("Concluir e revisar a primeira entrega do projeto nesta semana.");
   await expect(page.locator(".miniapp-sheet img[alt='QR gerado localmente']")).toBeVisible();
 });
+
+// The supplied brand supersedes the orange site palette only on this app route.
+test("marca RC, contraste, reflow e folha clara nos dois temas", async ({ page }) => {
+  for (const theme of ["light", "dark"]) {
+    await page.addInitScript(t => localStorage.setItem("theme", t), theme);
+    await page.setViewportSize({ width: 320, height: 800 });
+    await page.goto("/ferramentas/processo-de-trabalho/");
+    const start = page.getByRole("button", { name: "Iniciar", exact: true });
+    await expect(start).toHaveCSS("background-color", "rgb(45, 92, 230)");
+    await expect(start).toHaveCSS("color", "rgb(255, 255, 255)");
+    await expect(page.locator(".miniapp-root h1")).toHaveCSS("font-family", /DM Sans/);
+    await expect(page.locator(".miniapp-root")).toHaveCSS("font-family", /Inter/);
+    await expect(page.locator(".miniapp-root .eyebrow").first()).toHaveCSS("font-family", /DM Mono/);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    await start.click();
+    await expect(page.getByLabel("Título (opcional)")).toHaveCSS("min-height", "44px");
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    await page.getByRole("button", { name: "Voltar", exact: true }).click();
+    await page.getByRole("button", { name: "Ver exemplo preenchido" }).click();
+    await page.getByRole("button", { name: "Prisma", exact: true }).click();
+    await expect(page.locator(".miniapp-sheet")).toHaveCSS("background-color", "rgb(255, 253, 250)");
+    await expect(page.locator(".miniapp-sheet")).toHaveCSS("color", "rgb(0, 0, 0)");
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    await page.emulateMedia({ media: "print" });
+    await expect(page.locator("[data-print] > .miniapp-panel")).toBeHidden();
+    await expect(page.locator(".cf-header")).toBeHidden();
+    await expect(page.locator(".cf-footer")).toBeHidden();
+    await expect(page.locator("[data-bottom-bar]")).toBeHidden();
+    await page.emulateMedia({ media: "screen" });
+  }
+});
