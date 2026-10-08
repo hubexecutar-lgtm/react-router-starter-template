@@ -15,6 +15,7 @@ export default [
 	route("mapas/explorar/:fatorId", "routes/mapas.explorar.$fatorId.tsx"),
 	route("prisma", "routes/prisma.tsx"),
 	route("ferramentas", "routes/ferramentas._index.tsx"),
+	route("ferramentas/processo-de-trabalho", "routes/ferramentas.processo-de-trabalho.tsx"),
 	route("ferramentas/:type", "routes/ferramentas.$type._index.tsx"),
 	route("ferramentas/:type/:slug", "routes/ferramentas.$type.$slug.tsx"),
 	route("admin", "routes/admin._index.tsx"),

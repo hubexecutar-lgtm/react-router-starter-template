@@ -51,6 +51,9 @@ export default function Ferramentas() {
 							<Button href={PRISMA.href} size="lg" variant="outline">
 								Abrir o Prisma
 							</Button>
+							<Button href="/ferramentas/processo-de-trabalho/" size="lg" variant="outline">
+								Processo de Trabalho + Prisma
+							</Button>
 						</>
 					}
 				/>
@@ -72,6 +75,14 @@ export default function Ferramentas() {
 							meta="Sem conta; os dados ficam neste dispositivo."
 							cta="Abrir o Prisma"
 							data-tool-card="prisma"
+						/>
+						<Card
+							href="/ferramentas/processo-de-trabalho/"
+							eyebrow="Protótipo demonstrativo"
+							title="Processo de Trabalho + Prisma"
+							text="Experimente o fluxo de intake e as duas visualizações no navegador. Esta versão ainda não implementa PWA nem QR funcional."
+							cta="Abrir protótipo"
+							data-tool-card="processo-de-trabalho-prisma"
 						/>
 						<Card
 							href="/mapas/"
